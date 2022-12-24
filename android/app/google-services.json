@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1014330151731",
+    "project_id": "reportit-unisa",
+    "storage_bucket": "reportit-unisa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014330151731:android:d2bbfb1b053e04f586e446",
+        "android_client_info": {
+          "package_name": "com.example.report_it"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014330151731-bschc36kr206md6ti4k4reeovc5r8r0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5Pi4hQevrnm13d6zkpT17ZkMQvv-tZ3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014330151731-bschc36kr206md6ti4k4reeovc5r8r0i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1014330151731-plagr4r3pce5kdisvr8n5cgss8dkkfqr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.reportIt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
