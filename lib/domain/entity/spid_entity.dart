@@ -1,17 +1,20 @@
+import 'package:flutter/cupertino.dart';
+
 class SPID {
-  String cf;
-  String nome;
-  String luogoNascita;
-  DateTime dataNascita;
-  String sesso;
-  String tipoDocumento;
-  String numeroDocumento;
-  String domicilioFisico;
-  String provinciaNascita;
-  DateTime dataScadenzaDocumento;
-  String numCellulare;
-  String indirizzoEmail;
-  String password;
+  String? cf;
+  String? nome;
+  String? luogoNascita;
+  DateTime? dataNascita;
+  String? sesso;
+  String? tipoDocumento;
+  String? numeroDocumento;
+  String? domicilioFisico;
+  String? provinciaNascita;
+  DateTime? dataScadenzaDocumento;
+  String? numCellulare;
+  String? indirizzoEmail;
+  String? password;
+
   get getCf => this.cf;
 
   set setCf(cf) => this.cf = cf;
@@ -83,4 +86,56 @@ class SPID {
     this.indirizzoEmail,
     this.password,
   );
+
+  factory SPID.fromJson(Map<String, dynamic> json) {
+    return SPID(
+        json["CF"],
+        json["Nome"],
+        json["Luogo di Nascita"],
+        json["Data di Nascita"],
+        json["Sesso"],
+        json["TipoDocumento"],
+        json["Numero Documento"],
+        json["Domicilio fisico"],
+        json["Provincia di nascita"],
+        json["Data Scadenza Documento"],
+        json["Cellulare"],
+        json["Email"],
+        json["Password"]);
+  }
+
+  factory SPID.fromMap(map) {
+    return SPID(
+        map["CF"],
+        map["Nome"],
+        map["Luogo di Nascita"],
+        map["Data di Nascita"],
+        map["Sesso"],
+        map["TipoDocumento"],
+        map["Numero Documento"],
+        map["Domicilio fisico"],
+        map["Provincia di nascita"],
+        map["Data Scadenza Documento"],
+        map["Cellulare"],
+        map["Email"],
+        map["Password"]);
+  }
+
+  Map<String?, dynamic> toMap() {
+    return {
+      cf: "CF",
+      nome: "Nome",
+      luogoNascita: "Luogo di Nascita",
+      dataNascita.toString(): "Data di Nascita",
+      sesso: "Sesso",
+      tipoDocumento: "TipoDocumento",
+      numeroDocumento: "Numero Documento",
+      domicilioFisico: "Domicilio fisico",
+      provinciaNascita: "Provincia di nascita",
+      dataScadenzaDocumento.toString(): "Data Scadenza Documento",
+      numCellulare: "Cellulare",
+      indirizzoEmail: "Email",
+      password: "Password"
+    };
+  }
 }

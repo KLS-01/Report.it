@@ -1,15 +1,15 @@
 import 'package:report_it/domain/entity/tipo_ufficiale.dart';
 
 class UffPolGiud {
-  int id;
-  String nome;
-  String cognome;
-  String grado;
-  TipoUfficiale tipoUff;
-  String email;
-  String password;
-  String nomeCaserma;
-  String coordinate;
+  int? id;
+  String? nome;
+  String? cognome;
+  String? grado;
+  TipoUfficiale? tipoUff;
+  String? email;
+  String? password;
+  String? nomeCaserma;
+  String? coordinate;
 
   get getId => this.id;
 
@@ -49,4 +49,44 @@ class UffPolGiud {
 
   UffPolGiud(this.id, this.nome, this.cognome, this.grado, this.tipoUff,
       this.email, this.password, this.nomeCaserma, this.coordinate);
+
+  factory UffPolGiud.fromJson(Map<String, dynamic> json) {
+    return UffPolGiud(
+        json["ID"],
+        json["Nome"],
+        json["Cognome"],
+        json["Grado"],
+        json["TipoUfficiale"],
+        json["Email"],
+        json["Password"],
+        json["NomeCaserma"],
+        json["CoordCaserma"]);
+  }
+
+  factory UffPolGiud.fromMap(map) {
+    return UffPolGiud(
+        map["ID"],
+        map["Nome"],
+        map["Cognome"],
+        map["Grado"],
+        map["TipoUfficiale"],
+        map["Email"],
+        map["Password"],
+        map["NomeCaserma"],
+        map["CoordCaserma"]);
+  }
+
+  Map<String?, dynamic> toMap() {
+    return {
+      id.toString(): "ID",
+      nome: "Nome",
+      cognome: "Cognome",
+      grado: "Grado",
+      tipoUff.toString(): "TipoUfficiale",
+      email: "Email",
+      password: "Password",
+      nomeCaserma: "NomeCaserma",
+      coordinate: "CoordCaserma",
+    };
+  }
 }
