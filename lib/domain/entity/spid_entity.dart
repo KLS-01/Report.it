@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 
 class SPID {
@@ -92,16 +94,24 @@ class SPID {
         json["CF"],
         json["Nome"],
         json["Luogo di Nascita"],
-        json["Data di Nascita"],
+        DateTime(
+          SPID.prendiAnno(json["Data di Nascita"]),
+          SPID.prendiMese(json["Data di Nascita"]),
+          SPID.prendiGiorno(json["Data di Nascita"]),
+        ),
         json["Sesso"],
         json["TipoDocumento"],
         json["Numero Documento"],
         json["Domicilio fisico"],
         json["Provincia di nascita"],
-        json["Data Scadenza Documento"],
-        json["Cellulare"],
+        DateTime(
+          SPID.prendiAnno(json["Data Scadenza Documento"]),
+          SPID.prendiMese(json["Data Scadenza Documento"]),
+          SPID.prendiGiorno(json["Data Scadenza Documento"]),
+        ),
+        json["Cellulare"].toString(),
         json["Email"],
-        json["Password"]);
+        json["Password"].toString());
   }
 
   factory SPID.fromMap(map) {
@@ -123,19 +133,37 @@ class SPID {
 
   Map<String?, dynamic> toMap() {
     return {
-      cf: "CF",
-      nome: "Nome",
-      luogoNascita: "Luogo di Nascita",
-      dataNascita.toString(): "Data di Nascita",
-      sesso: "Sesso",
-      tipoDocumento: "TipoDocumento",
-      numeroDocumento: "Numero Documento",
-      domicilioFisico: "Domicilio fisico",
-      provinciaNascita: "Provincia di nascita",
-      dataScadenzaDocumento.toString(): "Data Scadenza Documento",
-      numCellulare: "Cellulare",
-      indirizzoEmail: "Email",
-      password: "Password"
+      "CF": cf,
+      "Nome": nome,
+      "Luogo di Nascita": luogoNascita,
+      "Data di Nascita": dataNascita,
+      "Sesso": sesso,
+      "TipoDocumento": tipoDocumento,
+      "Numero Documento": numeroDocumento,
+      "Domicilio fisico": domicilioFisico,
+      "Provincia di nascita": provinciaNascita,
+      "Data Scadenza Documento": dataScadenzaDocumento,
+      "Cellulare": numCellulare,
+      "Email": indirizzoEmail,
+      "Password": password
     };
+  }
+
+  static int prendiAnno(String data) {
+    int anno = int.parse(data.substring(6));
+
+    return anno;
+  }
+
+  static int prendiMese(String data) {
+    int anno = int.parse(data.substring(3, 5));
+
+    return anno;
+  }
+
+  static int prendiGiorno(String data) {
+    int anno = int.parse(data.substring(0, 2));
+
+    return anno;
   }
 }

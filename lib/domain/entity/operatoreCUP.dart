@@ -42,10 +42,10 @@ class OperatoreCUP {
 
   Map<String?, dynamic> toMap() {
     return {
-      id.toString(): "ID",
-      password: "Password",
-      email: "Email",
-      asl: "ASL",
+      "ID": id,
+      "Password": password,
+      "Email": email,
+      "ASL": asl,
     };
   }
 }

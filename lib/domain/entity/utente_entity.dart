@@ -1,7 +1,10 @@
-import 'SPID_entity.dart';
+import 'dart:convert';
+
+import 'spid_entity.dart';
 
 class Utente {
   String cf;
+  String id;
   SPID? spid;
 
   get getCf => this.cf;
@@ -10,21 +13,24 @@ class Utente {
 
   get getSpid => this.spid;
 
-  set setSpid(spid) => this.spid = spid;
-
-  Utente(this.cf);
+  Utente(this.cf, this.id);
 
   factory Utente.fromJson(Map<String, dynamic> json) {
-    return Utente(json["cf"]);
+    return Utente(json["CF"], json["id"]);
   }
 
   factory Utente.fromMap(map) {
-    return Utente(map['cf']);
+    return Utente(map['CF'], map["id"]);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      cf: "cf",
+      "CF": cf,
+      "id": id,
     };
+  }
+
+  setSpid(SPID value) {
+    this.spid = value;
   }
 }

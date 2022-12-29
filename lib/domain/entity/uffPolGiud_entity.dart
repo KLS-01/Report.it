@@ -56,7 +56,9 @@ class UffPolGiud {
         json["Nome"],
         json["Cognome"],
         json["Grado"],
-        json["TipoUfficiale"],
+        TipoUfficiale.values.firstWhere((element) =>
+            // ignore: prefer_interpolation_to_compose_strings
+            element.toString() == "TipoUfficiale" + json["TipoUfficiale"]),
         json["Email"],
         json["Password"],
         json["NomeCaserma"],
@@ -69,7 +71,9 @@ class UffPolGiud {
         map["Nome"],
         map["Cognome"],
         map["Grado"],
-        map["TipoUfficiale"],
+        TipoUfficiale.values.firstWhere((element) =>
+            // ignore: prefer_interpolation_to_compose_strings
+            element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
         map["Email"],
         map["Password"],
         map["NomeCaserma"],
@@ -78,15 +82,15 @@ class UffPolGiud {
 
   Map<String?, dynamic> toMap() {
     return {
-      id.toString(): "ID",
-      nome: "Nome",
-      cognome: "Cognome",
-      grado: "Grado",
-      tipoUff.toString(): "TipoUfficiale",
-      email: "Email",
-      password: "Password",
-      nomeCaserma: "NomeCaserma",
-      coordinate: "CoordCaserma",
+      "ID": id.toString(),
+      "Nome": nome,
+      "Cognome": cognome,
+      "Grado": grado,
+      "TipoUfficiale": tipoUff.toString(),
+      "Email": email,
+      "Password": password,
+      "NomeCaserma": nomeCaserma,
+      "CoordCaserma": coordinate,
     };
   }
 }
