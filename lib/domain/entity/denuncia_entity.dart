@@ -1,3 +1,6 @@
+import 'package:report_it/domain/entity/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/stato_denuncia.dart';
+
 class Denuncia {
   String? id,
       nomeDenunciante,
@@ -8,6 +11,7 @@ class Denuncia {
       cellulareDenunciante,
       emailDenunciante,
       tipoDocDenunciante,
+      numeroDocDenunciante,
       nomeVittima,
       cognomeVittima,
       denunciato,
@@ -19,6 +23,36 @@ class Denuncia {
 
   DateTime? scadenzaDocDenunciante, dataDenuncia;
   bool consenso = false, alreadyFiled = false;
+  Utente? utente;
+  CategoriaDenuncia categoriaDenuncia;
+  StatoDenuncia statoDenuncia;
+
+  Denuncia(
+    this.id,
+    this.utente,
+    this.nomeDenunciante,
+    this.cognomeDenunciante,
+    this.indirizzoDenunciante,
+    this.capDenunciante,
+    this.provinciaDenunciante,
+    this.cellulareDenunciante,
+    this.emailDenunciante,
+    this.tipoDocDenunciante,
+    this.numeroDocDenunciante,
+    this.scadenzaDocDenunciante,
+    this.dataDenuncia,
+    this.categoriaDenuncia,
+    this.nomeVittima,
+    this.denunciato,
+    this.alreadyFiled,
+    this.consenso,
+    this.descrizione,
+    this.statoDenuncia,
+    this.nomeCaserma,
+    this.coordCaserma,
+    this.nomeUff,
+    this.cognomeUff,
+  );
 
   String? get getId => id;
   set setId(String? id) => this.id = id;
@@ -83,4 +117,91 @@ class Denuncia {
 
   get getAlreadyFiled => alreadyFiled;
   set setAlreadyFiled(alreadyFiled) => this.alreadyFiled = alreadyFiled;
+
+  factory Denuncia.fromJson(Map<String, dynamic> json) {
+    return Denuncia(
+      json["ID"],
+      json["utente"],
+      json["nomeDenunciante"],
+      json["cognomeDenunciante"],
+      json["indirizzoDenunciante"],
+      json["capDenunciante"],
+      json["provinciaDenunciante"],
+      json["cellulareDenunciante"],
+      json["emailDenunciante"],
+      json["tipoDocDenunciante"],
+      json["numeroDocDenunciante"],
+      json["scadenzaDocDenunciante"],
+      json["dataDenuncia"],
+      json["categoriaDenuncia"],
+      json["nomeVittima"],
+      json["denunciato"],
+      json["alreadyFiled"],
+      json["consenso"],
+      json["descrizione"],
+      json["statoDenuncia"],
+      json["nomeCaserma"],
+      json["coordCaserma"],
+      json["nomeUff"],
+      json["cognomeUff"],
+    );
+  }
+
+  factory Denuncia.fromMap(map) {
+    return Denuncia(
+      map["ID"],
+      map["utente"],
+      map["nomeDenunciante"],
+      map["cognomeDenunciante"],
+      map["indirizzoDenunciante"],
+      map["capDenunciante"],
+      map["provinciaDenunciante"],
+      map["cellulareDenunciante"],
+      map["emailDenunciante"],
+      map["tipoDocDenunciante"],
+      map["numeroDocDenunciante"],
+      map["scadenzaDocDenunciante"],
+      map["dataDenuncia"],
+      map["categoriaDenuncia"],
+      map["nomeVittima"],
+      map["denunciato"],
+      map["alreadyFiled"],
+      map["consenso"],
+      map["descrizione"],
+      map["statoDenuncia"],
+      map["nomeCaserma"],
+      map["coordCaserma"],
+      map["nomeUff"],
+      map["cognomeUff"],
+    );
+  }
+
+  Map<String?, dynamic> toMap() {
+    return {
+      "ID": id,
+      "Utente": utente,
+      "nomeDenunciante": nomeDenunciante,
+      "cognomeDenunciante": cognomeDenunciante,
+      "indirizzoDenunciante": indirizzoDenunciante,
+      "capDenunciante": capDenunciante,
+      "provinciaDenunciante": provinciaDenunciante,
+      "cellulareDenunciante": cellulareDenunciante,
+      "emailDenunciante": emailDenunciante,
+      "tipoDocDenunciante": tipoDocDenunciante,
+      "numeroDocDenunciante": numeroDocDenunciante,
+      "scadenzaDocDenunciante": scadenzaDocDenunciante,
+      "dataDenuncia": tipoDocDenunciante,
+      "categoriaDenuncia": tipoDocDenunciante,
+      "nomeVittima": tipoDocDenunciante,
+      "denunciato": tipoDocDenunciante,
+      "alreadyFiled": tipoDocDenunciante,
+      "consenso": consenso,
+      "descrizione": descrizione,
+      "statoDenuncia": statoDenuncia,
+      "nomeCaserma": nomeCaserma,
+      "coordCaserma": coordCaserma,
+      "nomeUff": nomeUff,
+      "cognomeUff": cognomeUff,
+    };
+  }
 }
