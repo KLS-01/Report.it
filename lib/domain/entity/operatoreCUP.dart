@@ -1,5 +1,5 @@
 class OperatoreCUP {
-  int id;
+  String id;
   String password;
   String email;
   String asl;

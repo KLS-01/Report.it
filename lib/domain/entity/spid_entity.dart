@@ -94,21 +94,13 @@ class SPID {
         json["CF"],
         json["Nome"],
         json["Luogo di Nascita"],
-        DateTime(
-          SPID.prendiAnno(json["Data di Nascita"]),
-          SPID.prendiMese(json["Data di Nascita"]),
-          SPID.prendiGiorno(json["Data di Nascita"]),
-        ),
+        json["Data di Nascita"].toDate(),
         json["Sesso"],
         json["TipoDocumento"],
         json["Numero Documento"],
         json["Domicilio fisico"],
         json["Provincia di nascita"],
-        DateTime(
-          SPID.prendiAnno(json["Data Scadenza Documento"]),
-          SPID.prendiMese(json["Data Scadenza Documento"]),
-          SPID.prendiGiorno(json["Data Scadenza Documento"]),
-        ),
+        json["Data Scadenza Documento"].toDate(),
         json["Cellulare"].toString(),
         json["Email"],
         json["Password"].toString());

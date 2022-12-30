@@ -51,17 +51,13 @@ class UffPolGiud {
       this.email, this.password, this.nomeCaserma, this.coordinate);
 
   factory UffPolGiud.fromJson(Map<String, dynamic> json) {
-    return UffPolGiud(
-        json["ID"],
-        json["Nome"],
-        json["Cognome"],
-        json["Grado"],
-        TipoUfficiale.values.firstWhere((element) =>
-            // ignore: prefer_interpolation_to_compose_strings
-            element.toString() == "TipoUfficiale" + json["TipoUfficiale"]),
-        json["Email"],
-        json["Password"],
-        json["NomeCaserma"],
+    return UffPolGiud(json["ID"], json["Nome"], json["Cognome"], json["Grado"],
+        TipoUfficiale.values.firstWhere(
+      (element) {
+        // ignore: prefer_interpolation_to_compose_strings
+        return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
+      },
+    ), json["Email"], json["Password"], json["NomeCaserma"],
         json["CoordCaserma"]);
   }
 
