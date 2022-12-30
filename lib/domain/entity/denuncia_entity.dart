@@ -1,10 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
 
 class Denuncia {
-  String? id,
-      nomeDenunciante,
+  String? id;
+  String? nomeDenunciante,
       cognomeDenunciante,
       indirizzoDenunciante,
       capDenunciante,
@@ -22,11 +23,11 @@ class Denuncia {
       nomeUff,
       cognomeUff;
 
-  DateTime? scadenzaDocDenunciante, dataDenuncia;
+  String? scadenzaDocDenunciante, dataDenuncia;
   bool consenso = false, alreadyFiled = false;
-  Utente? utente;
-  CategoriaDenuncia categoriaDenuncia;
-  StatoDenuncia statoDenuncia;
+  Utente utente;
+  String categoriaDenuncia, statoDenuncia;
+  //StatoDenuncia statoDenuncia;
 
   Denuncia(
     this.id,
@@ -55,8 +56,8 @@ class Denuncia {
     this.cognomeUff,
   );
 
-  String? get getId => id;
-  set setId(String? id) => this.id = id;
+  get getId => id;
+  set setId(id) => this.id = id;
 
   get getNomeDenunciante => nomeDenunciante;
   set setNomeDenunciante(nomeDenunciante) =>
@@ -177,32 +178,32 @@ class Denuncia {
     );
   }
 
-  Map<String?, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       "ID": id,
-      "Utente": utente,
-      "nomeDenunciante": nomeDenunciante,
-      "cognomeDenunciante": cognomeDenunciante,
-      "indirizzoDenunciante": indirizzoDenunciante,
-      "capDenunciante": capDenunciante,
-      "provinciaDenunciante": provinciaDenunciante,
-      "cellulareDenunciante": cellulareDenunciante,
-      "emailDenunciante": emailDenunciante,
-      "tipoDocDenunciante": tipoDocDenunciante,
-      "numeroDocDenunciante": numeroDocDenunciante,
-      "scadenzaDocDenunciante": scadenzaDocDenunciante,
-      "dataDenuncia": tipoDocDenunciante,
-      "categoriaDenuncia": tipoDocDenunciante,
-      "nomeVittima": tipoDocDenunciante,
-      "denunciato": tipoDocDenunciante,
-      "alreadyFiled": tipoDocDenunciante,
-      "consenso": consenso,
-      "descrizione": descrizione,
-      "statoDenuncia": statoDenuncia,
-      "nomeCaserma": nomeCaserma,
-      "coordCaserma": coordCaserma,
-      "nomeUff": nomeUff,
-      "cognomeUff": cognomeUff,
+      "Utente": utente.getCf,
+      "NomeDenunciante": nomeDenunciante,
+      "CognomeDenunciante": cognomeDenunciante,
+      "IndirizzoDenunciante": indirizzoDenunciante,
+      "CapDenunciante": capDenunciante,
+      "ProvinciaDenunciante": provinciaDenunciante,
+      "CellulareDenunciante": cellulareDenunciante,
+      "EmailDenunciante": emailDenunciante,
+      "TipoDocDenunciante": tipoDocDenunciante,
+      "NumeroDocDenunciante": numeroDocDenunciante,
+      "ScadenzaDocDenunciante": scadenzaDocDenunciante,
+      "DataDenuncia": dataDenuncia,
+      "CategoriaDenuncia": categoriaDenuncia,
+      "NomeVittima": nomeVittima,
+      "Denunciato": denunciato,
+      "AlreadyFiled": alreadyFiled,
+      "Consenso": consenso,
+      "Descrizione": descrizione,
+      "StatoDenuncia": statoDenuncia,
+      "NomeCaserma": nomeCaserma,
+      "CoordCaserma": coordCaserma,
+      "NomeUff": nomeUff,
+      "CognomeUff": cognomeUff,
     };
   }
 }

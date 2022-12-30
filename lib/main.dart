@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:report_it/data/Models/denuncia_dao.dart';
 
 import 'data/firebase_options.dart';
+import 'domain/entity/denuncia_entity.dart';
+import 'domain/entity/utente_entity.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,6 +113,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            ElevatedButton(
+              child: Text('Create Record'),
+              onPressed: () {
+                createRecord();
+              },
+            ),
           ],
         ),
       ),
@@ -118,5 +128,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  //Metodo di test dell'aggiunta di una denuncia nel DB, da sostituire con i controller
+  void createRecord() {
+    Utente u = Utente("FGD3764728FGFG");
+    Denuncia d = Denuncia(
+        null,
+        u,
+        "Thomas",
+        "Turbato",
+        "Via del Cazzo 23",
+        "543534",
+        "PD",
+        "6969696969696969",
+        "cazoz@cazoz.it",
+        "Flag",
+        "420420420420",
+        "23/10/2069",
+        "23/12/2022",
+        "Superiorità della razza",
+        "Thomas Turbato",
+        "Nicola Frvgieri",
+        false,
+        true,
+        "Dato che sono un ebreo negro mi ha detto che sono inferiore",
+        "Presa in carico",
+        "Pisellissimo",
+        "34344",
+        "Cazzo",
+        "Durissimo");
+    print(DenunciaDao.addDenuncia(d));
+    print("Id dell'oggetto: ${d.getId}");
   }
 }

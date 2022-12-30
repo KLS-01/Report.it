@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1014330151731",
+    "firebase_url": "https://reportit-unisa-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "reportit-unisa",
     "storage_bucket": "reportit-unisa.appspot.com"
   },
