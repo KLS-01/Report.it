@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/repository/login_controller.dart';
 
 class AuthenticationService {
@@ -25,9 +26,24 @@ class AuthenticationService {
       required String password,
       required String userType}) async {
     try {
+      if (userType == "SPID") {
+        try {
+          var u = await RetrieveSPIDByEmail(email);
+          if (u.password == password) {
+            await auth.signInWithEmailAndPassword(
+                email: email, password: password);
+
+            return "Signed in with success";
+          } else {
+            print("password sbagliata");
+          }
+        } catch (e) {
+          print("utente non trovato");
+        }
+      }
+
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      //TODO: INVOCA FUNZIONE CHE CONTROLLA CON QUERY SUL DB
-      return "Signed in with success"; //   return auth.currentUser!.uid.toString();
+      return "Signed in with success";
     } on FirebaseAuthException catch (e) {
       return e.message;
     }

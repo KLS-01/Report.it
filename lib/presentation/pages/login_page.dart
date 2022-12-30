@@ -8,6 +8,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String workerFFOO = 'FFOO';
     String workerASL = 'ASL';
+    String workerSPID = "SPID";
 
     return MaterialApp(
       title: "Report.it",
@@ -46,7 +47,15 @@ class LoginPage extends StatelessWidget {
                           children: [
                             FloatingActionButton.extended(
                               heroTag: "btnSPID",
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginWorker(workerType: workerSPID),
+                                  ),
+                                );
+                              },
                               label: const Text("SPID"),
                               icon: const Icon(Icons.person),
                               backgroundColor:

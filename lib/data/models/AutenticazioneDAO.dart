@@ -6,6 +6,18 @@ import 'package:report_it/domain/entity/utente_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
+Future<SPID> RetrieveSPIDByEmail(String email) async {
+  var ref = database.collection("SPID").where("Email", isEqualTo: email);
+
+  var u = await ref.get().then(((value) async {
+    SPID u = SPID.fromJson(value.docs.first.data());
+
+    return u;
+  }));
+
+  return u;
+}
+
 // ignore: non_constant_identifier_names
 Future<Utente> RetrieveUtenteByID(String uid) async {
   var ref = database.collection("Utente").doc(uid);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/repository/login_controller.dart';
+
 import '../../domain/repository/authentication_service.dart';
 import 'authentication_wrapper.dart';
 
@@ -14,14 +14,20 @@ class LoginWorker extends StatefulWidget {
 }
 
 class _LoginWorkerState extends State<LoginWorker> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
   //Global key
-  final keys = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
+  String error = '';
+  bool loading = false;
+  //Form field
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    late SnackBar snackBar;
+    late String loginOutcome;
+
     return MaterialApp(
       title: "Report.it",
       debugShowCheckedModeBanner: false,
@@ -41,7 +47,7 @@ class _LoginWorkerState extends State<LoginWorker> {
             ),
           ),
           body: Form(
-            key: keys,
+            key: _formKey,
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: Column(
@@ -93,27 +99,73 @@ class _LoginWorkerState extends State<LoginWorker> {
                     height: 20,
                   ),
                   FloatingActionButton.extended(
-                    onPressed: () {
-                      if (keys.currentState!.validate()) {
-                        const snackBar = SnackBar(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        // setState(() => loading = true);
+                        snackBar = const SnackBar(
                           content: Text('Validazione in corso...'),
                         );
-                        ScaffoldMessenger.of(keys
+                        ScaffoldMessenger.of(_formKey
                                 .currentContext!) //TODO: controlla che cos'e' il '!', credo significhi "fra traquillo, lo so che puo' essere null", sticaxxi
                             .showSnackBar(snackBar);
-                      }
-                      context.read<AuthenticationService>().signIn(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            userType: widget.workerType,
-                          ) as String;
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AuthenticationWrapper(),
-                        ),
-                      );
+                        // snackBar = SnackBar(
+                        //   content: Text(
+                        loginOutcome =
+                            (await context.read<AuthenticationService>().signIn(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                  userType: widget.workerType,
+                                ))!;
+
+                        String alertMessage = "";
+
+                        switch (loginOutcome) {
+                          case 'logged-success':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AuthenticationWrapper(),
+                              ),
+                            );
+                            break;
+
+                          case 'invalid-email':
+                            alertMessage =
+                                'L\'indirizzo email inserito non è valido';
+                            break;
+                          case 'user-disabled':
+                            alertMessage =
+                                'L\'account a cui è associata questa email è stato disabilitato';
+                            break;
+                          case 'user-not-found':
+                            alertMessage =
+                                'L\'email inserita non è associata ad alcun account';
+                            break;
+                          case 'wrong-password':
+                            alertMessage = 'Password errata';
+                            break;
+                          default:
+                            alertMessage = 'Errore nell\'accesso';
+                            break;
+                        }
+                        print('Test: $loginOutcome');
+
+                        snackBar = SnackBar(
+                          content: Text(alertMessage),
+                        );
+
+                        ScaffoldMessenger.of(_formKey.currentContext!)
+                            .showSnackBar(snackBar);
+
+                        //   ),
+                        // );
+
+                        // setState(() => loading = false);
+
+                        // ScaffoldMessenger.of(_formKey.currentContext!)
+                        //     .showSnackBar(snackBar);
+                      }
                     },
                     label: const Text(
                       "Accedi",
