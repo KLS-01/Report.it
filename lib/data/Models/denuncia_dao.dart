@@ -6,6 +6,7 @@ import 'package:report_it/domain/entity/denuncia_entity.dart';
 var db = FirebaseFirestore.instance;
 
 class DenunciaDao {
+
   static Future<DocumentReference<Object?>> addDenuncia(Denuncia denuncia) {
     Future<DocumentReference<Object?>> id = db
         .collection("Denuncia")
@@ -23,5 +24,14 @@ class DenunciaDao {
       log("Error: ");
       return null;
     }
+  }
+
+  Future<Denuncia?> RetriveDenunciaById(String id) async{
+    var ref= db.collection("Denuncia").doc(id);
+
+    await ref.get().then((value){
+      Denuncia d= Denuncia.fromJson(value.data()!);
+      return d;
+    });
   }
 }
