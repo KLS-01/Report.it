@@ -1,10 +1,10 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
 
 class Denuncia {
-  String? id;
+  DocumentReference? id;
   String? nomeDenunciante,
       cognomeDenunciante,
       indirizzoDenunciante,

@@ -158,7 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
         "34344",
         "Cazzo",
         "Durissimo");
-    print(DenunciaDao.addDenuncia(d));
+    d.setId = DenunciaDao.addDenuncia(d);
+    //DenunciaDao.updateId(d.getId as DocumentReference);
+    print(d.getId);
     print("Id dell'oggetto: ${d.getId}");
   }
 }
