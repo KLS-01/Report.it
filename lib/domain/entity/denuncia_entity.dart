@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/utente_entity.dart';
 
 class Denuncia {
-  String? id,
-      nomeDenunciante,
+  String? id;
+  String? nomeDenunciante,
       cognomeDenunciante,
       indirizzoDenunciante,
       capDenunciante,
@@ -21,41 +23,41 @@ class Denuncia {
       nomeUff,
       cognomeUff;
 
-  DateTime? scadenzaDocDenunciante, dataDenuncia;
+  String? scadenzaDocDenunciante, dataDenuncia;
   bool consenso = false, alreadyFiled = false;
-  String utente;
-  CategoriaDenuncia categoriaDenuncia;
-  StatoDenuncia statoDenuncia;
+  Utente utente;
+  String categoriaDenuncia, statoDenuncia;
+  //StatoDenuncia statoDenuncia;
 
-  Denuncia(
-    this.id,
-    this.utente,
-    this.nomeDenunciante,
-    this.cognomeDenunciante,
-    this.indirizzoDenunciante,
-    this.capDenunciante,
-    this.provinciaDenunciante,
-    this.cellulareDenunciante,
-    this.emailDenunciante,
-    this.tipoDocDenunciante,
-    this.numeroDocDenunciante,
-    this.scadenzaDocDenunciante,
-    this.dataDenuncia,
-    this.categoriaDenuncia,
-    this.nomeVittima,
-    this.denunciato,
-    this.alreadyFiled,
-    this.consenso,
-    this.descrizione,
-    this.statoDenuncia,
-    this.nomeCaserma,
-    this.coordCaserma,
-    this.nomeUff,
-    this.cognomeUff,
-  );
+  Denuncia({
+    required this.id,
+    required this.utente,
+    required this.nomeDenunciante,
+    required this.cognomeDenunciante,
+    required this.indirizzoDenunciante,
+    required this.capDenunciante,
+    required this.provinciaDenunciante,
+    required this.cellulareDenunciante,
+    required this.emailDenunciante,
+    required this.tipoDocDenunciante,
+    required this.numeroDocDenunciante,
+    required this.scadenzaDocDenunciante,
+    required this.dataDenuncia,
+    required this.categoriaDenuncia,
+    required this.nomeVittima,
+    required this.denunciato,
+    required this.alreadyFiled,
+    required this.consenso,
+    required this.descrizione,
+    required this.statoDenuncia,
+    required this.nomeCaserma,
+    required this.coordCaserma,
+    required this.nomeUff,
+    required this.cognomeUff,
+  });
 
-  String? get getId => id;
-  set setId(String? id) => this.id = id;
+  get getId => id;
+  set setId(id) => this.id = id;
 
   get getNomeDenunciante => nomeDenunciante;
   set setNomeDenunciante(nomeDenunciante) =>
@@ -120,88 +122,88 @@ class Denuncia {
 
   factory Denuncia.fromJson(Map<String, dynamic> json) {
     return Denuncia(
-      json["ID"],
-      json["utente"],
-      json["nomeDenunciante"],
-      json["cognomeDenunciante"],
-      json["indirizzoDenunciante"],
-      json["capDenunciante"],
-      json["provinciaDenunciante"],
-      json["cellulareDenunciante"],
-      json["emailDenunciante"],
-      json["tipoDocDenunciante"],
-      json["numeroDocDenunciante"],
-      json["scadenzaDocDenunciante"],
-      json["dataDenuncia"],
-      json["categoriaDenuncia"],
-      json["nomeVittima"],
-      json["denunciato"],
-      json["alreadyFiled"],
-      json["consenso"],
-      json["descrizione"],
-      json["statoDenuncia"],
-      json["nomeCaserma"],
-      json["coordCaserma"],
-      json["nomeUff"],
-      json["cognomeUff"],
+      id: json["ID"],
+      utente: json["utente"],
+      nomeDenunciante: json["nomeDenunciante"],
+      cognomeDenunciante: json["cognomeDenunciante"],
+      indirizzoDenunciante: json["indirizzoDenunciante"],
+      capDenunciante: json["capDenunciante"],
+      provinciaDenunciante: json["provinciaDenunciante"],
+      cellulareDenunciante: json["cellulareDenunciante"],
+      emailDenunciante: json["emailDenunciante"],
+      tipoDocDenunciante: json["tipoDocDenunciante"],
+      numeroDocDenunciante: json["numeroDocDenunciante"],
+      scadenzaDocDenunciante: json["scadenzaDocDenunciante"],
+      dataDenuncia: json["dataDenuncia"],
+      categoriaDenuncia: json["categoriaDenuncia"],
+      nomeVittima: json["nomeVittima"],
+      denunciato: json["denunciato"],
+      alreadyFiled: json["alreadyFiled"],
+      consenso: json["consenso"],
+      descrizione: json["descrizione"],
+      statoDenuncia: json["statoDenuncia"],
+      nomeCaserma: json["nomeCaserma"],
+      coordCaserma: json["coordCaserma"],
+      nomeUff: json["nomeUff"],
+      cognomeUff: json["cognomeUff"],
     );
   }
 
   factory Denuncia.fromMap(map) {
     return Denuncia(
-      map["ID"],
-      map["utente"],
-      map["nomeDenunciante"],
-      map["cognomeDenunciante"],
-      map["indirizzoDenunciante"],
-      map["capDenunciante"],
-      map["provinciaDenunciante"],
-      map["cellulareDenunciante"],
-      map["emailDenunciante"],
-      map["tipoDocDenunciante"],
-      map["numeroDocDenunciante"],
-      map["scadenzaDocDenunciante"],
-      map["dataDenuncia"],
-      map["categoriaDenuncia"],
-      map["nomeVittima"],
-      map["denunciato"],
-      map["alreadyFiled"],
-      map["consenso"],
-      map["descrizione"],
-      map["statoDenuncia"],
-      map["nomeCaserma"],
-      map["coordCaserma"],
-      map["nomeUff"],
-      map["cognomeUff"],
+      id: map["ID"],
+      utente: map["utente"],
+      nomeDenunciante: map["nomeDenunciante"],
+      cognomeDenunciante: map["cognomeDenunciante"],
+      indirizzoDenunciante: map["indirizzoDenunciante"],
+      capDenunciante: map["capDenunciante"],
+      provinciaDenunciante: map["provinciaDenunciante"],
+      cellulareDenunciante: map["cellulareDenunciante"],
+      emailDenunciante: map["emailDenunciante"],
+      tipoDocDenunciante: map["tipoDocDenunciante"],
+      numeroDocDenunciante: map["numeroDocDenunciante"],
+      scadenzaDocDenunciante: map["scadenzaDocDenunciante"],
+      dataDenuncia: map["dataDenuncia"],
+      categoriaDenuncia: map["categoriaDenuncia"],
+      nomeVittima: map["nomeVittima"],
+      denunciato: map["denunciato"],
+      alreadyFiled: map["alreadyFiled"],
+      consenso: map["consenso"],
+      descrizione: map["descrizione"],
+      statoDenuncia: map["statoDenuncia"],
+      nomeCaserma: map["nomeCaserma"],
+      coordCaserma: map["coordCaserma"],
+      nomeUff: map["nomeUff"],
+      cognomeUff: map["cognomeUff"],
     );
   }
 
-  Map<String?, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       "ID": id,
-      "Utente": utente,
-      "nomeDenunciante": nomeDenunciante,
-      "cognomeDenunciante": cognomeDenunciante,
-      "indirizzoDenunciante": indirizzoDenunciante,
-      "capDenunciante": capDenunciante,
-      "provinciaDenunciante": provinciaDenunciante,
-      "cellulareDenunciante": cellulareDenunciante,
-      "emailDenunciante": emailDenunciante,
-      "tipoDocDenunciante": tipoDocDenunciante,
-      "numeroDocDenunciante": numeroDocDenunciante,
-      "scadenzaDocDenunciante": scadenzaDocDenunciante,
-      "dataDenuncia": tipoDocDenunciante,
-      "categoriaDenuncia": tipoDocDenunciante,
-      "nomeVittima": tipoDocDenunciante,
-      "denunciato": tipoDocDenunciante,
-      "alreadyFiled": tipoDocDenunciante,
-      "consenso": consenso,
-      "descrizione": descrizione,
-      "statoDenuncia": statoDenuncia,
-      "nomeCaserma": nomeCaserma,
-      "coordCaserma": coordCaserma,
-      "nomeUff": nomeUff,
-      "cognomeUff": cognomeUff,
+      "Utente": utente.getCf,
+      "NomeDenunciante": nomeDenunciante,
+      "CognomeDenunciante": cognomeDenunciante,
+      "IndirizzoDenunciante": indirizzoDenunciante,
+      "CapDenunciante": capDenunciante,
+      "ProvinciaDenunciante": provinciaDenunciante,
+      "CellulareDenunciante": cellulareDenunciante,
+      "EmailDenunciante": emailDenunciante,
+      "TipoDocDenunciante": tipoDocDenunciante,
+      "NumeroDocDenunciante": numeroDocDenunciante,
+      "ScadenzaDocDenunciante": scadenzaDocDenunciante,
+      "DataDenuncia": dataDenuncia,
+      "CategoriaDenuncia": categoriaDenuncia,
+      "NomeVittima": nomeVittima,
+      "Denunciato": denunciato,
+      "AlreadyFiled": alreadyFiled,
+      "Consenso": consenso,
+      "Descrizione": descrizione,
+      "StatoDenuncia": statoDenuncia,
+      "NomeCaserma": nomeCaserma,
+      "CoordCaserma": coordCaserma,
+      "NomeUff": nomeUff,
+      "CognomeUff": cognomeUff,
     };
   }
 }
