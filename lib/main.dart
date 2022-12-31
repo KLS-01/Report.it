@@ -1,12 +1,20 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//per la navbar
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:flutter_snake_navigationbar_example/custom_icons.dart';
+import 'package:iconsax/iconsax.dart';
+//per la faq ui
+import 'dart:math' as math;
+import 'package:expandable/expandable.dart';
+import 'package:report_it/presentation/pages/fake_index.dart';
+import 'package:report_it/presentation/pages/Informativa_contatti.dart';
 
-void main() => runApp(const ExampleApp());
+void main() => runApp(const MyApp());
 
-class ExampleApp extends StatelessWidget {
-  const ExampleApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,7 @@ class _SnakeNavigationBarExampleScreenState
   SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
   EdgeInsets padding = const EdgeInsets.all(12);
 
-  int _selectedItemPosition = 2;
+  int _selectedItemPosition = 0;
   SnakeShape snakeShape = SnakeShape.circle;
 
   bool showSelectedLabels = false;
@@ -49,8 +57,10 @@ class _SnakeNavigationBarExampleScreenState
 
   Gradient selectedGradient =
       const LinearGradient(colors: [Colors.red, Colors.amber]);
-  Gradient unselectedGradient =
-      const LinearGradient(colors: [Colors.red, Colors.blueGrey]);
+  Gradient unselectedGradient = const LinearGradient(colors: [
+    Color.fromARGB(255, 153, 235, 12),
+    Color.fromARGB(255, 25, 52, 183)
+  ]);
 
   Color? containerColor;
   List<Color> containerColors = [
@@ -58,6 +68,15 @@ class _SnakeNavigationBarExampleScreenState
     const Color(0xFFE4EDF5),
     const Color(0xFFE7EEED),
     const Color(0xFFF4E4CE),
+  ];
+
+// questo è l'indice della navbar, da aggiornare ad ogni nuova aggiunta
+  final List<Widget> Pagine = [
+    Fake_index(),
+    Fake_index(),
+    Informativa(),
+    Fake_index(),
+    Fake_index(),
   ];
 
   @override
@@ -76,38 +95,7 @@ class _SnakeNavigationBarExampleScreenState
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
-      body: AnimatedContainer(
-        color: containerColor ?? containerColors[0],
-        duration: const Duration(seconds: 1),
-        child: PageView(
-          onPageChanged: _onPageChanged,
-          children: <Widget>[
-            PagerPageWidget(
-              text: 'This is our beloved SnakeBar.',
-              description: 'Swipe right to see different styles',
-              image: Image.asset('images/flutter1.png'),
-            ),
-            PagerPageWidget(
-              text: 'It comes in all shapes and sizes...',
-              description:
-                  'Change indicator and bottom bar shape at your will.',
-              image: Image.asset('images/flutter2.png'),
-            ),
-            PagerPageWidget(
-              text: '...not only the ones you see here',
-              description:
-                  'Combine different shapes for unique and personalized style!.',
-              image: Image.asset('images/flutter3.png'),
-            ),
-            PagerPageWidget(
-              text: 'And it\'s all open source!',
-              description:
-                  'Get the Flutter library on github.com/herodotdigital',
-              image: Image.asset('images/flutter4.png'),
-            ),
-          ],
-        ),
-      ),
+      body: Pagine[_selectedItemPosition],
       bottomNavigationBar: SnakeNavigationBar.color(
         // height: 80,
         behaviour: snakeBarStyle,
@@ -133,139 +121,29 @@ class _SnakeNavigationBarExampleScreenState
         onTap: (index) => setState(() => _selectedItemPosition = index),
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'tickets'),
+            icon: Icon(Iconsax.document_normal),
+            label: 'denunce',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(CustomIcons.calendar), label: 'calendar'),
-          BottomNavigationBarItem(icon: Icon(CustomIcons.home), label: 'home'),
+            icon: Icon(Iconsax.people),
+            label: 'forum',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(CustomIcons.podcasts), label: 'microphone'),
+            icon: Icon(Iconsax.info_circle),
+            label: 'informazioni',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(CustomIcons.search), label: 'search')
+            icon: Icon(Iconsax.map),
+            label: 'mappa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Iconsax.health),
+            label: 'psicologo',
+          )
         ],
         selectedLabelStyle: const TextStyle(fontSize: 14),
         unselectedLabelStyle: const TextStyle(fontSize: 10),
       ),
-    );
-  }
-
-  void _onPageChanged(int page) {
-    containerColor = containerColors[page];
-    switch (page) {
-      case 0:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.floating;
-          snakeShape = SnakeShape.circle;
-          padding = const EdgeInsets.all(12);
-          bottomBarShape =
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25));
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-      case 1:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.circle;
-          padding = EdgeInsets.zero;
-          bottomBarShape = RoundedRectangleBorder(borderRadius: _borderRadius);
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-
-      case 2:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
-          bottomBarShape = BeveledRectangleBorder(borderRadius: _borderRadius);
-          showSelectedLabels = true;
-          showUnselectedLabels = true;
-        });
-        break;
-      case 3:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.indicator;
-          padding = EdgeInsets.zero;
-          bottomBarShape = null;
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-    }
-  }
-}
-
-class PagerPageWidget extends StatelessWidget {
-  final String? text;
-  final String? description;
-  final Image? image;
-  final TextStyle titleStyle =
-      const TextStyle(fontSize: 40, fontFamily: 'SourceSerifPro');
-  final TextStyle subtitleStyle = const TextStyle(
-    fontSize: 20,
-    fontFamily: 'Ubuntu',
-    fontWeight: FontWeight.w200,
-  );
-
-  const PagerPageWidget({
-    Key? key,
-    this.text,
-    this.description,
-    this.image,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      child: SafeArea(
-        child: OrientationBuilder(builder: (context, orientation) {
-          return orientation == Orientation.portrait
-              ? _portraitWidget()
-              : _horizontalWidget(context);
-        }),
-      ),
-    );
-  }
-
-  Widget _portraitWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(text!, style: titleStyle),
-            const SizedBox(height: 16),
-            Text(description!, style: subtitleStyle),
-          ],
-        ),
-        image!
-      ],
-    );
-  }
-
-  Widget _horizontalWidget(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(text!, style: titleStyle),
-              Text(description!, style: subtitleStyle),
-            ],
-          ),
-        ),
-        Expanded(child: image!)
-      ],
     );
   }
 }

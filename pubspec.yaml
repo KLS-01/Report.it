@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^4.3.1
   sweet_nav_bar: ^1.0.5
   flutter_snake_navigationbar: ^0.6.1
+  iconsax: ^0.0.8
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
