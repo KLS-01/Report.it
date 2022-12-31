@@ -1,164 +1,271 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/data/Models/denuncia_dao.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:flutter_snake_navigationbar_example/custom_icons.dart';
 
-import 'data/firebase_options.dart';
-import 'domain/entity/denuncia_entity.dart';
-import 'domain/entity/utente_entity.dart';
+void main() => runApp(const ExampleApp());
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
-}
+class ExampleApp extends StatelessWidget {
+  const ExampleApp({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      title: 'SnakeNavigationBar Example ',
+      home: SnakeNavigationBarExampleScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class SnakeNavigationBarExampleScreen extends StatefulWidget {
+  const SnakeNavigationBarExampleScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _SnakeNavigationBarExampleScreenState createState() =>
+      _SnakeNavigationBarExampleScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _SnakeNavigationBarExampleScreenState
+    extends State<SnakeNavigationBarExampleScreen> {
+  final BorderRadius _borderRadius = const BorderRadius.only(
+    topLeft: Radius.circular(25),
+    topRight: Radius.circular(25),
+  );
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(25)),
+  );
+  SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
+  EdgeInsets padding = const EdgeInsets.all(12);
+
+  int _selectedItemPosition = 2;
+  SnakeShape snakeShape = SnakeShape.circle;
+
+  bool showSelectedLabels = false;
+  bool showUnselectedLabels = false;
+
+  Color selectedColor = Colors.black;
+  Color unselectedColor = Colors.blueGrey;
+
+  Gradient selectedGradient =
+      const LinearGradient(colors: [Colors.red, Colors.amber]);
+  Gradient unselectedGradient =
+      const LinearGradient(colors: [Colors.red, Colors.blueGrey]);
+
+  Color? containerColor;
+  List<Color> containerColors = [
+    const Color(0xFFFDE1D7),
+    const Color(0xFFE4EDF5),
+    const Color(0xFFE7EEED),
+    const Color(0xFFF4E4CE),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: true,
+      extendBody: true,
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        centerTitle: false,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {}),
+        title: const Text('Go back', style: TextStyle(color: Colors.black)),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: AnimatedContainer(
+        color: containerColor ?? containerColors[0],
+        duration: const Duration(seconds: 1),
+        child: PageView(
+          onPageChanged: _onPageChanged,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            PagerPageWidget(
+              text: 'This is our beloved SnakeBar.',
+              description: 'Swipe right to see different styles',
+              image: Image.asset('images/flutter1.png'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            PagerPageWidget(
+              text: 'It comes in all shapes and sizes...',
+              description:
+                  'Change indicator and bottom bar shape at your will.',
+              image: Image.asset('images/flutter2.png'),
             ),
-            ElevatedButton(
-              child: Text('Create Record'),
-              onPressed: () {
-                createRecord();
-              },
+            PagerPageWidget(
+              text: '...not only the ones you see here',
+              description:
+                  'Combine different shapes for unique and personalized style!.',
+              image: Image.asset('images/flutter3.png'),
+            ),
+            PagerPageWidget(
+              text: 'And it\'s all open source!',
+              description:
+                  'Get the Flutter library on github.com/herodotdigital',
+              image: Image.asset('images/flutter4.png'),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: SnakeNavigationBar.color(
+        // height: 80,
+        behaviour: snakeBarStyle,
+        snakeShape: snakeShape,
+        shape: bottomBarShape,
+        padding: padding,
+
+        ///configuration for SnakeNavigationBar.color
+        snakeViewColor: selectedColor,
+        selectedItemColor:
+            snakeShape == SnakeShape.indicator ? selectedColor : null,
+        unselectedItemColor: unselectedColor,
+
+        ///configuration for SnakeNavigationBar.gradient
+        // snakeViewGradient: selectedGradient,
+        // selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
+        // unselectedItemGradient: unselectedGradient,
+
+        showUnselectedLabels: showUnselectedLabels,
+        showSelectedLabels: showSelectedLabels,
+
+        currentIndex: _selectedItemPosition,
+        onTap: (index) => setState(() => _selectedItemPosition = index),
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: 'tickets'),
+          BottomNavigationBarItem(
+              icon: Icon(CustomIcons.calendar), label: 'calendar'),
+          BottomNavigationBarItem(icon: Icon(CustomIcons.home), label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(CustomIcons.podcasts), label: 'microphone'),
+          BottomNavigationBarItem(
+              icon: Icon(CustomIcons.search), label: 'search')
+        ],
+        selectedLabelStyle: const TextStyle(fontSize: 14),
+        unselectedLabelStyle: const TextStyle(fontSize: 10),
+      ),
     );
   }
 
-  //Metodo di test dell'aggiunta di una denuncia nel DB, da sostituire con i controller
-  void createRecord() {
-    Utente u = Utente("FGD3764728FGFG");
-    Denuncia d = Denuncia(
-        null,
-        u,
-        "Thomas",
-        "Turbato",
-        "Via del Cazzo 23",
-        "543534",
-        "PD",
-        "6969696969696969",
-        "cazoz@cazoz.it",
-        "Flag",
-        "420420420420",
-        "23/10/2069",
-        "23/12/2022",
-        "Superiorità della razza",
-        "Thomas Turbato",
-        "Nicola Frvgieri",
-        false,
-        true,
-        "Dato che sono un ebreo negro mi ha detto che sono inferiore",
-        "Presa in carico",
-        "Pisellissimo",
-        "34344",
-        "Cazzo",
-        "Durissimo");
-    print(DenunciaDao.addDenuncia(d));
-    print("Id dell'oggetto: ${d.getId}");
+  void _onPageChanged(int page) {
+    containerColor = containerColors[page];
+    switch (page) {
+      case 0:
+        setState(() {
+          snakeBarStyle = SnakeBarBehaviour.floating;
+          snakeShape = SnakeShape.circle;
+          padding = const EdgeInsets.all(12);
+          bottomBarShape =
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25));
+          showSelectedLabels = false;
+          showUnselectedLabels = false;
+        });
+        break;
+      case 1:
+        setState(() {
+          snakeBarStyle = SnakeBarBehaviour.pinned;
+          snakeShape = SnakeShape.circle;
+          padding = EdgeInsets.zero;
+          bottomBarShape = RoundedRectangleBorder(borderRadius: _borderRadius);
+          showSelectedLabels = false;
+          showUnselectedLabels = false;
+        });
+        break;
+
+      case 2:
+        setState(() {
+          snakeBarStyle = SnakeBarBehaviour.pinned;
+          snakeShape = SnakeShape.rectangle;
+          padding = EdgeInsets.zero;
+          bottomBarShape = BeveledRectangleBorder(borderRadius: _borderRadius);
+          showSelectedLabels = true;
+          showUnselectedLabels = true;
+        });
+        break;
+      case 3:
+        setState(() {
+          snakeBarStyle = SnakeBarBehaviour.pinned;
+          snakeShape = SnakeShape.indicator;
+          padding = EdgeInsets.zero;
+          bottomBarShape = null;
+          showSelectedLabels = false;
+          showUnselectedLabels = false;
+        });
+        break;
+    }
+  }
+}
+
+class PagerPageWidget extends StatelessWidget {
+  final String? text;
+  final String? description;
+  final Image? image;
+  final TextStyle titleStyle =
+      const TextStyle(fontSize: 40, fontFamily: 'SourceSerifPro');
+  final TextStyle subtitleStyle = const TextStyle(
+    fontSize: 20,
+    fontFamily: 'Ubuntu',
+    fontWeight: FontWeight.w200,
+  );
+
+  const PagerPageWidget({
+    Key? key,
+    this.text,
+    this.description,
+    this.image,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      child: SafeArea(
+        child: OrientationBuilder(builder: (context, orientation) {
+          return orientation == Orientation.portrait
+              ? _portraitWidget()
+              : _horizontalWidget(context);
+        }),
+      ),
+    );
+  }
+
+  Widget _portraitWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(text!, style: titleStyle),
+            const SizedBox(height: 16),
+            Text(description!, style: subtitleStyle),
+          ],
+        ),
+        image!
+      ],
+    );
+  }
+
+  Widget _horizontalWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(text!, style: titleStyle),
+              Text(description!, style: subtitleStyle),
+            ],
+          ),
+        ),
+        Expanded(child: image!)
+      ],
+    );
   }
 }
