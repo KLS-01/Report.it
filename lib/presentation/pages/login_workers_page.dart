@@ -105,66 +105,61 @@ class _LoginWorkerState extends State<LoginWorker> {
                         snackBar = const SnackBar(
                           content: Text('Validazione in corso...'),
                         );
-                        ScaffoldMessenger.of(_formKey
-                                .currentContext!) //TODO: controlla che cos'e' il '!', credo significhi "fra traquillo, lo so che puo' essere null", sticaxxi
+                        ScaffoldMessenger.of(_formKey.currentContext!)
                             .showSnackBar(snackBar);
 
-                        // snackBar = SnackBar(
-                        //   content: Text(
-                        loginOutcome =
-                            (await context.read<AuthenticationService>().signIn(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                  userType: widget.workerType,
-                                ))!;
+                        ///'loginOutcome' makes possible to choose the right 'feedback message' to display for the user
+                        loginOutcome = (await context
+                            .read<AuthenticationService>()
+                            .signIn(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                userType: widget.workerType))!;
 
+                        ///alertMessage, thanks to this switch construct, takes the proper value
                         String alertMessage = "";
 
                         switch (loginOutcome) {
+
+                          ///feedback code created by KLS-01 for notifying and moving to the proper page
                           case 'logged-success':
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AuthenticationWrapper(),
-                              ),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AuthenticationWrapper(),
+                                ));
                             break;
 
-                          case 'invalid-email':
-                            alertMessage =
-                                'L\'indirizzo email inserito non è valido';
+                          ///error code from FirebaseAuthException
+                          case 'wrong-password':
+                            alertMessage = 'Password errata';
                             break;
+
+                          ///error code from FirebaseAuthException
                           case 'user-disabled':
                             alertMessage =
                                 'L\'account a cui è associata questa email è stato disabilitato';
                             break;
-                          case 'user-not-found':
+
+                          ///error code from FirebaseAuthException
+                          case 'invalid-email':
                             alertMessage =
-                                'L\'email inserita non è associata ad alcun account';
+                                'L\'indirizzo email inserito non è valido';
                             break;
-                          case 'wrong-password':
-                            alertMessage = 'Password errata';
-                            break;
+
                           default:
                             alertMessage = 'Errore nell\'accesso';
                             break;
                         }
-                        print('Test: $loginOutcome');
+                        print(
+                            'Test: $loginOutcome'); //TODO: only for tes. Action: Remove.
 
+                        ///The snackbar will display the message to alert the user (ex. for an error, ...)
                         snackBar = SnackBar(
                           content: Text(alertMessage),
                         );
-
                         ScaffoldMessenger.of(_formKey.currentContext!)
                             .showSnackBar(snackBar);
-
-                        //   ),
-                        // );
-
-                        // setState(() => loading = false);
-
-                        // ScaffoldMessenger.of(_formKey.currentContext!)
-                        //     .showSnackBar(snackBar);
                       }
                     },
                     label: const Text(

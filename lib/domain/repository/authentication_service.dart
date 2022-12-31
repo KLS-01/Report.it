@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/repository/login_controller.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;
@@ -29,13 +28,13 @@ class AuthenticationService {
       if (userType == "SPID") {
         try {
           var u = await RetrieveSPIDByEmail(email);
-          if (u.password == password) {
-            await auth.signInWithEmailAndPassword(
-                email: email, password: password);
 
-            return "Signed in with success";
-          } else {
-            print("password sbagliata");
+          if (u.password != password) {
+            print("password sbagliata"); //only for testing TODO: Remove
+
+            ///One of the [FirebaseAuthException] error code that may be throwed
+            ///(handled in login pages)
+            return 'wrong-password';
           }
         } catch (e) {
           print("utente non trovato");
@@ -43,9 +42,15 @@ class AuthenticationService {
       }
 
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      return "Signed in with success";
+      print('Signed in with success'); //only for testing TODO: Remove
+
+      ///An 'outcome' code 'self-made' that, by working along with the other
+      ///[FirebaseAuthException] error code, makes possible to handle also this
+      ///outcome (possibly by redirectiong to the homepage after bein logged-in)
+      return "logged-success";
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      print(e.message);
+      return e.code;
     }
   }
 }
