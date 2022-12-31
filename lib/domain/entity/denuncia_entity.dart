@@ -25,13 +25,13 @@ class Denuncia {
 
   String? scadenzaDocDenunciante, dataDenuncia;
   bool consenso = false, alreadyFiled = false;
-  Utente utente;
+  String idUtente;
   String categoriaDenuncia, statoDenuncia;
   //StatoDenuncia statoDenuncia;
 
   Denuncia({
     required this.id,
-    required this.utente,
+    required this.idUtente,
     required this.nomeDenunciante,
     required this.cognomeDenunciante,
     required this.indirizzoDenunciante,
@@ -120,10 +120,12 @@ class Denuncia {
   get getAlreadyFiled => alreadyFiled;
   set setAlreadyFiled(alreadyFiled) => this.alreadyFiled = alreadyFiled;
 
+  get getIdUtente => idUtente;
+
   factory Denuncia.fromJson(Map<String, dynamic> json) {
     return Denuncia(
       id: json["ID"],
-      utente: json["utente"],
+      idUtente: json["idUtente"],
       nomeDenunciante: json["nomeDenunciante"],
       cognomeDenunciante: json["cognomeDenunciante"],
       indirizzoDenunciante: json["indirizzoDenunciante"],
@@ -152,7 +154,7 @@ class Denuncia {
   factory Denuncia.fromMap(map) {
     return Denuncia(
       id: map["ID"],
-      utente: map["utente"],
+      idUtente: map["idUtente"],
       nomeDenunciante: map["nomeDenunciante"],
       cognomeDenunciante: map["cognomeDenunciante"],
       indirizzoDenunciante: map["indirizzoDenunciante"],
@@ -181,7 +183,7 @@ class Denuncia {
   Map<String, dynamic> toMap() {
     return {
       "ID": id,
-      "Utente": utente.getCf,
+      "idUtente": idUtente,
       "NomeDenunciante": nomeDenunciante,
       "CognomeDenunciante": cognomeDenunciante,
       "IndirizzoDenunciante": indirizzoDenunciante,

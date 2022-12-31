@@ -132,10 +132,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //Questo frammento di codice è un metodo di test dell'aggiunta di una denuncia nel DB, con relativo update dell'id, da sostituire con i controller quando saranno implementati
   void createRecord() {
-    Utente u = Utente("FGD3764728FGFG");
     Denuncia d = Denuncia(
         id: null,
-        utente: u,
+        idUtente: "dVd0S4ptsafnEqPJq938mjEmH3s2",
         nomeDenunciante: "Thomas",
         cognomeDenunciante: "Turbato",
         indirizzoDenunciante: "Via del Cazzo 23",
