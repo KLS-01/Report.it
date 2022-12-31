@@ -4,7 +4,7 @@ import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
 
 class Denuncia {
-  DocumentReference? id;
+  String? id;
   String? nomeDenunciante,
       cognomeDenunciante,
       indirizzoDenunciante,

@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  //Metodo di test dell'aggiunta di una denuncia nel DB, da sostituire con i controller
+  //Questo frammento di codice è un metodo di test dell'aggiunta di una denuncia nel DB, con relativo update dell'id, da sostituire con i controller quando saranno implementati
   void createRecord() {
     Utente u = Utente("FGD3764728FGFG");
     Denuncia d = Denuncia(
@@ -158,9 +158,10 @@ class _MyHomePageState extends State<MyHomePage> {
         "34344",
         "Cazzo",
         "Durissimo");
-    d.setId = DenunciaDao.addDenuncia(d);
-    //DenunciaDao.updateId(d.getId as DocumentReference);
-    print(d.getId);
-    print("Id dell'oggetto: ${d.getId}");
+
+    DenunciaDao.addDenuncia(d).then((DocumentReference<Object?> id) {
+      d.setId = id.id;
+      DenunciaDao.updateId(d.getId);
+    });
   }
 }
