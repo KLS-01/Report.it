@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:report_it/presentation/pages/login_page.dart';
+import 'package:report_it/presentation/pages/login_spid.dart';
 
 import 'data/firebase_options.dart';
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: LoginUser(),
     );
   }
 }
