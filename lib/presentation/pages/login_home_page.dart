@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
                 child: Hero(
                   tag: 'logo',
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/images/logo.png',
                     scale: 1.8,
                   ),
                 ),
@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: SvgPicture.asset(
-                                    'assets/spid-ico.svg',
+                                    'assets/images/spid-ico.svg',
                                     height: 22,
                                   ),
                                 ),

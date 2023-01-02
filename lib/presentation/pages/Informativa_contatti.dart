@@ -50,7 +50,7 @@ class Informativa extends StatelessWidget {
           PagerPageWidget(
             text: '....e Contatti!',
             description: 'Polizia 113 \nCarabinieri 112\n Pronto Soccorso 118',
-            image: Image.asset('images/support.png'),
+            image: Image.asset('assets/images/support.png'),
           ),
         ],
       ),

@@ -52,7 +52,7 @@ class _LoginWorkerState extends State<LoginWorker> {
                   child: Hero(
                     tag: 'logo',
                     child: Image.asset(
-                      'assets/logo.png',
+                      'assets/images/logo.png',
                       scale: 1.8,
                     ),
                   ),

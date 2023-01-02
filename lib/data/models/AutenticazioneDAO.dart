@@ -6,7 +6,7 @@ import 'package:report_it/domain/entity/utente_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
-Future<SPID> RetrieveSPIDByEmail(String email) async {
+Future<SPID?> RetrieveSPIDByEmail(String email) async {
   var ref = database.collection("SPID").where("Email", isEqualTo: email);
 
   var u = await ref.get().then(((value) async {
@@ -19,7 +19,7 @@ Future<SPID> RetrieveSPIDByEmail(String email) async {
 }
 
 // ignore: non_constant_identifier_names
-Future<Utente> RetrieveUtenteByID(String uid) async {
+Future<Utente?> RetrieveUtenteByID(String uid) async {
   var ref = database.collection("Utente").doc(uid);
 
   var u = await ref.get().then(((value) async {
@@ -27,7 +27,7 @@ Future<Utente> RetrieveUtenteByID(String uid) async {
 
     var spid = await RetrieveSPIDByID(uid);
 
-    u.setSpid(spid);
+    u.setSpid(spid!);
 
     return u;
   }));
@@ -36,7 +36,7 @@ Future<Utente> RetrieveUtenteByID(String uid) async {
 }
 
 // ignore: non_constant_identifier_names
-Future<SPID> RetrieveSPIDByID(String uid) async {
+Future<SPID?> RetrieveSPIDByID(String uid) async {
   var ref = database.collection("SPID").doc(uid);
 
   var u = await ref.get().then(((value) {
@@ -49,7 +49,7 @@ Future<SPID> RetrieveSPIDByID(String uid) async {
 }
 
 // ignore: non_constant_identifier_names
-Future<UffPolGiud> RetrieveUffPolGiudByID(String uid) async {
+Future<UffPolGiud?> RetrieveUffPolGiudByID(String uid) async {
   var ref = database.collection("UffPolGiud").doc(uid);
 
   var u = await ref.get().then(((value) {
@@ -62,7 +62,7 @@ Future<UffPolGiud> RetrieveUffPolGiudByID(String uid) async {
 }
 
 // ignore: non_constant_identifier_names
-Future<OperatoreCUP> RetrieveCUPByID(String uid) async {
+Future<OperatoreCUP?> RetrieveCUPByID(String uid) async {
   var ref = database.collection("OperatoreCUP").doc(uid);
 
   var u = await ref.get().then(((value) {
@@ -75,7 +75,7 @@ Future<OperatoreCUP> RetrieveCUPByID(String uid) async {
 }
 
 // ignore: non_constant_identifier_names
-Future<List<Utente>> RetrieveAllUtente() async {
+Future<List<Utente?>> RetrieveAllUtente() async {
   var ref = database.collection("Utente");
 
   List<Utente> lista = List.empty(growable: true);
@@ -85,7 +85,7 @@ Future<List<Utente>> RetrieveAllUtente() async {
       Utente ut = Utente.fromJson(c.data());
 
       var spid = await RetrieveSPIDByID(ut.id);
-      ut.setSpid(spid);
+      ut.setSpid(spid!);
       lista.add(ut);
     }
 
@@ -96,7 +96,7 @@ Future<List<Utente>> RetrieveAllUtente() async {
 }
 
 // ignore: non_constant_identifier_names
-Future<List<SPID>> RetrieveAllSPID() async {
+Future<List<SPID?>> RetrieveAllSPID() async {
   var ref = database.collection("SPID");
 
   List<SPID> lista = List.empty(growable: true);
@@ -114,7 +114,7 @@ Future<List<SPID>> RetrieveAllSPID() async {
 }
 
 // ignore: non_constant_identifier_names
-Future<List<UffPolGiud>> RetrieveAllUffPolGiud() async {
+Future<List<UffPolGiud?>> RetrieveAllUffPolGiud() async {
   var ref = database.collection("UffPolGiud");
 
   List<UffPolGiud> lista = List.empty(growable: true);
@@ -132,7 +132,7 @@ Future<List<UffPolGiud>> RetrieveAllUffPolGiud() async {
 }
 
 // ignore: non_constant_identifier_names
-Future<List<OperatoreCUP>> RetrieveAllOperatoreCUP() async {
+Future<List<OperatoreCUP?>> RetrieveAllOperatoreCUP() async {
   var ref = database.collection("OperatoreCUP");
 
   List<OperatoreCUP> lista = List.empty(growable: true);
