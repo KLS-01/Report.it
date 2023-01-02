@@ -14,7 +14,6 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -26,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -53,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1014330151731',
     projectId: 'reportit-unisa',
     authDomain: 'reportit-unisa.firebaseapp.com',
+    databaseURL: 'https://reportit-unisa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'reportit-unisa.appspot.com',
     measurementId: 'G-479CCJG3RF',
   );
@@ -62,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:1014330151731:android:d2bbfb1b053e04f586e446',
     messagingSenderId: '1014330151731',
     projectId: 'reportit-unisa',
+    databaseURL: 'https://reportit-unisa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'reportit-unisa.appspot.com',
   );
 
@@ -70,9 +68,20 @@ class DefaultFirebaseOptions {
     appId: '1:1014330151731:ios:39c92d64411226da86e446',
     messagingSenderId: '1014330151731',
     projectId: 'reportit-unisa',
+    databaseURL: 'https://reportit-unisa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'reportit-unisa.appspot.com',
-    iosClientId:
-        '1014330151731-plagr4r3pce5kdisvr8n5cgss8dkkfqr.apps.googleusercontent.com',
+    iosClientId: '1014330151731-plagr4r3pce5kdisvr8n5cgss8dkkfqr.apps.googleusercontent.com',
+    iosBundleId: 'com.example.reportIt',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDJcxTY_D1r10AAuJL0WC2uGIPBVT9yaes',
+    appId: '1:1014330151731:ios:39c92d64411226da86e446',
+    messagingSenderId: '1014330151731',
+    projectId: 'reportit-unisa',
+    databaseURL: 'https://reportit-unisa-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'reportit-unisa.appspot.com',
+    iosClientId: '1014330151731-plagr4r3pce5kdisvr8n5cgss8dkkfqr.apps.googleusercontent.com',
     iosBundleId: 'com.example.reportIt',
   );
 }
