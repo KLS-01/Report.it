@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:report_it/data/Models/denuncia_dao.dart';
+import 'package:report_it/domain/entity/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/stato_denuncia.dart';
 
 import 'data/firebase_options.dart';
 import 'domain/entity/denuncia_entity.dart';
@@ -132,32 +134,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //Questo frammento di codice è un metodo di test dell'aggiunta di una denuncia nel DB, con relativo update dell'id, da sostituire con i controller quando saranno implementati
   void createRecord() {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+    int scadenza = DateTime(2026, 07, 30, 0, 0, 0).millisecondsSinceEpoch;
+    DateTime scadenzats = DateTime.fromMillisecondsSinceEpoch(scadenza);
+    GeoPoint coord = const GeoPoint(3.4, 4.5);
     Denuncia d = Denuncia(
         id: null,
         idUtente: "dVd0S4ptsafnEqPJq938mjEmH3s2",
-        nomeDenunciante: "Thomas",
-        cognomeDenunciante: "Turbato",
-        indirizzoDenunciante: "Via del Cazzo 23",
+        nomeDenunciante: "Tizio",
+        cognomeDenunciante: "Caio",
+        indirizzoDenunciante: "Via Roma 23",
         capDenunciante: "543534",
         provinciaDenunciante: "PD",
-        cellulareDenunciante: "6969696969696969",
-        emailDenunciante: "cazoz@cazoz.it",
-        tipoDocDenunciante: "Tessera mensa",
+        cellulareDenunciante: "548894231658",
+        emailDenunciante: "tizio@email.it",
+        tipoDocDenunciante: "Carta d'identità",
         numeroDocDenunciante: "420420420420",
-        scadenzaDocDenunciante: "23/10/2069",
-        dataDenuncia: "23/12/2022",
-        categoriaDenuncia: "Superiorità della razza",
-        nomeVittima: "Thomas Turbato",
+        scadenzaDocDenunciante: scadenzats,
+        dataDenuncia: tsdate,
+        categoriaDenuncia: CategoriaDenuncia.origineNazionale,
+        nomeVittima: "Tizio",
+        cognomeVittima: "Caio",
         denunciato: "Nicola Frvgieri",
         alreadyFiled: false,
         consenso: true,
-        descrizione:
-            "Dato che sono un ebreo negro mi ha detto che sono inferiore",
-        statoDenuncia: "Presa in carico",
-        nomeCaserma: "Pisellissimo",
-        coordCaserma: "34344",
-        nomeUff: "Biscotto",
-        cognomeUff: "Frvgieri");
+        descrizione: "Denuncia per discriminazione ecceccc",
+        statoDenuncia: StatoDenuncia.presaInCarico,
+        nomeCaserma: "Caserma",
+        coordCaserma: coord,
+        nomeUff: "Adol",
+        cognomeUff: "Fitler");
 
     DenunciaDao.addDenuncia(d).then((DocumentReference<Object?> id) {
       d.setId = id.id;
