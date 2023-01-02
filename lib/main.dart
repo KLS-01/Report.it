@@ -46,7 +46,7 @@ class _SnakeNavigationBarExampleScreenState
   SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
   EdgeInsets padding = const EdgeInsets.all(12);
 
-  int _selectedItemPosition = 0;
+  int _selectedItemPosition = 2;
   SnakeShape snakeShape = SnakeShape.circle;
 
   bool showSelectedLabels = false;
@@ -85,16 +85,23 @@ class _SnakeNavigationBarExampleScreenState
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: true,
       extendBody: true,
+      // APPBAR FUNZIONANTE ma attualmente non in uso
       appBar: AppBar(
-        centerTitle: false,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {}),
-        title: const Text('Go back', style: TextStyle(color: Colors.black)),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
+          centerTitle: true,
+          leading: Image.asset('images/C11_Logo-png.png', fit: BoxFit.cover),
+          title: Text('Report.it', style: TextStyle(color: Colors.black)),
+          // IconButton(
+          // icon: const Icon(Icons.arrow_back, color: Colors.black),
+          // onPressed: () {}),
+          //title: const Text('Go back', style: TextStyle(color: Colors.black)),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(Iconsax.logout, color: Colors.black))
+          ]),
       body: Pagine[_selectedItemPosition],
       bottomNavigationBar: SnakeNavigationBar.color(
         // height: 80,
