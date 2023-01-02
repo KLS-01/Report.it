@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/denuncia_entity.dart';
+import 'package:report_it/domain/entity/stato_denuncia.dart';
 
 var db = FirebaseFirestore.instance;
 
@@ -83,6 +84,22 @@ class DenunciaDao {
 
     return lista;
   }
+
+  Future<List<Denuncia>> retrieveByStato(StatoDenuncia stato) async {
+    var ref = db.collection("Denuncia").where("Stato",isEqualTo: stato);
+    List<Denuncia> lista= List.empty(growable: true);
+    await ref.get().then(((value) {
+      for(var snap in value.docs){
+        Denuncia de= Denuncia.fromJson(snap.data());
+        lista.add(de);
+      }
+
+      return lista;
+    }));
+
+    return lista;
+  }
+
 
 
 }

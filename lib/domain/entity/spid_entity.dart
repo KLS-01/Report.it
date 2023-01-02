@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'package:flutter/cupertino.dart';
+
 class SPID {
   String? cf;
   String? nome;
@@ -70,36 +73,36 @@ class SPID {
   set setPassword(password) => this.password = password;
 
   SPID(
-    this.cf,
-    this.nome,
-    this.luogoNascita,
-    this.dataNascita,
-    this.sesso,
-    this.tipoDocumento,
-    this.numeroDocumento,
-    this.domicilioFisico,
-    this.provinciaNascita,
-    this.dataScadenzaDocumento,
-    this.numCellulare,
-    this.indirizzoEmail,
-    this.password,
-  );
+      this.cf,
+      this.nome,
+      this.luogoNascita,
+      this.dataNascita,
+      this.sesso,
+      this.tipoDocumento,
+      this.numeroDocumento,
+      this.domicilioFisico,
+      this.provinciaNascita,
+      this.dataScadenzaDocumento,
+      this.numCellulare,
+      this.indirizzoEmail,
+      this.password,
+      );
 
   factory SPID.fromJson(Map<String, dynamic> json) {
     return SPID(
         json["CF"],
         json["Nome"],
         json["Luogo di Nascita"],
-        json["Data di Nascita"],
+        json["Data di Nascita"].toDate(),
         json["Sesso"],
         json["TipoDocumento"],
         json["Numero Documento"],
         json["Domicilio fisico"],
         json["Provincia di nascita"],
-        json["Data Scadenza Documento"],
-        json["Cellulare"],
+        json["Data Scadenza Documento"].toDate(),
+        json["Cellulare"].toString(),
         json["Email"],
-        json["Password"]);
+        json["Password"].toString());
   }
 
   factory SPID.fromMap(map) {
@@ -122,18 +125,37 @@ class SPID {
   Map<String?, dynamic> toMap() {
     return {
       "CF": cf,
-      "nome": nome,
-      "luogoNascita": luogoNascita,
-      "dataDiNascita": dataNascita,
-      "sesso": sesso,
-      "tipoDocumento": tipoDocumento,
-      "numeroDocumento": numeroDocumento,
-      "domicilioFisico": domicilioFisico,
-      "provinciaNascita": provinciaNascita,
-      "dataScadenzaDocumento": dataNascita,
-      "numCellulare": numCellulare,
-      "indirizzoEmail": indirizzoEmail,
-      "password": password
+      "Nome": nome,
+      "Luogo di Nascita": luogoNascita,
+      "Data di Nascita": dataNascita,
+      "Sesso": sesso,
+      "TipoDocumento": tipoDocumento,
+      "Numero Documento": numeroDocumento,
+      "Domicilio fisico": domicilioFisico,
+      "Provincia di nascita": provinciaNascita,
+      "Data Scadenza Documento": dataScadenzaDocumento,
+      "Cellulare": numCellulare,
+      "Email": indirizzoEmail,
+      "Password": password
     };
   }
+
+  static int prendiAnno(String data) {
+    int anno = int.parse(data.substring(6));
+
+    return anno;
+  }
+
+  static int prendiMese(String data) {
+    int anno = int.parse(data.substring(3, 5));
+
+    return anno;
+  }
+
+  static int prendiGiorno(String data) {
+    int anno = int.parse(data.substring(0, 2));
+
+    return anno;
+  }
+
 }
