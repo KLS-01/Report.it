@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
+import 'package:report_it/domain/entity/utente_entity.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;
