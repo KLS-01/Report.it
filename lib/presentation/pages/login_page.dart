@@ -79,7 +79,7 @@ class LoginUser extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),
                               child: Text(
-                                'Sei un utente frocio e vuoi denunciare tua madre? Accedi con SPID.',
+                                'Accedi con SPID.',
                                 style: TextStyle(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
