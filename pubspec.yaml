@@ -37,6 +37,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^2.4.0
+  firebase_database: ^10.0.9
+  cloud_firestore: ^4.3.1
+  sweet_nav_bar: ^1.0.5
+  flutter_snake_navigationbar: ^0.6.1
+  iconsax: ^0.0.8
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -90,3 +96,22 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - images/
+
+  fonts:
+    - family: SourceSerifPro
+      fonts:
+        - asset: fonts/SourceSerifPro-Bold.ttf
+
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu-Regular.ttf
+        - asset: fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: fonts/Ubuntu-Light.ttf
+          weight: 200
+
+    - family: IconFont
+      fonts:
+        - asset: fonts/IconFont.ttf
