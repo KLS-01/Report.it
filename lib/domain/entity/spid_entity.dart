@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 
 class SPID {
@@ -158,4 +157,5 @@ class SPID {
 
     return anno;
   }
+
 }

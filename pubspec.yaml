@@ -47,7 +47,12 @@ dependencies:
   firebase_auth: ^4.2.3
   cloud_firestore: ^4.3.1
   flutter_svg: ^1.1.6
+  sweet_nav_bar: ^1.0.5
+  flutter_snake_navigationbar: ^0.6.1
+  iconsax: ^0.0.8
+  expandable: ^5.0.1
    
+
 
 dev_dependencies: 
   flutter_test:
@@ -100,3 +105,22 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - images/
+
+  fonts:
+    - family: SourceSerifPro
+      fonts:
+        - asset: fonts/SourceSerifPro-Bold.ttf
+
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu-Regular.ttf
+        - asset: fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: fonts/Ubuntu-Light.ttf
+          weight: 200
+
+    - family: IconFont
+      fonts:
+        - asset: fonts/IconFont.ttf

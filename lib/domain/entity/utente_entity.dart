@@ -13,6 +13,7 @@ class Utente {
 
   get getSpid => this.spid;
 
+
   Utente(this.cf, this.id);
 
   factory Utente.fromJson(Map<String, dynamic> json) {
@@ -21,6 +22,7 @@ class Utente {
 
   factory Utente.fromMap(map) {
     return Utente(map['CF'], map["id"]);
+
   }
 
   Map<String, dynamic> toMap() {
@@ -33,4 +35,5 @@ class Utente {
   setSpid(SPID value) {
     this.spid = value;
   }
+
 }
