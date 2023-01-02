@@ -39,14 +39,16 @@ class AuthenticationService {
             return 'wrong-password';
           }
         } catch (e) {
-          print("utente non trovato");
-        }
-      } else {
-        SPID? u = await RetrieveSPIDByEmail(email);
-
-        if (u != null) {
           return 'invalid-email';
         }
+      } else {
+        try {
+          SPID? u = await RetrieveSPIDByEmail(email);
+
+          if (u != null) {
+            return 'invalid-email';
+          }
+        } catch (e) {}
       }
 
       await auth.signInWithEmailAndPassword(email: email, password: password);
