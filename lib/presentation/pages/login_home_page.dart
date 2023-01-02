@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/login_user_page.dart';
 
+import '../../domain/repository/authentication_service.dart';
+import 'authentication_wrapper.dart';
 import 'navigation_animations.dart';
 
 class LoginPage extends StatelessWidget {
@@ -11,6 +14,13 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String userWorker = 'WRK';
     String userSPID = 'SPID';
+
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+
+    late SnackBar snackBar;
+    late String loginOutcome;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -48,7 +58,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     // ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           margin: const EdgeInsets.fromLTRB(40, 10, 40, 10),
@@ -88,39 +98,175 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(20),
-                              minimumSize: const Size(double.infinity, 20),
-                              backgroundColor: Colors.green,
-                              elevation: 15,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(createRouteTo(
-                                  LoginWorker(userType: userWorker)));
-                            },
-                            child: const Text(
-                              'Accesso FFOO o CUP',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            // margin: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                            // child: ElevatedButton(
+                            //   style: ElevatedButton.styleFrom(
+                            //     padding: const EdgeInsets.all(20),
+                            //     minimumSize: const Size(double.infinity, 20),
+                            //     backgroundColor: Colors.green,
+                            //     elevation: 15,
+                            //   ),
+                            //   onPressed: () {
+                            //     Navigator.of(context).push(createRouteTo(
+                            //         LoginWorker(userType: userWorker)));
+                            //   },
+                            //   child: const Text(
+                            //     'Accesso FFOO o CUP',
+                            //     style: TextStyle(
+                            //       fontSize: 20,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            // ),
+                            children: [
+                              Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                child: TextFormField(
+                                  controller: emailController,
+                                  decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.email),
+                                    iconColor: Colors.red,
+                                    focusColor: Colors.red,
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(255, 254, 248, 1),
+                                    hintText: 'Inserisci l\'e-mail',
+                                    labelText: 'E-mail',
+                                    errorStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 15),
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Per favore, inserisci l\'email';
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(30, 60, 30, 20),
-                          child: const Text(
-                            'Report.it garantisce che il trattamento dei dati'
-                            'personali si svolga nel rispetto dei diritti, '
-                            'delle libertà fondamentali, nonché della dignità '
-                            'delle persone fisiche, con particolare riferimento'
-                            ' alla riservatezza e all´identità personale '
-                            '(secondo quanto enunciato dall\'art.1, d.lg.675 31 Dicembre 1996)',
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,
+                              Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                child: TextFormField(
+                                  obscureText: true,
+                                  controller: passwordController,
+                                  decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.lock),
+                                    iconColor: Colors.red,
+                                    focusColor: Colors.red,
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(255, 254, 248, 1),
+                                    hintText: 'Inserisci la password',
+                                    labelText: 'Password',
+                                    errorStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 15),
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Per favore, inserisci la password';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 30),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(20),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                    onPressed: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        // setState(() => loading = true);
+                                        snackBar = const SnackBar(
+                                          content:
+                                              Text('Validazione in corso...'),
+                                        );
+                                        ScaffoldMessenger.of(
+                                                _formKey.currentContext!)
+                                            .showSnackBar(snackBar);
+
+                                        ///'loginOutcome' makes possible to choose the right 'feedback message' to display for the user
+                                        loginOutcome = (await context
+                                            .read<AuthenticationService>()
+                                            .signIn(
+                                                email:
+                                                    emailController.text.trim(),
+                                                password: passwordController
+                                                    .text
+                                                    .trim(),
+                                                userType: 'WRK'))!;
+
+                                        ///alertMessage, thanks to this switch construct, takes the proper value
+                                        String alertMessage = "";
+
+                                        switch (loginOutcome) {
+
+                                          ///feedback code created by KLS-01 for notifying and moving to the proper page
+                                          case 'logged-success':
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AuthenticationWrapper(),
+                                                ));
+                                            break;
+
+                                          ///error code from FirebaseAuthException
+                                          case 'wrong-password':
+                                            alertMessage = 'Password errata';
+                                            break;
+
+                                          ///error code from FirebaseAuthException
+                                          case 'user-disabled':
+                                            alertMessage =
+                                                'L\'account a cui è associata questa email è stato disabilitato';
+                                            break;
+
+                                          ///error code from FirebaseAuthException
+                                          case 'invalid-email':
+                                            alertMessage =
+                                                'L\'indirizzo email inserito non è valido';
+                                            break;
+
+                                          default:
+                                            alertMessage =
+                                                'Errore nell\'accesso';
+                                            break;
+                                        }
+                                        print(
+                                            'Test: $loginOutcome'); //TODO: only for tes. Action: Remove.
+
+                                        ///The snackbar will display the message to alert the user (ex. for an error, ...)
+                                        snackBar = SnackBar(
+                                          content: Text(alertMessage),
+                                        );
+                                        ScaffoldMessenger.of(
+                                                _formKey.currentContext!)
+                                            .showSnackBar(snackBar);
+                                      }
+                                    },
+                                    child: const Text(
+                                      "Accedi",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
                       ],
