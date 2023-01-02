@@ -37,14 +37,24 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^2.4.0
-  firebase_database: ^10.0.9
+  animated_bottom_navigation_bar: ^1.1.0+1
+  floating_bottom_navigation_bar: ^1.5.2
+  dartz: ^0.10.1    #testando il three layer
+  equatable: ^2.0.5 #testando il three layer
+  http: ^0.13.5     #testando il three layer
+  provider: ^6.0.5
+  firebase_database: ^10.0.8
+  firebase_auth: ^4.2.3
   cloud_firestore: ^4.3.1
+  flutter_svg: ^1.1.6
   sweet_nav_bar: ^1.0.5
   flutter_snake_navigationbar: ^0.6.1
   iconsax: ^0.0.8
   expandable: ^5.0.1
+   
 
-dev_dependencies:
+
+dev_dependencies: 
   flutter_test:
     sdk: flutter
 
@@ -67,9 +77,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
