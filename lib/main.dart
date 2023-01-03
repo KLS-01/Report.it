@@ -14,6 +14,13 @@ import 'package:report_it/presentation/pages/authentication_wrapper.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/Informativa_contatti.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:report_it/data/Models/denuncia_dao.dart';
+import 'package:report_it/domain/entity/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/stato_denuncia.dart';
+
 import 'domain/repository/authentication_service.dart';
 
 void main() async {

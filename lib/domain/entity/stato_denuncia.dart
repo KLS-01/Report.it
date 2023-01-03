@@ -1,1 +1,1 @@
-enum StatoDenuncia { nonInCarico, presaInCarico, chiusa }
+enum StatoDenuncia { NonInCarico, PresaInCarico, Chiusa }
