@@ -65,7 +65,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       TextEditingController(text: "Cattivo");
   final TextEditingController descrizioneController =
       TextEditingController(text: "Insulti ecc ecc");
-  bool? consensoValue = false;
+  bool? consensoValue = false, alreadyFilledValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -332,11 +332,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                   Row(
                     children: <Widget>[
                       Checkbox(
-                          value: consensoValue,
+                          value: alreadyFilledValue,
                           onChanged: (value) {
                             setState(() {
 //save checkbox value to variable that store terms and notify form that state changed
-                              consensoValue = value;
+                              alreadyFilledValue = value;
                               state.didChange(value);
                             });
                           }),
@@ -355,10 +355,8 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
 //output from validation will be displayed in state.errorText (above)
             validator: (value) {
-              if (consensoValue == null) {
+              if (alreadyFilledValue == null) {
                 return 'Error';
-              } else if (!consensoValue!) {
-                return 'You need to accept terms';
               } else {
                 return null;
               }
@@ -408,7 +406,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         denunciato: denunciatoController.text,
         descrizione: descrizioneController.text,
         cognomeVittima: cognomeVittimaController.text,
-        consenso: consensoValue!);
+        consenso: consensoValue!,
+        alreadyFilled: alreadyFilledValue!);
 
     print(
         "Operation terminated with success on presentation layer, resultId: $result");

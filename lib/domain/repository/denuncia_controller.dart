@@ -43,7 +43,8 @@ class DenunciaController {
       required denunciato,
       required descrizione,
       required cognomeVittima,
-      required bool consenso}) async {
+      required bool consenso,
+      required bool alreadyFilled}) async {
     Timestamp today = Timestamp.now();
 
     final User? user = auth.currentUser;
@@ -70,7 +71,7 @@ class DenunciaController {
         denunciato: denunciato,
         descrizione: descrizione,
         cognomeVittima: cognomeVittima,
-        alreadyFiled: false,
+        alreadyFiled: alreadyFilled,
         consenso: consenso,
         cognomeUff: null,
         coordCaserma: null,
