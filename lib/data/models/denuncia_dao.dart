@@ -26,6 +26,18 @@ class DenunciaDao {
     }
   }
 
+  static void updateAttribute(String attribute, var value) async {
+    DocumentReference? returnCode;
+    try {
+      returnCode =
+          FirebaseFirestore.instance.collection('Denuncia').doc(attribute);
+      await returnCode.update({attribute: value});
+    } catch (e) {
+      log("Error: ");
+      return null;
+    }
+  }
+
   Future<Denuncia> retrieveById(String id) async {
     var ref = db.collection("Denuncia").doc(id);
 

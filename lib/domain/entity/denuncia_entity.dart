@@ -19,9 +19,9 @@ class Denuncia {
       descrizione;
 
   Timestamp scadenzaDocDenunciante, dataDenuncia;
-  GeoPoint coordCaserma;
+  GeoPoint? coordCaserma;
 
-  String? nomeCaserma, nomeUff, cognomeUff,idUff;
+  String? nomeCaserma, nomeUff, cognomeUff, idUff;
 
   bool consenso = false, alreadyFiled = false;
   String idUtente;
@@ -61,8 +61,7 @@ class Denuncia {
   set setId(id) => this.id = id;
 
   get getIdUff => idUff;
-  set setIdUff(idUff) =>
-      this.idUff = idUff;
+  set setIdUff(idUff) => this.idUff = idUff;
 
   get getNomeDenunciante => nomeDenunciante;
   set setNomeDenunciante(nomeDenunciante) =>
@@ -142,7 +141,8 @@ class Denuncia {
         numeroDocDenunciante: json["NumeroDocDenunciante"],
         scadenzaDocDenunciante: json["ScadenzaDocDenunciante"],
         dataDenuncia: json["DataDenuncia"],
-        categoriaDenuncia:CategoriaDenuncia.values.byName(json["CategoriaDenuncia"]),
+        categoriaDenuncia:
+            CategoriaDenuncia.values.byName(json["CategoriaDenuncia"]),
         nomeVittima: json["NomeVittima"],
         denunciato: json["Denunciato"],
         alreadyFiled: json["AlreadyFiled"],
