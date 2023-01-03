@@ -12,7 +12,7 @@ import 'package:report_it/firebase_options.dart';
 import 'package:report_it/presentation/pages/authentication_wrapper.dart';
 //per la faq ui
 import 'package:report_it/presentation/pages/fake_index.dart';
-import 'package:report_it/presentation/pages/Informativa_contatti.dart';
+import 'package:report_it/presentation/pages/Informativa_contatti_page.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
