@@ -18,7 +18,10 @@ class InformativaContatti extends StatelessWidget {
             children: [
               const Text(
                 "HOMEPAGE",
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black),
               ),
               const SizedBox(
                 height: 20,

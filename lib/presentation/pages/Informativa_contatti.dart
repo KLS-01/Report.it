@@ -4,20 +4,11 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//CAMBIARE, QUESTO è IL ROSA PORCO DI FONDO
-Color? containerColor;
-List<Color> containerColors = [
-  const Color(0xFFFDE1D7),
-  const Color(0xFFE4EDF5),
-  const Color(0xFFE7EEED),
-  const Color(0xFFF4E4CE),
-];
-
 class Informativa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: containerColor ?? containerColors[0],
+      color: Color.fromRGBO(255, 254, 248, 1),
       duration: const Duration(seconds: 1),
       child: PageView(
         // onPageChanged: _onPageChanged,

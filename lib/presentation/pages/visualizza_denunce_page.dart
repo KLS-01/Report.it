@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,7 @@ import 'package:report_it/data/Models/denuncia_dao.dart';
 import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 
-import '../../data/firebase_options.dart';
+import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
 import '../../domain/entity/utente_entity.dart';
 import '../../../domain/repository/denuncia_controller.dart';
@@ -14,41 +13,43 @@ import '../../../domain/repository/denuncia_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
 
-
 class VisualizzaDenunceUtentePage extends StatefulWidget {
   const VisualizzaDenunceUtentePage({Key? key}) : super(key: key);
 
   @override
-  State<VisualizzaDenunceUtentePage> createState() => _VisualizzaDenunceUtentePageState();
+  State<VisualizzaDenunceUtentePage> createState() =>
+      _VisualizzaDenunceUtentePageState();
 }
 
-class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePage> {
+class _VisualizzaDenunceUtentePageState
+    extends State<VisualizzaDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     denunce = generaListaDenunce();
   }
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Text("le tue denunce"),
         FutureBuilder<List<Denuncia>>(
           future: denunce,
-          builder: (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data?.length,
-
                 itemBuilder: (context, index) {
                   final item = snapshot.data![index];
 
                   return ListTile(
                     title: Text(item.descrizione),
-                    subtitle:const ElevatedButton(onPressed: createRecord, child: Text("aggiungi")),
+                    subtitle: const ElevatedButton(
+                        onPressed: createRecord, child: Text("aggiungi")),
                   );
                 },
               );
@@ -59,34 +60,28 @@ class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePag
         )
       ],
     );
-
   }
 }
 
-
-
-Future<List<Denuncia>> generaListaDenunce(){
-  DenunciaController controller= DenunciaController();
+Future<List<Denuncia>> generaListaDenunce() {
+  DenunciaController controller = DenunciaController();
 
   return controller.visualizzaDenunceByUtente();
 }
 
-
-void stampaDenunce() async{
-  DenunciaDao dao= new DenunciaDao();
+void stampaDenunce() async {
+  DenunciaDao dao = new DenunciaDao();
   print("stampo tutte le denunce");
-  List<Denuncia> lista=(await dao.retrieveAll()) as List<Denuncia>;
+  List<Denuncia> lista = (await dao.retrieveAll()) as List<Denuncia>;
   print("stampa 2");
-  for(var d in lista){
+  for (var d in lista) {
     print(d);
   }
 }
 
-
 void createRecord() {
-
-  Timestamp scadenzaTS=Timestamp.fromDate(DateTime.now());
-  Timestamp dataDenuncia= Timestamp.fromDate(DateTime.now());
+  Timestamp scadenzaTS = Timestamp.fromDate(DateTime.now());
+  Timestamp dataDenuncia = Timestamp.fromDate(DateTime.now());
   GeoPoint coord = const GeoPoint(3.4, 4.5);
   Denuncia d = Denuncia(
       id: null,
@@ -114,8 +109,7 @@ void createRecord() {
       coordCaserma: coord,
       nomeUff: "Adol",
       cognomeUff: "Fitler",
-      idUff: " 1PZNxmcGrWVN2ezktgyKFVRWdBS2"
-  );
+      idUff: " 1PZNxmcGrWVN2ezktgyKFVRWdBS2");
 
   DenunciaDao.addDenuncia(d).then((DocumentReference<Object?> id) {
     d.setId = id.id;

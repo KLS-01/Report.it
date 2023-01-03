@@ -37,24 +37,9 @@ class _HomePageState extends State<HomePage> {
   Color selectedColor = Colors.black;
   Color unselectedColor = Colors.blueGrey;
 
-  Gradient selectedGradient =
-      const LinearGradient(colors: [Colors.red, Colors.amber]);
-  Gradient unselectedGradient = const LinearGradient(colors: [
-    Color.fromARGB(255, 153, 235, 12),
-    Color.fromARGB(255, 25, 52, 183)
-  ]);
-
-  Color? containerColor;
-  List<Color> containerColors = [
-    const Color(0xFFFDE1D7),
-    const Color(0xFFE4EDF5),
-    const Color(0xFFE7EEED),
-    const Color(0xFFF4E4CE),
-  ];
-
 // questo è l'indice della navbar, da aggiornare ad ogni nuova aggiunta
   final List<Widget> Pagine = [
-    Fake_index(),
+    InformativaContatti(),
     Fake_index(),
     Informativa(),
     Fake_index(),
@@ -67,7 +52,6 @@ class _HomePageState extends State<HomePage> {
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: true,
       extendBody: true,
-      // APPBAR FUNZIONANTE ma attualmente non in uso
       appBar: AppBar(
           centerTitle: true,
           leading:
@@ -78,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           // onPressed: () {}),
           //title: const Text('Go back', style: TextStyle(color: Colors.black)),
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromRGBO(255, 254, 248, 1),
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           actions: [
             IconButton(
@@ -89,22 +73,17 @@ class _HomePageState extends State<HomePage> {
           ]),
       body: Pagine[_selectedItemPosition],
       bottomNavigationBar: SnakeNavigationBar.color(
-        // height: 80,
         behaviour: snakeBarStyle,
         snakeShape: snakeShape,
         shape: bottomBarShape,
         padding: padding,
+        elevation: 8,
 
         ///configuration for SnakeNavigationBar.color
-        snakeViewColor: selectedColor,
+        snakeViewColor: Color.fromRGBO(219, 29, 69, 1), //E' QUESTOOOOOOO
         selectedItemColor:
             snakeShape == SnakeShape.indicator ? selectedColor : null,
-        unselectedItemColor: unselectedColor,
-
-        ///configuration for SnakeNavigationBar.gradient
-        // snakeViewGradient: selectedGradient,
-        // selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-        // unselectedItemGradient: unselectedGradient,
+        unselectedItemColor: Colors.blueGrey,
 
         showUnselectedLabels: showUnselectedLabels,
         showSelectedLabels: showSelectedLabels,
