@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
         title: 'Report.it',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          backgroundColor: Color.fromRGBO(255, 254, 248, 1),
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
