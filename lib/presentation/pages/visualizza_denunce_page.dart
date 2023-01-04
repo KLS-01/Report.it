@@ -57,20 +57,33 @@ class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePag
           child: FutureBuilder<List<Denuncia>>(
             future: denunce,
             builder: (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot){
-                return ListView.builder(
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (context, index) {
-                    final item = snapshot.data![index];
+              var data= snapshot.data;
+              if(data ==null){
+                return const Center(child: CircularProgressIndicator());
+              }else{
+                var datalenght= data.length;
+                if(datalenght==0){
+                  return const Center(
+                    child: Text('Nessuna denuncia trovata'),
+                  );
+                }else{
+                  return ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        final item = snapshot.data![index];
 
-                    return ListTile(
-                      title: Text(item.descrizione),
-                      subtitle:  ElevatedButton(
-                          onPressed: createRecord,
-                          child: Text("aggiungi")
-                      ),
-                    );
-                     }
-                );
+                        return ListTile(
+                          title: Text(item.descrizione),
+                          subtitle:  ElevatedButton(
+                              onPressed: createRecord,
+                              child: Text("aggiungi")
+                          ),
+                        );
+                      }
+                  );
+                }
+              }
+
             }
           ),
         )
