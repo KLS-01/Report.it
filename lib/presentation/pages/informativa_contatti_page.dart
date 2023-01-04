@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/presentation/widget/widget_uno.dart';
+import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class Informativa extends StatefulWidget {
@@ -16,18 +14,22 @@ class _InformativaState extends State<Informativa> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: Color.fromRGBO(255, 254, 248, 1),
+      color: const Color.fromRGBO(255, 254, 248, 1),
       duration: const Duration(seconds: 1),
       child: ListView(
         children: [
-          WidgetInfo(
-              titolo: "Informativa...",
-              corpo: "Hai bisogno di aiuto? Ecco qui una sezione FAQ!"),
+          const WidgetInfo(
+            titolo: "Informativa",
+            corpo: "Hai bisogno di aiuto?\nEcco qui una sezione FAQ!",
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           CarouselSlider(
             options: CarouselOptions(
               enableInfiniteScroll: false,
               viewportFraction: 1,
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.55,
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
@@ -38,27 +40,28 @@ class _InformativaState extends State<Informativa> {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Color.fromARGB(255, 246, 208, 97)),
-                      child: Column(
-                        children: [
-                          Text(
-                            '${i.title}',
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                          Image.asset(
-                            i.imagePath,
-                            scale: 7,
-                          ),
-                          Text(
-                            '${i.title}',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ));
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Color.fromARGB(255, 225, 225, 225)),
+                    child: Column(
+                      children: [
+                        Text(
+                          i.title,
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                        Image.asset(
+                          i.imagePath,
+                          scale: 7,
+                        ),
+                        Text(
+                          i.body,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
+                  );
                 },
               );
             }).toList(),
@@ -71,12 +74,13 @@ class _InformativaState extends State<Informativa> {
                 child: Container(
                   width: 12.0,
                   height: 12.0,
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 4.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: (Theme.of(context).brightness == Brightness.dark
                               ? Colors.white
-                              : Color.fromRGBO(219, 29, 69, 1))
+                              : const Color.fromRGBO(219, 29, 69, 1))
                           .withOpacity(_current == entry.key ? 1.0 : 0.4)),
                 ),
               );
@@ -91,24 +95,100 @@ class _InformativaState extends State<Informativa> {
           // e volevo riempire i caroselli + vedere come aggiungere il tasto sull'ultimo Contents Information,
           // a cui va collegata una pagina molto easy di solo testo con le varie FAQ di cui posso occuparmene io,
           //quando arrivi a questo punto scrivimi che ci coordiniamo
+          //Ci sono arrivato donnola :3
 
-          WidgetInfo(titolo: "....E contatti!", corpo: ""),
-          Material(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
+          const WidgetInfo(titolo: "Contatti", corpo: ""),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+            child: Material(
+              elevation: 10,
+              color: const Color.fromARGB(255, 225, 225, 225),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Polizia',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(width: 5),
+                        TextButton(
+                          onPressed: () async {
+                            FlutterPhoneDirectCaller.callNumber('113');
+                          },
+                          child: const Text(
+                            '113',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Carabinieri',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(width: 5),
+                        TextButton(
+                          onPressed: () async {
+                            FlutterPhoneDirectCaller.callNumber('112');
+                          },
+                          child: const Text(
+                            '112',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Guardia di Finanza',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(width: 5),
+                        TextButton(
+                          onPressed: () async {
+                            FlutterPhoneDirectCaller.callNumber('117');
+                          },
+                          child: const Text(
+                            '117',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Samaritas',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(width: 5),
+                        TextButton(
+                          onPressed: () async {
+                            FlutterPhoneDirectCaller.callNumber('06 77208977');
+                          },
+                          child: const Text(
+                            '06 77208977',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: InkWell(
-              onTap: () async {
-                //FlutterPhoneDirectCaller.callNumber("");
-              },
-              child: Text('Carabinieri 118'),
-            ),
           ),
-          Container(
-            child: Image.asset('assets/images/support.png'),
-          )
         ],
       ),
     );
@@ -116,25 +196,30 @@ class _InformativaState extends State<Informativa> {
 
   List<ContentsInformation> carousels = [
     ContentsInformation(
-        title: 'title1',
-        body: 'testo1',
-        imagePath: 'assets/images/flutter1.png'),
+        title: 'Race Discrimination',
+        body:
+            'Non esistono razze ma etnie diverse: ogni individuo, qualunque sia la sua origine e la sua cultura, non dev\'essere sminuito e va trattato con dignità.',
+        imagePath: 'assets/images/racism.png'),
     ContentsInformation(
-        title: 'title2',
-        body: 'testo2',
-        imagePath: 'assets/images/flutter1.png'),
+        title: 'Religious Discrimination',
+        body:
+            'Ogni individuo è libero di scegliere il proprio credo e di parlarne apertamente, senza paura alcuna.',
+        imagePath: 'assets/images/religion.png'),
     ContentsInformation(
-        title: 'title3',
-        body: 'testo3',
-        imagePath: 'assets/images/flutter1.png'),
+        title: 'Sexual Discrimination',
+        body:
+            'Ogni individuo è libero di amare e porre dei vincoli a chi si può amare è soltanto il residuo di una cultura retrograda.',
+        imagePath: 'assets/images/sexual.png'),
     ContentsInformation(
-        title: 'title4',
-        body: 'testo4',
-        imagePath: 'assets/images/flutter1.png'),
+        title: 'Political Discrimination',
+        body:
+            'Ogni individuo deve essere uguale davanti alla legge, e deve poter essere libero di votare liberamente per la fazione politica di sua preferenza senza essere visto di cattivo occhio per le sue scelte; il pensiero politico di un singolo non deve prevalere su un altro',
+        imagePath: 'assets/images/politics.png'),
     ContentsInformation(
-        title: 'title5',
-        body: 'testo5',
-        imagePath: 'assets/images/flutter1.png'),
+        title: 'Disability Discrimination',
+        body:
+            'Ogni individuo sofferente di una qualsiasi forma di disabilità, sia essa fisica o neurale, dev\'essere trattato con dignità e alla pari di ciascun altro individuo',
+        imagePath: 'assets/images/disability.png'),
   ];
 }
 
