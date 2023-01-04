@@ -33,33 +33,37 @@ class _VisualizzaDenunceUtentePageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("le tue denunce"),
-        FutureBuilder<List<Denuncia>>(
-          future: denunce,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  final item = snapshot.data![index];
-
-                  return ListTile(
-                    title: Text(item.descrizione),
-                    subtitle: const ElevatedButton(
-                        onPressed: createRecord, child: Text("aggiungi")),
+    return Column(children: [
+      Text("le tue denunce"),
+      Expanded(
+        child: FutureBuilder<List<Denuncia>>(
+            future: denunce,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
+              var data = snapshot.data;
+              if (data == null) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                var datalenght = data.length;
+                if (datalenght == 0) {
+                  return const Center(
+                    child: Text('Nessuna denuncia trovata'),
                   );
-                },
-              );
-            } else {
-              return const Text('Non hai denuncee aaaaaaaaaaa');
-            }
-          },
-        )
-      ],
-    );
+                } else {
+                  return ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        final item = snapshot.data![index];
+
+                        return ListTile(
+                          title: Text(item.descrizione),
+                        );
+                      });
+                }
+              }
+            }),
+      )
+    ]);
   }
 }
 
