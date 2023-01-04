@@ -33,37 +33,79 @@ class _VisualizzaDenunceUtentePageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text("le tue denunce"),
-      Expanded(
-        child: FutureBuilder<List<Denuncia>>(
-            future: denunce,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
-              var data = snapshot.data;
-              if (data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                var datalenght = data.length;
-                if (datalenght == 0) {
-                  return const Center(
-                    child: Text('Nessuna denuncia trovata'),
-                  );
-                } else {
-                  return ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        final item = snapshot.data![index];
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(255, 254, 248, 1),
+            bottom: const TabBar(
+              labelColor: Color.fromRGBO(219, 29, 69, 1),
+              indicatorColor: Color.fromRGBO(219, 29, 69, 1),
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Attive",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Storico",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body: TabBarView(
+            children: [
+              //1st tab
+              Container(
+                  // child: Expanded(
+                  //   child: FutureBuilder<List<Denuncia>>(
+                  //     future: denunce,
+                  //     builder: (BuildContext context,
+                  //         AsyncSnapshot<List<Denuncia>> snapshot) {
+                  //       var data = snapshot.data;
+                  //       if (data == null) {
+                  //         return const Center(child: CircularProgressIndicator());
+                  //       } else {
+                  //         var datalenght = data.length;
+                  //         if (datalenght == 0) {
+                  //           return const Center(
+                  //             child: Text('Nessuna denuncia trovata'),
+                  //           );
+                  //         } else {
+                  //           return ListView.builder(
+                  //             itemCount: snapshot.data?.length,
+                  //             itemBuilder: (context, index) {
+                  //               final item = snapshot.data![index];
 
-                        return ListTile(
-                          title: Text(item.descrizione),
-                        );
-                      });
-                }
-              }
-            }),
-      )
-    ]);
+                  //               return ListTile(
+                  //                 title: Text(item.descrizione),
+                  //               );
+                  //             },
+                  //           );
+                  //         }
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
+                  ),
+              //2nd tab
+              Container(
+                child: Text(
+                  'Sorm',
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
