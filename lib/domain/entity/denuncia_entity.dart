@@ -19,7 +19,7 @@ class Denuncia {
       descrizione;
 
   Timestamp scadenzaDocDenunciante, dataDenuncia;
-  GeoPoint coordCaserma;
+  GeoPoint? coordCaserma;
 
   String? nomeCaserma, nomeUff, cognomeUff,idUff;
 

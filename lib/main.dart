@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:report_it/firebase_options.dart';
 import 'package:report_it/presentation/pages/authentication_wrapper.dart';
 import 'domain/repository/authentication_service.dart';
+import 'package:report_it/presentation/widget/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,25 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Report.it',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          backgroundColor: Color.fromRGBO(255, 254, 248, 1),
-          primarySwatch: Colors.red,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 40,
-              fontFamily: 'SourceSerifPro',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            bodyText1: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Ubuntu',
-              fontWeight: FontWeight.w200,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        theme: AppTheme().build(),
         home: Scaffold(
           body: AuthenticationWrapper(),
         ),
