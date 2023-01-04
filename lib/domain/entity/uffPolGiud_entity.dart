@@ -1,15 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/tipo_ufficiale.dart';
 
 class UffPolGiud {
-  int? id;
-  String? nome;
-  String? cognome;
-  String? grado;
-  TipoUfficiale? tipoUff;
-  String? email;
-  String? password;
-  String? nomeCaserma;
-  String? coordinate;
+  String id;
+  String nome;
+  String cognome;
+  String grado;
+  TipoUfficiale tipoUff;
+  String email;
+  String password;
+  String nomeCaserma;
+  GeoPoint coordinate;
 
   get getId => this.id;
 

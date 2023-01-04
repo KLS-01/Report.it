@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
 
 import "../../data/models/denuncia_dao.dart";
 import '../entity/denuncia_entity.dart';
@@ -84,5 +85,40 @@ class DenunciaController {
       result = denuncia.getId;
     });
     return await result;
+  }
+
+  Future<UffPolGiud?> controlloUffPolGiud() async{
+    String? user= auth.currentUser?.uid;
+    if(user==null){
+      return null;
+    }
+    else{
+      UffPolGiud? u= await RetrieveUffPolGiudByID(user!);
+      if(u==null){
+        return null;
+      }
+      else{
+        return u;
+      }
+    }
+  }
+
+
+  Future<bool> accettaDenuncia(String idDenuncia) async {
+    //controllo se l'utente è un UffPolGiud
+    UffPolGiud? uff= await controlloUffPolGiud();
+    if(uff==null){
+      return false;
+    }
+    else{
+      Denuncia? d= await denunciaDao.retrieveById(idDenuncia);
+      if(d == null){
+        return false;
+      }
+      else{
+        denunciaDao.accettaDenuncia(idDenuncia, uff.coordinate, uff.id, uff.nomeCaserma, uff.nome, uff.cognome);
+        return true;
+      }
+    }
   }
 }

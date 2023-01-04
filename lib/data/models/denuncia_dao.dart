@@ -109,4 +109,16 @@ class DenunciaDao {
 
     return lista;
   }
+
+  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff){
+    var ref= db.collection("Denuncia").doc(idDenuncia);
+
+    ref.update({
+      "CognomeUff":cognomeUff,
+      "CoordCaserma": coordCaserma,
+      "IDUff": idUff,
+      "NomeCaserma": nomeCaserma,
+      "NomeUff": nomeUff
+    });
+  }
 }
