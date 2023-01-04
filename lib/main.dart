@@ -53,6 +53,20 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color.fromRGBO(255, 254, 248, 1),
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontSize: 40,
+              fontFamily: 'SourceSerifPro',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.w200,
+              color: Colors.black,
+            ),
+          ),
         ),
         home: Scaffold(
           body: AuthenticationWrapper(),
