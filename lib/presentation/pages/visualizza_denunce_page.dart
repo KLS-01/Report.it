@@ -13,6 +13,16 @@ import '../../../domain/repository/denuncia_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
 
+
+Color? containerColor;
+List<Color> containerColors = [
+  const Color(0xFFFDE1D7),
+  const Color(0xFFE4EDF5),
+  const Color(0xFFE7EEED),
+  const Color(0xFFF4E4CE),
+];
+
+
 class VisualizzaDenunceUtentePage extends StatefulWidget {
   const VisualizzaDenunceUtentePage({Key? key}) : super(key: key);
 
@@ -21,8 +31,7 @@ class VisualizzaDenunceUtentePage extends StatefulWidget {
       _VisualizzaDenunceUtentePageState();
 }
 
-class _VisualizzaDenunceUtentePageState
-    extends State<VisualizzaDenunceUtentePage> {
+class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
 
   @override
@@ -34,34 +43,43 @@ class _VisualizzaDenunceUtentePageState
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children:  [
         Text("le tue denunce"),
-        FutureBuilder<List<Denuncia>>(
-          future: denunce,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  final item = snapshot.data![index];
+        Padding(
+          padding: const EdgeInsets.all(100.0),
+          child: ElevatedButton(
+              onPressed: (){
+                print("denunce");
+              },
+              child: Text("visualizza")),
+        ),
+        Expanded(
+          child: FutureBuilder<List<Denuncia>>(
+            future: denunce,
+            builder: (BuildContext context, AsyncSnapshot<List<Denuncia>> snapshot){
+                return ListView.builder(
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    final item = snapshot.data![index];
 
-                  return ListTile(
-                    title: Text(item.descrizione),
-                    subtitle: const ElevatedButton(
-                        onPressed: createRecord, child: Text("aggiungi")),
-                  );
-                },
-              );
-            } else {
-              return const Text('Non hai denuncee aaaaaaaaaaa');
+                    return ListTile(
+                      title: Text(item.descrizione),
+                      subtitle:  ElevatedButton(
+                          onPressed: createRecord,
+                          child: Text("aggiungi")
+                      ),
+                    );
+                     }
+                );
             }
-          },
+          ),
         )
-      ],
+      ]
     );
   }
 }
+
+
 
 Future<List<Denuncia>> generaListaDenunce() {
   DenunciaController controller = DenunciaController();
