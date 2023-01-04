@@ -11,7 +11,6 @@ class DenunciaController{
 
   Future<List<Denuncia>>visualizzaDenunceByUtente()async{
 
-    try {
       final User? user = auth.currentUser;
       if(user==null) {
         print("NON SEI LOGGATO biscottooo");
@@ -19,11 +18,6 @@ class DenunciaController{
       else {
         return await denunciaDao.retrieveByUtente(user.uid);
       }
+      return Future.error(StackTrace);
     }
-    catch(e){
-      print(e);
-      rethrow;
-    }
-    return Future.error(StackTrace);
   }
-}
