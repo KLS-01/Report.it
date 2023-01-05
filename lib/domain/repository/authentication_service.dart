@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/spid_entity.dart';
+import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
+
+import '../entity/uffPolGiud_entity.dart';
+import '../../data/models/AutenticazioneDAO.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;
@@ -16,6 +21,31 @@ class AuthenticationService {
   /// after you called this method if you want to pop all routes.
   Future<void> signOut() async {
     await auth.signOut();
+  }
+
+//metodo che converte un FirebaseUser ad un SuperUtente
+  Future<SuperUtente?> superUtenteFromFirebaseUser(User? user)async{
+    if(user==null){
+      return null;
+    }
+    else{
+      if((await RetrieveUffPolGiudByID(user.uid))!=null) {
+        return SuperUtente(
+            user.uid, TipoUtente.UffPolGiud);
+      }
+      else if((await RetrieveCUPByID(user.uid))!=null){
+        return SuperUtente(
+            user.uid, TipoUtente.OperatoreCup);
+      }else{
+        return SuperUtente(
+            user.uid, TipoUtente.Utente);
+      }
+    }
+  }
+
+
+  Stream<SuperUtente?> get superUtenteStream {
+      return auth.authStateChanges().asyncMap((event) => superUtenteFromFirebaseUser(event));
   }
 
   /// There are a lot of different ways on how you can do exception handling.
@@ -64,4 +94,10 @@ class AuthenticationService {
       return e.code;
     }
   }
+
+  //metodo che torna il tipo di utente connesso
+  TipoUtente? getTipoUtente(SuperUtente? u){
+    return u?.tipo;
+  }
+
 }

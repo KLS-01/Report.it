@@ -6,7 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/Informativa_contatti.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
-import 'package:report_it/presentation/pages/visualizza_denunce_page.dart';
+import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
 import '../../domain/repository/authentication_service.dart';
 import 'informativa_contatti_page.dart';
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
 
 // questo è l'indice della navbar, da aggiornare ad ogni nuova aggiunta
   final List<Widget> Pagine = [
-    const VisualizzaDenunceUtentePage(),
+    const VisualizzaStoricoDenunceUtentePage(),
     Fake_index(),
     Informativa(),
     Fake_index(),

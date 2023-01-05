@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_ufficiale.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
 
-class UffPolGiud {
-  String id;
+class UffPolGiud extends SuperUtente{
   String nome;
   String cognome;
   String grado;
@@ -12,7 +13,7 @@ class UffPolGiud {
   String nomeCaserma;
   GeoPoint coordinate;
 
-  get getId => this.id;
+  get getId => super.id;
 
   set setId(id) => this.id = id;
 
@@ -48,8 +49,9 @@ class UffPolGiud {
 
   set setCoordinate(coordinate) => this.coordinate = coordinate;
 
-  UffPolGiud(this.id, this.nome, this.cognome, this.grado, this.tipoUff,
-      this.email, this.password, this.nomeCaserma, this.coordinate);
+  UffPolGiud(id, this.nome, this.cognome, this.grado, this.tipoUff,
+      this.email, this.password, this.nomeCaserma, this.coordinate)
+      : super(id,TipoUtente.values.byName("UffPolGiud"));
 
   factory UffPolGiud.fromJson(Map<String, dynamic> json) {
     return UffPolGiud(json["ID"], json["Nome"], json["Cognome"], json["Grado"],

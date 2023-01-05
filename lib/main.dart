@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/firebase_options.dart';
 import 'package:report_it/presentation/pages/authentication_wrapper.dart';
 //per la faq ui
@@ -35,29 +36,21 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
-        ),
-        StreamProvider(
-          create: (context) =>
-              context.read<AuthenticationService>().authStateChanges,
+        return StreamProvider<SuperUtente?>(
+          create: (_)=> AuthenticationService(FirebaseAuth.instance).superUtenteStream,
           initialData: null,
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Report.it',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Scaffold(
-          body: AuthenticationWrapper(),
-        ),
-      ),
-    );
+          child: MaterialApp(
+            title: 'Report.it',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.red,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: Scaffold(
+              body: AuthenticationWrapper(),
+            ),
+          ),
+        );
   }
 }
 

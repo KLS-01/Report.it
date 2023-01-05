@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:report_it/data/Models/denuncia_dao.dart';
 import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/super_utente.dart';
 
 import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
@@ -23,15 +24,15 @@ List<Color> containerColors = [
 ];
 
 
-class VisualizzaDenunceUtentePage extends StatefulWidget {
-  const VisualizzaDenunceUtentePage({Key? key}) : super(key: key);
+class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
+  const VisualizzaStoricoDenunceUtentePage({Key? key}) : super(key: key);
 
   @override
-  State<VisualizzaDenunceUtentePage> createState() =>
-      _VisualizzaDenunceUtentePageState();
+  State<VisualizzaStoricoDenunceUtentePage> createState() =>
+      _VisualizzaStoricoDenunceUtentePageState();
 }
 
-class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePage> {
+class _VisualizzaStoricoDenunceUtentePageState extends State<VisualizzaStoricoDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
 
   @override
@@ -42,6 +43,7 @@ class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePag
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children:  [
         Text("le tue denunce"),
@@ -76,7 +78,7 @@ class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePag
                           title: Text(item.descrizione),
                           subtitle:  ElevatedButton(
                               onPressed: createRecord,
-                              child: Text("aggiungi")
+                              child: Text("accetta")
                           ),
                         );
                       }
@@ -97,7 +99,7 @@ class _VisualizzaDenunceUtentePageState extends State<VisualizzaDenunceUtentePag
 Future<List<Denuncia>> generaListaDenunce() {
   DenunciaController controller = DenunciaController();
 
-  return controller.visualizzaDenunceByUtente();
+  return controller.visualizzaStoricoDenunceByUtente();
 }
 
 void stampaDenunce() async {

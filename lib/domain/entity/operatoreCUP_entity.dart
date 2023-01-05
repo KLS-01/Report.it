@@ -1,5 +1,7 @@
-class OperatoreCUP {
-  String id;
+import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
+
+class OperatoreCUP extends SuperUtente{
   String password;
   String email;
   String asl;
@@ -20,7 +22,7 @@ class OperatoreCUP {
 
   set setAsl(asl) => this.asl = asl;
 
-  OperatoreCUP(this.id, this.password, this.email, this.asl);
+  OperatoreCUP(id, this.password, this.email, this.asl) : super(id,TipoUtente.values.byName("OperatoreCup"));
 
   factory OperatoreCUP.fromJson(Map<String, dynamic> json) {
     return OperatoreCUP(

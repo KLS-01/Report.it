@@ -1,19 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
 
 import "../../data/models/denuncia_dao.dart";
 import '../entity/denuncia_entity.dart';
 import "../../data/models/autenticazioneDAO.dart";
+import '../entity/super_utente.dart';
 import "../entity/utente_entity.dart";
+import "authentication_service.dart";
 
 class DenunciaController {
   DenunciaDao denunciaDao = DenunciaDao();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<List<Denuncia>> visualizzaDenunceByUtente() async {
+  Future<List<Denuncia>> visualizzaStoricoDenunceByUtente() async {
       final User? user = auth.currentUser;
       if (user == null) {
         print("NON SEI LOGGATO biscottooo");
@@ -23,8 +26,8 @@ class DenunciaController {
     return Future.error(StackTrace);
   }
 
-  Future<String?> addDenunciaControl(
-      {required nomeDenunciante,
+  Future<String?> addDenunciaControl({
+      required nomeDenunciante,
       required cognomeDenunciante,
       required indirizzoDenunciante,
       required capDenunciante,
@@ -87,38 +90,38 @@ class DenunciaController {
     return await result;
   }
 
-  Future<UffPolGiud?> controlloUffPolGiud() async{
-    String? user= auth.currentUser?.uid;
-    if(user==null){
-      return null;
-    }
-    else{
-      UffPolGiud? u= await RetrieveUffPolGiudByID(user!);
-      if(u==null){
-        return null;
-      }
-      else{
-        return u;
-      }
-    }
-  }
 
-
-  Future<bool> accettaDenuncia(String idDenuncia) async {
+  Future<bool> accettaDenuncia(String idDenuncia, SuperUtente utente) async {
     //controllo se l'utente è un UffPolGiud
-    UffPolGiud? uff= await controlloUffPolGiud();
-    if(uff==null){
+
+    if(AuthenticationService(auth).getTipoUtente(utente) != TipoUtente.UffPolGiud){
       return false;
     }
     else{
       Denuncia? d= await denunciaDao.retrieveById(idDenuncia);
-      if(d == null){
+      if(d==null){
         return false;
       }
       else{
-        denunciaDao.accettaDenuncia(idDenuncia, uff.coordinate, uff.id, uff.nomeCaserma, uff.nome, uff.cognome);
-        return true;
+        UffPolGiud? uff= await RetrieveUffPolGiudByID(utente.id);
+        if(uff==null) {
+          return false;
+        }
+        else {
+          denunciaDao.accettaDenuncia(
+              idDenuncia, uff.coordinate, uff.id, uff.nomeCaserma, uff.nome,
+              uff.cognome);
+          return true;
+        }
       }
     }
   }
+
+
+
+
+
+
+
+
 }
