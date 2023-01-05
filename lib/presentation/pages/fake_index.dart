@@ -4,7 +4,7 @@ class Fake_index extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 254, 248, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
     );
   }
 }

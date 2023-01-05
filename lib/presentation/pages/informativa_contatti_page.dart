@@ -14,7 +14,7 @@ class _InformativaState extends State<Informativa> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: const Color.fromRGBO(255, 254, 248, 1),
+      color: Theme.of(context).backgroundColor,
       duration: const Duration(seconds: 1),
       child: ListView(
         children: [
@@ -27,7 +27,7 @@ class _InformativaState extends State<Informativa> {
           ),
           CarouselSlider(
             options: CarouselOptions(
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               viewportFraction: 1,
               height: MediaQuery.of(context).size.height * 0.55,
               onPageChanged: (index, reason) {

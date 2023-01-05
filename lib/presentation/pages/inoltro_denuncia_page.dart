@@ -22,6 +22,13 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Color.fromRGBO(219, 29, 69, 1),
+        ),
+        elevation: 0,
+        backgroundColor: Theme.of(context).backgroundColor,
+      ),
       body: Stepper(
         controlsBuilder: (context, details) {
           return Row(

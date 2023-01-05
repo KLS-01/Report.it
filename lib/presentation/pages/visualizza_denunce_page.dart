@@ -12,6 +12,7 @@ import '../../../domain/repository/denuncia_controller.dart';
 
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
+import 'inoltro_denuncia_page.dart';
 
 class VisualizzaDenunceUtentePage extends StatefulWidget {
   const VisualizzaDenunceUtentePage({Key? key}) : super(key: key);
@@ -35,24 +36,30 @@ class _VisualizzaDenunceUtentePageState
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromRGBO(255, 254, 248, 1),
+            backgroundColor: Theme.of(context).backgroundColor,
             bottom: const TabBar(
               labelColor: Color.fromRGBO(219, 29, 69, 1),
               indicatorColor: Color.fromRGBO(219, 29, 69, 1),
               tabs: [
                 Tab(
                   child: Text(
-                    "Attive",
-                    style: TextStyle(fontSize: 20),
+                    "In attesa",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Prese in carico",
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ],
@@ -63,45 +70,75 @@ class _VisualizzaDenunceUtentePageState
             children: [
               //1st tab
               Container(
-                  // child: Expanded(
-                  //   child: FutureBuilder<List<Denuncia>>(
-                  //     future: denunce,
-                  //     builder: (BuildContext context,
-                  //         AsyncSnapshot<List<Denuncia>> snapshot) {
-                  //       var data = snapshot.data;
-                  //       if (data == null) {
-                  //         return const Center(child: CircularProgressIndicator());
-                  //       } else {
-                  //         var datalenght = data.length;
-                  //         if (datalenght == 0) {
-                  //           return const Center(
-                  //             child: Text('Nessuna denuncia trovata'),
-                  //           );
-                  //         } else {
-                  //           return ListView.builder(
-                  //             itemCount: snapshot.data?.length,
-                  //             itemBuilder: (context, index) {
-                  //               final item = snapshot.data![index];
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 228, 228, 228),
+                    borderRadius: BorderRadius.circular(20)),
+                child: Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    Expanded(
+                      child: FutureBuilder<List<Denuncia>>(
+                        future: denunce,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<Denuncia>> snapshot) {
+                          var data = snapshot.data;
+                          if (data == null) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else {
+                            var datalenght = data.length;
+                            if (datalenght == 0) {
+                              return const Center(
+                                child: Text('Nessuna denuncia trovata'),
+                              );
+                            } else {
+                              return ListView.builder(
+                                itemCount: snapshot.data?.length,
+                                itemBuilder: (context, index) {
+                                  final item = snapshot.data![index];
 
-                  //               return ListTile(
-                  //                 title: Text(item.descrizione),
-                  //               );
-                  //             },
-                  //           );
-                  //         }
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
-                  ),
+                                  return ListTile(
+                                    title: Text(item.descrizione),
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               //2nd tab
               Container(
                 child: Text(
                   'Sorm',
                   style: TextStyle(fontSize: 40),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                child: Text(
+                  'Mammt',
+                  style: TextStyle(fontSize: 40),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InoltroDenuncia(),
+                ),
+              );
+            },
+            backgroundColor: Color.fromRGBO(219, 29, 69, 1),
+            child: Icon(Icons.add),
           ),
         ),
       ),
