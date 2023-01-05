@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/login_user_page.dart';
+import 'package:report_it/presentation/pages/widget/app_background.dart';
 
 import '../../domain/repository/authentication_service.dart';
 import 'authentication_wrapper.dart';
@@ -23,11 +24,11 @@ class LoginPage extends StatelessWidget {
     late String loginOutcome;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: Center(
-          // child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             children: [
               Container(
@@ -41,34 +42,37 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
-                flex: 2,
-                fit: FlexFit.tight,
+              Container(
+                height: MediaQuery.of(context).size.height * 0.55,
+                decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(100)),
+                  color: Color.fromRGBO(219, 29, 69, 1),
+                ),
                 child: Stack(
                   children: [
                     // Hero(
                     //   tag: 'redContainer',
                     //   child:
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.only(topLeft: Radius.circular(100)),
-                        color: Color.fromRGBO(219, 29, 69, 1),
-                      ),
-                    ),
                     // ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Text("Sei un cittadino?",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Container(
-                          margin: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          width: MediaQuery.of(context).size.width * 0.8,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.all(20),
                               minimumSize: const Size(double.infinity, 20),
                               backgroundColor:
                                   const Color.fromRGBO(0, 102, 204, 1),
-                              elevation: 15,
+                              elevation: 2,
                             ),
                             onPressed: () {
                               Navigator.of(context).push(createRouteTo(
@@ -98,31 +102,40 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/separator.png',
+                              scale: 15,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Text(
+                              "altrimenti",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Image.asset('assets/images/separator.png',
+                                scale: 15),
+                          ],
+                        ),
                         Form(
                           key: _formKey,
                           child: Column(
-                            // margin: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                            // child: ElevatedButton(
-                            //   style: ElevatedButton.styleFrom(
-                            //     padding: const EdgeInsets.all(20),
-                            //     minimumSize: const Size(double.infinity, 20),
-                            //     backgroundColor: Colors.green,
-                            //     elevation: 15,
-                            //   ),
-                            //   onPressed: () {
-                            //     Navigator.of(context).push(createRouteTo(
-                            //         LoginWorker(userType: userWorker)));
-                            //   },
-                            //   child: const Text(
-                            //     'Accesso FFOO o CUP',
-                            //     style: TextStyle(
-                            //       fontSize: 20,
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //   ),
-                            // ),
                             children: [
                               Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                // height: MediaQuery.of(context).size.height * 0.8
                                 margin:
                                     const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: TextFormField(
@@ -152,8 +165,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                width: MediaQuery.of(context).size.width * 0.8,
                                 child: TextFormField(
                                   obscureText: true,
                                   controller: passwordController,
@@ -182,12 +194,17 @@ class LoginPage extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 30),
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 30),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(20),
-                                      backgroundColor: Colors.green,
+                                      backgroundColor: Colors.white,
+                                      elevation: 10,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
                                     ),
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
@@ -263,7 +280,9 @@ class LoginPage extends StatelessWidget {
                                     child: const Text(
                                       "Accedi",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
                                     )),
                               ),
                             ],
@@ -278,6 +297,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
+
       // ),
     );
   }
