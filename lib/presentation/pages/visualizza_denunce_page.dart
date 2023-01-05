@@ -69,48 +69,52 @@ class _VisualizzaDenunceUtentePageState
           body: TabBarView(
             children: [
               //1st tab
-              Container(
-                margin: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 228, 228, 228),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    Expanded(
-                      child: FutureBuilder<List<Denuncia>>(
-                        future: denunce,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<Denuncia>> snapshot) {
-                          var data = snapshot.data;
-                          if (data == null) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          } else {
-                            var datalenght = data.length;
-                            if (datalenght == 0) {
-                              return const Center(
-                                child: Text('Nessuna denuncia trovata'),
-                              );
-                            } else {
-                              return ListView.builder(
-                                itemCount: snapshot.data?.length,
-                                itemBuilder: (context, index) {
-                                  final item = snapshot.data![index];
 
-                                  return ListTile(
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  Expanded(
+                    child: FutureBuilder<List<Denuncia>>(
+                      future: denunce,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Denuncia>> snapshot) {
+                        var data = snapshot.data;
+                        if (data == null) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          var datalenght = data.length;
+                          if (datalenght == 0) {
+                            return const Center(
+                              child: Text('Nessuna denuncia trovata'),
+                            );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (context, index) {
+                                final item = snapshot.data![index];
+
+                                return Container(
+                                  child: ListTile(
                                     title: Text(item.descrizione),
-                                  );
-                                },
-                              );
-                            }
+                                    subtitle:
+                                        Text(item.categoriaDenuncia.toString()),
+                                  ),
+                                  margin: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 228, 228, 228),
+                                      borderRadius: BorderRadius.circular(20)),
+                                );
+                              },
+                            );
                           }
-                        },
-                      ),
+                        }
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+
               //2nd tab
               Container(
                 child: Text(
@@ -119,6 +123,7 @@ class _VisualizzaDenunceUtentePageState
                   textAlign: TextAlign.center,
                 ),
               ),
+              //3rd tab
               Container(
                 child: Text(
                   'Mammt',
