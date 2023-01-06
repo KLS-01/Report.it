@@ -19,10 +19,27 @@ class DenunciaController {
   Future<List<Denuncia>> visualizzaStoricoDenunceByUtente() async {
       final User? user = auth.currentUser;
       if (user == null) {
-        print("NON SEI LOGGATO biscottooo");
+        print("NON SEI LOGGATO");
       } else {
         return await denunciaDao.retrieveByUtente(user.uid);
       }
+    return Future.error(StackTrace);
+  }
+
+  Future<Denuncia?> visualizzaDenunciaById(String idDenuncia) async{
+    final User? user = auth.currentUser;
+    if (user == null) {
+      print("NON SEI LOGGATO");
+    } else {
+      Denuncia? d= await denunciaDao.retrieveById(idDenuncia);
+      if(d==null){
+        return null;
+      }else if(d.idUtente!= user.uid){
+        return null;
+      }else{
+        return d;
+      }
+    }
     return Future.error(StackTrace);
   }
 
@@ -116,11 +133,6 @@ class DenunciaController {
       }
     }
   }
-
-
-
-
-
 
 
 
