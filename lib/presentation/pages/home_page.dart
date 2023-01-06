@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/presentation/pages/Informativa_contatti.dart';
+import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
@@ -14,7 +14,7 @@ import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
 import 'package:report_it/presentation/pages/forum_home_page.dart';
 import 'package:report_it/presentation/pages/mappa_page.dart';
 import 'package:report_it/presentation/pages/psicologo_home_page.dart';
-import 'package:report_it/presentation/pages/visualizza_denunce_page.dart';
+import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
 import 'package:report_it/presentation/widget/tab_navigator.dart';
 
 class HomePage extends StatefulWidget {
