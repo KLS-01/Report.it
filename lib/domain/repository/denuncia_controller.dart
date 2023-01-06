@@ -94,7 +94,7 @@ class DenunciaController {
   Future<bool> accettaDenuncia(String idDenuncia, SuperUtente utente) async {
     //controllo se l'utente è un UffPolGiud
 
-    if(AuthenticationService(auth).getTipoUtente(utente) != TipoUtente.UffPolGiud){
+    if(utente.tipo!= TipoUtente.UffPolGiud){
       return false;
     }
     else{

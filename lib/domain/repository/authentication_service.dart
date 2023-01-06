@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
+import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/spid_entity.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
 
 import '../entity/uffPolGiud_entity.dart';
-import '../../data/models/AutenticazioneDAO.dart';
+
 
 class AuthenticationService {
   final FirebaseAuth auth;
@@ -29,23 +30,26 @@ class AuthenticationService {
       return null;
     }
     else{
-      if((await RetrieveUffPolGiudByID(user.uid))!=null) {
-        return SuperUtente(
-            user.uid, TipoUtente.UffPolGiud);
-      }
-      else if((await RetrieveCUPByID(user.uid))!=null){
-        return SuperUtente(
-            user.uid, TipoUtente.OperatoreCup);
-      }else{
+      Utente? ut= await RetrieveUtenteByID(user.uid);
+      UffPolGiud? uff=await RetrieveUffPolGiudByID(user.uid);
+      if(ut != null) {
         return SuperUtente(
             user.uid, TipoUtente.Utente);
+      }else if(uff != null) {
+        print("sei un uff");
+        return SuperUtente(
+            user.uid, TipoUtente.UffPolGiud);
+      }else{
+        print("sei un op");
+        return SuperUtente(
+            user.uid, TipoUtente.OperatoreCup);
       }
     }
   }
 
 
   Stream<SuperUtente?> get superUtenteStream {
-      return auth.authStateChanges().asyncMap((event) => superUtenteFromFirebaseUser(event));
+      return auth.authStateChanges().asyncMap(superUtenteFromFirebaseUser);
   }
 
   /// There are a lot of different ways on how you can do exception handling.
@@ -55,7 +59,9 @@ class AuthenticationService {
   Future<String?> signIn(
       {required String email,
       required String password,
-      required String userType}) async {
+      required String userType})
+  async
+  {
     try {
       if (userType == "SPID") {
         try {
@@ -95,9 +101,6 @@ class AuthenticationService {
     }
   }
 
-  //metodo che torna il tipo di utente connesso
-  TipoUtente? getTipoUtente(SuperUtente? u){
-    return u?.tipo;
-  }
+
 
 }

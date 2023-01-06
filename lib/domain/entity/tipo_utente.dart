@@ -1,5 +1,5 @@
 enum TipoUtente{
   UffPolGiud,
   OperatoreCup,
-  Utente
+  Utente,
 }
