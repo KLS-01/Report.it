@@ -102,8 +102,17 @@ class _VisualizzaDenunceUtentePageState
                                   ),
                                   margin: EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 228, 228, 228),
-                                      borderRadius: BorderRadius.circular(20)),
+                                      // color: Color.fromARGB(255, 228, 228, 228),
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(1.5, 1.5),
+                                        )
+                                      ]),
                                 );
                               },
                             );

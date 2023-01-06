@@ -34,7 +34,7 @@ class _InformativaState extends State<Informativa> {
                 const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
             child: CarouselSlider(
               options: CarouselOptions(
-                enableInfiniteScroll: false,
+                enableInfiniteScroll: true,
                 viewportFraction: 1,
                 height: MediaQuery.of(context).size.height * 0.58,
                 onPageChanged: (index, reason) {
