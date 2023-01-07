@@ -16,6 +16,18 @@ class DenunciaController {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  Future<List<Denuncia>> visualizzaStoricoDenunceBySuperUtenteAndStato(SuperUtente? utente, StatoDenuncia stato) async {
+    if(utente==null){
+      return Future.error(StackTrace);
+    }else{
+      if(utente.tipo==TipoUtente.Utente){
+        return denunciaDao.retrieveByUtente(utente.id);
+      }else{
+        return denunciaDao.retrieveByUff(utente.id);
+      }
+    }
+  }
+
   Future<List<Denuncia>> visualizzaStoricoDenunceByUtente() async {
     final User? user = auth.currentUser;
     if (user == null) {
@@ -26,7 +38,12 @@ class DenunciaController {
     return Future.error(StackTrace);
   }
 
-  Future<Denuncia?> visualizzaDenunciaById(String idDenuncia) async {
+  Future<List<Denuncia>> visualizzaDenunceByStato(StatoDenuncia stato){
+    return denunciaDao.retrieveByStato(stato);
+  }
+
+  Future<Denuncia?> visualizzaDenunciaById(String idDenuncia, SuperUtente utente) async {
+    //bisogna fare il controllo se è un uffPolGiud che ha accettato questa denuncia nel caso sia accettata
     final User? user = auth.currentUser;
     if (user == null) {
       print("NON SEI LOGGATO");

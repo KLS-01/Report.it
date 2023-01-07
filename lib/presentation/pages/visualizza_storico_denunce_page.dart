@@ -7,6 +7,7 @@ import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/presentation/pages/dettagli_denuncia_page.dart';
 
 import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
@@ -16,6 +17,7 @@ import '../../../domain/repository/denuncia_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
 import 'inoltro_denuncia_page.dart';
+import '../widget/visualizza_denunce_widget.dart';
 
 class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
   const VisualizzaStoricoDenunceUtentePage({Key? key}) : super(key: key);
@@ -28,11 +30,18 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
-
+  late Future<List<Denuncia>> denunceDaAccettare;
   @override
   void initState() {
     super.initState();
-    denunce = generaListaDenunce();
+    SuperUtente? utente= context.read<SuperUtente?>();
+    denunce=generaListaDenunce();
+
+    if(utente!=null){
+      if(utente.tipo==TipoUtente.UffPolGiud){
+        denunceDaAccettare=DenunciaController().visualizzaDenunceByStato(StatoDenuncia.NonInCarico);
+      }
+    }
   }
 
   @override
@@ -72,104 +81,45 @@ class _VisualizzaStoricoDenunceUtentePageState
           body: TabBarView(
             children: [
               //1st tab
-
-              Flex(
-                direction: Axis.vertical,
-                children: [
-                  Expanded(
-                    child: Consumer<SuperUtente?>(
-                      builder: (context, utente,_){
-                        if(utente==null){
-                          return const Text("non sei loggato");
-                        }
-                        else{
-                          if(utente.tipo!= TipoUtente.Utente){
-                            return const Text("Errore non hai i permessi");
-                          }
-                          else{
-                            return FutureBuilder<List<Denuncia>>(
-                              future: denunce,
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<List<Denuncia>> snapshot) {
-                                var data = snapshot.data;
-                                if (data == null) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else {
-                                  var datalenght = data.length;
-                                  if (datalenght == 0) {
-                                    return const Center(
-                                      child: Text('Nessuna denuncia trovata'),
-                                    );
-                                  } else {
-                                    return ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      itemBuilder: (context, index) {
-                                        final item = snapshot.data![index];
-
-                                        return Container(
-                                          margin: EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            // color: Color.fromARGB(255, 228, 228, 228),
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(20),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 2.0,
-                                                  spreadRadius: 0.0,
-                                                  offset: Offset(1.5, 1.5),
-                                                )
-                                              ]),
-                                          child: ListTile(
-                                            title: Text(item.descrizione),
-                                            subtitle:
-                                            Text(item.categoriaDenuncia.toString()),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                }
-                              },
-                            );
-                          }
-                        }
-                      },
-                    ),
-                  ),
-                ],
+              Consumer<SuperUtente?>(
+                builder: (context, utente,_){
+                  if(utente?.tipo==TipoUtente.UffPolGiud){
+                    return VisualizzaDenunceWidget(denunce: denunceDaAccettare);
+                  }else{
+                    return VisualizzaDenunceWidget(denunce: denunce);
+                  }
+                }
               ),
-
               //2nd tab
-              Container(
-                child: const Text(
-                  'Sorm',
-                  style: TextStyle(fontSize: 40),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              VisualizzaDenunceWidget(denunce: denunce),
               //3rd tab
-              Container(
-                child: const Text(
-                  'Mammt',
-                  style: TextStyle(fontSize: 40),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              VisualizzaDenunceWidget(denunce: denunce)
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => InoltroDenuncia(),
-                ),
-              );
+          floatingActionButton: Consumer<SuperUtente?>(
+            builder: (context,utente,_){
+              if(utente?.tipo==TipoUtente.Utente){
+                return FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InoltroDenuncia(),
+                      ),
+                    );
+                  },
+                  backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+                  child: const Icon(Icons.add),
+                );
+              }else{
+                return Visibility(
+                  visible: false,
+                  child: FloatingActionButton(
+                    onPressed: () {}
+                  ),
+                );
+              }
             },
-            backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-            child: const Icon(Icons.add),
           ),
         ),
       ),
@@ -182,3 +132,4 @@ Future<List<Denuncia>> generaListaDenunce() {
 
   return controller.visualizzaStoricoDenunceByUtente();
 }
+
