@@ -21,7 +21,7 @@ class TabNavigator extends StatelessWidget {
     if (tabItem == "denuncia")
       child = VisualizzaStoricoDenunceUtentePage();
     else if (tabItem == "forum")
-      child = Forum();
+      child = ForumHome();
     else if (tabItem == "informativa")
       child = Informativa();
     else if (tabItem == "mappa")
