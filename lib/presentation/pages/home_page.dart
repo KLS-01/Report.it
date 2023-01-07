@@ -8,6 +8,7 @@ import 'package:report_it/presentation/pages/Informativa_contatti.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
+import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';
 import '../../domain/repository/authentication_service.dart';
 import 'informativa_contatti_page.dart';
 import 'test_prenotazioni.dart';
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     const VisualizzaStoricoDenunceUtentePage(),
     Fake_index(),
     Informativa(),
-    PrenotazionePage(),
+    const VisualizzaStoricoPrenotazioniPage(),
     Fake_index(),
   ];
 

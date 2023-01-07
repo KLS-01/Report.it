@@ -84,7 +84,27 @@ class PrenotazioneController {
       List<Prenotazione> listaAttive =
           await prenotazioneDao.retrieveByUtente(utente.id);
       listaAttive.removeWhere((element) => element.dataPrenotazione == null);
+
       return listaAttive;
+    }
+    return Future.error(StackTrace);
+  }
+
+  Future<List<Prenotazione>> visualizzaStoricoByOperatore(
+      SuperUtente? operatore) async {
+    if (operatore == null) {
+      print("User Error");
+    } else {
+      if (operatore.tipo != TipoUtente.OperatoreCup) {
+        return Future.error(StackTrace);
+      } else {
+        List<Prenotazione> listaAccettate =
+            await prenotazioneDao.retrieveByOperatore(operatore.id);
+        listaAccettate
+            .removeWhere((element) => element.dataPrenotazione == null);
+
+        return listaAccettate;
+      }
     }
     return Future.error(StackTrace);
   }
@@ -94,6 +114,7 @@ class PrenotazioneController {
       print("User Error");
     } else {
       List<Prenotazione> listaAttive = await prenotazioneDao.retrieveAttive();
+      //print("Print Application layer: $listaAttive");
       return listaAttive;
     }
     return Future.error(StackTrace);

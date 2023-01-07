@@ -82,6 +82,7 @@ class PrenotazioneDao {
   }
 
   Future<List<Prenotazione>> retrieveByUtente(idUtente) async {
+    print("data $idUtente");
     var ref =
         db.collection(DOCUMENT_NAME).where("IDUtente", isEqualTo: idUtente);
     List<Prenotazione> lista = List.empty(growable: true);
@@ -93,13 +94,14 @@ class PrenotazioneDao {
 
       return lista;
     }));
-
     return lista;
   }
 
-  Future<List<Prenotazione>> retrieveAttive() async {
-    var ref =
-        db.collection(DOCUMENT_NAME).where("DataPrenotazione", isEqualTo: null);
+  Future<List<Prenotazione>> retrieveByOperatore(idOperatore) async {
+    print("data $idOperatore");
+    var ref = db
+        .collection(DOCUMENT_NAME)
+        .where("IDOperatore", isEqualTo: idOperatore);
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
@@ -109,7 +111,22 @@ class PrenotazioneDao {
 
       return lista;
     }));
+    return lista;
+  }
 
+  Future<List<Prenotazione>> retrieveAttive() async {
+    var ref =
+        db.collection(DOCUMENT_NAME).where("DataPrenotazione", isNull: true);
+    List<Prenotazione> lista = List.empty(growable: true);
+    await ref.get().then(((value) {
+      for (var snap in value.docs) {
+        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        lista.add(prenotazione);
+      }
+
+      return lista;
+    }));
+    //print("Print Data layer: $lista");
     return lista;
   }
 

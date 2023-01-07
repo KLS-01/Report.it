@@ -7,6 +7,7 @@ import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/firebase_options.dart';
+import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() async {
@@ -110,7 +111,8 @@ class MyCustomPageState extends State<MyCustomPage> {
                       padding: const EdgeInsets.only(left: 150.0, top: 40.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          showPrenotazione(utente);
+                          Navigator.of(context, rootNavigator: true)
+                              .pop(context);
                         },
                         child: const Text('Mostra prenotazione'),
                       ))
