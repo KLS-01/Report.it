@@ -38,10 +38,12 @@ class _VisualizzaStoricoDenunceUtentePageState
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 0,
             backgroundColor: Theme.of(context).backgroundColor,
             bottom: const TabBar(
               labelColor: Color.fromRGBO(219, 29, 69, 1),
@@ -78,15 +80,13 @@ class _VisualizzaStoricoDenunceUtentePageState
                 children: [
                   Expanded(
                     child: Consumer<SuperUtente?>(
-                      builder: (context, utente,_){
-                        if(utente==null){
+                      builder: (context, utente, _) {
+                        if (utente == null) {
                           return const Text("non sei loggato");
-                        }
-                        else{
-                          if(utente.tipo!= TipoUtente.Utente){
+                        } else {
+                          if (utente.tipo != TipoUtente.Utente) {
                             return const Text("Errore non hai i permessi");
-                          }
-                          else{
+                          } else {
                             return FutureBuilder<List<Denuncia>>(
                               future: denunce,
                               builder: (BuildContext context,
@@ -110,21 +110,51 @@ class _VisualizzaStoricoDenunceUtentePageState
                                         return Container(
                                           margin: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            // color: Color.fromARGB(255, 228, 228, 228),
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(20),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 2.0,
-                                                  spreadRadius: 0.0,
-                                                  offset: Offset(1.5, 1.5),
-                                                )
-                                              ]),
-                                          child: ListTile(
-                                            title: Text(item.descrizione),
-                                            subtitle:
-                                            Text(item.categoriaDenuncia.toString()),
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                blurRadius: 8.0,
+                                                spreadRadius: 1.0,
+                                                offset: Offset(0, 3),
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              const Icon(
+                                                Icons.circle,
+                                                color: Colors.amberAccent,
+                                              ),
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: 75.0,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      item.descrizione,
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(item
+                                                        .categoriaDenuncia
+                                                        .toString()),
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    Icons.info_outline_rounded,
+                                                  ))
+                                            ],
                                           ),
                                         );
                                       },
