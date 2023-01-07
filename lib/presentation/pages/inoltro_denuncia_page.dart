@@ -26,12 +26,12 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   @override
   Widget build(BuildContext context) {
     return Consumer<SuperUtente?>(
-      builder:(context, utente,_){
-        if(utente==null){
+      builder: (context, utente, _) {
+        if (utente == null) {
           return const Text("Non sei loggato");
-        }else if(utente.tipo!= TipoUtente.Utente){
+        } else if (utente.tipo != TipoUtente.Utente) {
           return const Text("non hai i permessi per questa funzionalità");
-        }else{
+        } else {
           return Scaffold(
             appBar: AppBar(
               iconTheme: IconThemeData(
@@ -90,7 +90,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(labelText: 'Numero telefonico'),
+                          decoration:
+                              InputDecoration(labelText: 'Numero telefonico'),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci il numero telefonico';
@@ -100,7 +101,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(labelText: 'Indirizzo e-mail'),
+                          decoration:
+                              InputDecoration(labelText: 'Indirizzo e-mail'),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci l\'indirizzo e-mail';
@@ -114,7 +116,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     ),
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
+                  state: _currentStep >= 0
+                      ? StepState.complete
+                      : StepState.disabled,
                 ),
                 Step(
                   title: Text("Discriminazione"),
@@ -300,7 +304,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     ),
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
+                  state: _currentStep >= 1
+                      ? StepState.complete
+                      : StepState.disabled,
                 ),
                 Step(
                   title: Text("Vittima"),
@@ -315,7 +321,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     ),
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
+                  state: _currentStep >= 2
+                      ? StepState.complete
+                      : StepState.disabled,
                 ),
               ],
             ),

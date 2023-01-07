@@ -53,18 +53,21 @@ class _VisualizzaStoricoDenunceUtentePageState
                   child: Text(
                     "In attesa",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Prese in carico",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
