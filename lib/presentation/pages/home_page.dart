@@ -10,6 +10,7 @@ import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
 import '../../domain/repository/authentication_service.dart';
 import 'informativa_contatti_page.dart';
+import 'test_prenotazioni.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
     const VisualizzaStoricoDenunceUtentePage(),
     Fake_index(),
     Informativa(),
-    Fake_index(),
+    PrenotazionePage(),
     Fake_index(),
   ];
 
