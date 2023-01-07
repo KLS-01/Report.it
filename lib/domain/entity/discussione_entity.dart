@@ -1,4 +1,5 @@
 class Commento {
+  String? id;
   String creatore;
   DateTime dataCreazione;
   int punteggio;
@@ -7,13 +8,21 @@ class Commento {
   Commento(this.creatore, this.dataCreazione, this.punteggio, this.testo);
 
   factory Commento.fromJson(Map<String, dynamic> json) {
-    return Commento(json["Creatore"], json["DataOra"].toDate(),
+    var c = Commento(json["Creatore"], json["DataOra"].toDate(),
         json["Punteggio"], json["Testo"]);
+
+    c.id = json["ID"];
+
+    return c;
   }
 
   factory Commento.fromMap(map) {
-    return Commento(map["Creatore"], map["DataOra"].toDate(), map["Punteggio"],
+    var c = Commento(map["Creatore"], map["DataOra"].toDate(), map["Punteggio"],
         map["Testo"]);
+
+    c.id = map["ID"];
+
+    return c;
   }
 
   Map<String, dynamic> toMap() {
@@ -34,10 +43,11 @@ class Discussione {
   int punteggio;
   String titolo;
   String testo;
+  String stato;
   List<Commento?> commenti = List.empty(growable: true);
 
   Discussione(this.categoria, this.dataCreazione, this.idCreatore,
-      this.punteggio, this.testo, this.titolo);
+      this.punteggio, this.testo, this.titolo, this.stato);
 
   factory Discussione.fromJson(Map<String, dynamic> json) {
     var u = Discussione(
@@ -47,6 +57,7 @@ class Discussione {
       json["Punteggio"],
       json["Testo"],
       json["Titolo"],
+      json["Stato"],
     );
     u.id = json["ID"];
 
@@ -61,6 +72,7 @@ class Discussione {
       map["Punteggio"],
       map["Testo"],
       map["Titolo"],
+      map["Stato"],
     );
     u.id = map["ID"];
 
@@ -75,6 +87,7 @@ class Discussione {
       "Punteggio": punteggio,
       "Testo": testo,
       "Titolo": titolo,
+      "Stato": stato,
     };
   }
 
