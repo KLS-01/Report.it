@@ -43,12 +43,18 @@ class AuthenticationService {
         }
       } else {
         try {
-          SPID? u = await RetrieveSPIDByEmail(email);
+          var u = await RetrieveSPIDByEmail(email);
 
           if (u != null) {
             return 'invalid-email';
           }
-        } catch (e) {}
+        } catch (e) {
+          print(e);
+          if (e.toString() == "Bad state: No element") {
+          } else {
+            return "invalid-email";
+          }
+        }
       }
 
       await auth.signInWithEmailAndPassword(email: email, password: password);

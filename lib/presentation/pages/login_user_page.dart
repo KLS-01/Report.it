@@ -173,7 +173,7 @@ class _LoginWorkerState extends State<LoginWorker> {
                                                 password: passwordController
                                                     .text
                                                     .trim(),
-                                                userType: 'WRK'))!;
+                                                userType: 'SPID'))!;
 
                                         ///alertMessage, thanks to this switch construct, takes the proper value
                                         String alertMessage = "";

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:report_it/data/Models/forum_dao.dart';
 import 'package:report_it/domain/entity/discussione_entity.dart';
 import 'package:report_it/firebase_options.dart';
@@ -30,12 +31,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  var d = await RetrieveAllForumUtente("MjQfAm3PDdOS3BUFJWkrrGBdHyR2");
-
-  AggiungiCommento(
-      Commento("dVd0S4ptsafnEqPJq938mjEmH3s2 ", DateTime.now(), 2, "confermo"),
-      d.first!.id!);
 
   runApp(MyApp());
 }

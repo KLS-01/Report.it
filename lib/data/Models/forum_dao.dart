@@ -11,6 +11,7 @@ Future<List<Discussione?>> RetrieveAllForum() async {
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
       Discussione ut = Discussione.fromJson(c.data());
+      ut.setID(c.id);
 
       ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
       lista.add(ut);
@@ -23,7 +24,7 @@ Future<List<Discussione?>> RetrieveAllForum() async {
 }
 
 Future<List<Commento?>> RetrieveAllCommenti(String id) async {
-  var ref = database.collection("Discussione/$id/Commento");
+  var ref = database.collection("Discussione").doc(id).collection("Commento");
 
   List<Commento> lista = List.empty(growable: true);
 
@@ -48,9 +49,7 @@ Future<List<Discussione?>> RetrieveAllForumUtente(String id) async {
 
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
-      print(c.data());
       Discussione? ut = Discussione.fromJson(c.data());
-      print(ut.id);
 
       ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
       lista.add(ut);
@@ -63,11 +62,20 @@ Future<List<Discussione?>> RetrieveAllForumUtente(String id) async {
 }
 
 void AggiungiCommento(Commento commento, String discussione) {
-  var ref = database.collection("Discussione/$discussione");
+  var ref = database
+      .collection("Discussione")
+      .doc(discussione)
+      .collection("Commento");
+
+  ref.add(commento.toMap());
 }
 
-void AggiungiDiscussione(Discussione discussione) {
+Future<String> AggiungiDiscussione(Discussione discussione) async {
   var ref = database.collection("Discussione");
 
-  ref.add(discussione.toMap()).then((value) => discussione.id = value.id);
+  String id = await ref.add(discussione.toMap()).then((value) {
+    return value.id;
+  });
+
+  return id;
 }

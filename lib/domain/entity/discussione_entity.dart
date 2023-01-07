@@ -75,7 +75,10 @@ class Discussione {
       "Punteggio": punteggio,
       "Testo": testo,
       "Titolo": titolo,
-      "Commento": commenti
     };
+  }
+
+  void setID(String id) {
+    this.id = id;
   }
 }
