@@ -193,6 +193,7 @@ class _VisualizzaStoricoDenunceUtentePageState
             ],
           ),
           floatingActionButton: FloatingActionButton(
+            heroTag: null,
             onPressed: () {
               Navigator.push(
                 context,
