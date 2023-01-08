@@ -78,7 +78,8 @@ class _VisualizzaPrenotazioniAttivePageState
                 future: prenotazioni,
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Prenotazione>> snapshot) {
-                  return PrenotazioneListWidget(snapshot: snapshot);
+                  return PrenotazioneListWidget(
+                      snapshot: snapshot, utente: utente);
                 },
               ))
             ]);

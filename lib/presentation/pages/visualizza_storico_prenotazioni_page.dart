@@ -92,8 +92,9 @@ class _VisualizzaStoricoPrenotazioniPageState
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Prenotazione>> snapshot) {
                   return PrenotazioneListWidget(
-                      snapshot:
-                          snapshot); //Genera la lista di prenotazione utilizzando il widget PrenotazioneListWidget
+                      snapshot: snapshot,
+                      utente:
+                          utente); //Genera la lista di prenotazione utilizzando il widget PrenotazioneListWidget
                 },
               ))
             ]);

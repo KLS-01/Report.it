@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage> {
     const VisualizzaStoricoDenunceUtentePage(),
     Fake_index(),
     Informativa(),
-    const VisualizzaStoricoPrenotazioniPage(),
     Fake_index(),
+    const VisualizzaStoricoPrenotazioniPage(),
   ];
 
   @override
