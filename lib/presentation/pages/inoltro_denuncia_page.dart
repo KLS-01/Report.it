@@ -16,15 +16,97 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController oppressoreController = TextEditingController();
   final regexEmail = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   String? discriminazione;
+  String? vittima;
+  String? consenso1, consenso2;
 
   @override
   Widget build(BuildContext context) {
+    final consenso_widget = Wrap(
+      children: [
+        Column(
+          children: <Widget>[
+            const Text(
+              "Rilascia il consenso all'Ufficiale di Polizia Giudiziaria di condividere il Suo nome ed altre informazioni personali con altre parti inerenti a questo caso quando così facendo si collabora nell’investigazione e nella risoluzione del Suo reclamo?",
+              style: TextStyle(fontSize: 16),
+            ),
+            RadioListTile(
+              title: const Text("Sì"),
+              value: "Si",
+              groupValue: consenso1,
+              onChanged: ((value) {
+                setState(() {
+                  consenso1 = value.toString();
+                  consenso2 = null;
+                });
+              }),
+            ),
+            RadioListTile(
+              title: const Text("No"),
+              value: "No",
+              groupValue: consenso2,
+              onChanged: ((value) {
+                setState(() {
+                  consenso2 = value.toString();
+                  consenso1 = null;
+                });
+              }),
+            ),
+          ],
+        ),
+        (consenso2) != null
+            ? Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const <Widget>[
+                    SizedBox(height: 5),
+                    Text(
+                      "Bisogna necessariamente accettare il consenso per poter inoltra correttamente tale denuncia.",
+                    ),
+                  ],
+                ),
+              )
+            : Column(),
+        //se il consenso "sì" --> allora il bottne viene mostrato
+        (consenso1) != null
+            ? Flexible(
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          //
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(244, 67, 54, 1),
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                        ),
+                        child: const Text(
+                          "Inoltra",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    )),
+              )
+            : Column(),
+      ],
+    );
+
     return Consumer<SuperUtente?>(
       builder: (context, utente, _) {
         if (utente == null) {
@@ -34,7 +116,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
         } else {
           return Scaffold(
             appBar: AppBar(
-              iconTheme: IconThemeData(
+              iconTheme: const IconThemeData(
                 color: Color.fromRGBO(219, 29, 69, 1),
               ),
               elevation: 0,
@@ -42,21 +124,41 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
             ),
             body: Stepper(
               controlsBuilder: (context, details) {
-                return Row(
-                  children: <Widget>[
-                    ElevatedButton(
-                      onPressed: details.onStepContinue,
-                      child: Text('Continua'),
-                    ),
-                    TextButton(
-                      onPressed: details.onStepCancel,
-                      child: Text(
-                        'Indietro',
-                        style: TextStyle(color: Colors.black),
+                if (_currentStep == 0) {
+                  return Row(
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: details.onStepContinue,
+                        child: const Text('Continua'),
                       ),
+                    ],
+                  );
+                }
+                if (_currentStep == 5) {
+                  return TextButton(
+                    onPressed: details.onStepCancel,
+                    child: const Text(
+                      'Indietro',
+                      style: TextStyle(color: Colors.black),
                     ),
-                  ],
-                );
+                  );
+                } else {
+                  return Row(
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: details.onStepContinue,
+                        child: const Text('Continua'),
+                      ),
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: const Text(
+                          'Indietro',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  );
+                }
               },
               type: stepperType,
               currentStep: _currentStep,
@@ -65,13 +167,19 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
               onStepCancel: cancel,
               steps: <Step>[
                 Step(
-                  title: Text("Dati anagrafici"),
+                  title: const Text(
+                    "Dati anagrafici",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   content: Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Nome'),
+                          decoration: const InputDecoration(labelText: 'Nome'),
+                          controller: nameController,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci il nome';
@@ -80,7 +188,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Cognome'),
+                          decoration:
+                              const InputDecoration(labelText: 'Cognome'),
+                          controller: surnameController,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci il cognome';
@@ -90,8 +200,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.phone,
-                          decoration:
-                              InputDecoration(labelText: 'Numero telefonico'),
+                          controller: numberController,
+                          decoration: const InputDecoration(
+                              labelText: 'Numero telefonico'),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci il numero telefonico';
@@ -101,8 +212,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          decoration:
-                              InputDecoration(labelText: 'Indirizzo e-mail'),
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                              labelText: 'Indirizzo e-mail'),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci l\'indirizzo e-mail';
@@ -121,18 +233,23 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       : StepState.disabled,
                 ),
                 Step(
-                  title: Text("Discriminazione"),
+                  title: const Text(
+                    "Discriminazione",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   content: Form(
                     key: _formKey2,
                     child: Column(
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Indicare la natura della presunta discriminazione:",
                           style: TextStyle(fontSize: 16),
                         ),
                         RadioListTile(
-                          title: Text("Razza"),
-                          value: "Razza",
+                          title: const Text("Etnia"),
+                          value: "Etnia",
                           groupValue: discriminazione,
                           onChanged: ((value) {
                             setState(() {
@@ -141,8 +258,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Colore"),
-                          value: "Colore",
+                          title: const Text("Colore della pelle"),
+                          value: "ColoreDellaPelle",
                           groupValue: discriminazione,
                           onChanged: ((value) {
                             setState(() {
@@ -151,17 +268,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Origine Nazionale"),
-                          value: "OrigineNazionale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: Text("Disabilità"),
+                          title: const Text("Disabilità"),
                           value: "Disabilita",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -171,7 +278,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Età"),
+                          title: const Text("Età"),
                           value: "Eta",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -181,17 +288,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Sesso"),
-                          value: "Sesso",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: Text("Orientamento Sessuale"),
+                          title: const Text("Orientamento Sessuale"),
                           value: "OrientamentoSessuale",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -201,7 +298,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Religione"),
+                          title: const Text("Religione"),
                           value: "Religione",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -211,7 +308,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Stirpe"),
+                          title: const Text("Stirpe"),
                           value: "Stirpe",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -221,8 +318,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Gender"),
-                          value: "Gender",
+                          title: const Text("GenereSessuale"),
+                          value: "GenereSessuale",
                           groupValue: discriminazione,
                           onChanged: ((value) {
                             setState(() {
@@ -231,17 +328,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Etnicità"),
-                          value: "Etnicita",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: Text("Identità di genere"),
+                          title: const Text("Identità di genere"),
                           value: "IdentitaDiGenere",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -251,7 +338,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Espressione di genere"),
+                          title: const Text("Espressione di genere"),
                           value: "EspressioneDiGenere",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -261,7 +348,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Fede religiosa"),
+                          title: const Text("Fede"),
                           value: "Fede",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -271,17 +358,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Veterano"),
-                          value: "Veterano",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: Text("Storia Personale"),
+                          title: const Text("Storia Personale"),
                           value: "StoriaPersonale",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -291,8 +368,28 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Reddito"),
-                          value: "BassoReddito",
+                          title: const Text("Reddito"),
+                          value: "Reddito",
+                          groupValue: discriminazione,
+                          onChanged: ((value) {
+                            setState(() {
+                              discriminazione = value.toString();
+                            });
+                          }),
+                        ),
+                        RadioListTile(
+                          title: const Text("Abusi"),
+                          value: "Abusi",
+                          groupValue: discriminazione,
+                          onChanged: ((value) {
+                            setState(() {
+                              discriminazione = value.toString();
+                            });
+                          }),
+                        ),
+                        RadioListTile(
+                          title: Text("Aggressione"),
+                          value: "Aggressione",
                           groupValue: discriminazione,
                           onChanged: ((value) {
                             setState(() {
@@ -309,17 +406,126 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       : StepState.disabled,
                 ),
                 Step(
-                  title: Text("Vittima"),
+                  title: const Text(
+                    "Vittima",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   content: Form(
                     child: Column(
                       children: <Widget>[
-                        Text(
-                          "Indicare la natura della presunta discriminazione:",
+                        const Text(
+                          "Chi ritiene essere stato vittima di discriminazione?",
                           style: TextStyle(fontSize: 16),
+                        ),
+                        RadioListTile(
+                          title: const Text("Lei stesso"),
+                          value: "LeiStesso",
+                          groupValue: vittima,
+                          onChanged: ((value) {
+                            setState(() {
+                              vittima = value.toString();
+                            });
+                          }),
+                        ),
+                        RadioListTile(
+                          title: const Text("Persona terza"),
+                          value: "PersonaTerza",
+                          groupValue: vittima,
+                          onChanged: ((value) {
+                            setState(() {
+                              vittima = value.toString();
+                            });
+                          }),
                         ),
                       ],
                     ),
                   ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 2
+                      ? StepState.complete
+                      : StepState.disabled,
+                ),
+                Step(
+                  title: const Text(
+                    "Oppressore",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: Form(
+                    child: Column(
+                      children: <Widget>[
+                        const Text(
+                          "Scrivi qui il nome della persona e/o dell’organizzazione che Lei ritiene abbia compiuto l’azione discriminante",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration:
+                              InputDecoration(labelText: 'Nome oppressore'),
+                          controller: oppressoreController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 3
+                      ? StepState.complete
+                      : StepState.disabled,
+                ),
+                Step(
+                  title: const Text(
+                    "Vicenda",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: Form(
+                    child: Column(
+                      children: <Widget>[
+                        const Text(
+                          "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia. È possibile allegare pagine aggiuntive per spiegare il Suo reclamo ",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'Scrivi qui la vicenda'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 3
+                      ? StepState.complete
+                      : StepState.disabled,
+                ),
+                Step(
+                  title: const Text(
+                    "Consenso",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: consenso_widget,
                   isActive: _currentStep >= 0,
                   state: _currentStep >= 2
                       ? StepState.complete
@@ -346,7 +552,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   continued() {
     if (_formKey.currentState!.validate()) {
-      _currentStep < 4 ? setState(() => _currentStep += 1) : null;
+      _currentStep < 6 ? setState(() => _currentStep += 1) : null;
     }
   }
 
