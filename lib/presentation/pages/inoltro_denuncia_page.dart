@@ -15,16 +15,27 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
+  final TextEditingController indirizzoController = TextEditingController();
+  final TextEditingController capController = TextEditingController();
+  final TextEditingController provinciaController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController oppressoreController = TextEditingController();
-  final regexEmail = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+  final TextEditingController nomeVittimaController = TextEditingController();
+  final TextEditingController cognomeVittimaController =
+      TextEditingController();
+  final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
+  //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,+\s][0-9]$");
+  final regexCap = RegExp(r"^[0-9]{5}$");
+  final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
+  final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
 
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   String? discriminazione;
-  String? vittima;
+  String? vittima1, vittima2;
   String? consenso1, consenso2;
 
   @override
@@ -68,9 +79,20 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const <Widget>[
                     SizedBox(height: 5),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Attenzione!",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          )),
+                    ),
                     Text(
                       "Bisogna necessariamente accettare il consenso per poter inoltra correttamente tale denuncia.",
                     ),
+                    SizedBox(
+                      height: 10,
+                    )
                   ],
                 ),
               )
@@ -88,7 +110,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           //
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(244, 67, 54, 1),
+                          backgroundColor: Colors.white,
                           elevation: 4,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
@@ -96,12 +118,83 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         child: const Text(
                           "Inoltra",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 16,
                           ),
                         ),
                       ),
                     )),
+              )
+            : Column(),
+      ],
+    );
+
+    final vittima_widget = Wrap(
+      children: [
+        Column(
+          children: <Widget>[
+            const Text(
+              "Chi ritiene essere stato vittima di discriminazione?",
+              style: TextStyle(fontSize: 16),
+            ),
+            RadioListTile(
+              title: const Text("Lei stesso"),
+              value: "LeiStesso",
+              groupValue: vittima1,
+              onChanged: ((value) {
+                setState(() {
+                  vittima1 = value.toString();
+                  vittima2 = null;
+                });
+              }),
+            ),
+            RadioListTile(
+              title: const Text("Persona terza"),
+              value: "PersonaTerza",
+              groupValue: vittima2,
+              onChanged: ((value) {
+                setState(() {
+                  vittima2 = value.toString();
+                  vittima1 = null;
+                });
+              }),
+            ),
+          ],
+        ),
+        (vittima2) != null
+            ? Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(height: 5),
+                    const Text(
+                      "Scrivi qui il nome della presunta vittima: ",
+                    ),
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(labelText: 'Nome vittima'),
+                      controller: nomeVittimaController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il nome della vittima';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(labelText: 'Cognome vittima'),
+                      controller: cognomeVittimaController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il cognome della vittima';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               )
             : Column(),
       ],
@@ -119,7 +212,14 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
               iconTheme: const IconThemeData(
                 color: Color.fromRGBO(219, 29, 69, 1),
               ),
-              elevation: 0,
+              title: const Text(
+                "Modulo inoltro denuncia/querela",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              elevation: 3,
               backgroundColor: Theme.of(context).backgroundColor,
             ),
             body: Stepper(
@@ -136,12 +236,14 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 }
                 if (_currentStep == 5) {
                   return TextButton(
-                    onPressed: details.onStepCancel,
-                    child: const Text(
-                      'Indietro',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
+                      onPressed: details.onStepCancel,
+                      child: const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Indietro',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ));
                 } else {
                   return Row(
                     children: <Widget>[
@@ -199,6 +301,45 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           },
                         ),
                         TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Indirizzo'),
+                          controller: indirizzoController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci un indirizzo';
+                            } else if (!regexIndirizzo.hasMatch(value)) {
+                              return 'Per favore, inserisci un indirizzo valida';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'CAP'),
+                          controller: capController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il CAP';
+                            } else if (!regexCap.hasMatch(value)) {
+                              return 'Per favore, inserisci un CAP valido';
+                            }
+
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Provincia'),
+                          controller: provinciaController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci la provincia';
+                            } else if (!regexProvincia.hasMatch(value)) {
+                              return 'Per favore, inserisci una provincia valida';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
                           keyboardType: TextInputType.phone,
                           controller: numberController,
                           decoration: const InputDecoration(
@@ -206,6 +347,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci il numero telefonico';
+                            } else if (!regexCellulare.hasMatch(value)) {
+                              return 'Per favore, inserisci una provincia valida';
                             }
                             return null;
                           },
@@ -218,7 +361,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Per favore, inserisci l\'indirizzo e-mail';
-                            } else if (!regexEmail.hasMatch(value!)) {
+                            } else if (!regexEmail.hasMatch(value)) {
                               return 'Per favore, inserisci una e-mail valida';
                             }
                             return null;
@@ -388,7 +531,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           }),
                         ),
                         RadioListTile(
-                          title: Text("Aggressione"),
+                          title: const Text("Aggressione"),
                           value: "Aggressione",
                           groupValue: discriminazione,
                           onChanged: ((value) {
@@ -412,36 +555,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  content: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "Chi ritiene essere stato vittima di discriminazione?",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        RadioListTile(
-                          title: const Text("Lei stesso"),
-                          value: "LeiStesso",
-                          groupValue: vittima,
-                          onChanged: ((value) {
-                            setState(() {
-                              vittima = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Persona terza"),
-                          value: "PersonaTerza",
-                          groupValue: vittima,
-                          onChanged: ((value) {
-                            setState(() {
-                              vittima = value.toString();
-                            });
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
+                  content: vittima_widget,
                   isActive: _currentStep >= 0,
                   state: _currentStep >= 2
                       ? StepState.complete
@@ -465,8 +579,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           height: 20,
                         ),
                         TextFormField(
-                          decoration:
-                              InputDecoration(labelText: 'Nome oppressore'),
+                          decoration: const InputDecoration(
+                              labelText: 'Nome oppressore'),
                           controller: oppressoreController,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -494,7 +608,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia. È possibile allegare pagine aggiuntive per spiegare il Suo reclamo ",
+                          "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
                           style: TextStyle(fontSize: 16),
                         ),
                         const SizedBox(
@@ -533,7 +647,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 ),
               ],
             ),
-            backgroundColor: Theme.of(context).backgroundColor,
+            //backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Colors.white,
           );
         }
       },
