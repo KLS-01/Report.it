@@ -7,6 +7,7 @@ import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/presentation/pages/dettagli_denuncia.dart';
 
 import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
@@ -153,7 +154,15 @@ class _VisualizzaStoricoDenunceUtentePageState
                                                 ),
                                               ),
                                               IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DettagliDenuncia(),
+                                                      ),
+                                                    );
+                                                  },
                                                   icon: const Icon(
                                                     Icons.info_outline_rounded,
                                                   ))

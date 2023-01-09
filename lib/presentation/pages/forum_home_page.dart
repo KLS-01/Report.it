@@ -16,7 +16,6 @@ class _ForumHomeState extends State<ForumHome> {
         child: Scaffold(
           backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
           appBar: AppBar(
-            elevation: 5,
             toolbarHeight: 0,
             backgroundColor: Theme.of(context).backgroundColor,
             bottom: const TabBar(
@@ -24,10 +23,10 @@ class _ForumHomeState extends State<ForumHome> {
               indicatorColor: Color.fromRGBO(219, 29, 69, 1),
               tabs: [
                 Tab(
-                  child: Text("tutte le discussioni"),
+                  child: Text("Tutte le discussioni"),
                 ),
                 Tab(
-                  child: Text("le tue discussioni"),
+                  child: Text("Le tue discussioni"),
                 )
               ],
             ),
