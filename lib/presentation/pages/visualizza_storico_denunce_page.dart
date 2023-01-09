@@ -30,22 +30,11 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
-  late Future<List<Denuncia>> denunceDaAccettare;
-  @override
-  void initState() {
-    super.initState();
-    SuperUtente? utente= context.read<SuperUtente?>();
-    denunce=generaListaDenunce();
 
-    if(utente!=null){
-      if(utente.tipo==TipoUtente.UffPolGiud){
-        denunceDaAccettare=DenunciaController().visualizzaDenunceByStato(StatoDenuncia.NonInCarico);
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    denunce= generaListaDenunce(context.watch<SuperUtente?>());
     return MaterialApp(
       home: DefaultTabController(
         length: 3,
@@ -78,23 +67,19 @@ class _VisualizzaStoricoDenunceUtentePageState
             ),
             title: const Text('Tabs Demo'),
           ),
-          body: TabBarView(
-            children: [
-              //1st tab
-              Consumer<SuperUtente?>(
-                builder: (context, utente,_){
-                  if(utente?.tipo==TipoUtente.UffPolGiud){
-                    return VisualizzaDenunceWidget(denunce: denunceDaAccettare);
-                  }else{
-                    return VisualizzaDenunceWidget(denunce: denunce);
-                  }
-                }
-              ),
-              //2nd tab
-              VisualizzaDenunceWidget(denunce: denunce),
-              //3rd tab
-              VisualizzaDenunceWidget(denunce: denunce)
-            ],
+          body: Consumer<SuperUtente?>(
+            builder: (context, utente,_){
+              return TabBarView(
+                  children: [
+                  //1st tab
+                  VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.NonInCarico)),
+                  //2nd tab
+                  VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.PresaInCarico)),
+                  //3rd tab
+                  VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.Chiusa))
+                  ],
+              );
+            },
           ),
           floatingActionButton: Consumer<SuperUtente?>(
             builder: (context,utente,_){
@@ -127,9 +112,9 @@ class _VisualizzaStoricoDenunceUtentePageState
   }
 }
 
-Future<List<Denuncia>> generaListaDenunce() {
+Future<List<Denuncia>> generaListaDenunce(SuperUtente? utente) {
   DenunciaController controller = DenunciaController();
+  return controller.visualizzaStoricoDenunceByUtente(utente);
 
-  return controller.visualizzaStoricoDenunceByUtente();
 }
 
