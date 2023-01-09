@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   Color unselectedColor = Colors.blueGrey;
 
 // questo è l'indice della navbar, da aggiornare ad ogni nuova aggiunta
+//non serve può essere tolto
   final List<Widget> Pagine = [
     Fake_index(),
     Fake_index(),
