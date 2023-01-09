@@ -132,7 +132,7 @@ class _VisualizzaStoricoDenunceUtentePageState
                                               SizedBox(
                                                 width: 5,
                                               ),
-                                              const Icon(
+                                              Icon(
                                                 Icons.circle,
                                                 color: Colors.amberAccent,
                                               ),
@@ -184,20 +184,213 @@ class _VisualizzaStoricoDenunceUtentePageState
               ),
 
               //2nd tab
-              Container(
-                child: const Text(
-                  'Sorm',
-                  style: TextStyle(fontSize: 40),
-                  textAlign: TextAlign.center,
-                ),
+
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  Expanded(
+                    child: Consumer<SuperUtente?>(
+                      builder: (context, utente, _) {
+                        if (utente == null) {
+                          return const Text("non sei loggato");
+                        } else {
+                          if (utente.tipo != TipoUtente.Utente) {
+                            return const Text("Errore non hai i permessi");
+                          } else {
+                            return FutureBuilder<List<Denuncia>>(
+                              future: denunce,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<Denuncia>> snapshot) {
+                                var data = snapshot.data;
+                                if (data == null) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  var datalenght = data.length;
+                                  if (datalenght == 0) {
+                                    return const Center(
+                                      child: Text('Nessuna denuncia trovata'),
+                                    );
+                                  } else {
+                                    return ListView.builder(
+                                      itemCount: snapshot.data?.length,
+                                      itemBuilder: (context, index) {
+                                        final item = snapshot.data![index];
+
+                                        return Container(
+                                          margin: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                blurRadius: 8.0,
+                                                spreadRadius: 1.0,
+                                                offset: Offset(0, 3),
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              const Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                              ),
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: 75.0,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      item.descrizione,
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(item
+                                                        .categoriaDenuncia
+                                                        .toString()),
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DettagliDenuncia(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.info_outline_rounded,
+                                                  ))
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                }
+                              },
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
               //3rd tab
-              Container(
-                child: const Text(
-                  'Mammt',
-                  style: TextStyle(fontSize: 40),
-                  textAlign: TextAlign.center,
-                ),
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  Expanded(
+                    child: Consumer<SuperUtente?>(
+                      builder: (context, utente, _) {
+                        if (utente == null) {
+                          return const Text("non sei loggato");
+                        } else {
+                          if (utente.tipo != TipoUtente.Utente) {
+                            return const Text("Errore non hai i permessi");
+                          } else {
+                            return FutureBuilder<List<Denuncia>>(
+                              future: denunce,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<Denuncia>> snapshot) {
+                                var data = snapshot.data;
+                                if (data == null) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  var datalenght = data.length;
+                                  if (datalenght == 0) {
+                                    return const Center(
+                                      child: Text('Nessuna denuncia trovata'),
+                                    );
+                                  } else {
+                                    return ListView.builder(
+                                      itemCount: snapshot.data?.length,
+                                      itemBuilder: (context, index) {
+                                        final item = snapshot.data![index];
+
+                                        return Container(
+                                          margin: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                blurRadius: 8.0,
+                                                spreadRadius: 1.0,
+                                                offset: Offset(0, 3),
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              const Icon(
+                                                Icons.circle,
+                                                color: Colors.grey,
+                                              ),
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: 75.0,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      item.descrizione,
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(item
+                                                        .categoriaDenuncia
+                                                        .toString()),
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DettagliDenuncia(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.info_outline_rounded,
+                                                  ))
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                }
+                              },
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
