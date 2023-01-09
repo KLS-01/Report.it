@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/discussione_entity.dart';
 import 'package:report_it/domain/repository/forum_service.dart';
+import 'package:report_it/presentation/pages/form_crea_discussione.dart';
 
 class ForumHome extends StatefulWidget {
   const ForumHome({super.key});
@@ -38,6 +39,23 @@ class _ForumHomeState extends State<ForumHome> {
             crealista(list: ForumService.PrendiTutte()),
             crealista(list: ForumService().Prendiutente())
           ]),
+          floatingActionButton: FloatingActionButton(
+            heroTag: null,
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => ForumForm(),
+                  transitionDuration: Duration(seconds: 0),
+                  transitionsBuilder: (_, a, __, c) =>
+                      FadeTransition(opacity: a, child: c),
+                ),
+              );
+              //
+            },
+            backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+            child: const Icon(Icons.add),
+          ),
         ),
       ),
     );
