@@ -5,8 +5,6 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/fake_index.dart';
-import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
 
 import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';
@@ -26,7 +24,6 @@ import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 
 import 'package:report_it/presentation/widget/tab_navigator.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -81,14 +78,12 @@ class _HomePageState extends State<HomePage> {
     )
   ];
 
-
   List<String> pageKeys = [
     "denuncia",
     "forum",
     "informativa",
     "mappa",
     "psicologo"
-
   ];
 
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
