@@ -251,15 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.7"
-
   flutter_phone_direct_caller:
     dependency: "direct main"
     description:
@@ -267,7 +258,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   flutter_snake_navigationbar:
     dependency: "direct main"
     description:
@@ -493,7 +490,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "20.4.42"
-
   tab_container:
     dependency: "direct main"
     description:
@@ -501,7 +497,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-
   term_glyph:
     dependency: transitive
     description:

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
-import '../../domain/entity/denuncia_entity.dart';
+import '../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../domain/repository/denuncia_controller.dart';
-import '../pages/dettagli_denuncia_page.dart';
-import '../pages/inoltro_denuncia_page.dart';
+import '../pages/pages_GD/dettagli_denuncia_page.dart';
+import '../pages/pages_GD/inoltro_denuncia_page.dart';
 
 class VisualizzaDenunceWidget extends StatefulWidget {
   final Future<List<Denuncia>> denunce;

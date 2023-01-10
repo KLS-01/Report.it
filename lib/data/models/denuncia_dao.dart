@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:report_it/domain/entity/denuncia_entity.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/denuncia_entity.dart';
+
+import '../../domain/entity/entity_GD/stato_denuncia.dart';
 
 var db = FirebaseFirestore.instance;
 

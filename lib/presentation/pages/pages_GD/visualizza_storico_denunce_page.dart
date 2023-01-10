@@ -3,23 +3,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/data/Models/denuncia_dao.dart';
-import 'package:report_it/domain/entity/categoria_denuncia.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/presentation/pages/dettagli_denuncia_page.dart';
-import 'package:report_it/presentation/pages/dettagli_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/presentation/pages/pages_GD/dettagli_denuncia_page.dart';
+import 'package:report_it/presentation/pages/pages_GD/dettagli_denuncia.dart';
 
-import '../../firebase_options.dart';
-import '../../domain/entity/denuncia_entity.dart';
-import '../../domain/entity/utente_entity.dart';
-import '../../../domain/repository/denuncia_controller.dart';
+import '../../../firebase_options.dart';
+import '../../../domain/entity/entity_GD/denuncia_entity.dart';
+import '../../../domain/entity/entity_GA/utente_entity.dart';
+import '../../../../domain/repository/denuncia_controller.dart';
 
 import 'package:flutter/material.dart';
-import '../../../domain/repository/denuncia_controller.dart';
-import '../widget/theme.dart';
+import '../../../../domain/repository/denuncia_controller.dart';
+import '../../widget/theme.dart';
 import 'inoltro_denuncia_page.dart';
-import '../widget/visualizza_denunce_widget.dart';
+import '../../widget/visualizza_denunce_widget.dart';
 
 class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
   const VisualizzaStoricoDenunceUtentePage({Key? key}) : super(key: key);

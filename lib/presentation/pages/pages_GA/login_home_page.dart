@@ -1,53 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/presentation/pages/authentication_wrapper.dart';
+import 'package:report_it/presentation/pages/pages_GA/login_user_page.dart';
 
-import '../../domain/repository/authentication_service.dart';
+import '../../../domain/repository/authentication_controller.dart';
+import 'authentication_wrapper.dart';
+import '../navigation_animations.dart';
 
-class LoginWorker extends StatefulWidget {
-  late String userType;
-
-  LoginWorker({required String this.userType});
-
-  @override
-  State<LoginWorker> createState() => _LoginWorkerState();
-}
-
-class _LoginWorkerState extends State<LoginWorker> {
-  //Global key
-  final _formKey = GlobalKey<FormState>();
-
-  String error = '';
-  //Form field
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String userWorker = 'WRK';
+    String userSPID = 'SPID';
+
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+
     late SnackBar snackBar;
     late String loginOutcome;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
+                margin: const EdgeInsets.only(top: 19),
+                padding: const EdgeInsets.fromLTRB(0, 100, 0, 50),
                 child: Hero(
                   tag: 'logo',
                   child: Image.asset(
@@ -60,29 +45,96 @@ class _LoginWorkerState extends State<LoginWorker> {
                 height: MediaQuery.of(context).size.height * 0.55,
                 decoration: const BoxDecoration(
                   borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(100)),
+                      BorderRadius.only(topLeft: Radius.circular(100)),
                   color: Color.fromRGBO(219, 29, 69, 1),
                 ),
                 child: Stack(
                   children: [
+                    // Hero(
+                    //   tag: 'redContainer',
+                    //   child:
+                    // ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Text("Sei un cittadino?",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
-                        Image.asset(
-                          'assets/images/spid_banner.png',
-                          scale: 6,
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(20),
+                              minimumSize: const Size(double.infinity, 20),
+                              backgroundColor:
+                                  const Color.fromRGBO(0, 102, 204, 1),
+                              elevation: 2,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(createRouteTo(
+                                  LoginWorker(userType: userSPID)));
+                            },
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SvgPicture.asset(
+                                    'assets/images/spid-ico.svg',
+                                    height: 22,
+                                  ),
+                                ),
+                                const Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Entra con SPID',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/separator.png',
+                              scale: 15,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Text(
+                              "altrimenti",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Image.asset('assets/images/separator.png',
+                                scale: 15),
+                          ],
+                        ),
                         Form(
                           key: _formKey,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.8,
+                                // height: MediaQuery.of(context).size.height * 0.8
                                 margin:
                                     const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: TextFormField(
@@ -143,7 +195,7 @@ class _LoginWorkerState extends State<LoginWorker> {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 40),
+                                    const EdgeInsets.symmetric(vertical: 30),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(20),
@@ -173,7 +225,7 @@ class _LoginWorkerState extends State<LoginWorker> {
                                                 password: passwordController
                                                     .text
                                                     .trim(),
-                                                userType: 'SPID'))!;
+                                                userType: 'WRK'))!;
 
                                         ///alertMessage, thanks to this switch construct, takes the proper value
                                         String alertMessage = "";
@@ -244,6 +296,7 @@ class _LoginWorkerState extends State<LoginWorker> {
           ),
         ),
       ),
+
       // ),
     );
   }

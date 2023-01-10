@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:report_it/presentation/pages/inoltro_denuncia_page.dart';
+import 'package:report_it/presentation/pages/pages_GD/inoltro_denuncia_page.dart';
 
 class Mappa extends StatelessWidget {
   const Mappa({super.key});

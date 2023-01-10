@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:report_it/domain/entity/discussione_entity.dart';
+import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 

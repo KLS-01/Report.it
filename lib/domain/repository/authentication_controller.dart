@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/spid_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/entity/utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
 
-import '../entity/uffPolGiud_entity.dart';
+import '../entity/entity_GA/uffPolGiud_entity.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;

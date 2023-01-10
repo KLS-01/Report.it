@@ -1,6 +1,6 @@
  import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/domain/entity/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 void main() => runApp(MyApp());

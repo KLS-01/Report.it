@@ -4,7 +4,7 @@ import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import 'FAQinformativa_page.dart';
-import 'navigation_animations.dart';
+import '../navigation_animations.dart';
 
 class Informativa extends StatefulWidget {
   @override

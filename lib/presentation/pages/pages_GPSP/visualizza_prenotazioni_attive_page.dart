@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
-import 'package:report_it/presentation/lista_prenotazioni_widget.dart';
+import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
 import 'test_prenotazioni.dart';
 
 Color? containerColor;

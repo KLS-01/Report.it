@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
+import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
 
 import "../../data/models/denuncia_dao.dart";
-import '../entity/denuncia_entity.dart';
+import '../entity/entity_GD/denuncia_entity.dart';
 import "../../data/models/autenticazioneDAO.dart";
-import '../entity/super_utente.dart';
-import "../entity/utente_entity.dart";
-import "authentication_service.dart";
+import '../entity/entity_GA/super_utente.dart';
+import '../entity/entity_GA/utente_entity.dart';
+import "authentication_controller.dart";
 
 class DenunciaController {
   DenunciaDao denunciaDao = DenunciaDao();

@@ -3,9 +3,9 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';

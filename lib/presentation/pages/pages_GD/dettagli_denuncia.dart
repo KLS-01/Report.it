@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/repository/denuncia_controller.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
-import '../../domain/entity/super_utente.dart';
+import '../../../domain/entity/entity_GA/super_utente.dart';
 
-class InoltroDenuncia extends StatefulWidget {
+class DettagliDenuncia extends StatefulWidget {
   @override
-  _InoltroDenuncia createState() => _InoltroDenuncia();
+  _DettagliDenuncia createState() => _DettagliDenuncia();
 }
 
-class _InoltroDenuncia extends State<InoltroDenuncia> {
+class _DettagliDenuncia extends State<DettagliDenuncia> {
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
   final TextEditingController nameController = TextEditingController();
@@ -279,95 +278,16 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   content: Form(
                     key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'Nome'),
-                          controller: nameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Cognome'),
-                          controller: surnameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il cognome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Indirizzo'),
-                          controller: indirizzoController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci un indirizzo';
-                            } else if (!regexIndirizzo.hasMatch(value)) {
-                              return 'Per favore, inserisci un indirizzo valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'CAP'),
-                          controller: capController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il CAP';
-                            } else if (!regexCap.hasMatch(value)) {
-                              return 'Per favore, inserisci un CAP valido';
-                            }
-
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Provincia'),
-                          controller: provinciaController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci la provincia';
-                            } else if (!regexProvincia.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.phone,
-                          controller: numberController,
-                          decoration: const InputDecoration(
-                              labelText: 'Numero telefonico'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il numero telefonico';
-                            } else if (!regexCellulare.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                              labelText: 'Indirizzo e-mail'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci l\'indirizzo e-mail';
-                            } else if (!regexEmail.hasMatch(value)) {
-                              return 'Per favore, inserisci una e-mail valida';
-                            }
-                            return null;
-                          },
-                        ),
+                        Text('Nome'),
+                        Text('Cognome'),
+                        Text('Indirizzo'),
+                        Text('CAP'),
+                        Text('Provincia'),
+                        Text('Numero telefonico'),
+                        Text('Indirizzo e-mail'),
                       ],
                     ),
                   ),
@@ -388,158 +308,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Indicare la natura della presunta discriminazione:",
+                          "La natura della presunta discriminazione è:",
                           style: TextStyle(fontSize: 16),
-                        ),
-                        RadioListTile(
-                          title: const Text("Etnia"),
-                          value: "Etnia",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Colore della pelle"),
-                          value: "ColoreDellaPelle",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Disabilità"),
-                          value: "Disabilita",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Età"),
-                          value: "Eta",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Orientamento Sessuale"),
-                          value: "OrientamentoSessuale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Religione"),
-                          value: "Religione",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Stirpe"),
-                          value: "Stirpe",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("GenereSessuale"),
-                          value: "GenereSessuale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Identità di genere"),
-                          value: "IdentitaDiGenere",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Espressione di genere"),
-                          value: "EspressioneDiGenere",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Fede"),
-                          value: "Fede",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Storia Personale"),
-                          value: "StoriaPersonale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Reddito"),
-                          value: "Reddito",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Abusi"),
-                          value: "Abusi",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Aggressione"),
-                          value: "Aggressione",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
+                          textAlign: TextAlign.start,
                         ),
                       ],
                     ),
@@ -556,7 +327,11 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  content: vittima_widget,
+                  content: Text(
+                    'La vittima di discriminazione è:',
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.start,
+                  ),
                   isActive: _currentStep >= 0,
                   state: _currentStep >= 2
                       ? StepState.complete
@@ -573,23 +348,14 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Scrivi qui il nome della persona e/o dell’organizzazione che Lei ritiene abbia compiuto l’azione discriminante",
+                          "Persona e/o organizzazione che ha compiuto l'azione discriminante: ",
                           style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.start,
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Nome oppressore'),
-                          controller: oppressoreController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
-                            }
-                            return null;
-                          },
-                        ),
+                        Text('Nome oppressore')
                       ],
                     ),
                   ),
@@ -609,21 +375,12 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
+                          'Dettagli',
                           style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.start,
                         ),
                         const SizedBox(
                           height: 20,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Scrivi qui la vicenda'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
-                            }
-                            return null;
-                          },
                         ),
                       ],
                     ),
@@ -640,7 +397,11 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  content: consenso_widget,
+                  content: Text(
+                    'Consenso',
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.start,
+                  ),
                   isActive: _currentStep >= 0,
                   state: _currentStep >= 2
                       ? StepState.complete

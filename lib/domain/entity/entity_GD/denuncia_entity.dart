@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:report_it/domain/entity/categoria_denuncia.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 
 class Denuncia {
   String? id;
