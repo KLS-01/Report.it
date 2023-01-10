@@ -87,7 +87,6 @@ Future<OperatoreCUP?> RetrieveCUPByID(String uid) async {
       return u;
     }
   }));
-
   return u;
 }
 

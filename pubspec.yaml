@@ -51,10 +51,15 @@ dependencies:
   flutter_snake_navigationbar: ^0.6.1
   iconsax: ^0.0.8
   expandable: ^5.0.1
+  file_picker: ^5.2.4
+  firebase_storage: ^11.0.10 
+  syncfusion_flutter_pdfviewer: ^20.4.42
+  date_time_picker: "^2.1.0"
   carousel_slider: ^4.2.1
   flutter_phone_direct_caller: ^2.1.1
   tab_container: ^2.0.0
    
+
 
 
 dev_dependencies: 
