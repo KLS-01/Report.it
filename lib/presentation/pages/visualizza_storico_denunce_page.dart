@@ -17,6 +17,7 @@ import '../../../domain/repository/denuncia_controller.dart';
 
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
+import '../widget/theme.dart';
 import 'inoltro_denuncia_page.dart';
 import '../widget/visualizza_denunce_widget.dart';
 
@@ -45,6 +46,7 @@ class _VisualizzaStoricoDenunceUtentePageState
     }
     denunce= generaListaDenunce(context.watch<SuperUtente?>());
     return MaterialApp(
+      theme: AppTheme().build(),
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 3,

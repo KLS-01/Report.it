@@ -5,8 +5,6 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/fake_index.dart';
-import 'package:report_it/presentation/pages/fake_index.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
 
 import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';

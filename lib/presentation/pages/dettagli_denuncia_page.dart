@@ -6,21 +6,21 @@ import '../../domain/entity/denuncia_entity.dart';
 import '../../../domain/repository/denuncia_controller.dart';
 import '../pages/inoltro_denuncia_page.dart';
 
-class DettagliDenuncia extends StatefulWidget {
-  const DettagliDenuncia({super.key, required this.denunciaId, required this.utente});
+class DettagliDenunciaRebecca extends StatefulWidget {
+  const DettagliDenunciaRebecca({super.key, required this.denunciaId, required this.utente});
   final String denunciaId;
   final SuperUtente utente;
 
   @override
-  State<DettagliDenuncia> createState() => _DettagliDenunciaState(denunciaId: denunciaId, utente: utente);
+  State<DettagliDenunciaRebecca> createState() => _DettagliDenunciaRebeccaState(denunciaId: denunciaId, utente: utente);
 }
 
-class _DettagliDenunciaState extends State<DettagliDenuncia> {
+class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   late Future<Denuncia?> denuncia;
   String denunciaId;
   SuperUtente utente;
 
-  _DettagliDenunciaState({required this.denunciaId,required this.utente});
+  _DettagliDenunciaRebeccaState({required this.denunciaId,required this.utente});
 
   @override
   void initState() {
