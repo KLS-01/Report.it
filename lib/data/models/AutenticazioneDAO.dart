@@ -8,8 +8,10 @@ FirebaseFirestore database = FirebaseFirestore.instance;
 
 Future<SPID?> RetrieveSPIDByEmail(String email) async {
   var ref = database.collection("SPID").where("Email", isEqualTo: email);
+  print(email);
 
   var u = await ref.get().then(((value) async {
+    print(value.docs);
     SPID u = SPID.fromJson(value.docs.first.data());
 
     return u;
@@ -23,10 +25,9 @@ Future<Utente?> RetrieveUtenteByID(String uid) async {
   var ref = database.collection("Utente").doc(uid);
 
   var u = await ref.get().then(((value) async {
-    if(value.data()==null){
+    if (value.data() == null) {
       return null;
-    }
-    else {
+    } else {
       Utente u = Utente.fromJson(value.data()!);
 
       var spid = await RetrieveSPIDByID(uid);
@@ -45,10 +46,9 @@ Future<SPID?> RetrieveSPIDByID(String uid) async {
   var ref = database.collection("SPID").doc(uid);
 
   var u = await ref.get().then(((value) {
-    if(value.data()==null){
+    if (value.data() == null) {
       return null;
-    }
-    else {
+    } else {
       SPID u = SPID.fromJson(value.data()!);
       return u;
     }
@@ -62,10 +62,9 @@ Future<UffPolGiud?> RetrieveUffPolGiudByID(String uid) async {
   var ref = database.collection("UffPolGiud").doc(uid);
 
   var u = await ref.get().then(((value) {
-    if(value.data()==null){
+    if (value.data() == null) {
       return null;
-    }
-    else {
+    } else {
       UffPolGiud u = UffPolGiud.fromJson(value.data()!);
 
       return u;
@@ -80,10 +79,9 @@ Future<OperatoreCUP?> RetrieveCUPByID(String uid) async {
   var ref = database.collection("OperatoreCUP").doc(uid);
 
   var u = await ref.get().then(((value) {
-    if(value.data()==null){
+    if (value.data() == null) {
       return null;
-    }
-    else {
+    } else {
       OperatoreCUP u = OperatoreCUP.fromJson(value.data()!);
 
       return u;
