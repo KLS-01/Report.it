@@ -8,8 +8,10 @@ FirebaseFirestore database = FirebaseFirestore.instance;
 
 Future<SPID?> RetrieveSPIDByEmail(String email) async {
   var ref = database.collection("SPID").where("Email", isEqualTo: email);
+  print(email);
 
   var u = await ref.get().then(((value) async {
+    print(value.docs);
     SPID u = SPID.fromJson(value.docs.first.data());
 
     return u;

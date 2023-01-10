@@ -7,6 +7,8 @@ import 'package:report_it/domain/entity/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/presentation/pages/dettagli_denuncia_page.dart';
+import 'package:report_it/presentation/pages/dettagli_denuncia.dart';
 
 import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
@@ -15,17 +17,8 @@ import '../../../domain/repository/denuncia_controller.dart';
 
 import 'package:flutter/material.dart';
 import '../../../domain/repository/denuncia_controller.dart';
-import '../../data/models/AutenticazioneDAO.dart';
-
-
-Color? containerColor;
-List<Color> containerColors = [
-  const Color(0xFFFDE1D7),
-  const Color(0xFFE4EDF5),
-  const Color(0xFFE7EEED),
-  const Color(0xFFF4E4CE),
-];
-
+import 'inoltro_denuncia_page.dart';
+import '../widget/visualizza_denunce_widget.dart';
 
 class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
   const VisualizzaStoricoDenunceUtentePage({Key? key}) : super(key: key);
@@ -35,132 +28,117 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
       _VisualizzaStoricoDenunceUtentePageState();
 }
 
-class _VisualizzaStoricoDenunceUtentePageState extends State<VisualizzaStoricoDenunceUtentePage> {
+class _VisualizzaStoricoDenunceUtentePageState
+    extends State<VisualizzaStoricoDenunceUtentePage> {
   late Future<List<Denuncia>> denunce;
 
-  @override
-  void initState() {
-    super.initState();
-    denunce = generaListaDenunce();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children:  [
-        Text("le tue denunce"),
-        Padding(
-          padding: const EdgeInsets.all(100.0),
-          child: ElevatedButton(
-              onPressed: () {},
-              child: Text("visualizza")),
-        ),
-        Expanded(
-          child: Consumer<SuperUtente?>(
-            builder: (context, utente,child){
-              if(utente==null){
-                return const Text("Errore non sei loggato");
-              }else {
-                if (utente.tipo == TipoUtente.Utente) {
-                  return FutureBuilder<List<Denuncia>>(
-                      future: denunce,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Denuncia>> snapshot) {
-                        var data = snapshot.data;
-                        if (data == null) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else {
-                          var datalenght = data.length;
-                          if (datalenght == 0) {
-                            return const Center(
-                              child: Text('Nessuna denuncia trovata'),
-                            );
-                          } else {
-                            return ListView.builder(
-                                itemCount: snapshot.data?.length,
-                                itemBuilder: (context, index) {
-                                  final item = snapshot.data![index];
+    SuperUtente? utente= context.watch<SuperUtente?>();
 
-                                  return ListTile(
-                                    title: Text(item.descrizione),
-                                    subtitle: const ElevatedButton(
-                                        onPressed: createRecord,
-                                        child: Text("accetta")
-                                    ),
-                                  );
-                                }
-                            );
-                          }
-                        }
-                      }
-                  );
-                }
-                else {
-                  return const Text(
-                      "Non hai l'autorizzazione per visualizzare la pagina");
-                }
+    Future<List<Denuncia>> denunceDaAccettare;
+    if(utente?.tipo== TipoUtente.UffPolGiud){
+      denunceDaAccettare= DenunciaController().visualizzaDenunceByStato(StatoDenuncia.NonInCarico);
+    }else{
+      denunceDaAccettare=generaListaVuota();
+    }
+    denunce= generaListaDenunce(context.watch<SuperUtente?>());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 0,
+            backgroundColor: Theme.of(context).backgroundColor,
+            bottom: const TabBar(
+              labelColor: Color.fromRGBO(219, 29, 69, 1),
+              indicatorColor: Color.fromRGBO(219, 29, 69, 1),
+              tabs: [
+                Tab(
+                  child: Text(
+                    "In attesa",
+                    style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Prese in carico",
+                    style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Storico",
+                    style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body:TabBarView(
+             children: [
+                      //1st tab
+                      Consumer<SuperUtente?>(
+                        builder: (context, utente,_){
+                            if(utente?.tipo==TipoUtente.Utente){
+                              return VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.NonInCarico));
+                            }else{
+                              return VisualizzaDenunceWidget(denunce: denunceDaAccettare);
+                            }
+                        },
+                      ),
+                      //2nd tab
+                      VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.PresaInCarico)),
+                      //3rd tab
+                      VisualizzaDenunceWidget(denunce: DenunciaController().filtraDenunciaByStato(denunce, StatoDenuncia.Chiusa))
+                  ],
+              ),
+          floatingActionButton: Consumer<SuperUtente?>(
+            builder: (context,utente,_){
+              if(utente?.tipo==TipoUtente.Utente){
+                return FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InoltroDenuncia(),
+                      ),
+                    );
+                  },
+                  backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+                  child: const Icon(Icons.add),
+                );
+              }else{
+                return Visibility(
+                  visible: false,
+                  child: FloatingActionButton(
+                    onPressed: () {}
+                  ),
+                );
               }
-            }//builder del consumer
-          ) ,
-        )
-      ]
+            },
+          ),
+        ),
+      ),
     );
   }
 }
 
-
-
-Future<List<Denuncia>> generaListaDenunce() {
+Future<List<Denuncia>> generaListaDenunce(SuperUtente? utente) {
   DenunciaController controller = DenunciaController();
+  return controller.visualizzaStoricoDenunceByUtente(utente);
 
-  return controller.visualizzaStoricoDenunceByUtente();
 }
 
-void stampaDenunce() async {
-  DenunciaDao dao = new DenunciaDao();
-  print("stampo tutte le denunce");
-  List<Denuncia> lista = (await dao.retrieveAll()) as List<Denuncia>;
-  print("stampa 2");
-  for (var d in lista) {
-    print(d);
-  }
+Future<List<Denuncia>> generaListaVuota()async{
+  List<Denuncia> lista= List.empty();
+  Future.delayed(Duration.zero);
+  return lista;
 }
 
-void createRecord() {
-  Timestamp scadenzaTS = Timestamp.fromDate(DateTime.now());
-  Timestamp dataDenuncia = Timestamp.fromDate(DateTime.now());
-  GeoPoint coord = const GeoPoint(3.4, 4.5);
-  Denuncia d = Denuncia(
-      id: null,
-      idUtente: "dVd0S4ptsafnEqPJq938mjEmH3s2",
-      nomeDenunciante: "Tizio",
-      cognomeDenunciante: "Caio",
-      indirizzoDenunciante: "Via Roma 23",
-      capDenunciante: "543534",
-      provinciaDenunciante: "PD",
-      cellulareDenunciante: "548894231658",
-      emailDenunciante: "tizio@email.it",
-      tipoDocDenunciante: "Carta d'identità",
-      numeroDocDenunciante: "420420420420",
-      scadenzaDocDenunciante: scadenzaTS,
-      dataDenuncia: dataDenuncia,
-      categoriaDenuncia: CategoriaDenuncia.OrigineNazionale,
-      nomeVittima: "Tizio",
-      cognomeVittima: "Caio",
-      denunciato: "Nicola Frvgieri",
-      alreadyFiled: false,
-      consenso: true,
-      descrizione: "Denuncia per discriminazione ecceccc",
-      statoDenuncia: StatoDenuncia.PresaInCarico,
-      nomeCaserma: "Caserma",
-      coordCaserma: coord,
-      nomeUff: "Adol",
-      cognomeUff: "Fitler",
-      idUff: " 1PZNxmcGrWVN2ezktgyKFVRWdBS2");
-
-  DenunciaDao.addDenuncia(d).then((DocumentReference<Object?> id) {
-    d.setId = id.id;
-    DenunciaDao.updateId(d.getId);
-  });
-}

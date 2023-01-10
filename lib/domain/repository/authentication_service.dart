@@ -8,7 +8,6 @@ import 'package:report_it/domain/entity/utente_entity.dart';
 
 import '../entity/uffPolGiud_entity.dart';
 
-
 class AuthenticationService {
   final FirebaseAuth auth;
 
@@ -25,31 +24,26 @@ class AuthenticationService {
   }
 
 //metodo che converte un FirebaseUser ad un SuperUtente
-  Future<SuperUtente?> superUtenteFromFirebaseUser(User? user)async{
-    if(user==null){
+  Future<SuperUtente?> superUtenteFromFirebaseUser(User? user) async {
+    if (user == null) {
       return null;
-    }
-    else{
-      Utente? ut= await RetrieveUtenteByID(user.uid);
-      UffPolGiud? uff=await RetrieveUffPolGiudByID(user.uid);
-      if(ut != null) {
-        return SuperUtente(
-            user.uid, TipoUtente.Utente);
-      }else if(uff != null) {
+    } else {
+      Utente? ut = await RetrieveUtenteByID(user.uid);
+      UffPolGiud? uff = await RetrieveUffPolGiudByID(user.uid);
+      if (ut != null) {
+        return SuperUtente(user.uid, TipoUtente.Utente);
+      } else if (uff != null) {
         print("sei un uff");
-        return SuperUtente(
-            user.uid, TipoUtente.UffPolGiud);
-      }else{
+        return SuperUtente(user.uid, TipoUtente.UffPolGiud);
+      } else {
         print("sei un op");
-        return SuperUtente(
-            user.uid, TipoUtente.OperatoreCup);
+        return SuperUtente(user.uid, TipoUtente.OperatoreCup);
       }
     }
   }
 
-
   Stream<SuperUtente?> get superUtenteStream {
-      return auth.authStateChanges().asyncMap(superUtenteFromFirebaseUser);
+    return auth.authStateChanges().asyncMap(superUtenteFromFirebaseUser);
   }
 
   /// There are a lot of different ways on how you can do exception handling.
@@ -59,9 +53,7 @@ class AuthenticationService {
   Future<String?> signIn(
       {required String email,
       required String password,
-      required String userType})
-  async
-  {
+      required String userType}) async {
     try {
       if (userType == "SPID") {
         try {
@@ -79,12 +71,18 @@ class AuthenticationService {
         }
       } else {
         try {
-          SPID? u = await RetrieveSPIDByEmail(email);
+          var u = await RetrieveSPIDByEmail(email);
 
           if (u != null) {
             return 'invalid-email';
           }
-        } catch (e) {}
+        } catch (e) {
+          print(e);
+          if (e.toString() == "Bad state: No element") {
+          } else {
+            return "invalid-email";
+          }
+        }
       }
 
       await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -100,7 +98,4 @@ class AuthenticationService {
       return e.code;
     }
   }
-
-
-
 }
