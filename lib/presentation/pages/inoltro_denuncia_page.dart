@@ -223,430 +223,438 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
               elevation: 3,
               backgroundColor: Theme.of(context).backgroundColor,
             ),
-            body: Stepper(
-              controlsBuilder: (context, details) {
-                if (_currentStep == 0) {
-                  return Row(
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        child: const Text('Continua'),
-                      ),
-                    ],
-                  );
-                }
-                if (_currentStep == 5) {
-                  return TextButton(
-                      onPressed: details.onStepCancel,
-                      child: const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Indietro',
-                          style: TextStyle(color: Colors.black),
+            body: Theme(
+              data: ThemeData(
+                colorScheme: ColorScheme.light(
+                  primary: Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
+              child: Stepper(
+                controlsBuilder: (context, details) {
+                  if (_currentStep == 0) {
+                    return Row(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          child: const Text('Continua'),
                         ),
-                      ));
-                } else {
-                  return Row(
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        child: const Text('Continua'),
-                      ),
-                      TextButton(
+                      ],
+                    );
+                  }
+                  if (_currentStep == 5) {
+                    return TextButton(
                         onPressed: details.onStepCancel,
-                        child: const Text(
-                          'Indietro',
-                          style: TextStyle(color: Colors.black),
+                        child: const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Indietro',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ));
+                  } else {
+                    return Row(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          child: const Text('Continua'),
                         ),
+                        TextButton(
+                          onPressed: details.onStepCancel,
+                          child: const Text(
+                            'Indietro',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+                type: stepperType,
+                currentStep: _currentStep,
+                // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
+                onStepContinue: continued,
+                onStepCancel: cancel,
+                steps: <Step>[
+                  Step(
+                    title: const Text(
+                      "Dati anagrafici",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  );
-                }
-              },
-              type: stepperType,
-              currentStep: _currentStep,
-              // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
-              onStepContinue: continued,
-              onStepCancel: cancel,
-              steps: <Step>[
-                Step(
-                  title: const Text(
-                    "Dati anagrafici",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  content: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'Nome'),
-                          controller: nameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Cognome'),
-                          controller: surnameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il cognome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Indirizzo'),
-                          controller: indirizzoController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci un indirizzo';
-                            } else if (!regexIndirizzo.hasMatch(value)) {
-                              return 'Per favore, inserisci un indirizzo valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'CAP'),
-                          controller: capController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il CAP';
-                            } else if (!regexCap.hasMatch(value)) {
-                              return 'Per favore, inserisci un CAP valido';
-                            }
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            decoration:
+                                const InputDecoration(labelText: 'Nome'),
+                            controller: nameController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il nome';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            decoration:
+                                const InputDecoration(labelText: 'Cognome'),
+                            controller: surnameController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il cognome';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            decoration:
+                                const InputDecoration(labelText: 'Indirizzo'),
+                            controller: indirizzoController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci un indirizzo';
+                              } else if (!regexIndirizzo.hasMatch(value)) {
+                                return 'Per favore, inserisci un indirizzo valida';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(labelText: 'CAP'),
+                            controller: capController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il CAP';
+                              } else if (!regexCap.hasMatch(value)) {
+                                return 'Per favore, inserisci un CAP valido';
+                              }
 
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Provincia'),
-                          controller: provinciaController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci la provincia';
-                            } else if (!regexProvincia.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.phone,
-                          controller: numberController,
-                          decoration: const InputDecoration(
-                              labelText: 'Numero telefonico'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il numero telefonico';
-                            } else if (!regexCellulare.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                              labelText: 'Indirizzo e-mail'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci l\'indirizzo e-mail';
-                            } else if (!regexEmail.hasMatch(value)) {
-                              return 'Per favore, inserisci una e-mail valida';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            decoration:
+                                const InputDecoration(labelText: 'Provincia'),
+                            controller: provinciaController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci la provincia';
+                              } else if (!regexProvincia.hasMatch(value)) {
+                                return 'Per favore, inserisci una provincia valida';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.phone,
+                            controller: numberController,
+                            decoration: const InputDecoration(
+                                labelText: 'Numero telefonico'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il numero telefonico';
+                              } else if (!regexCellulare.hasMatch(value)) {
+                                return 'Per favore, inserisci una provincia valida';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                                labelText: 'Indirizzo e-mail'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci l\'indirizzo e-mail';
+                              } else if (!regexEmail.hasMatch(value)) {
+                                return 'Per favore, inserisci una e-mail valida';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 0
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 0
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Discriminazione",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Discriminazione",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  content: Form(
-                    key: _formKey2,
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "Indicare la natura della presunta discriminazione:",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        RadioListTile(
-                          title: const Text("Etnia"),
-                          value: "Etnia",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Colore della pelle"),
-                          value: "ColoreDellaPelle",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Disabilità"),
-                          value: "Disabilita",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Età"),
-                          value: "Eta",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Orientamento Sessuale"),
-                          value: "OrientamentoSessuale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Religione"),
-                          value: "Religione",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Stirpe"),
-                          value: "Stirpe",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("GenereSessuale"),
-                          value: "GenereSessuale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Identità di genere"),
-                          value: "IdentitaDiGenere",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Espressione di genere"),
-                          value: "EspressioneDiGenere",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Fede"),
-                          value: "Fede",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Storia Personale"),
-                          value: "StoriaPersonale",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Reddito"),
-                          value: "Reddito",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Abusi"),
-                          value: "Abusi",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                        RadioListTile(
-                          title: const Text("Aggressione"),
-                          value: "Aggressione",
-                          groupValue: discriminazione,
-                          onChanged: ((value) {
-                            setState(() {
-                              discriminazione = value.toString();
-                            });
-                          }),
-                        ),
-                      ],
+                    content: Form(
+                      key: _formKey2,
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            "Indicare la natura della presunta discriminazione:",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          RadioListTile(
+                            title: const Text("Etnia"),
+                            value: "Etnia",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Colore della pelle"),
+                            value: "ColoreDellaPelle",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Disabilità"),
+                            value: "Disabilita",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Età"),
+                            value: "Eta",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Orientamento Sessuale"),
+                            value: "OrientamentoSessuale",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Religione"),
+                            value: "Religione",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Stirpe"),
+                            value: "Stirpe",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("GenereSessuale"),
+                            value: "GenereSessuale",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Identità di genere"),
+                            value: "IdentitaDiGenere",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Espressione di genere"),
+                            value: "EspressioneDiGenere",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Fede"),
+                            value: "Fede",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Storia Personale"),
+                            value: "StoriaPersonale",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Reddito"),
+                            value: "Reddito",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Abusi"),
+                            value: "Abusi",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                          RadioListTile(
+                            title: const Text("Aggressione"),
+                            value: "Aggressione",
+                            groupValue: discriminazione,
+                            onChanged: ((value) {
+                              setState(() {
+                                discriminazione = value.toString();
+                              });
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 1
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 1
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Vittima",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Vittima",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    content: vittima_widget,
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 2
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  content: vittima_widget,
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Oppressore",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Oppressore",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  content: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "Scrivi qui il nome della persona e/o dell’organizzazione che Lei ritiene abbia compiuto l’azione discriminante",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Nome oppressore'),
-                          controller: oppressoreController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
+                    content: Form(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            "Scrivi qui il nome della persona e/o dell’organizzazione che Lei ritiene abbia compiuto l’azione discriminante",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                                labelText: 'Nome oppressore'),
+                            controller: oppressoreController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 3
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Vicenda",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Vicenda",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  content: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Scrivi qui la vicenda'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
+                    content: Form(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                                labelText: 'Scrivi qui la vicenda'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 3
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Consenso",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Consenso",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    content: consenso_widget,
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 2
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  content: consenso_widget,
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-              ],
+                ],
+              ),
             ),
             //backgroundColor: Theme.of(context).backgroundColor,
             backgroundColor: Colors.white,

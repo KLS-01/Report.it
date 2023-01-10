@@ -222,192 +222,199 @@ class _DettagliDenuncia extends State<DettagliDenuncia> {
               elevation: 3,
               backgroundColor: Theme.of(context).backgroundColor,
             ),
-            body: Stepper(
-              controlsBuilder: (context, details) {
-                if (_currentStep == 0) {
-                  return Row(
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        child: const Text('Continua'),
-                      ),
-                    ],
-                  );
-                }
-                if (_currentStep == 5) {
-                  return TextButton(
-                      onPressed: details.onStepCancel,
-                      child: const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Indietro',
-                          style: TextStyle(color: Colors.black),
+            body: Theme(
+              data: ThemeData(
+                colorScheme: ColorScheme.light(
+                  primary: Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
+              child: Stepper(
+                controlsBuilder: (context, details) {
+                  if (_currentStep == 0) {
+                    return Row(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          child: const Text('Continua'),
                         ),
-                      ));
-                } else {
-                  return Row(
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        child: const Text('Continua'),
-                      ),
-                      TextButton(
+                      ],
+                    );
+                  }
+                  if (_currentStep == 5) {
+                    return TextButton(
                         onPressed: details.onStepCancel,
-                        child: const Text(
-                          'Indietro',
-                          style: TextStyle(color: Colors.black),
+                        child: const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Indietro',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ));
+                  } else {
+                    return Row(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          child: const Text('Continua'),
                         ),
+                        TextButton(
+                          onPressed: details.onStepCancel,
+                          child: const Text(
+                            'Indietro',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+                type: stepperType,
+                currentStep: _currentStep,
+                // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
+                onStepContinue: continued,
+                onStepCancel: cancel,
+                steps: <Step>[
+                  Step(
+                    title: const Text(
+                      "Dati anagrafici",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  );
-                }
-              },
-              type: stepperType,
-              currentStep: _currentStep,
-              // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
-              onStepContinue: continued,
-              onStepCancel: cancel,
-              steps: <Step>[
-                Step(
-                  title: const Text(
-                    "Dati anagrafici",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  content: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Text('Nome'),
-                        Text('Cognome'),
-                        Text('Indirizzo'),
-                        Text('CAP'),
-                        Text('Provincia'),
-                        Text('Numero telefonico'),
-                        Text('Indirizzo e-mail'),
-                      ],
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Nome'),
+                          Text('Cognome'),
+                          Text('Indirizzo'),
+                          Text('CAP'),
+                          Text('Provincia'),
+                          Text('Numero telefonico'),
+                          Text('Indirizzo e-mail'),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 0
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 0
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Discriminazione",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Discriminazione",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  content: Form(
-                    key: _formKey2,
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "La natura della presunta discriminazione è:",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
+                    content: Form(
+                      key: _formKey2,
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            "La natura della presunta discriminazione è:",
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 1
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 1
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Vittima",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  Step(
+                    title: const Text(
+                      "Vittima",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  content: Text(
-                    'La vittima di discriminazione è:',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.start,
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Oppressore",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    content: Text(
+                      'La vittima di discriminazione è:',
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.start,
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 2
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  content: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          "Persona e/o organizzazione che ha compiuto l'azione discriminante: ",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.start,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text('Nome oppressore')
-                      ],
+                  Step(
+                    title: const Text(
+                      "Oppressore",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Vicenda",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    content: Form(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            "Persona e/o organizzazione che ha compiuto l'azione discriminante: ",
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text('Nome oppressore')
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 3
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  content: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          'Dettagli',
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.start,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
+                  Step(
+                    title: const Text(
+                      "Vicenda",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text(
-                    "Consenso",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    content: Form(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            'Dettagli',
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 3
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  content: Text(
-                    'Consenso',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.start,
+                  Step(
+                    title: const Text(
+                      "Consenso",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    content: Text(
+                      'Consenso',
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.start,
+                    ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 2
+                        ? StepState.complete
+                        : StepState.disabled,
                   ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-              ],
+                ],
+              ),
             ),
             //backgroundColor: Theme.of(context).backgroundColor,
             backgroundColor: Colors.white,
