@@ -89,16 +89,14 @@ class ForumDao {
     return id;
   }
 
-  static void CambiaStato(Discussione discussione, String stato) {
-    var ref = database.collection("Discussione").doc(discussione.id);
+  static void CambiaStato(String? discussione, String stato) {
+    var ref = database.collection("Discussione").doc(discussione);
 
-    discussione.stato = stato;
-
-    ref.update(discussione.toMap());
+    ref.update({"Stato": stato});
   }
 
-  static void cancellaDenuncia(Discussione discussione) {
-    var ref = database.collection("Discussione").doc(discussione.id);
+  static void cancellaDiscussione(String discussione) {
+    var ref = database.collection("Discussione").doc(discussione);
 
     ref.delete();
   }

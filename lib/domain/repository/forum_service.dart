@@ -48,4 +48,12 @@ class ForumService {
     });
     _discussioni_all = list;
   }
+
+  void EliminaDiscussione(String? id) {
+    ForumDao.cancellaDiscussione(id!);
+  }
+
+  void ChiudiDiscussione(String? id) {
+    ForumDao.CambiaStato(id, "chiusa");
+  }
 }
