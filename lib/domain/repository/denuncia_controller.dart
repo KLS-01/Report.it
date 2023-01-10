@@ -148,4 +148,6 @@ class DenunciaController {
       }
     }
   }
+
+  //Future<bool> chiudiDenuncia(String idDenuncia, SuperUtente utente)async{}
 }

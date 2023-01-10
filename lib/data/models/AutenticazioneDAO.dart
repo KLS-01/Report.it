@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
-import 'package:report_it/domain/entity/entity_GA//utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
 
 import '../../domain/entity/entity_GA/uffPolGiud_entity.dart';
 
