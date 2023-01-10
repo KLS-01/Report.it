@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
+import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/spid_entity.dart';
+import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/entity/utente_entity.dart';
+
+import '../entity/uffPolGiud_entity.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;
@@ -16,6 +21,29 @@ class AuthenticationService {
   /// after you called this method if you want to pop all routes.
   Future<void> signOut() async {
     await auth.signOut();
+  }
+
+//metodo che converte un FirebaseUser ad un SuperUtente
+  Future<SuperUtente?> superUtenteFromFirebaseUser(User? user) async {
+    if (user == null) {
+      return null;
+    } else {
+      Utente? ut = await RetrieveUtenteByID(user.uid);
+      UffPolGiud? uff = await RetrieveUffPolGiudByID(user.uid);
+      if (ut != null) {
+        return SuperUtente(user.uid, TipoUtente.Utente);
+      } else if (uff != null) {
+        print("sei un uff");
+        return SuperUtente(user.uid, TipoUtente.UffPolGiud);
+      } else {
+        print("sei un op");
+        return SuperUtente(user.uid, TipoUtente.OperatoreCup);
+      }
+    }
+  }
+
+  Stream<SuperUtente?> get superUtenteStream {
+    return auth.authStateChanges().asyncMap(superUtenteFromFirebaseUser);
   }
 
   /// There are a lot of different ways on how you can do exception handling.
@@ -43,12 +71,18 @@ class AuthenticationService {
         }
       } else {
         try {
-          SPID? u = await RetrieveSPIDByEmail(email);
+          var u = await RetrieveSPIDByEmail(email);
 
           if (u != null) {
             return 'invalid-email';
           }
-        } catch (e) {}
+        } catch (e) {
+          print(e);
+          if (e.toString() == "Bad state: No element") {
+          } else {
+            return "invalid-email";
+          }
+        }
       }
 
       await auth.signInWithEmailAndPassword(email: email, password: password);

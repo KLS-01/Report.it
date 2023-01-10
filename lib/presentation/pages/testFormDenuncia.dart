@@ -1,4 +1,7 @@
+ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:report_it/domain/entity/categoria_denuncia.dart';
+import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,31 +36,36 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController nomeDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "Tizio");
   final TextEditingController cognomeDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "Caio");
   final TextEditingController indirizzoDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "Via Roma 23");
   final TextEditingController capDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "85896");
   final TextEditingController provinciaDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "BN");
   final TextEditingController cellulareDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "3256987");
   final TextEditingController emailDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "email@email.com");
   final TextEditingController tipoDocDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "Carta dientità");
   final TextEditingController numDocDenuncianteController =
-      TextEditingController();
+      TextEditingController(text: "AA4589");
   final TextEditingController scadDocDenuncianteController =
-      TextEditingController();
-  final TextEditingController categoriaController = TextEditingController();
-  final TextEditingController nomeVittimaController = TextEditingController();
+      TextEditingController(text: "2026-03-20 00:00:00.000");
+  final TextEditingController categoriaController =
+      TextEditingController(text: "Razza");
+  final TextEditingController nomeVittimaController =
+      TextEditingController(text: "Tizio");
   final TextEditingController cognomeVittimaController =
-      TextEditingController();
-  final TextEditingController denunciatoController = TextEditingController();
-  final TextEditingController descrizioneController = TextEditingController();
+      TextEditingController(text: "Caio");
+  final TextEditingController denunciatoController =
+      TextEditingController(text: "Cattivo");
+  final TextEditingController descrizioneController =
+      TextEditingController(text: "Insulti ecc ecc");
+  bool? consensoValue = false, alreadyFilledValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -278,6 +286,82 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
+          FormField<bool>(
+            builder: (state) {
+              return Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                          value: consensoValue,
+                          onChanged: (value) {
+                            setState(() {
+//save checkbox value to variable that store terms and notify form that state changed
+                              consensoValue = value;
+                              state.didChange(value);
+                            });
+                          }),
+                      Text('Consenso'),
+                    ],
+                  ),
+//display error in matching theme
+                  Text(
+                    state.errorText ?? '',
+                    style: TextStyle(
+                      color: Theme.of(context).errorColor,
+                    ),
+                  )
+                ],
+              );
+            },
+//output from validation will be displayed in state.errorText (above)
+            validator: (value) {
+              if (consensoValue == null) {
+                return 'Error';
+              } else if (!consensoValue!) {
+                return 'You need to accept terms';
+              } else {
+                return null;
+              }
+            },
+          ),
+          FormField<bool>(
+            builder: (state) {
+              return Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                          value: alreadyFilledValue,
+                          onChanged: (value) {
+                            setState(() {
+//save checkbox value to variable that store terms and notify form that state changed
+                              alreadyFilledValue = value;
+                              state.didChange(value);
+                            });
+                          }),
+                      Text('Already filed'),
+                    ],
+                  ),
+//display error in matching theme
+                  Text(
+                    state.errorText ?? '',
+                    style: TextStyle(
+                      color: Theme.of(context).errorColor,
+                    ),
+                  )
+                ],
+              );
+            },
+//output from validation will be displayed in state.errorText (above)
+            validator: (value) {
+              if (alreadyFilledValue == null) {
+                return 'Error';
+              } else {
+                return null;
+              }
+            },
+          ),
           Container(
             padding: const EdgeInsets.only(left: 150.0, top: 40.0),
             child: ElevatedButton(
@@ -302,7 +386,30 @@ class MyCustomFormState extends State<MyCustomForm> {
       const SnackBar(content: Text('Processing Data')),
     );
 
-    print(nomeDenuncianteController.text);
-    //Qua va inserita la chiamata al Controller
+    Timestamp convertedDate =
+        Timestamp.fromDate(DateTime.parse(scadDocDenuncianteController.text));
+    DenunciaController control = DenunciaController();
+    var result = control.addDenunciaControl(
+        nomeDenunciante: nomeDenuncianteController.text,
+        cognomeDenunciante: cognomeDenuncianteController.text,
+        indirizzoDenunciante: indirizzoDenuncianteController.text,
+        capDenunciante: capDenuncianteController.text,
+        provinciaDenunciante: provinciaDenuncianteController.text,
+        cellulareDenunciante: cellulareDenuncianteController.text,
+        emailDenunciante: emailDenuncianteController.text,
+        tipoDocDenunciante: tipoDocDenuncianteController.text,
+        numeroDocDenunciante: nomeDenuncianteController.text,
+        scadenzaDocDenunciante: convertedDate,
+        categoriaDenuncia:
+            CategoriaDenuncia.values.byName(categoriaController.text),
+        nomeVittima: nomeVittimaController.text,
+        denunciato: denunciatoController.text,
+        descrizione: descrizioneController.text,
+        cognomeVittima: cognomeVittimaController.text,
+        consenso: consensoValue!,
+        alreadyFilled: alreadyFilledValue!);
+
+    print(
+        "Operation terminated with success on presentation layer, resultId: $result");
   }
 }

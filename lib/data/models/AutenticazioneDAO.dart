@@ -8,8 +8,10 @@ FirebaseFirestore database = FirebaseFirestore.instance;
 
 Future<SPID?> RetrieveSPIDByEmail(String email) async {
   var ref = database.collection("SPID").where("Email", isEqualTo: email);
+  print(email);
 
   var u = await ref.get().then(((value) async {
+    print(value.docs);
     SPID u = SPID.fromJson(value.docs.first.data());
 
     return u;
@@ -23,13 +25,17 @@ Future<Utente?> RetrieveUtenteByID(String uid) async {
   var ref = database.collection("Utente").doc(uid);
 
   var u = await ref.get().then(((value) async {
-    Utente u = Utente.fromJson(value.data()!);
+    if (value.data() == null) {
+      return null;
+    } else {
+      Utente u = Utente.fromJson(value.data()!);
 
-    var spid = await RetrieveSPIDByID(uid);
+      var spid = await RetrieveSPIDByID(uid);
 
-    u.setSpid(spid!);
+      u.setSpid(spid!);
 
-    return u;
+      return u;
+    }
   }));
 
   return u;
@@ -40,9 +46,12 @@ Future<SPID?> RetrieveSPIDByID(String uid) async {
   var ref = database.collection("SPID").doc(uid);
 
   var u = await ref.get().then(((value) {
-    SPID u = SPID.fromJson(value.data()!);
-
-    return u;
+    if (value.data() == null) {
+      return null;
+    } else {
+      SPID u = SPID.fromJson(value.data()!);
+      return u;
+    }
   }));
 
   return u;
@@ -53,9 +62,13 @@ Future<UffPolGiud?> RetrieveUffPolGiudByID(String uid) async {
   var ref = database.collection("UffPolGiud").doc(uid);
 
   var u = await ref.get().then(((value) {
-    UffPolGiud u = UffPolGiud.fromJson(value.data()!);
+    if (value.data() == null) {
+      return null;
+    } else {
+      UffPolGiud u = UffPolGiud.fromJson(value.data()!);
 
-    return u;
+      return u;
+    }
   }));
 
   return u;
@@ -66,9 +79,13 @@ Future<OperatoreCUP?> RetrieveCUPByID(String uid) async {
   var ref = database.collection("OperatoreCUP").doc(uid);
 
   var u = await ref.get().then(((value) {
-    OperatoreCUP u = OperatoreCUP.fromJson(value.data()!);
+    if (value.data() == null) {
+      return null;
+    } else {
+      OperatoreCUP u = OperatoreCUP.fromJson(value.data()!);
 
-    return u;
+      return u;
+    }
   }));
 
   return u;

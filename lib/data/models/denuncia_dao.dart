@@ -26,13 +26,30 @@ class DenunciaDao {
     }
   }
 
-  Future<Denuncia> retrieveById(String id) async {
+  static void updateAttribute(String attribute, var value) async {
+    DocumentReference? returnCode;
+    try {
+      returnCode =
+          FirebaseFirestore.instance.collection('Denuncia').doc(attribute);
+      await returnCode.update({attribute: value});
+    } catch (e) {
+      log("Error: ");
+      return null;
+    }
+  }
+
+  Future<Denuncia?> retrieveById(String id) async {
     var ref = db.collection("Denuncia").doc(id);
 
     var d = await ref.get().then(((value) {
-      Denuncia? d = Denuncia.fromJson(value.data()!);
+      if(value.data()==null){
+        return null;
+      }
+      else {
+        Denuncia? d = Denuncia.fromJson(value.data()!);
+        return d;
+      }
 
-      return d;
     }));
 
     return d;
@@ -96,5 +113,17 @@ class DenunciaDao {
     }));
 
     return lista;
+  }
+
+  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff){
+    var ref= db.collection("Denuncia").doc(idDenuncia);
+
+    ref.update({
+      "CognomeUff":cognomeUff,
+      "CoordCaserma": coordCaserma,
+      "IDUff": idUff,
+      "NomeCaserma": nomeCaserma,
+      "NomeUff": nomeUff
+    });
   }
 }

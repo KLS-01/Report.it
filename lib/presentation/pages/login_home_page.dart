@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/login_user_page.dart';
-import 'package:report_it/presentation/pages/widget/app_background.dart';
 
 import '../../domain/repository/authentication_service.dart';
 import 'authentication_wrapper.dart';
@@ -25,7 +24,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,
