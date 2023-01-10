@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/pages_GIC/informativa_contatti_page.dart';
 import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
 
-import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_prenotazioni_page.dart';
+import 'package:report_it/presentation/pages/pages_GPSP/visualizza_storico_prenotazioni_page.dart';
 import '../../domain/repository/authentication_controller.dart';
 import 'pages_GIC/informativa_contatti_page.dart';
 import 'pages_GPSP/test_prenotazioni.dart';

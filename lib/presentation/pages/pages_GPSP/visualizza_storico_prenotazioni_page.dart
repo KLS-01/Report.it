@@ -5,8 +5,8 @@ import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
-import '../pages_GPSP/test_prenotazioni.dart';
-import '../pages_GPSP/visualizza_prenotazioni_attive_page.dart';
+import 'test_prenotazioni.dart';
+import 'visualizza_prenotazioni_attive_page.dart';
 
 Color? containerColor;
 List<Color> containerColors = [
