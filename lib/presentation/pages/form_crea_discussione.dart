@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:report_it/domain/entity/discussione_entity.dart';
+import 'package:report_it/domain/repository/forum_service.dart';
 import 'package:report_it/presentation/widget/theme.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 
@@ -12,8 +14,8 @@ class ForumForm extends StatefulWidget {
 class _ForumFormState extends State<ForumForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController titoloController = TextEditingController();
+  final TextEditingController testoController = TextEditingController();
   final TextEditingController categoriaController = TextEditingController();
 
   @override
@@ -57,6 +59,7 @@ class _ForumFormState extends State<ForumForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: titoloController,
                       decoration: InputDecoration(
                         hintText: "Inserisci un titolo",
                         filled: true,
@@ -66,6 +69,12 @@ class _ForumFormState extends State<ForumForm> {
                             borderRadius: BorderRadius.circular(20)),
                         contentPadding: EdgeInsets.all(20.0),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci un titolo';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Padding(
@@ -79,6 +88,7 @@ class _ForumFormState extends State<ForumForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: testoController,
                       decoration: InputDecoration(
                         hintText: "Scrivi il testo della tua discussione...",
                         filled: true,
@@ -88,6 +98,12 @@ class _ForumFormState extends State<ForumForm> {
                             borderRadius: BorderRadius.circular(20)),
                         contentPadding: EdgeInsets.all(20.0),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci un titolo';
+                        }
+                        return null;
+                      },
                       maxLines: 10,
                     ),
                   ),
@@ -102,6 +118,7 @@ class _ForumFormState extends State<ForumForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: categoriaController,
                       decoration: InputDecoration(
                         hintText: "Inserisci la categoria del tuo post",
                         filled: true,
@@ -111,6 +128,12 @@ class _ForumFormState extends State<ForumForm> {
                             borderRadius: BorderRadius.circular(20)),
                         contentPadding: EdgeInsets.all(20.0),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci un titolo';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -120,8 +143,12 @@ class _ForumFormState extends State<ForumForm> {
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Pubblica'),
         heroTag: null,
-        onPressed: () {
-          //
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            ForumService().AggiungiDiscussione(titoloController.text,
+                testoController.text, categoriaController.text);
+            Navigator.pop(context);
+          }
         },
         backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
       ),

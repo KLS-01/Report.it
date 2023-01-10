@@ -50,7 +50,9 @@ class _ForumHomeState extends State<ForumHome> {
                   transitionsBuilder: (_, a, __, c) =>
                       FadeTransition(opacity: a, child: c),
                 ),
-              );
+              ).then((value) {
+                ForumService().AggiornaLista();
+              });
               //
             },
             backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
