@@ -96,12 +96,12 @@ class DenunciaDao {
 
       return lista;
     }));
-
+    print("attenzione lista di denunce vuota");
     return lista;
   }
 
   Future<List<Denuncia>> retrieveByStato(StatoDenuncia stato) async {
-    var ref = db.collection("Denuncia").where("Stato", isEqualTo: stato);
+    var ref = db.collection("Denuncia").where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString());
     List<Denuncia> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
