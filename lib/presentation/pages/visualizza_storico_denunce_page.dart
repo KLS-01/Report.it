@@ -8,6 +8,7 @@ import 'package:report_it/domain/entity/stato_denuncia.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/presentation/pages/dettagli_denuncia_page.dart';
+import 'package:report_it/presentation/pages/dettagli_denuncia.dart';
 
 import '../../firebase_options.dart';
 import '../../domain/entity/denuncia_entity.dart';
@@ -44,10 +45,12 @@ class _VisualizzaStoricoDenunceUtentePageState
     }
     denunce= generaListaDenunce(context.watch<SuperUtente?>());
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 0,
             backgroundColor: Theme.of(context).backgroundColor,
             bottom: const TabBar(
               labelColor: Color.fromRGBO(219, 29, 69, 1),
@@ -57,18 +60,21 @@ class _VisualizzaStoricoDenunceUtentePageState
                   child: Text(
                     "In attesa",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Prese in carico",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
                     style: TextStyle(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
