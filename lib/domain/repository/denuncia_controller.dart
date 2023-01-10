@@ -22,11 +22,12 @@ class DenunciaController {
     if (utente == null) {
       print("NON SEI LOGGATO");
     } else {
-      if(utente?.tipo==TipoUtente.Utente){
-        return await denunciaDao.retrieveByUtente(utente?.id);
+      if(utente.tipo==TipoUtente.Utente){
+        return await denunciaDao.retrieveByUtente(utente.id);
       }
       else{
-        return await denunciaDao.retrieveByUff(utente?.id);
+        print("sto chiamando il dao per fare il retriveByUff");
+        return await denunciaDao.retrieveByUff(utente.id);
       }
     }
     return Future.error(StackTrace);

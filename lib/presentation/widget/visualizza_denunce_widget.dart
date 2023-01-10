@@ -33,7 +33,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                 return const Text("non sei loggato");
               }
               else{
-                if(utente.tipo!= TipoUtente.Utente){
+                if(utente.tipo== TipoUtente.OperatoreCup){
                   return const Text("Errore non hai i permessi");
                 }
                 else{
