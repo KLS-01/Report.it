@@ -54,7 +54,7 @@ dependencies:
   file_picker: ^5.2.4
   firebase_storage: ^11.0.10 
   syncfusion_flutter_pdfviewer: ^20.4.42
-
+  date_time_picker: "^2.1.0"
 
 dev_dependencies: 
   flutter_test:

@@ -39,8 +39,10 @@ class PrenotazioneListWidget extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Scaffold(
-                                          body: InformazioniPrenotazione())))
+                                      builder: (context) => Scaffold(
+                                          body: InformazioniPrenotazione(
+                                              prenotazione: item,
+                                              utente: utente))))
                             },
                         child: const Text("Apri prenotazione"))
                 ],

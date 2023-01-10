@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Prenotazione {
   String? id, idUtente, idOperatore, nomeASL, impegnativa;
+
   String cap, provincia;
   GeoPoint? coordASL;
   Timestamp? dataPrenotazione;
@@ -41,6 +42,9 @@ class Prenotazione {
   get getDataPrenotazione => dataPrenotazione;
   set setDataPrenotazione(dataPrenotazione) =>
       this.dataPrenotazione = dataPrenotazione;
+
+  get getImpegnativa => impegnativa;
+  set setImpegnativa(impegnativa) => this.impegnativa = impegnativa;
 
   factory Prenotazione.fromJson(Map<String, dynamic> json) {
     return Prenotazione(

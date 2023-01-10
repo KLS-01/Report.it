@@ -120,12 +120,8 @@ class PrenotazioneController {
     return Future.error(StackTrace);
   }
 
-  Future<bool> inizializzaPrenotazione(
-      String idPrenotazione,
-      SuperUtente utente,
-      GeoPoint coordASL,
-      Timestamp dataPrenotazione,
-      String nomeASL) async {
+  Future<bool> inizializzaPrenotazione(String idPrenotazione,
+      SuperUtente utente, Timestamp dataPrenotazione) async {
     if (utente.tipo != TipoUtente.OperatoreCup) {
       return false;
     } else {
@@ -140,10 +136,10 @@ class PrenotazioneController {
         } else {
           prenotazioneDao.accettaPrenotazione(
               idPrenotazione: idPrenotazione,
-              idOperatore: op.id,
-              coordASL: coordASL,
+              idOperatore: op.getId,
+              coordASL: op.getCoordAsl,
               dataPrenotazione: dataPrenotazione,
-              nomeASL: nomeASL);
+              nomeASL: op.getAsl);
           return true;
         }
       }
