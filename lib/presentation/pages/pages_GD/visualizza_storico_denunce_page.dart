@@ -31,13 +31,15 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
+
+
+
   @override
   Widget build(BuildContext context) {
-    SuperUtente? utente = context.watch<SuperUtente?>();
+    SuperUtente? utente= context.watch<SuperUtente?>();
 
-    Stream<QuerySnapshot<Map<String, dynamic>>> denunce =
-        DenunciaController().generaStreaUtenteByUtente(utente!);
-
+    Stream<QuerySnapshot<Map<String,dynamic>>> denunce=DenunciaController().generaStreaUtenteByUtente(utente!);
+    
     return MaterialApp(
       theme: AppTheme().build(),
       debugShowCheckedModeBanner: false,
@@ -76,121 +78,77 @@ class _VisualizzaStoricoDenunceUtentePageState
             ),
             title: const Text('Tabs Demo'),
           ),
-          body: StreamBuilder(
-              stream: denunce,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text("Errore nello snapshot");
-                } else {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return Text("Nessuna Denuncia");
-                    case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
-                      break;
-                    case ConnectionState.active:
-                      {
-                        List<Denuncia>? listaDenunce = snapshot.data?.docs
-                            .map((e) => Denuncia.fromJson(e.data()))
-                            .toList();
+          body:StreamBuilder(
+            stream: denunce,
+            builder: (context, snapshot) {
+              if(snapshot.hasError){
+                return Text("Errore nello snapshot");
+              }else{
+                switch(snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Text("Nessuna Denuncia");
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                    break;
+                  case ConnectionState.active:{
+                    List<Denuncia>? listaDenunce= snapshot.data?.docs.map((e) => Denuncia.fromJson(e.data())).toList();
 
-                        if (listaDenunce == null) {
-                          return Text("non ci sono denunce");
-                        } else {
-                          return TabBarView(
-                            children: [
-                              //1st tab
-                              Consumer<SuperUtente?>(
-                                builder: (context, utente, _) {
-                                  if (utente?.tipo == TipoUtente.Utente) {
-                                    return VisualizzaDenunceWidget(
-                                        denunce: listaDenunce
-                                            .where((event) =>
-                                                event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
-                                            .toList());
-                                  } else {
-                                    return VisualizzaDenunceWidget(
-                                        denunce: listaDenunce
-                                            .where((event) =>
-                                                event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
-                                            .toList());
-                                  }
-                                },
-                              ),
-                              //2nd tab
-                              VisualizzaDenunceWidget(
-                                  denunce: listaDenunce
-                                      .where((event) =>
-                                          event.statoDenuncia ==
-                                          StatoDenuncia.PresaInCarico)
-                                      .toList()),
-                              //3rd tab
-                              VisualizzaDenunceWidget(
-                                  denunce: listaDenunce
-                                      .where((event) =>
-                                          event.statoDenuncia ==
-                                          StatoDenuncia.Chiusa)
-                                      .toList())
-                            ],
-                          );
-                        }
-                      }
-                    case ConnectionState.done:
-                      {
-                        List<Denuncia>? listaDenunce = snapshot.data?.docs
-                            .map((e) => Denuncia.fromJson(e.data()))
-                            .toList();
-                        if (listaDenunce == null) {
-                          return Text("non ci sono denunce");
-                        } else {
-                          return TabBarView(
-                            children: [
-                              //1st tab
-                              Consumer<SuperUtente?>(
-                                builder: (context, utente, _) {
-                                  if (utente?.tipo == TipoUtente.Utente) {
-                                    return VisualizzaDenunceWidget(
-                                        denunce: listaDenunce
-                                            .where((event) =>
-                                                event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
-                                            .toList());
-                                  } else {
-                                    return VisualizzaDenunceWidget(
-                                        denunce: listaDenunce
-                                            .where((event) =>
-                                                event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
-                                            .toList());
-                                  }
-                                },
-                              ),
-                              //2nd tab
-                              VisualizzaDenunceWidget(
-                                  denunce: listaDenunce
-                                      .where((event) =>
-                                          event.statoDenuncia ==
-                                          StatoDenuncia.PresaInCarico)
-                                      .toList()),
-                              //3rd tab
-                              VisualizzaDenunceWidget(
-                                  denunce: listaDenunce
-                                      .where((event) =>
-                                          event.statoDenuncia ==
-                                          StatoDenuncia.Chiusa)
-                                      .toList())
-                            ],
-                          );
-                        }
-                      }
+                    if(listaDenunce==null){
+                      return Text("non ci sono denunce");
+                    }else{
+                      return TabBarView(
+                        children: [
+                          //1st tab
+                          Consumer<SuperUtente?>(
+                            builder: (context, utente,_){
+                              if(utente?.tipo==TipoUtente.Utente){
+                                return VisualizzaDenunceWidget(denunce: listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.NonInCarico).toList());
+                              }else{
+                                return VisualizzaDenunceWidget(denunce: listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.NonInCarico).toList());
+                              }
+                            },
+                          ),
+                          //2nd tab
+                          VisualizzaDenunceWidget(denunce:listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.PresaInCarico).toList()),
+                          //3rd tab
+                          VisualizzaDenunceWidget(denunce:listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.Chiusa).toList() )
+                        ],
+                      );
+                    }
+                  }
+                  case ConnectionState.done:{
+                    List<Denuncia>? listaDenunce= snapshot.data?.docs.map((e) => Denuncia.fromJson(e.data())).toList();
+                    if(listaDenunce==null){
+                      return Text("non ci sono denunce");
+                    }else{
+                      return TabBarView(
+                        children: [
+                          //1st tab
+                          Consumer<SuperUtente?>(
+                            builder: (context, utente,_){
+                              if(utente?.tipo==TipoUtente.Utente){
+                                return VisualizzaDenunceWidget(denunce: listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.NonInCarico).toList());
+                              }else{
+                                return VisualizzaDenunceWidget(denunce: listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.NonInCarico).toList());
+                              }
+                            },
+                          ),
+                          //2nd tab
+                          VisualizzaDenunceWidget(denunce:listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.PresaInCarico).toList()),
+                          //3rd tab
+                          VisualizzaDenunceWidget(denunce:listaDenunce.where((event) => event.statoDenuncia==StatoDenuncia.Chiusa).toList() )
+                        ],
+                      );
+                    }
                   }
                 }
-              }),
+              }
+
+            }
+          ),
           floatingActionButton: Consumer<SuperUtente?>(
-            builder: (context, utente, _) {
-              if (utente?.tipo == TipoUtente.Utente) {
+            builder: (context,utente,_){
+              if(utente?.tipo==TipoUtente.Utente){
                 return FloatingActionButton(
                   onPressed: () {
                     Navigator.push(
@@ -203,10 +161,12 @@ class _VisualizzaStoricoDenunceUtentePageState
                   backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
                   child: const Icon(Icons.add),
                 );
-              } else {
+              }else{
                 return Visibility(
                   visible: false,
-                  child: FloatingActionButton(onPressed: () {}),
+                  child: FloatingActionButton(
+                    onPressed: () {}
+                  ),
                 );
               }
             },
@@ -216,3 +176,16 @@ class _VisualizzaStoricoDenunceUtentePageState
     );
   }
 }
+
+Future<List<Denuncia>> generaListaDenunce(SuperUtente? utente) {
+  DenunciaController controller = DenunciaController();
+  return controller.visualizzaStoricoDenunceByUtente(utente);
+
+}
+
+Future<List<Denuncia>> generaListaVuota()async{
+  List<Denuncia> lista= List.empty();
+  Future.delayed(Duration.zero);
+  return lista;
+}
+
