@@ -62,6 +62,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
 
 
 Widget generaTasto(Denuncia denuncia, SuperUtente utente){
+
   if(utente.tipo==TipoUtente.UffPolGiud) {
     switch (denuncia.statoDenuncia) {
       case StatoDenuncia.NonInCarico:

@@ -22,11 +22,14 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
+  callback(){
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
+
     SuperUtente? utente= context.watch<SuperUtente?>();
     Stream<QuerySnapshot<Map<String,dynamic>>> denunceDaAccettare;
-
     Stream<QuerySnapshot<Map<String,dynamic>>> denunce=DenunciaController().generaStreamDenunciaByUtente(utente!);
 
     if(utente.tipo==TipoUtente.UffPolGiud){
@@ -36,10 +39,9 @@ class _VisualizzaStoricoDenunceUtentePageState
     }
 
 
-    return MaterialApp(
-      theme: AppTheme().build(),
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
+    return Scaffold(
+
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(

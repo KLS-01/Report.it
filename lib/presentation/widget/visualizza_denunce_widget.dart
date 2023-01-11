@@ -21,6 +21,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
   _VisualizzaDenunceWidgetState({required this.denunce});
   List<Denuncia> denunce;
 
+
   @override
   Widget build(BuildContext context) {
     return Flex(
