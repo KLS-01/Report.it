@@ -38,12 +38,15 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        iconTheme: IconThemeData(color: Color.fromRGBO(219, 29, 69, 1)),
+        iconTheme: IconThemeData(
+          color: Color.fromRGBO(219, 29, 69, 1),
+        ),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        children: [
-          FutureBuilder<Denuncia?>(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            FutureBuilder<Denuncia?>(
               future: denuncia,
               builder:
                   (BuildContext context, AsyncSnapshot<Denuncia?> snapshot) {
@@ -51,17 +54,21 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                   return const Text("Errore denuncia non trovata");
                 } else {
                   String? descrizione = snapshot.data?.descrizione;
-                  return SingleChildScrollView(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         Container(
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.amber,
                           child: InputDecorator(
-                            decoration:
-                                InputDecoration(labelText: 'Dati anagrafici'),
+                            decoration: InputDecoration(
+                              labelText: 'Dati anagrafici',
+                              labelStyle: TextStyle(
+                                fontSize: 30,
+                              ),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -76,30 +83,32 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                             ),
                           ),
                         ),
-                        // generaTasto(snapshot.data!, utente)
                         Container(
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.green,
                           child: InputDecorator(
-                            decoration:
-                                InputDecoration(labelText: 'Discriminazione'),
-                            child: Text('Natura della discriminazione'),
+                            decoration: InputDecoration(
+                              labelText: 'Discriminazione',
+                              labelStyle: TextStyle(fontSize: 30),
+                            ),
+                            child: Text('Natura della discriminazione: '),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.lightBlue,
                           child: InputDecorator(
-                            decoration: InputDecoration(labelText: 'Vittima'),
+                            decoration: InputDecoration(
+                              labelText: 'Vittima',
+                              labelStyle: TextStyle(fontSize: 30),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Nome'),
-                                Text('Cognome'),
+                                Text('Nome: '),
+                                Text('Cognome: '),
                               ],
                             ),
                           ),
@@ -108,39 +117,47 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.amber,
                           child: InputDecorator(
-                            decoration:
-                                InputDecoration(labelText: 'Oppressore'),
-                            child: Text('Nome oppressore'),
+                            decoration: InputDecoration(
+                              labelText: 'Oppressore',
+                              labelStyle: TextStyle(fontSize: 30),
+                            ),
+                            child: Text('Nome oppressore: '),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.green,
                           child: InputDecorator(
-                            decoration: InputDecoration(labelText: 'Vicenda'),
-                            child: Text('Dettagli della vicenda'),
+                            decoration: InputDecoration(
+                              labelText: 'Vicenda',
+                              labelStyle: TextStyle(fontSize: 30),
+                            ),
+                            child: Text('Dettagli della vicenda: '),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: Colors.lightBlue,
                           child: InputDecorator(
-                            decoration: InputDecoration(labelText: 'Consenso'),
-                            child: Text('Consenso'),
+                            decoration: InputDecoration(
+                              labelText: 'Consenso',
+                              labelStyle: TextStyle(fontSize: 30),
+                            ),
+                            child: Text('Consenso: '),
                           ),
                         ),
+                        generaTasto(snapshot.data!, utente),
                       ],
                     ),
                   );
                 }
-              })
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
