@@ -16,19 +16,27 @@ class DenunciaController {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  Denuncia jsonToDenuncia(QueryDocumentSnapshot<Map<String, dynamic>> json){
+    return Denuncia.fromJson(json.data());
+  }
 
-
-  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreaUtenteByUtente(SuperUtente utente){
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunciaByUtente(SuperUtente utente){
     return DenunciaDao().generaStreamDenunceByUtente(utente);
   }
 
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunciaByStato(StatoDenuncia stato){
+    return DenunciaDao().generaStreamDenunceByStato(stato);
+  }
+
+  Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunciaById(String id){
+    return DenunciaDao().generaStreamDenunceById(id);
+  }
 
   Future<List<Denuncia>> visualizzaDenunceByStato(StatoDenuncia stato) {
     return denunciaDao.retrieveByStato(stato);
   }
 
   Future<Denuncia?> visualizzaDenunciaById(String idDenuncia, SuperUtente utente) async {
-    //bisogna fare il controllo se è un uffPolGiud che ha accettato questa denuncia nel caso sia accettata
 
       Denuncia? d = await denunciaDao.retrieveById(idDenuncia);
       if(d==null){

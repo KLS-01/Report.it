@@ -40,6 +40,16 @@ class DenunciaDao {
 
   }
 
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStato(StatoDenuncia stato){
+    var ref=db.collection("Denuncia");
+    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString()).snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunceById(String id){
+    var ref=db.collection("Denuncia");
+    return ref.doc(id).snapshots();
+  }
+
   Future<void> updateAttribute(String id,String attribute, var value) async {
     DocumentReference? returnCode;
     try {
