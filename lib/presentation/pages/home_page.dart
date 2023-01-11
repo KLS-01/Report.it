@@ -25,7 +25,6 @@ import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
 import 'package:report_it/presentation/widget/tab_navigator.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -79,14 +78,12 @@ class _HomePageState extends State<HomePage> {
     )
   ];
 
-
   List<String> pageKeys = [
     "denuncia",
     "forum",
     "informativa",
     "mappa",
     "psicologo"
-
   ];
 
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
@@ -96,20 +93,6 @@ class _HomePageState extends State<HomePage> {
     "mappa": GlobalKey<NavigatorState>(),
     "psicologo": GlobalKey<NavigatorState>(),
   };
-
-  // Map<String, GlobalKey<NavigatorState>> _navigatorKeysUffPolGiud = {
-  //   "denuncia": GlobalKey<NavigatorState>(),
-  //   "forum": GlobalKey<NavigatorState>(),
-  //   "informativa": GlobalKey<NavigatorState>(),
-  //   "mappa": GlobalKey<NavigatorState>(),
-  // };
-
-  // Map<String, GlobalKey<NavigatorState>> _navigatorKeysOpCup = {
-  //   "forum": GlobalKey<NavigatorState>(),
-  //   "informativa": GlobalKey<NavigatorState>(),
-  //   "mappa": GlobalKey<NavigatorState>(),
-  //   "psicologo": GlobalKey<NavigatorState>(),
-  // };
 
   int _selectedIndex = 2;
 
@@ -161,7 +144,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Color.fromRGBO(255, 254, 248, 1),
             appBar: AppBar(
                 centerTitle: true,
-                leading: Image.asset('assets/images/C11_Logo-png.png',
+                leading: Image.asset('assets/images/C11_Logo-noscritta.png',
                     fit: BoxFit.cover),
                 title: Text('Report.it', style: TextStyle(color: Colors.black)),
                 elevation: 0,
