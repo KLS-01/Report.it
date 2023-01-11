@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/data/Models/denuncia_dao.dart';
@@ -20,17 +21,19 @@ class DettagliDenunciaRebecca extends StatefulWidget {
 }
 
 class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
-  late Future<Denuncia?> denuncia;
+  _DettagliDenunciaRebeccaState(
+      {required this.denunciaId, required this.utente});
+
+  late Stream<DocumentSnapshot<Map<String,dynamic>>> denuncia;
   String denunciaId;
   SuperUtente utente;
 
-  _DettagliDenunciaRebeccaState(
-      {required this.denunciaId, required this.utente});
+
 
   @override
   void initState() {
     super.initState();
-    denuncia = DenunciaController().visualizzaDenunciaById(denunciaId, utente);
+    denuncia = DenunciaController().generaStreamDenunciaById(denunciaId);
   }
 
   @override
@@ -43,123 +46,234 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
         ),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FutureBuilder<Denuncia?>(
-              future: denuncia,
-              builder:
-                  (BuildContext context, AsyncSnapshot<Denuncia?> snapshot) {
-                if (snapshot.data == null) {
-                  return const Text("Errore denuncia non trovata");
-                } else {
-                  String? descrizione = snapshot.data?.descrizione;
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Dati anagrafici',
-                              labelStyle: TextStyle(
-                                fontSize: 30,
+      body: Column(
+        children: [
+          StreamBuilder(
+              stream: denuncia,
+              builder: (BuildContext context,snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Errore nello snapshot");
+                }else{
+                  switch(snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return Text("Dati denuncia non trovati");
+                    case ConnectionState.waiting:
+                      return const Center(child: CircularProgressIndicator());
+                      break;
+                    case ConnectionState.active:{
+                      var json= snapshot.data?.data();
+                      Denuncia d= DenunciaController().jsonToDenunciaDettagli(json!);
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: const InputDecoration(
+                                  labelText: 'Dati anagrafici',
+                                  labelStyle: TextStyle(
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nome: ${d.nomeDenunciante}'),
+                                    Text('Cognome: ${d.cognomeDenunciante}'),
+                                    Text('Indirizzo: ${d.indirizzoDenunciante}'),
+                                    Text('CAP: ${d.capDenunciante}'),
+                                    Text('Sigla provincia: ${d.provinciaDenunciante}'),
+                                    Text('Numero di telefono: ${d.cellulareDenunciante}'),
+                                    Text('E-mail: ${d.emailDenunciante}'),
+                                  ],
+                                ),
                               ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Nome: '),
-                                Text('Cognome: '),
-                                Text('Indirizzo: '),
-                                Text('CAP: '),
-                                Text('Sigla provincia: '),
-                                Text('Numero di telefono: '),
-                                Text('E-mail: '),
-                              ],
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Discriminazione',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Natura della discriminazione: ${d.descrizione}'),
+                              ),
                             ),
-                          ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Vittima',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nome: ${d.nomeVittima}'),
+                                    Text('Cognome: ${d.cognomeVittima}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Oppressore',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Nome oppressore: ${d.denunciato}'),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Vicenda',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Dettagli della vicenda: '),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Consenso',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Consenso: ${d.alreadyFiled}'),
+                              ),
+                            ),
+                            generaTasto(d, utente),
+                          ],
                         ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Discriminazione',
-                              labelStyle: TextStyle(fontSize: 30),
+                      );
+                    }
+                    case ConnectionState.done:{
+                      var json= snapshot.data?.data();
+                      Denuncia d= DenunciaController().jsonToDenunciaDettagli(json!);
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            generaTasto(d, utente),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: const InputDecoration(
+                                  labelText: 'Dati anagrafici',
+                                  labelStyle: TextStyle(
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nome: ${d.nomeDenunciante}'),
+                                    Text('Cognome: ${d.cognomeDenunciante}'),
+                                    Text('Indirizzo: ${d.indirizzoDenunciante}'),
+                                    Text('CAP: ${d.capDenunciante}'),
+                                    Text('Sigla provincia: ${d.provinciaDenunciante}'),
+                                    Text('Numero di telefono: ${d.cellulareDenunciante}'),
+                                    Text('E-mail: ${d.emailDenunciante}'),
+                                  ],
+                                ),
+                              ),
                             ),
-                            child: Text('Natura della discriminazione: '),
-                          ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Discriminazione',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Natura della discriminazione: ${d.descrizione}'),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Vittima',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nome: ${d.nomeVittima}'),
+                                    Text('Cognome: ${d.cognomeVittima}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Oppressore',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Nome oppressore: ${d.denunciato}'),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Vicenda',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Dettagli della vicenda: '),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  labelText: 'Consenso',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                ),
+                                child: Text('Consenso: ${d.alreadyFiled}'),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Vittima',
-                              labelStyle: TextStyle(fontSize: 30),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Nome: '),
-                                Text('Cognome: '),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Oppressore',
-                              labelStyle: TextStyle(fontSize: 30),
-                            ),
-                            child: Text('Nome oppressore: '),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Vicenda',
-                              labelStyle: TextStyle(fontSize: 30),
-                            ),
-                            child: Text('Dettagli della vicenda: '),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: InputDecorator(
-                            decoration: InputDecoration(
-                              labelText: 'Consenso',
-                              labelStyle: TextStyle(fontSize: 30),
-                            ),
-                            child: Text('Consenso: '),
-                          ),
-                        ),
-                        generaTasto(snapshot.data!, utente),
-                      ],
-                    ),
-                  );
+                      );
+                    }
+
+                  }
                 }
               },
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
 

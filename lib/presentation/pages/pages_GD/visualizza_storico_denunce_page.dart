@@ -40,7 +40,6 @@ class _VisualizzaStoricoDenunceUtentePageState
 
 
     return Scaffold(
-
       body: DefaultTabController(
         length: 3,
         child: Scaffold(

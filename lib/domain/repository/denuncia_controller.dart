@@ -20,6 +20,10 @@ class DenunciaController {
     return Denuncia.fromJson(json.data());
   }
 
+  Denuncia jsonToDenunciaDettagli(Map<String, dynamic> json){
+    return Denuncia.fromJson(json);
+  }
+
   Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunciaByUtente(SuperUtente utente){
     return DenunciaDao().generaStreamDenunceByUtente(utente);
   }
@@ -37,7 +41,6 @@ class DenunciaController {
   }
 
   Future<Denuncia?> visualizzaDenunciaById(String idDenuncia, SuperUtente utente) async {
-
       Denuncia? d = await denunciaDao.retrieveById(idDenuncia);
       if(d==null){
         return d;
