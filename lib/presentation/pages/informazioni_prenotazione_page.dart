@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/prenotazione_entity.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
@@ -15,9 +13,12 @@ import 'visualizza_prenotazioni_attive_page.dart';
 class InformazioniPrenotazione extends StatefulWidget {
   final Prenotazione prenotazione;
   final SuperUtente utente;
-  const InformazioniPrenotazione(
-      {Key? key, required this.prenotazione, required this.utente})
-      : super(key: key);
+
+  const InformazioniPrenotazione({
+    Key? key,
+    required this.prenotazione,
+    required this.utente,
+  }) : super(key: key);
 
   @override
   State<InformazioniPrenotazione> createState() =>
@@ -31,9 +32,13 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
   final _prenotazioneFormKey = GlobalKey<FormState>();
   var dateController;
 
-  _InformazioniPrenotazione({required this.prenotazione, required this.utente});
+  _InformazioniPrenotazione({
+    required this.prenotazione,
+    required this.utente,
+  });
   @override
   Widget build(BuildContext context) {
+    print(prenotazione.getDataPrenotazione);
     return Scaffold(
         body: Column(children: [
       Padding(
@@ -133,11 +138,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                                         .validate()) {
                                       inizializza(dateController);
 
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  VisualizzaPrenotazioniAttivePage()),
-                                          (Route<dynamic> route) => false);
+                                      Navigator.pop(context);
 
                                       // If the form is valid, display a snackbar. In the real world,
                                       // you'd often call a server or save the information in a database.

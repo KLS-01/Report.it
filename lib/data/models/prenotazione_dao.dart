@@ -145,4 +145,33 @@ class PrenotazioneDao {
       "NomeASL": nomeASL,
     });
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamAttive() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> ref = db
+        .collection(DOCUMENT_NAME)
+        .where("DataPrenotazione", isNull: true)
+        .snapshots();
+
+    print("ref $ref");
+    return ref;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamByUtente(idUtente) {
+    var ref = db
+        .collection(DOCUMENT_NAME)
+        .where("IDUtente", isEqualTo: idUtente)
+        .snapshots();
+
+    return ref;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamByOperatore(
+      idOperatore) {
+    var ref = db
+        .collection(DOCUMENT_NAME)
+        .where("IDOperatore", isEqualTo: idOperatore)
+        .snapshots();
+
+    return ref;
+  }
 }

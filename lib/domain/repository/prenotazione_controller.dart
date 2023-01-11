@@ -9,7 +9,6 @@ import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/prenotazione_entity.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
 
 class PrenotazioneController {
   PrenotazioneDao prenotazioneDao = PrenotazioneDao();
@@ -144,5 +143,34 @@ class PrenotazioneController {
         }
       }
     }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamAttive() {
+    return prenotazioneDao.retrieveStreamAttive();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamAttiveUtente(
+      SuperUtente utente) {
+    return prenotazioneDao.retrieveStreamByUtente(utente.id);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamStoricoOperatore(
+      SuperUtente operatore) {
+    if (operatore.tipo == TipoUtente.OperatoreCup) {
+      return prenotazioneDao.retrieveStreamByOperatore(operatore.id);
+    } else {
+      throw ("L'utente non è un operatore");
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamStoricoUtente(
+      SuperUtente utente) {
+    return prenotazioneDao.retrieveStreamByUtente(utente.id);
+  }
+
+  Prenotazione prenotazioneFromJson(
+      QueryDocumentSnapshot<Map<String, dynamic>> json) {
+    print("AAAAAAAAAAAAAAAAAAAA");
+    return Prenotazione.fromJson(json.data());
   }
 }
