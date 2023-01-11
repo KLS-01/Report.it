@@ -4,15 +4,20 @@ import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/presentation/pages/informazioni_prenotazione_page.dart';
 
-class PrenotazioneListWidget extends StatelessWidget {
+class PrenotazioneListWidget extends StatefulWidget {
   final AsyncSnapshot<List<Prenotazione>> snapshot;
   final SuperUtente utente;
   const PrenotazioneListWidget(
       {super.key, required this.snapshot, required this.utente});
 
   @override
+  State<PrenotazioneListWidget> createState() => _PrenotazioneListWidgetState();
+}
+
+class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
+  @override
   Widget build(BuildContext context) {
-    var data = snapshot.data;
+    var data = widget.snapshot.data;
     if (data == null) {
       return const Center(child: CircularProgressIndicator());
     } else {
@@ -23,9 +28,9 @@ class PrenotazioneListWidget extends StatelessWidget {
         );
       } else {
         return ListView.builder(
-          itemCount: snapshot.data?.length,
+          itemCount: widget.snapshot.data?.length,
           itemBuilder: (context, index) {
-            final item = snapshot.data![index];
+            final item = widget.snapshot.data![index];
 
             return Material(
               child: Column(
@@ -33,7 +38,7 @@ class PrenotazioneListWidget extends StatelessWidget {
                   ListTile(
                     title: Text(item.id!),
                   ),
-                  if (utente.tipo == TipoUtente.OperatoreCup)
+                  if (widget.utente.tipo == TipoUtente.OperatoreCup)
                     ElevatedButton(
                         onPressed: () => {
                               Navigator.push(
@@ -42,7 +47,7 @@ class PrenotazioneListWidget extends StatelessWidget {
                                       builder: (context) => Scaffold(
                                           body: InformazioniPrenotazione(
                                               prenotazione: item,
-                                              utente: utente))))
+                                              utente: widget.utente))))
                             },
                         child: const Text("Apri prenotazione"))
                 ],

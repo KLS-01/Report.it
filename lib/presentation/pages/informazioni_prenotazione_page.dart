@@ -10,6 +10,8 @@ import 'package:report_it/domain/repository/prenotazione_controller.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import 'visualizza_prenotazioni_attive_page.dart';
+
 class InformazioniPrenotazione extends StatefulWidget {
   final Prenotazione prenotazione;
   final SuperUtente utente;
@@ -38,7 +40,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
         padding: const EdgeInsets.only(top: 40.0, left: 10),
         child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(context);
+              Navigator.pop(context);
             },
             child: const Text("Torna indietro")),
       ),
@@ -130,8 +132,13 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                                     if (_prenotazioneFormKey.currentState!
                                         .validate()) {
                                       inizializza(dateController);
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop(context);
+
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VisualizzaPrenotazioniAttivePage()),
+                                          (Route<dynamic> route) => false);
+
                                       // If the form is valid, display a snackbar. In the real world,
                                       // you'd often call a server or save the information in a database.
                                       //createRecord(utente);

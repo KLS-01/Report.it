@@ -35,73 +35,78 @@ class _VisualizzaStoricoPrenotazioniPageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Expanded(
-        child: Consumer<SuperUtente?>(builder: (context, utente, child) {
-          if (utente == null) {
-            //se l'utente è null resituisce errore
-            return const Text("Errore non sei loggato");
-          } else {
-            if (utente.tipo == TipoUtente.UffPolGiud) {
-              //se l'utente è un UffPolGiud restituisce errore
-              return const Text(
-                  "Non hai l'autorizzazione per visualizzare la pagina");
-            } else if (utente.tipo == TipoUtente.Utente) {
-              //se l'utente è di tipo Utente, genera la lista per l'utente
-              print(utente.id);
-              prenotazioni = generaListaStoricoPrenotazioniUtente(utente);
-            } else if (utente.tipo == TipoUtente.OperatoreCup) {
-              //altrimenti se l'utente è di tipo Operatore, genera la lista per l'operatore
-              prenotazioni = generaListaStoricoPrenotazioniOperatore(utente);
-            }
-            return Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 250, top: 100),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Scaffold(
-                                  body:
-                                      VisualizzaPrenotazioniAttivePage()))); //Reindirizza alla pagina prenotazioni attive
-                    },
-                    child: const Text("Visualizza attive")),
-              ),
-              //Presente solo se l'utente è di tipo Utente
-              if (utente.tipo == TipoUtente.Utente)
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('First Route'),
+      ),
+      body: Column(children: [
+        Expanded(
+          child: Consumer<SuperUtente?>(builder: (context, utente, child) {
+            if (utente == null) {
+              //se l'utente è null resituisce errore
+              return const Text("Errore non sei loggato");
+            } else {
+              if (utente.tipo == TipoUtente.UffPolGiud) {
+                //se l'utente è un UffPolGiud restituisce errore
+                return const Text(
+                    "Non hai l'autorizzazione per visualizzare la pagina");
+              } else if (utente.tipo == TipoUtente.Utente) {
+                //se l'utente è di tipo Utente, genera la lista per l'utente
+                print(utente.id);
+                prenotazioni = generaListaStoricoPrenotazioniUtente(utente);
+              } else if (utente.tipo == TipoUtente.OperatoreCup) {
+                //altrimenti se l'utente è di tipo Operatore, genera la lista per l'operatore
+                prenotazioni = generaListaStoricoPrenotazioniOperatore(utente);
+              }
+              return Column(children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: const EdgeInsets.only(left: 250, top: 100),
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    PrenotazionePage())); //Reindirizza alla pagina per effettuare una prenotazione
+                                builder: (context) => const Scaffold(
+                                    body:
+                                        VisualizzaPrenotazioniAttivePage()))); //Reindirizza alla pagina prenotazioni attive
                       },
-                      child: const Text("Prenota")),
+                      child: const Text("Visualizza attive")),
                 ),
-              const Padding(
-                padding: EdgeInsets.only(top: 100),
-                child: Text("Storico prenotazioni"),
-              ),
-              Expanded(
-                  child: FutureBuilder<List<Prenotazione>>(
-                future: prenotazioni,
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Prenotazione>> snapshot) {
-                  return PrenotazioneListWidget(
-                      snapshot: snapshot,
-                      utente:
-                          utente); //Genera la lista di prenotazione utilizzando il widget PrenotazioneListWidget
-                },
-              ))
-            ]);
-          }
-        }),
-      )
-    ]);
+                //Presente solo se l'utente è di tipo Utente
+                if (utente.tipo == TipoUtente.Utente)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PrenotazionePage())); //Reindirizza alla pagina per effettuare una prenotazione
+                        },
+                        child: const Text("Prenota")),
+                  ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 100),
+                  child: Text("Storico prenotazioni"),
+                ),
+                Expanded(
+                    child: FutureBuilder<List<Prenotazione>>(
+                  future: prenotazioni,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Prenotazione>> snapshot) {
+                    return PrenotazioneListWidget(
+                        snapshot: snapshot,
+                        utente:
+                            utente); //Genera la lista di prenotazione utilizzando il widget PrenotazioneListWidget
+                  },
+                ))
+              ]);
+            }
+          }),
+        )
+      ]),
+    );
   }
 }
 
