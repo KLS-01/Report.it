@@ -17,70 +17,52 @@ class DenunciaController {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
 
-  Future<List<Denuncia>> visualizzaStoricoDenunceByUtente(SuperUtente? utente) async {
 
-    if (utente == null) {
-      print("NON SEI LOGGATO");
-    } else {
-      if(utente.tipo==TipoUtente.Utente){
-        return await denunciaDao.retrieveByUtente(utente.id);
-      }
-      else{
-        print("sto chiamando il dao per fare il retriveByUff");
-        return await denunciaDao.retrieveByUff(utente.id);
-      }
-    }
-    return Future.error(StackTrace);
-  }
-
-  Future<List<Denuncia>> filtraDenunciaByStato(Future<List<Denuncia>> denunce, StatoDenuncia stato){
-          return denunce.then((value){
-            return value.where((element) => element.statoDenuncia== stato).toList();
-          });
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreaUtenteByUtente(SuperUtente utente){
+    return DenunciaDao().generaStreamDenunceByUtente(utente);
   }
 
 
-
-  Future<List<Denuncia>> visualizzaDenunceByStato(StatoDenuncia stato){
+  Future<List<Denuncia>> visualizzaDenunceByStato(StatoDenuncia stato) {
     return denunciaDao.retrieveByStato(stato);
   }
 
   Future<Denuncia?> visualizzaDenunciaById(String idDenuncia, SuperUtente utente) async {
     //bisogna fare il controllo se è un uffPolGiud che ha accettato questa denuncia nel caso sia accettata
-    final User? user = auth.currentUser;
-    if (user == null) {
-      print("NON SEI LOGGATO");
-    } else {
+
       Denuncia? d = await denunciaDao.retrieveById(idDenuncia);
-      if (d == null) {
-        return null;
-      } else if (d.idUtente != user.uid) {
-        return null;
-      } else {
+      if(d==null){
         return d;
+      }else if(utente.tipo==TipoUtente.Utente){
+        return d;
+      }else{
+        if(d.statoDenuncia==StatoDenuncia.NonInCarico){
+          return d;
+        }else if(d.idUff==utente.id){
+          return d;
+        }else{
+          return null;
+        }
       }
-    }
-    return Future.error(StackTrace);
   }
 
-  Future<String?> addDenunciaControl(
-      {required nomeDenunciante,
-      required cognomeDenunciante,
-      required indirizzoDenunciante,
-      required capDenunciante,
-      required provinciaDenunciante,
-      required cellulareDenunciante,
-      required emailDenunciante,
-      required tipoDocDenunciante,
-      required numeroDocDenunciante,
-      required scadenzaDocDenunciante,
-      required categoriaDenuncia,
-      required nomeVittima,
-      required denunciato,
-      required descrizione,
-      required cognomeVittima,
-      required bool consenso,
-      required bool alreadyFilled}) async {
+  Future<String?> addDenunciaControl({required nomeDenunciante,
+    required cognomeDenunciante,
+    required indirizzoDenunciante,
+    required capDenunciante,
+    required provinciaDenunciante,
+    required cellulareDenunciante,
+    required emailDenunciante,
+    required tipoDocDenunciante,
+    required numeroDocDenunciante,
+    required scadenzaDocDenunciante,
+    required categoriaDenuncia,
+    required nomeVittima,
+    required denunciato,
+    required descrizione,
+    required cognomeVittima,
+    required bool consenso,
+    required bool alreadyFilled}) async {
     Timestamp today = Timestamp.now();
 
     final User? user = auth.currentUser;
@@ -127,27 +109,35 @@ class DenunciaController {
     return await result;
   }
 
-  Future<bool> accettaDenuncia(String idDenuncia, SuperUtente utente) async {
+  Future<bool> accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
     //controllo se l'utente è un UffPolGiud
-
+    //debug per prova stream
+    DenunciaDao().generaStreamDenunceByUtente(utente);
     if (utente.tipo != TipoUtente.UffPolGiud) {
       return false;
     } else {
-      Denuncia? d = await denunciaDao.retrieveById(idDenuncia);
-      if (d == null) {
+      UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
+      if (uff == null) {
         return false;
       } else {
-        UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
-        if (uff == null) {
-          return false;
-        } else {
-          denunciaDao.accettaDenuncia(idDenuncia, uff.coordinate, uff.id,
-              uff.nomeCaserma, uff.nome, uff.cognome);
-          return true;
-        }
+        denunciaDao.accettaDenuncia(denuncia.id!, uff.coordinate, uff.id,
+            uff.nomeCaserma, uff.nome, uff.cognome);
+        return true;
       }
     }
   }
 
-  //Future<bool> chiudiDenuncia(String idDenuncia, SuperUtente utente)async{}
+  Future<void> chiudiDenuncia(Denuncia denuncia, SuperUtente utente)async{
+    if (utente.tipo != TipoUtente.UffPolGiud) {
+      return;
+    } else {
+
+        if (denuncia.idUff != utente.id) {
+          return;
+        } else {
+          return await DenunciaDao().updateAttribute(denuncia.id!,"Stato", StatoDenuncia.NonInCarico.name.toString());
+        }
+    }
+  }
+
 }
