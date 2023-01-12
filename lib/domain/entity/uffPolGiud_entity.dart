@@ -3,7 +3,7 @@ import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 
-class UffPolGiud extends SuperUtente{
+class UffPolGiud extends SuperUtente {
   String nome;
   String cognome;
   String grado;
@@ -12,6 +12,10 @@ class UffPolGiud extends SuperUtente{
   String password;
   String nomeCaserma;
   GeoPoint coordinate;
+  String capCaserma;
+  String indirizzoCaserma;
+  String cittaCaserma;
+  String provinciaCaserma;
 
   get getId => super.id;
 
@@ -49,9 +53,21 @@ class UffPolGiud extends SuperUtente{
 
   set setCoordinate(coordinate) => this.coordinate = coordinate;
 
-  UffPolGiud(id, this.nome, this.cognome, this.grado, this.tipoUff,
-      this.email, this.password, this.nomeCaserma, this.coordinate)
-      : super(id,TipoUtente.values.byName("UffPolGiud"));
+  UffPolGiud(
+      id,
+      this.nome,
+      this.cognome,
+      this.grado,
+      this.tipoUff,
+      this.email,
+      this.password,
+      this.nomeCaserma,
+      this.coordinate,
+      this.capCaserma,
+      this.cittaCaserma,
+      this.indirizzoCaserma,
+      this.provinciaCaserma)
+      : super(id, TipoUtente.values.byName("UffPolGiud"));
 
   factory UffPolGiud.fromJson(Map<String, dynamic> json) {
     return UffPolGiud(json["ID"], json["Nome"], json["Cognome"], json["Grado"],
@@ -60,23 +76,35 @@ class UffPolGiud extends SuperUtente{
         // ignore: prefer_interpolation_to_compose_strings
         return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
       },
-    ), json["Email"], json["Password"], json["NomeCaserma"],
-        json["CoordCaserma"]);
+    ),
+        json["Email"],
+        json["Password"],
+        json["NomeCaserma"],
+        json["CoordCaserma"],
+        json["CapCaserma"],
+        json["CittaCaserma"],
+        json["IndirizzoCaserma"],
+        json["ProvinciaCaserma"]);
   }
 
   factory UffPolGiud.fromMap(map) {
     return UffPolGiud(
-        map["ID"],
-        map["Nome"],
-        map["Cognome"],
-        map["Grado"],
-        TipoUfficiale.values.firstWhere((element) =>
-            // ignore: prefer_interpolation_to_compose_strings
-            element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
-        map["Email"],
-        map["Password"],
-        map["NomeCaserma"],
-        map["CoordCaserma"]);
+      map["ID"],
+      map["Nome"],
+      map["Cognome"],
+      map["Grado"],
+      TipoUfficiale.values.firstWhere((element) =>
+          // ignore: prefer_interpolation_to_compose_strings
+          element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
+      map["Email"],
+      map["Password"],
+      map["NomeCaserma"],
+      map["CoordCaserma"],
+      map["CapCaserma"],
+      map["CittaCaserma"],
+      map["IndirizzoCaserma"],
+      map["ProvinciaCaserma"],
+    );
   }
 
   Map<String?, dynamic> toMap() {
@@ -90,6 +118,10 @@ class UffPolGiud extends SuperUtente{
       "Password": password,
       "NomeCaserma": nomeCaserma,
       "CoordCaserma": coordinate,
+      "CapCaserma": capCaserma,
+      "CittaCaserma": cittaCaserma,
+      "IndirizzoCaserma": indirizzoCaserma,
+      "ProvinciaCaserma": provinciaCaserma,
     };
   }
 }

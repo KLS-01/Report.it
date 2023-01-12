@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/prenotazione_entity.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/lista_prenotazioni_widget.dart';
-import 'visualizza_prenotazioni_attive_page.dart';
 
 Color? containerColor;
 List<Color> containerColors = [
@@ -33,7 +33,7 @@ class _VisualizzaPrenotazioniPageState
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
       GlobalKey<RefreshIndicatorState>();
-
+  OperatoreCUP? op;
   @override
   void initState() {
     super.initState();
@@ -116,7 +116,8 @@ class _VisualizzaPrenotazioniPageState
                                                             .prenotazioneFromJson(
                                                                 e))
                                                         .toList();
-                                                print(listaPrenotazioni);
+                                                print(
+                                                    "lista $listaPrenotazioni");
 
                                                 return PrenotazioneListWidget(
                                                   snapshot: listaPrenotazioni,
@@ -212,9 +213,9 @@ class _VisualizzaPrenotazioniPageState
     if (utente.tipo == TipoUtente.Utente) {
       return controller.generaStreamAttiveUtente(utente);
     } else if (utente.tipo == TipoUtente.OperatoreCup) {
-      return controller.generaStreamAttive();
+      return controller.generaStreamAttive(utente);
     } else {
-      throw (NullThrownError());
+      return const Stream.empty();
     }
   }
 

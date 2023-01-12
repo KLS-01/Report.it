@@ -35,9 +35,8 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
       return const Center(child: Text('Errore'));
     }
     if (snapshot!.isEmpty) {
-      return const Center(
-        child: Text('Nessuna prenotazione trovata'),
-      );
+      return ListView(
+          children: [Center(child: Text('Nessuna prenotazione trovata'))]);
     } else {
       return ListView.builder(
         itemCount: snapshot!.length,
