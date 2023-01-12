@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:report_it/domain/entity/discussione_entity.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
@@ -13,6 +15,16 @@ class ForumDao {
       for (var c in value.docs) {
         Discussione ut = Discussione.fromJson(c.data());
         ut.setID(c.id);
+
+        if (ut.pathImmagine != null &&
+            (ut.pathImmagine!.startsWith("http") ||
+                ut.pathImmagine!.startsWith("gs://"))) {
+          final gsReference =
+              FirebaseStorage.instance.refFromURL(ut.pathImmagine!);
+          await gsReference
+              .getDownloadURL()
+              .then((value) => ut.setpathImmagine(value));
+        }
 
         ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
         lista.add(ut);
@@ -54,6 +66,14 @@ class ForumDao {
       for (var c in value.docs) {
         Discussione? ut = Discussione.fromJson(c.data());
         ut.id = c.id;
+        if (!ut.pathImmagine!.startsWith("http") ||
+            !ut.pathImmagine!.startsWith("gs://")) {
+          final gsReference =
+              FirebaseStorage.instance.refFromURL(ut.pathImmagine!);
+          await gsReference
+              .getDownloadURL()
+              .then((value) => ut.setpathImmagine(value));
+        }
 
         ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
         lista.add(ut);
@@ -111,14 +131,10 @@ class ForumDao {
     ref.delete();
   }
 
-  static int supportaDiscussione(Discussione discussione) {
-    var ref = database.collection("Discussione").doc(discussione.id);
+  static void modificaPunteggio(String id, int valore) {
+    var ref = database.collection("Discussione").doc(id);
 
-    discussione.punteggio += 1;
-
-    ref.update(discussione.toMap());
-
-    return discussione.punteggio;
+    ref.update({"Punteggio": FieldValue.increment(valore)});
   }
 
   static int supportaCommento(Commento commento, Discussione discussione) {
@@ -133,5 +149,19 @@ class ForumDao {
     ref.update(commento.toMap());
 
     return commento.punteggio;
+  }
+
+  Future<String> caricaImmagne(FilePickerResult file) async {
+    final storageRef = FirebaseStorage.instance.ref();
+
+    var c = storageRef.child("Immagini").child(file.names.first!);
+
+    var u = c.putData(file.files.first.bytes!);
+
+    String path = await u.then((p0) {
+      return p0.ref.getDownloadURL();
+    });
+
+    return path;
   }
 }

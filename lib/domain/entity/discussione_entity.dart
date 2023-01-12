@@ -45,20 +45,22 @@ class Discussione {
   String testo;
   String stato;
   List<Commento?> commenti = List.empty(growable: true);
+  String? pathImmagine;
 
   Discussione(this.categoria, this.dataCreazione, this.idCreatore,
-      this.punteggio, this.testo, this.titolo, this.stato);
+      this.punteggio, this.testo, this.titolo, this.stato,
+      {this.pathImmagine});
 
   factory Discussione.fromJson(Map<String, dynamic> json) {
     var u = Discussione(
-      json["Categoria"],
-      json["DataOraCreazione"].toDate(),
-      json["IDCreatore"],
-      json["Punteggio"],
-      json["Testo"],
-      json["Titolo"],
-      json["Stato"],
-    );
+        json["Categoria"],
+        json["DataOraCreazione"].toDate(),
+        json["IDCreatore"],
+        json["Punteggio"],
+        json["Testo"],
+        json["Titolo"],
+        json["Stato"],
+        pathImmagine: json["pathImmagine"]);
     u.id = json["ID"];
 
     return u;
@@ -73,6 +75,7 @@ class Discussione {
       map["Testo"],
       map["Titolo"],
       map["Stato"],
+      pathImmagine: map["pathImmagine"],
     );
     u.id = map["ID"];
 
@@ -88,10 +91,15 @@ class Discussione {
       "Testo": testo,
       "Titolo": titolo,
       "Stato": stato,
+      "pathImmagine": pathImmagine,
     };
   }
 
   void setID(String id) {
     this.id = id;
+  }
+
+  void setpathImmagine(String path) {
+    this.pathImmagine = path;
   }
 }

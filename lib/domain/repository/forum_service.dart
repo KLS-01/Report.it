@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/data/Models/forum_dao.dart';
@@ -33,13 +34,26 @@ class ForumService {
     return UtenteDiscussioni;
   }
 
-  void AggiungiDiscussione(String titolo, String testo, String categoria) {
+  Future<void> AggiungiDiscussione(
+      String titolo, String testo, String categoria,
+      [FilePickerResult? file]) async {
     final User? user = auth.currentUser;
 
-    Discussione d = Discussione(
-        categoria, DateTime.now(), user!.uid, 0, testo, titolo, "Aperta");
+    if (file != null) {
+      var c = ForumDao().caricaImmagne(file);
 
-    ForumDao.AggiungiDiscussione(d);
+      Discussione d = Discussione(
+          categoria, DateTime.now(), user!.uid, 0, testo, titolo, "Aperta");
+      await c.then((value) {
+        d.setpathImmagine(value);
+      });
+      ForumDao.AggiungiDiscussione(d);
+    } else {
+      Discussione d = Discussione(
+          categoria, DateTime.now(), user!.uid, 0, testo, titolo, "Aperta",
+          pathImmagine: "");
+      ForumDao.AggiungiDiscussione(d);
+    }
   }
 
   void AggiornaLista() {
@@ -55,5 +69,13 @@ class ForumService {
 
   void ChiudiDiscussione(String? id) {
     ForumDao.CambiaStato(id, "chiusa");
+  }
+
+  void sostieniDiscusione(String id) {
+    ForumDao.modificaPunteggio(id, 1);
+  }
+
+  void desostieniDiscusione(String id) {
+    ForumDao.modificaPunteggio(id, -1);
   }
 }
