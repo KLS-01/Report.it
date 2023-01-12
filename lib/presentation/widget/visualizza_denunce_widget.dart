@@ -14,12 +14,15 @@ class VisualizzaDenunceWidget extends StatefulWidget {
   const VisualizzaDenunceWidget({Key? key, required this.denunce}) : super(key: key);
 
   @override
-  State<VisualizzaDenunceWidget> createState() => _VisualizzaDenunceWidgetState(denunce: denunce);
+  State<VisualizzaDenunceWidget> createState() => _VisualizzaDenunceWidgetState(denunce: denunce,);
 }
 
 class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
   _VisualizzaDenunceWidgetState({required this.denunce});
   List<Denuncia> denunce;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
+  GlobalKey<RefreshIndicatorState>();
 
 
   @override
@@ -38,87 +41,87 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                   return const Text("Errore non hai i permessi");
                 }
                 else{
-                  return ListView.builder(
-                    itemCount: denunce.length,
-                    itemBuilder: (context, index) {
-                      final item = denunce[index];
+                    return ListView.builder(
+                      itemCount: denunce.length,
+                      itemBuilder: (context, index) {
+                        final item = denunce[index];
 
-                      return Container(
-                        margin: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                          BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 8.0,
-                              spreadRadius: 1.0,
-                              offset: Offset(0, 3),
-                            )
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Consumer<SuperUtente?>(
-                                builder: (context,utente,_){
-                                  switch(item.statoDenuncia) {
-                                    case StatoDenuncia.NonInCarico:
-                                      return const Icon(
-                                        Icons.circle,
-                                        color: Colors.amberAccent,
-                                      );
-                                      case StatoDenuncia.PresaInCarico:
+                        return Container(
+                          margin: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 8.0,
+                                spreadRadius: 1.0,
+                                offset: Offset(0, 3),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Consumer<SuperUtente?>(
+                                  builder: (context,utente,_){
+                                    switch(item.statoDenuncia) {
+                                      case StatoDenuncia.NonInCarico:
                                         return const Icon(
                                           Icons.circle,
-                                          color: Colors.green,
+                                          color: Colors.amberAccent,
                                         );
-                                        case StatoDenuncia.Chiusa:
-                                          return Icon(
+                                        case StatoDenuncia.PresaInCarico:
+                                          return const Icon(
                                             Icons.circle,
-                                            color: Colors.grey.shade400,
+                                            color: Colors.green,
                                           );
+                                          case StatoDenuncia.Chiusa:
+                                            return Icon(
+                                              Icons.circle,
+                                              color: Colors.grey.shade400,
+                                            );
+                                      }
                                     }
-                                  }
-                                ),
-                            Expanded(
-                              child: SizedBox(
-                                height: 75.0,
-                                child: ListTile(
-                                  title: Text(
-                                    item.descrizione,
-                                    style: const TextStyle(
-                                      fontWeight:
-                                      FontWeight.bold,
-                                    ),
                                   ),
-                                  subtitle: Text(item
-                                      .categoriaDenuncia
-                                      .toString()),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 75.0,
+                                  child: ListTile(
+                                    title: Text(
+                                      item.descrizione,
+                                      style: const TextStyle(
+                                        fontWeight:
+                                        FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(item
+                                        .categoriaDenuncia
+                                        .toString()),
+                                  ),
                                 ),
                               ),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          DettagliDenunciaRebecca(denunciaId: item.id!, utente:utente),
-                                    ),
-                                  );
-                                  },
-                                icon: const Icon(
-                                  Icons.info_outline_rounded,
-                                ))
-                          ],
-                        ),
-                      );
-                      },
-                  );
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DettagliDenunciaRebecca(denunciaId: item.id!, utente:utente),
+                                      ),
+                                    );
+                                    },
+                                  icon: const Icon(
+                                    Icons.info_outline_rounded,
+                                  ))
+                            ],
+                          ),
+                        );
+                        },
+                    );
                 }
               }
             },
