@@ -16,15 +16,15 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   final TextEditingController capController = TextEditingController();
   final TextEditingController provinciaController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-
-// aggiungere controllo sul CF
+  final TextEditingController cfController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
-
+  final regexCF = RegExp(
+      r"^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$");
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   String? discriminazione;
@@ -117,7 +117,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                         child: const Text(
                           "Inoltra",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),
@@ -257,10 +257,12 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                     TextFormField(
                       decoration:
                           const InputDecoration(labelText: 'Codice Fiscale'),
-                      // controller: mettere controller del CF,
+                      controller: cfController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il tuo CF.';
+                        } else if (!regexCF.hasMatch(value)) {
+                          return 'Per favore, inserisci un CF valido.';
                         }
                         return null;
                       },
