@@ -39,6 +39,13 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
+        title: Text(
+          'Dettagli denuncia',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'SourceSerifPro'),
+        ),
         iconTheme: IconThemeData(
           color: Color.fromRGBO(219, 29, 69, 1),
         ),
@@ -69,7 +76,20 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
                                 margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
@@ -77,93 +97,291 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelText: 'Dati anagrafici',
                                     labelStyle: TextStyle(
                                       fontSize: 30,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                    border: InputBorder.none,
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Nome: ${d.nomeDenunciante}'),
-                                      Text('Cognome: ${d.cognomeDenunciante}'),
-                                      Text(
-                                          'Indirizzo: ${d.indirizzoDenunciante}'),
-                                      Text('CAP: ${d.capDenunciante}'),
-                                      Text(
-                                          'Sigla provincia: ${d.provinciaDenunciante}'),
-                                      Text(
-                                          'Numero di telefono: ${d.cellulareDenunciante}'),
-                                      Text('E-mail: ${d.emailDenunciante}'),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Nome: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.nomeDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Cognome: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.cognomeDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Indirizzo: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.indirizzoDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'CAP: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.capDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Provincia: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.provinciaDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Cellulare: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.cellulareDenunciante}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'E-mail: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.emailDenunciante}'),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
                                 margin: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: InputDecoration(
                                     labelText: 'Discriminazione',
-                                    labelStyle: TextStyle(fontSize: 30),
+                                    labelStyle: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    border: InputBorder.none,
                                   ),
-                                  child: Text(
-                                      'Natura della discriminazione: ${d.descrizione}'),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: 'Vittima',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  child: Row(
                                     children: [
-                                      Text('Nome: ${d.nomeVittima}'),
-                                      Text('Cognome: ${d.cognomeVittima}'),
+                                      Text(
+                                        'Natura della discriminazione: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text('${d.descrizione}'),
                                     ],
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
+                                child: InputDecorator(
+                                  decoration: InputDecoration(
+                                    labelText: 'Vittima',
+                                    labelStyle: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Nome: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.nomeVittima}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Cognome: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.cognomeVittima}'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
                                 margin: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: InputDecoration(
                                     labelText: 'Oppressore',
-                                    labelStyle: TextStyle(fontSize: 30),
+                                    labelStyle: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    border: InputBorder.none,
                                   ),
-                                  child:
-                                      Text('Nome oppressore: ${d.denunciato}'),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Nome oppressore: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text('${d.denunciato}'),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
                                 margin: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: InputDecoration(
                                     labelText: 'Vicenda',
-                                    labelStyle: TextStyle(fontSize: 30),
+                                    labelStyle: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    border: InputBorder.none,
                                   ),
-                                  child: Text('Dettagli della vicenda: '),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Dettagli della vicenda: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
                                 margin: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: InputDecoration(
                                     labelText: 'Consenso',
-                                    labelStyle: TextStyle(fontSize: 30),
+                                    labelStyle: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    border: InputBorder.none,
                                   ),
-                                  child: Text('Consenso: ${d.alreadyFiled}'),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Consenso: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text('${d.alreadyFiled}'),
+                                    ],
+                                  ),
                                 ),
                               ),
                               generaTasto(d, utente),

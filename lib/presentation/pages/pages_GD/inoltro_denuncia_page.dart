@@ -210,6 +210,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
         } else {
           return Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               iconTheme: const IconThemeData(
                 color: Color.fromRGBO(219, 29, 69, 1),
               ),
@@ -218,6 +219,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
+                  fontFamily: 'SourceSerifPro',
                 ),
               ),
               elevation: 3,
@@ -328,8 +330,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           },
                         ),
                         TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Sigla provincia'),
+                          decoration: const InputDecoration(
+                              labelText: 'Sigla provincia'),
                           controller: provinciaController,
                           validator: (value) {
                             if (value!.isEmpty) {

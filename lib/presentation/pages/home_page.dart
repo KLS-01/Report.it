@@ -146,7 +146,6 @@ class _HomePageState extends State<HomePage> {
                 centerTitle: true,
                 leading: Image.asset('assets/images/C11_Logo-noscritta.png',
                     fit: BoxFit.cover),
-                title: Text('Report.it', style: TextStyle(color: Colors.black)),
                 elevation: 0,
                 backgroundColor: Color.fromRGBO(255, 254, 248, 1),
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
