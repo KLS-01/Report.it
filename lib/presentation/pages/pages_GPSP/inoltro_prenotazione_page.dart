@@ -80,7 +80,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                           )),
                     ),
                     Text(
-                      "Bisogna necessariamente accettare il consenso per poter inoltra correttamente la richiesta.",
+                      "Bisogna necessariamente accettare il consenso per poter inoltrare correttamente la richiesta.",
                     ),
                     SizedBox(
                       height: 10,
@@ -101,11 +101,18 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                         onPressed: () {
                           //
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
+                        style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(5),
+                          textStyle: MaterialStateProperty.all(
+                              Theme.of(context).textTheme.button),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color.fromRGBO(219, 29, 69, 1),
+                          ),
                         ),
                         child: const Text(
                           "Inoltra",
@@ -136,213 +143,283 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         elevation: 3,
         backgroundColor: Theme.of(context).backgroundColor,
       ),
-      body: Stepper(
-        controlsBuilder: (context, details) {
-          if (_currentStep == 0) {
-            return Row(
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: details.onStepContinue,
-                  child: const Text('Continua'),
-                ),
-              ],
-            );
-          }
-          if (_currentStep == 5) {
-            return TextButton(
-                onPressed: details.onStepCancel,
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Indietro',
-                    style: TextStyle(color: Colors.black),
+      body: Theme(
+        data: ThemeData(
+          colorScheme: ColorScheme.light(
+            primary: Color.fromRGBO(219, 29, 69, 1),
+          ),
+        ),
+        child: Stepper(
+          controlsBuilder: (context, details) {
+            if (_currentStep == 0) {
+              return Row(
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: details.onStepContinue,
+                    child: const Text('Continua'),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(5),
+                      textStyle: MaterialStateProperty.all(
+                          Theme.of(context).textTheme.button),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(219, 29, 69, 1),
+                      ),
+                    ),
                   ),
-                ));
-          } else {
-            return Row(
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: details.onStepContinue,
-                  child: const Text('Continua'),
-                ),
-                TextButton(
+                ],
+              );
+            }
+            if (_currentStep == 3) {
+              return TextButton(
                   onPressed: details.onStepCancel,
-                  child: const Text(
-                    'Indietro',
-                    style: TextStyle(color: Colors.black),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Indietro',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ));
+            } else {
+              return Row(
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: details.onStepContinue,
+                    child: const Text('Continua'),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(5),
+                      textStyle: MaterialStateProperty.all(
+                          Theme.of(context).textTheme.button),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(219, 29, 69, 1),
+                      ),
+                    ),
                   ),
+                  TextButton(
+                    onPressed: details.onStepCancel,
+                    child: const Text(
+                      'Indietro',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+          type: stepperType,
+          currentStep: _currentStep,
+          // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
+          onStepContinue: continued,
+          onStepCancel: cancel,
+          steps: <Step>[
+            Step(
+              title: const Text(
+                "Dati anagrafici",
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
-              ],
-            );
-          }
-        },
-        type: stepperType,
-        currentStep: _currentStep,
-        // onStepTapped: (step) => tapped(step), <- se lo si abilita, l'utente sarà abilitato a viaggiare tra le sezioni
-        onStepContinue: continued,
-        onStepCancel: cancel,
-        steps: <Step>[
-          Step(
-            title: const Text(
-              "Dati anagrafici",
-              style: TextStyle(
-                fontFamily: 'SourceSerifPro',
-                fontWeight: FontWeight.bold,
               ),
-            ),
-            content: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Nome'),
-                    controller: nameController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il nome.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Cognome'),
-                    controller: surnameController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il cognome.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration:
-                        const InputDecoration(labelText: 'Codice Fiscale'),
-                    // controller: mettere controller del CF,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il tuo CF.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Indirizzo'),
-                    controller: indirizzoController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci un indirizzo';
-                      } else if (!regexIndirizzo.hasMatch(value)) {
-                        return 'Per favore, inserisci un indirizzo valido.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'CAP'),
-                    controller: capController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il CAP.';
-                      } else if (!regexCap.hasMatch(value)) {
-                        return 'Per favore, inserisci un CAP valido';
-                      }
+              content: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Nome'),
+                      controller: nameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il nome.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Cognome'),
+                      controller: surnameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il cognome.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(labelText: 'Codice Fiscale'),
+                      // controller: mettere controller del CF,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il tuo CF.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Indirizzo'),
+                      controller: indirizzoController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci un indirizzo';
+                        } else if (!regexIndirizzo.hasMatch(value)) {
+                          return 'Per favore, inserisci un indirizzo valido.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'CAP'),
+                      controller: capController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il CAP.';
+                        } else if (!regexCap.hasMatch(value)) {
+                          return 'Per favore, inserisci un CAP valido';
+                        }
 
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Provincia'),
-                    controller: provinciaController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci la provincia.';
-                      } else if (!regexProvincia.hasMatch(value)) {
-                        return 'Per favore, inserisci una provincia valida.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller: numberController,
-                    decoration:
-                        const InputDecoration(labelText: 'Numero telefonico'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il numero telefonico.';
-                      } else if (!regexCellulare.hasMatch(value)) {
-                        return 'Per favore, inserisci un numero telefonico valido.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration:
-                        const InputDecoration(labelText: 'Indirizzo e-mail'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci l\'indirizzo e-mail.';
-                      } else if (!regexEmail.hasMatch(value)) {
-                        return 'Per favore, inserisci una e-mail valida.';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Provincia'),
+                      controller: provinciaController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci la provincia.';
+                        } else if (!regexProvincia.hasMatch(value)) {
+                          return 'Per favore, inserisci una provincia valida.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      controller: numberController,
+                      decoration:
+                          const InputDecoration(labelText: 'Numero telefonico'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il numero telefonico.';
+                        } else if (!regexCellulare.hasMatch(value)) {
+                          return 'Per favore, inserisci un numero telefonico valido.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      decoration:
+                          const InputDecoration(labelText: 'Indirizzo e-mail'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci l\'indirizzo e-mail.';
+                        } else if (!regexEmail.hasMatch(value)) {
+                          return 'Per favore, inserisci una e-mail valida.';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 0 ? StepState.complete : StepState.disabled,
             ),
-            isActive: _currentStep >= 0,
-            state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
-          ),
-          Step(
-            title: const Text(
-              "Motivazione",
-              style: TextStyle(
-                fontFamily: 'SourceSerifPro',
-                fontWeight: FontWeight.bold,
+            Step(
+              title: const Text(
+                "Motivazione",
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            content: Form(
-              child: Column(
-                children: <Widget>[
-                  const Text(
-                    "Breve descrizione della motivazione per cui si sta richiedendo il consulto psicologico.",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Scrivi qui la motivazione'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Per favore, inserisci il motivo della richiesta.';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+              content: Form(
+                child: Column(
+                  children: <Widget>[
+                    const Text(
+                      "Breve descrizione della motivazione per cui si sta richiedendo il consulto psicologico.",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Scrivi qui la motivazione'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Per favore, inserisci il motivo della richiesta.';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 1 ? StepState.complete : StepState.disabled,
             ),
-            isActive: _currentStep >= 0,
-            state: _currentStep >= 4 ? StepState.complete : StepState.disabled,
-          ),
-          Step(
-            title: const Text(
-              "Consenso",
-              style: TextStyle(
-                fontFamily: 'SourceSerifPro',
-                fontWeight: FontWeight.bold,
+            Step(
+              title: const Text(
+                "Impegnativa del medico",
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
+              content: ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(5),
+                    textStyle: MaterialStateProperty.all(
+                        Theme.of(context).textTheme.button),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(219, 29, 69, 1),
+                    ),
+                  ),
+                  onPressed: (() {
+                    //caricamento PDF
+                  }),
+                  child: Text("Carica l\'impegnativa del medico")),
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 2 ? StepState.complete : StepState.disabled,
             ),
-            content: consensoWidget,
-            isActive: _currentStep >= 0,
-            state: _currentStep >= 5 ? StepState.complete : StepState.disabled,
-          ),
-        ],
+            Step(
+              title: const Text(
+                "Consenso",
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              content: consensoWidget,
+              isActive: _currentStep >= 0,
+              state:
+                  _currentStep >= 3 ? StepState.complete : StepState.disabled,
+            ),
+          ],
+        ),
       ),
       //backgroundColor: Theme.of(context).backgroundColor,
       backgroundColor: Colors.white,

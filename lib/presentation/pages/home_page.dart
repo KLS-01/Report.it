@@ -4,25 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
-
-import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';
-import '../../domain/repository/authentication_service.dart';
-import 'informativa_contatti_page.dart';
-import 'test_prenotazioni.dart';
-
-import '../../domain/entity/super_utente.dart';
-import '../../domain/repository/authentication_service.dart';
-import 'informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/forum_home_page.dart';
-import 'package:report_it/presentation/pages/mappa_page.dart';
-import 'package:report_it/presentation/pages/psicologo_home_page.dart';
-import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/presentation/widget/tab_navigator.dart';
 
 class HomePage extends StatefulWidget {
@@ -146,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 centerTitle: true,
                 leading: Image.asset('assets/images/C11_Logo-noscritta.png',
                     fit: BoxFit.cover),
-                title: Text('Report.it', style: TextStyle(color: Colors.black)),
+                title: Text('', style: TextStyle(color: Colors.black)),
                 elevation: 0,
                 backgroundColor: Color.fromRGBO(255, 254, 248, 1),
                 systemOverlayStyle: SystemUiOverlayStyle.dark,

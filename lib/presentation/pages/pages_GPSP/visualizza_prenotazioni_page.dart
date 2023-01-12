@@ -45,24 +45,21 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
                 Tab(
                   child: Text(
                     "In attesa",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
+                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Prese in carico",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
+                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
+                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
                     textAlign: TextAlign.center,
                   ),
                 ),
