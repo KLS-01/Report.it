@@ -5,11 +5,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/data/models/prenotazione_dao.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
 
 class PrenotazioneController {
   PrenotazioneDao prenotazioneDao = PrenotazioneDao();

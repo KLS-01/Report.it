@@ -1,8 +1,11 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:report_it/domain/entity/denuncia_entity.dart';
-import 'package:report_it/domain/entity/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GD/denuncia_entity.dart';
+
+import '../../domain/entity/entity_GA/super_utente.dart';
+import '../../domain/entity/entity_GD/stato_denuncia.dart';
 
 var db = FirebaseFirestore.instance;
 
@@ -21,20 +24,40 @@ class DenunciaDao {
       returnCode = FirebaseFirestore.instance.collection('Denuncia').doc(id);
       await returnCode.update({"ID": id});
     } catch (e) {
-      log("Error: ");
+      print(e);
       return null;
     }
   }
 
-  static void updateAttribute(String attribute, var value) async {
+
+  Stream<QuerySnapshot<Map<String,dynamic>>>generaStreamDenunceByUtente(SuperUtente utente){
+    var ref= db.collection("Denuncia");
+    if(utente.tipo==TipoUtente.Utente){
+      return ref.where("IDUtente" ,isEqualTo: utente.id).snapshots();
+    }else{
+      return ref.where("IDUff" ,isEqualTo: utente.id).snapshots();
+    }
+
+  }
+
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStato(StatoDenuncia stato){
+    var ref=db.collection("Denuncia");
+    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString()).snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunceById(String id){
+    var ref=db.collection("Denuncia");
+    return ref.doc(id).snapshots();
+  }
+
+  Future<void> updateAttribute(String id,String attribute, var value) async {
     DocumentReference? returnCode;
     try {
-      returnCode =
-          FirebaseFirestore.instance.collection('Denuncia').doc(attribute);
-      await returnCode.update({attribute: value});
+      returnCode = db.collection('Denuncia').doc(id);
+      return await returnCode.update({attribute: value});
     } catch (e) {
-      log("Error: ");
-      return null;
+      print(e);
+      return;
     }
   }
 
@@ -96,7 +119,6 @@ class DenunciaDao {
 
       return lista;
     }));
-    print("attenzione lista di denunce vuota");
     return lista;
   }
 
@@ -115,15 +137,19 @@ class DenunciaDao {
     return lista;
   }
 
-  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff){
-    var ref= db.collection("Denuncia").doc(idDenuncia);
+  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff) {
+    try {
+      var ref = db.collection("Denuncia").doc(idDenuncia);
 
-    ref.update({
-      "CognomeUff":cognomeUff,
-      "CoordCaserma": coordCaserma,
-      "IDUff": idUff,
-      "NomeCaserma": nomeCaserma,
-      "NomeUff": nomeUff
-    });
+      ref.update({
+        "CognomeUff": cognomeUff,
+        "CoordCaserma": coordCaserma,
+        "IDUff": idUff,
+        "NomeCaserma": nomeCaserma,
+        "NomeUff": nomeUff
+      });
+    }catch(e){
+      print(e);
+    }
   }
 }

@@ -94,20 +94,6 @@ class _HomePageState extends State<HomePage> {
     "psicologo": GlobalKey<NavigatorState>(),
   };
 
-  // Map<String, GlobalKey<NavigatorState>> _navigatorKeysUffPolGiud = {
-  //   "denuncia": GlobalKey<NavigatorState>(),
-  //   "forum": GlobalKey<NavigatorState>(),
-  //   "informativa": GlobalKey<NavigatorState>(),
-  //   "mappa": GlobalKey<NavigatorState>(),
-  // };
-
-  // Map<String, GlobalKey<NavigatorState>> _navigatorKeysOpCup = {
-  //   "forum": GlobalKey<NavigatorState>(),
-  //   "informativa": GlobalKey<NavigatorState>(),
-  //   "mappa": GlobalKey<NavigatorState>(),
-  //   "psicologo": GlobalKey<NavigatorState>(),
-  // };
-
   int _selectedIndex = 2;
 
   void _selectTab(String tabItem, int index) {
@@ -158,7 +144,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Color.fromRGBO(255, 254, 248, 1),
             appBar: AppBar(
                 centerTitle: true,
-                leading: Image.asset('assets/images/C11_Logo-png.png',
+                leading: Image.asset('assets/images/C11_Logo-noscritta.png',
                     fit: BoxFit.cover),
                 title: Text('Report.it', style: TextStyle(color: Colors.black)),
                 elevation: 0,
