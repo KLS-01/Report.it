@@ -2,7 +2,7 @@
     package="com.example.report_it">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="report_it"
+        android:label="Report.it"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
