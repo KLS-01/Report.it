@@ -98,6 +98,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
@@ -202,6 +203,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
@@ -240,6 +242,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
@@ -294,6 +297,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
@@ -332,6 +336,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
@@ -369,6 +374,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     labelStyle: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                     border: InputBorder.none,
                                   ),
