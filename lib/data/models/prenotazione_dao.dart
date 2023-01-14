@@ -165,6 +165,7 @@ class PrenotazioneDao {
     var ref = db
         .collection(DOCUMENT_NAME)
         .where("IDUtente", isEqualTo: idUtente)
+        .where("DataPrenotazione")
         .snapshots();
 
     return ref;

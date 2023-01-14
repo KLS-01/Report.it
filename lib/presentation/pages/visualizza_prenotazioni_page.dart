@@ -103,6 +103,14 @@ class _VisualizzaPrenotazioniPageState
                                                       e.data());
                                                 }).toList();
 
+                                                if (listaPrenotazioni != null) {
+                                                  listaPrenotazioni.removeWhere(
+                                                      (element) =>
+                                                          element
+                                                              .getDataPrenotazione !=
+                                                          null);
+                                                } 
+
                                                 return PrenotazioneListWidget(
                                                   snapshot: listaPrenotazioni,
                                                   utente: utente,
@@ -118,7 +126,18 @@ class _VisualizzaPrenotazioniPageState
                                                         .toList();
                                                 print(
                                                     "lista $listaPrenotazioni");
-
+                                                if (utente.tipo ==
+                                                        TipoUtente.Utente &&
+                                                    listaPrenotazioni != null) {
+                                                  listaPrenotazioni.removeWhere(
+                                                      (element) =>
+                                                          element.getDataPrenotazione !=
+                                                              null ||
+                                                          DateTime.now()
+                                                              .isAfter(element
+                                                                  .getDataPrenotazione
+                                                                  .toDate()));
+                                                }
                                                 return PrenotazioneListWidget(
                                                   snapshot: listaPrenotazioni,
                                                   utente: utente,
@@ -171,6 +190,16 @@ class _VisualizzaPrenotazioniPageState
                                                       e.data());
                                                 }).toList();
 
+                                                if (listaPrenotazioni != null) {
+                                                  listaPrenotazioni.removeWhere(
+                                                      (element) =>
+                                                          element.getDataPrenotazione ==
+                                                              null ||
+                                                          DateTime.now()
+                                                              .isBefore(element
+                                                                  .getDataPrenotazione
+                                                                  .toDate()));
+                                                }
                                                 return PrenotazioneListWidget(
                                                   snapshot: listaPrenotazioni,
                                                   utente: utente,
@@ -185,6 +214,17 @@ class _VisualizzaPrenotazioniPageState
                                                                 e))
                                                         .toList();
                                                 print(listaPrenotazioni);
+
+                                                if (listaPrenotazioni != null) {
+                                                  listaPrenotazioni.removeWhere(
+                                                      (element) =>
+                                                          element.getDataPrenotazione ==
+                                                              null ||
+                                                          DateTime.now()
+                                                              .isBefore(element
+                                                                  .getDataPrenotazione
+                                                                  .toDate()));
+                                                }
 
                                                 return PrenotazioneListWidget(
                                                   snapshot: listaPrenotazioni,
