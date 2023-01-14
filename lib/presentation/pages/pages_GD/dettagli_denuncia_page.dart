@@ -16,7 +16,6 @@ class DettagliDenunciaRebecca extends StatefulWidget {
   final String denunciaId;
   final SuperUtente utente;
 
-
   @override
   State<DettagliDenunciaRebecca> createState() =>
       _DettagliDenunciaRebeccaState(denunciaId: denunciaId, utente: utente);
@@ -29,7 +28,6 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   late Stream<DocumentSnapshot<Map<String, dynamic>>> denuncia;
   String denunciaId;
   SuperUtente utente;
-
 
   @override
   void initState() {
@@ -56,6 +54,99 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
+          // if(utente.tipo == TipoUtente.UffPolGiud){
+          //   Container(
+          //                         decoration: BoxDecoration(
+          //                           color: Colors.white,
+          //                           borderRadius: BorderRadius.circular(20),
+          //                           boxShadow: [
+          //                             BoxShadow(
+          //                               color: Colors.grey.withOpacity(0.2),
+          //                               blurRadius: 8.0,
+          //                               spreadRadius: 1.0,
+          //                               offset: Offset(0, 3),
+          //                             )
+          //                           ],
+          //                         ),
+          //                         padding: const EdgeInsets.symmetric(
+          //                             vertical: 10, horizontal: 20),
+          //                         margin: const EdgeInsets.symmetric(
+          //                             vertical: 10, horizontal: 20),
+          //                         child: InputDecorator(
+          //                           decoration: const InputDecoration(
+          //                             labelText: 'Presa in carico da:',
+          //                             labelStyle: TextStyle(
+          //                               fontSize: 30,
+          //                               fontWeight: FontWeight.bold,
+          //                             ),
+          //                             border: InputBorder.none,
+          //                           ),
+          //                           child: SingleChildScrollView(
+          //                             scrollDirection: Axis.horizontal,
+          //                             child: Column(
+          //                               crossAxisAlignment:
+          //                                   CrossAxisAlignment.start,
+          //                               children: [
+          //                                 Row(
+          //                                   children: [
+          //                                     Text(
+          //                                       'Ufficiale di Polizia Giudiziaria: ',
+          //                                       style: TextStyle(
+          //                                           fontWeight:
+          //                                               FontWeight.bold),
+          //                                     ),
+          //                                     Text('chiamata dal back'),
+          //                                   ],
+          //                                 ),
+          //                                 Row(
+          //                                   children: [
+          //                                     Text(
+          //                                       'Grado: ',
+          //                                       style: TextStyle(
+          //                                           fontWeight:
+          //                                               FontWeight.bold),
+          //                                     ),
+          //                                     Text('chiamata dal back'),
+          //                                   ],
+          //                                 ),
+          //                                 Row(
+          //                                   children: [
+          //                                     Text(
+          //                                       'Tipo di Ufficiale: (carabinieri blabla)',
+          //                                       style: TextStyle(
+          //                                           fontWeight:
+          //                                               FontWeight.bold),
+          //                                     ),
+          //                                     Text('chiamata dal back'),
+          //                                   ],
+          //                                 ),
+          //                                 Row(
+          //                                   children: [
+          //                                     Text(
+          //                                       'Caserma di riferimento: ',
+          //                                       style: TextStyle(
+          //                                           fontWeight:
+          //                                               FontWeight.bold),
+          //                                     ),
+          //                                     Text('chiamata dal back'),
+          //                                   ],
+          //                                 ),
+          //                                 Row(
+          //                                   children: [
+          //                                     Text(
+          //                                       'Indirizzo caserma: VIA, CAP, CITTA\' ',
+          //                                       style: TextStyle(
+          //                                           fontWeight:
+          //                                               FontWeight.bold),
+          //                                     ),
+          //                                     Text('chiamata dal back'),
+          //                                   ],
+          //                                 ),
+          //                               ],
+          //                             ),
+          //                           ),
+          //                         )),
+          // }
           children: [
             StreamBuilder(
               stream: denuncia,
@@ -394,7 +485,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   ),
                                 ),
                               ),
-                              generaTasto(context,d, utente),
+                              generaTasto(context, d, utente),
                             ],
                           ),
                         );
@@ -408,7 +499,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              generaTasto(context,d, utente),
+                              generaTasto(context, d, utente),
                               Container(
                                 padding: EdgeInsets.all(10),
                                 margin: const EdgeInsets.symmetric(
@@ -522,16 +613,19 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   }
 }
 
-Widget generaTasto(BuildContext context,Denuncia denuncia, SuperUtente utente) {
+Widget generaTasto(
+    BuildContext context, Denuncia denuncia, SuperUtente utente) {
   if (utente.tipo == TipoUtente.UffPolGiud) {
     switch (denuncia.statoDenuncia) {
       case StatoDenuncia.NonInCarico:
         return ElevatedButton(
-            onPressed: ()=>DenunciaController.accettaDenuncia(denuncia, utente),
+            onPressed: () =>
+                DenunciaController.accettaDenuncia(denuncia, utente),
             child: const Text("Accetta"));
       case StatoDenuncia.PresaInCarico:
         return ElevatedButton(
-            onPressed: ()=>DenunciaController().chiudiDenuncia(denuncia, utente),
+            onPressed: () =>
+                DenunciaController().chiudiDenuncia(denuncia, utente),
             child: const Text("Chiudi"));
       case StatoDenuncia.Chiusa:
         return ElevatedButton(
@@ -542,15 +636,16 @@ Widget generaTasto(BuildContext context,Denuncia denuncia, SuperUtente utente) {
   }
 }
 
-showAlertDialogAccetta(BuildContext context,Denuncia denuncia, SuperUtente utente) {
+showAlertDialogAccetta(
+    BuildContext context, Denuncia denuncia, SuperUtente utente) {
   // set up the buttons
   Widget cancelButton = ElevatedButton(
     child: Text("Cancel"),
-    onPressed:  () {},
+    onPressed: () {},
   );
   Widget continueButton = ElevatedButton(
     child: Text("Continue"),
-    onPressed:()=> DenunciaController.accettaDenuncia(denuncia, utente),
+    onPressed: () => DenunciaController.accettaDenuncia(denuncia, utente),
   );
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
@@ -570,91 +665,85 @@ showAlertDialogAccetta(BuildContext context,Denuncia denuncia, SuperUtente utent
   );
 }
 
-Widget generaStatoDenuncia(StatoDenuncia stato){
-  switch(stato){
-    case StatoDenuncia.NonInCarico:{
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(
-            vertical: 10, horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.amberAccent,
-          borderRadius: BorderRadius.circular(20),
-          // border: Border.all(
-          //     color: Colors.black, width: 1.5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              blurRadius: 8.0,
-              spreadRadius: 1.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Text(
-          '${stato.name.toString()}',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+Widget generaStatoDenuncia(StatoDenuncia stato) {
+  switch (stato) {
+    case StatoDenuncia.NonInCarico:
+      {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            color: Colors.amberAccent,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 8.0,
+                spreadRadius: 1.0,
+                offset: Offset(0, 3),
+              ),
+            ],
           ),
-        ),
-      );
-    }
-    case StatoDenuncia.PresaInCarico:{
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(
-            vertical: 10, horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.circular(20),
-          // border: Border.all(
-          //     color: Colors.black, width: 1.5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              blurRadius: 8.0,
-              spreadRadius: 1.0,
-              offset: Offset(0, 3),
+          child: Text(
+            'In attesa',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-        child: Text(
-          '${stato.name.toString()}',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
           ),
-        ),
-      );
-    }
-    case StatoDenuncia.Chiusa:{
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(
-            vertical: 10, horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade400,
-          borderRadius: BorderRadius.circular(20),
-          // border: Border.all(
-          //     color: Colors.black, width: 1.5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              blurRadius: 8.0,
-              spreadRadius: 1.0,
-              offset: Offset(0, 3),
+        );
+      }
+    case StatoDenuncia.PresaInCarico:
+      {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 8.0,
+                spreadRadius: 1.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Text(
+            'Presa in carico',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-        child: Text(
-          '${stato.name.toString()}',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
           ),
-        ),
-      );
-    }
+        );
+      }
+    case StatoDenuncia.Chiusa:
+      {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 8.0,
+                spreadRadius: 1.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Text(
+            'Chiusa',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      }
   }
 }

@@ -151,80 +151,95 @@ class _InformativaState extends State<Informativa> {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Polizia',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Polizia',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('113');
-                            },
-                            child: const Text(
-                              '113',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white,
                             ),
-                          ),
-                        )
-                      ],
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('113');
+                              },
+                              child: const Text(
+                                '113',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Text(
-                          'Carabinieri',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Carabinieri',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('112');
-                            },
-                            child: const Text(
-                              '112',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white,
+                            ),
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('112');
+                              },
+                              child: const Text(
+                                '112',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Text(
-                          'Guardia di Finanza',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Guardia di Finanza',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('117');
-                            },
-                            child: const Text(
-                              '117',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white,
+                            ),
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('117');
+                              },
+                              child: const Text(
+                                '117',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

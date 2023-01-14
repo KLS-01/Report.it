@@ -11,10 +11,13 @@ import '../pages/pages_GD/inoltro_denuncia_page.dart';
 
 class VisualizzaDenunceWidget extends StatefulWidget {
   final List<Denuncia> denunce;
-  const VisualizzaDenunceWidget({Key? key, required this.denunce}) : super(key: key);
+  const VisualizzaDenunceWidget({Key? key, required this.denunce})
+      : super(key: key);
 
   @override
-  State<VisualizzaDenunceWidget> createState() => _VisualizzaDenunceWidgetState(denunce: denunce,);
+  State<VisualizzaDenunceWidget> createState() => _VisualizzaDenunceWidgetState(
+        denunce: denunce,
+      );
 }
 
 class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
@@ -22,8 +25,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
   List<Denuncia> denunce;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
-  GlobalKey<RefreshIndicatorState>();
-
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,34 +34,36 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
       children: [
         Expanded(
           child: Consumer<SuperUtente?>(
-            builder: (context, utente,_){
-              if(utente==null){
-                return const Text("non sei loggato");
-              }
-              else{
-                if(utente.tipo== TipoUtente.OperatoreCup){
-                  return const Text("Errore non hai i permessi");
-                }
-                else{
-                  if(denunce.length==0){
+            builder: (context, utente, _) {
+              if (utente == null) {
+                return const Text("Non sei loggato");
+              } else {
+                if (utente.tipo == TipoUtente.OperatoreCup) {
+                  return const Text("Errore, non hai i permessi");
+                } else {
+                  if (denunce.length == 0) {
                     return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Non ci sono denunce in questa sezione"),
+                        Center(
+                          child: Text(
+                            "Non ci sono denunce in questa sezione",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ],
                     );
-                  }
-                  else{
+                  } else {
                     return ListView.builder(
                       itemCount: denunce.length,
                       itemBuilder: (context, index) {
                         final item = denunce[index];
 
                         return Container(
-                          margin: EdgeInsets.all(20),
+                          margin: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius:
-                            BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.2),
@@ -75,26 +79,25 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                                 width: 5,
                               ),
                               Consumer<SuperUtente?>(
-                                  builder: (context,utente,_){
-                                    switch(item.statoDenuncia) {
-                                      case StatoDenuncia.NonInCarico:
-                                        return const Icon(
-                                          Icons.circle,
-                                          color: Colors.amberAccent,
-                                        );
-                                        case StatoDenuncia.PresaInCarico:
-                                          return const Icon(
-                                            Icons.circle,
-                                            color: Colors.green,
-                                          );
-                                          case StatoDenuncia.Chiusa:
-                                            return Icon(
-                                              Icons.circle,
-                                              color: Colors.grey.shade400,
-                                            );
-                                      }
-                                    }
-                                  ),
+                                  builder: (context, utente, _) {
+                                switch (item.statoDenuncia) {
+                                  case StatoDenuncia.NonInCarico:
+                                    return const Icon(
+                                      Icons.circle,
+                                      color: Colors.amberAccent,
+                                    );
+                                  case StatoDenuncia.PresaInCarico:
+                                    return const Icon(
+                                      Icons.circle,
+                                      color: Colors.green,
+                                    );
+                                  case StatoDenuncia.Chiusa:
+                                    return Icon(
+                                      Icons.circle,
+                                      color: Colors.grey.shade400,
+                                    );
+                                }
+                              }),
                               Expanded(
                                 child: SizedBox(
                                   height: 75.0,
@@ -102,13 +105,11 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                                     title: Text(
                                       item.descrizione,
                                       style: const TextStyle(
-                                        fontWeight:
-                                        FontWeight.bold,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    subtitle: Text(item
-                                        .categoriaDenuncia
-                                        .toString()),
+                                    subtitle:
+                                        Text(item.categoriaDenuncia.toString()),
                                   ),
                                 ),
                               ),
@@ -118,17 +119,19 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DettagliDenunciaRebecca(denunciaId: item.id!, utente:utente),
+                                            DettagliDenunciaRebecca(
+                                                denunciaId: item.id!,
+                                                utente: utente),
                                       ),
                                     );
-                                    },
+                                  },
                                   icon: const Icon(
                                     Icons.info_outline_rounded,
                                   ))
                             ],
                           ),
                         );
-                        },
+                      },
                     );
                   }
                 }
@@ -140,6 +143,3 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
     );
   }
 }
-
-
-
