@@ -486,15 +486,111 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Consumer<SuperUtente?>(
-                                  builder: (context,utente,_){
-                                    if(utente?.tipo==TipoUtente.Utente){
-                                      return Container();     //MARISA ECCO IL TUO CONTAINER <3
-                                    }else{
-                                      return Visibility(child: Text(""), visible: false);
-                                    }
-                                  }
-                              ),
-                              generaTastoCambiaStato( denuncia:d, utente:utente),
+                                  builder: (context, utente, _) {
+                                if (utente?.tipo == TipoUtente.Utente) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.redAccent,
+                                          blurRadius: 8.0,
+                                          spreadRadius: 1.0,
+                                          offset: Offset(0, 3),
+                                        )
+                                      ],
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: InputDecorator(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Presa in carico da:',
+                                        labelStyle: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                        border: InputBorder.none,
+                                      ),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Ufficiale di Polizia Giudiziaria: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                    '${d.cognomeUff} ${d.nomeUff}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Grado: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                    'INSERIRE IL GRADO DEL DB'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Tipo di Ufficiale:',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                    'INSERIRE TIPO NEL DB  (carabinieri blabla)'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Caserma di riferimento: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text('${d.nomeCaserma}'),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Indirizzo caserma: VIA, CAP, CITTA\' ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text('${d.coordCaserma}'),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ); //MARISA ECCO IL TUO CONTAINER <3
+                                } else {
+                                  return Visibility(
+                                      child: Text(""), visible: false);
+                                }
+                              }),
+                              generaTastoCambiaStato(
+                                  denuncia: d, utente: utente),
                             ],
                           ),
                         );
@@ -508,7 +604,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              generaTastoCambiaStato( denuncia:d, utente:utente),
+                              generaTastoCambiaStato(
+                                  denuncia: d, utente: utente),
                               Container(
                                 padding: EdgeInsets.all(10),
                                 margin: const EdgeInsets.symmetric(
@@ -622,9 +719,10 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   }
 }
 
-
 class generaTastoCambiaStato extends StatelessWidget {
-  const generaTastoCambiaStato({Key? key,required this.denuncia, required this.utente}) : super(key: key);
+  const generaTastoCambiaStato(
+      {Key? key, required this.denuncia, required this.utente})
+      : super(key: key);
   final Denuncia denuncia;
   final SuperUtente utente;
 
@@ -634,23 +732,52 @@ class generaTastoCambiaStato extends StatelessWidget {
       switch (denuncia.statoDenuncia) {
         case StatoDenuncia.NonInCarico:
           return ElevatedButton(
-              onPressed: ()=>showAlertDialogAccetta(context,denuncia, utente),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
+              onPressed: () =>
+                  showAlertDialogAccetta(context, denuncia, utente),
               child: const Text("Accetta"));
         case StatoDenuncia.PresaInCarico:
           return ElevatedButton(
-              onPressed: () =>
-                  showAlertDialogChiudi(context, denuncia, utente),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
+              onPressed: () => showAlertDialogChiudi(context, denuncia, utente),
               child: const Text("Chiudi"));
         case StatoDenuncia.Chiusa:
-          return Visibility(visible:false, child: Text(""),);
+          return Visibility(
+            visible: false,
+            child: Text(""),
+          );
       }
     } else {
       return const Visibility(visible: false, child: Text(""));
     }
-
   }
 
-  showAlertDialogAccetta(BuildContext context, Denuncia denuncia, SuperUtente utente) {
+  showAlertDialogAccetta(
+      BuildContext context, Denuncia denuncia, SuperUtente utente) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -658,24 +785,51 @@ class generaTastoCambiaStato extends StatelessWidget {
           title: Text("Attenzione!!!!!!"),
           content: Text("Sei sicuro di accettare la denuncia?"),
           actions: [
-              ElevatedButton(
-                 child: Text("Cancel"),
-                  onPressed: ()=>Navigator.pop(context, "Cancel"),
+            ElevatedButton(
+              child: Text("Cancel"),
+              onPressed: () => Navigator.pop(context, "Cancel"),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
               ),
-              ElevatedButton(
-                  child: Text("Continue"),
-                  onPressed: () {
-                    DenunciaController.accettaDenuncia(denuncia, utente);
-                    Navigator.pop(context,"Continue");
-                    },
+            ),
+            ElevatedButton(
+              child: Text("Continue"),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
               ),
+              onPressed: () {
+                DenunciaController.accettaDenuncia(denuncia, utente);
+                Navigator.pop(context, "Continue");
+              },
+            ),
           ],
         );
       },
     );
   }
 
-  showAlertDialogChiudi(BuildContext context, Denuncia denuncia, SuperUtente utente) {
+  showAlertDialogChiudi(
+      BuildContext context, Denuncia denuncia, SuperUtente utente) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -685,13 +839,39 @@ class generaTastoCambiaStato extends StatelessWidget {
           actions: [
             ElevatedButton(
               child: Text("NO"),
-              onPressed: ()=>Navigator.pop(context, "Cancel"),
+              onPressed: () => Navigator.pop(context, "Cancel"),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
             ),
             ElevatedButton(
               child: Text("SI"),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                textStyle: MaterialStateProperty.all(
+                    Theme.of(context).textTheme.button),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(219, 29, 69, 1),
+                ),
+              ),
               onPressed: () {
                 DenunciaController().chiudiDenuncia(denuncia, utente);
-                Navigator.pop(context,"Continue");
+                Navigator.pop(context, "Continue");
               },
             ),
           ],
@@ -699,12 +879,7 @@ class generaTastoCambiaStato extends StatelessWidget {
       },
     );
   }
-
-
 }
-
-
-
 
 Widget generaStatoDenuncia(StatoDenuncia stato) {
   switch (stato) {
