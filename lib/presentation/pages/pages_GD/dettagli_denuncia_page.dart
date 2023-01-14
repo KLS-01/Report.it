@@ -485,6 +485,15 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   ),
                                 ),
                               ),
+                              Consumer<SuperUtente?>(
+                                  builder: (context,utente,_){
+                                    if(utente?.tipo==TipoUtente.Utente){
+                                      return Container();     //MARISA ECCO IL TUO CONTAINER <3
+                                    }else{
+                                      return Visibility(child: Text(""), visible: false);
+                                    }
+                                  }
+                              ),
                               generaTastoCambiaStato( denuncia:d, utente:utente),
                             ],
                           ),
