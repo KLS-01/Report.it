@@ -485,7 +485,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   ),
                                 ),
                               ),
-                              generaTasto(context, d, utente),
+                              generaTastoCambiaStato( denuncia:d, utente:utente),
                             ],
                           ),
                         );
@@ -499,7 +499,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              generaTasto(context, d, utente),
+                              generaTastoCambiaStato( denuncia:d, utente:utente),
                               Container(
                                 padding: EdgeInsets.all(10),
                                 margin: const EdgeInsets.symmetric(
@@ -613,57 +613,89 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   }
 }
 
-Widget generaTasto(
-    BuildContext context, Denuncia denuncia, SuperUtente utente) {
-  if (utente.tipo == TipoUtente.UffPolGiud) {
-    switch (denuncia.statoDenuncia) {
-      case StatoDenuncia.NonInCarico:
-        return ElevatedButton(
-            onPressed: () =>
-                DenunciaController.accettaDenuncia(denuncia, utente),
-            child: const Text("Accetta"));
-      case StatoDenuncia.PresaInCarico:
-        return ElevatedButton(
-            onPressed: () =>
-                DenunciaController().chiudiDenuncia(denuncia, utente),
-            child: const Text("Chiudi"));
-      case StatoDenuncia.Chiusa:
-        return ElevatedButton(
-            onPressed: () {}, child: const Text("Non puoi fare nulla"));
+
+class generaTastoCambiaStato extends StatelessWidget {
+  const generaTastoCambiaStato({Key? key,required this.denuncia, required this.utente}) : super(key: key);
+  final Denuncia denuncia;
+  final SuperUtente utente;
+
+  @override
+  Widget build(BuildContext context) {
+    if (utente.tipo == TipoUtente.UffPolGiud) {
+      switch (denuncia.statoDenuncia) {
+        case StatoDenuncia.NonInCarico:
+          return ElevatedButton(
+              onPressed: ()=>showAlertDialogAccetta(context,denuncia, utente),
+              child: const Text("Accetta"));
+        case StatoDenuncia.PresaInCarico:
+          return ElevatedButton(
+              onPressed: () =>
+                  showAlertDialogChiudi(context, denuncia, utente),
+              child: const Text("Chiudi"));
+        case StatoDenuncia.Chiusa:
+          return Visibility(visible:false, child: Text(""),);
+      }
+    } else {
+      return const Visibility(visible: false, child: Text(""));
     }
-  } else {
-    return const Visibility(visible: false, child: Text(""));
+
   }
+
+  showAlertDialogAccetta(BuildContext context, Denuncia denuncia, SuperUtente utente) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Attenzione!!!!!!"),
+          content: Text("Sei sicuro di accettare la denuncia?"),
+          actions: [
+              ElevatedButton(
+                 child: Text("Cancel"),
+                  onPressed: ()=>Navigator.pop(context, "Cancel"),
+              ),
+              ElevatedButton(
+                  child: Text("Continue"),
+                  onPressed: () {
+                    DenunciaController.accettaDenuncia(denuncia, utente);
+                    Navigator.pop(context,"Continue");
+                    },
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  showAlertDialogChiudi(BuildContext context, Denuncia denuncia, SuperUtente utente) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Attenzione!!!!!!"),
+          content: Text("Sei sicuro di voler chiudere la pratica?"),
+          actions: [
+            ElevatedButton(
+              child: Text("NO"),
+              onPressed: ()=>Navigator.pop(context, "Cancel"),
+            ),
+            ElevatedButton(
+              child: Text("SI"),
+              onPressed: () {
+                DenunciaController().chiudiDenuncia(denuncia, utente);
+                Navigator.pop(context,"Continue");
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }
 
-showAlertDialogAccetta(
-    BuildContext context, Denuncia denuncia, SuperUtente utente) {
-  // set up the buttons
-  Widget cancelButton = ElevatedButton(
-    child: Text("Cancel"),
-    onPressed: () {},
-  );
-  Widget continueButton = ElevatedButton(
-    child: Text("Continue"),
-    onPressed: () => DenunciaController.accettaDenuncia(denuncia, utente),
-  );
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Attenzione!!!!!!"),
-    content: Text("Sei sicuro di accettare la denuncia?"),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
+
+
 
 Widget generaStatoDenuncia(StatoDenuncia stato) {
   switch (stato) {
