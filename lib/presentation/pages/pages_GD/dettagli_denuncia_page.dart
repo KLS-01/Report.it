@@ -76,6 +76,32 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           child: Column(
                             children: [
                               Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  // border: Border.all(
+                                  //     color: Colors.black, width: 1.5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.4),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '${d.statoDenuncia}',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
