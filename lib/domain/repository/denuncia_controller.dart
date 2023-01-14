@@ -28,8 +28,8 @@ class DenunciaController {
     return DenunciaDao().generaStreamDenunceByUtente(utente);
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunciaByStato(StatoDenuncia stato){
-    return DenunciaDao().generaStreamDenunceByStato(stato);
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunciaByStatoAndCap(StatoDenuncia stato, SuperUtente utente){
+    return DenunciaDao().generaStreamDenunceByStatoAndCap(stato,utente.cap!);
   }
 
   Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunciaById(String id){
@@ -120,25 +120,22 @@ class DenunciaController {
     return await result;
   }
 
-  Future<bool> accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
-    //controllo se l'utente è un UffPolGiud
-    //debug per prova stream
-    DenunciaDao().generaStreamDenunceByUtente(utente);
+static accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
     if (utente.tipo != TipoUtente.UffPolGiud) {
-      return false;
+      return;
     } else {
       UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
       if (uff == null) {
-        return false;
+        return;
       } else {
-        denunciaDao.accettaDenuncia(denuncia.id!, uff.coordinate, uff.id,
+        DenunciaDao().accettaDenuncia(denuncia.id!, uff.coordinate, uff.id.trim(),
             uff.nomeCaserma, uff.nome, uff.cognome);
-        return true;
+        return;
       }
     }
   }
 
-  Future<void> chiudiDenuncia(Denuncia denuncia, SuperUtente utente)async{
+ chiudiDenuncia(Denuncia denuncia, SuperUtente utente)async{
     if (utente.tipo != TipoUtente.UffPolGiud) {
       return;
     } else {
@@ -146,7 +143,7 @@ class DenunciaController {
         if (denuncia.idUff != utente.id) {
           return;
         } else {
-          return await DenunciaDao().updateAttribute(denuncia.id!,"Stato", StatoDenuncia.NonInCarico.name.toString());
+          return await DenunciaDao().updateAttribute(denuncia.id!,"Stato", StatoDenuncia.Chiusa.name.toString());
         }
     }
   }

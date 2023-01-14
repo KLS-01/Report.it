@@ -12,8 +12,10 @@ import 'inoltro_denuncia_page.dart';
 class DettagliDenunciaRebecca extends StatefulWidget {
   const DettagliDenunciaRebecca(
       {super.key, required this.denunciaId, required this.utente});
+
   final String denunciaId;
   final SuperUtente utente;
+
 
   @override
   State<DettagliDenunciaRebecca> createState() =>
@@ -27,6 +29,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   late Stream<DocumentSnapshot<Map<String, dynamic>>> denuncia;
   String denunciaId;
   SuperUtente utente;
+
 
   @override
   void initState() {
@@ -75,32 +78,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(vertical: 10),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 15),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  // border: Border.all(
-                                  //     color: Colors.black, width: 1.5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Text(
-                                  '${d.statoDenuncia}',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                              generaStatoDenuncia(d.statoDenuncia),
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -416,7 +394,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   ),
                                 ),
                               ),
-                              generaTasto(d, utente),
+                              generaTasto(context,d, utente),
                             ],
                           ),
                         );
@@ -430,7 +408,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              generaTasto(d, utente),
+                              generaTasto(context,d, utente),
                               Container(
                                 padding: EdgeInsets.all(10),
                                 margin: const EdgeInsets.symmetric(
@@ -544,21 +522,16 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   }
 }
 
-Widget generaTasto(Denuncia denuncia, SuperUtente utente) {
+Widget generaTasto(BuildContext context,Denuncia denuncia, SuperUtente utente) {
   if (utente.tipo == TipoUtente.UffPolGiud) {
     switch (denuncia.statoDenuncia) {
       case StatoDenuncia.NonInCarico:
         return ElevatedButton(
-            onPressed: () {
-              DenunciaController().accettaDenuncia(denuncia, utente);
-            },
+            onPressed: ()=>DenunciaController.accettaDenuncia(denuncia, utente),
             child: const Text("Accetta"));
       case StatoDenuncia.PresaInCarico:
         return ElevatedButton(
-            onPressed: () =>
-                DenunciaController().chiudiDenuncia(denuncia, utente) == true
-                    ? print("denuncia chiusa")
-                    : print("denuncia non chiusa"),
+            onPressed: ()=>DenunciaController().chiudiDenuncia(denuncia, utente),
             child: const Text("Chiudi"));
       case StatoDenuncia.Chiusa:
         return ElevatedButton(
@@ -566,5 +539,122 @@ Widget generaTasto(Denuncia denuncia, SuperUtente utente) {
     }
   } else {
     return const Visibility(visible: false, child: Text(""));
+  }
+}
+
+showAlertDialogAccetta(BuildContext context,Denuncia denuncia, SuperUtente utente) {
+  // set up the buttons
+  Widget cancelButton = ElevatedButton(
+    child: Text("Cancel"),
+    onPressed:  () {},
+  );
+  Widget continueButton = ElevatedButton(
+    child: Text("Continue"),
+    onPressed:()=> DenunciaController.accettaDenuncia(denuncia, utente),
+  );
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Attenzione!!!!!!"),
+    content: Text("Sei sicuro di accettare la denuncia?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+Widget generaStatoDenuncia(StatoDenuncia stato){
+  switch(stato){
+    case StatoDenuncia.NonInCarico:{
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(
+            vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.amberAccent,
+          borderRadius: BorderRadius.circular(20),
+          // border: Border.all(
+          //     color: Colors.black, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 8.0,
+              spreadRadius: 1.0,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Text(
+          '${stato.name.toString()}',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+    case StatoDenuncia.PresaInCarico:{
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(
+            vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(20),
+          // border: Border.all(
+          //     color: Colors.black, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 8.0,
+              spreadRadius: 1.0,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Text(
+          '${stato.name.toString()}',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+    case StatoDenuncia.Chiusa:{
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(
+            vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade400,
+          borderRadius: BorderRadius.circular(20),
+          // border: Border.all(
+          //     color: Colors.black, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 8.0,
+              spreadRadius: 1.0,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Text(
+          '${stato.name.toString()}',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
   }
 }

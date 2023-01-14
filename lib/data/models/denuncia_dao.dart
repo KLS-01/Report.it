@@ -40,9 +40,10 @@ class DenunciaDao {
 
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStato(StatoDenuncia stato){
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStatoAndCap(StatoDenuncia stato, String cap){
     var ref=db.collection("Denuncia");
-    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString()).snapshots();
+    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString())
+        .where("CapDenunciante", isEqualTo: cap).snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunceById(String id){
@@ -54,6 +55,7 @@ class DenunciaDao {
     DocumentReference? returnCode;
     try {
       returnCode = db.collection('Denuncia').doc(id);
+      print("aggiorno il seguente campo di $attribute: $value");
       return await returnCode.update({attribute: value});
     } catch (e) {
       print(e);
@@ -146,7 +148,8 @@ class DenunciaDao {
         "CoordCaserma": coordCaserma,
         "IDUff": idUff,
         "NomeCaserma": nomeCaserma,
-        "NomeUff": nomeUff
+        "NomeUff": nomeUff,
+        "Stato": "PresaInCarico",
       });
     }catch(e){
       print(e);

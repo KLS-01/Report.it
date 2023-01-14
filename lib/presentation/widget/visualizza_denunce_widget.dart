@@ -41,6 +41,14 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                   return const Text("Errore non hai i permessi");
                 }
                 else{
+                  if(denunce.length==0){
+                    return Column(
+                      children: [
+                        Text("Non ci sono denunce in questa sezione"),
+                      ],
+                    );
+                  }
+                  else{
                     return ListView.builder(
                       itemCount: denunce.length,
                       itemBuilder: (context, index) {
@@ -122,6 +130,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                         );
                         },
                     );
+                  }
                 }
               }
             },
