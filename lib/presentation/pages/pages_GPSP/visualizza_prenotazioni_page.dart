@@ -1,19 +1,10 @@
-// ignore_for_file: unused_import
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/presentation/pages/pages_GPSP/inoltro_prenotazione_page.dart';
-import 'package:report_it/presentation/widget/widget_info.dart';
-import '../../../domain/entity/entity_GD/denuncia_entity.dart';
-import '../../../../domain/repository/denuncia_controller.dart';
 import '../../widget/styles.dart';
-import '../../widget/theme.dart';
-import '../../widget/visualizza_denunce_widget.dart';
 
 class VisualizzaPrenotazioni extends StatefulWidget {
   const VisualizzaPrenotazioni({Key? key}) : super(key: key);
@@ -30,7 +21,7 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
         title: const Text('Sezione Prenotazione Psicologica',
             style: ThemeText.titoloSezione),
         elevation: 0,
-        backgroundColor: Color.fromRGBO(255, 254, 248, 1),
+        backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: DefaultTabController(
@@ -46,27 +37,30 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
                 Tab(
                   child: Text(
                     "In attesa",
-                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
-                    "Prese in carico",
-                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
+                    "Prenotate",
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
-                    style: TextStyle(fontSize: 15, fontFamily: 'Ubuntu'),
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
               ],
             ),
             title: const Text('Tabs Demo'),
+          ),
+          body: Container(
+            color: Theme.of(context).backgroundColor,
           ),
           floatingActionButton: Consumer<SuperUtente?>(
             builder: (context, utente, _) {
