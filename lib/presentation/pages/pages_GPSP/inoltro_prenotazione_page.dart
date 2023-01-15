@@ -1,12 +1,20 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import '../../widget/styles.dart';
 
 class InoltroPrenotazione extends StatefulWidget {
+  final SuperUtente utente;
+
+  InoltroPrenotazione({required this.utente});
   @override
-  _InoltroPrenotazione createState() => _InoltroPrenotazione();
+  _InoltroPrenotazione createState() => _InoltroPrenotazione(utente: utente);
 }
 
 class _InoltroPrenotazione extends State<InoltroPrenotazione> {
+  _InoltroPrenotazione({required this.utente});
+  final SuperUtente utente;
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
 
@@ -38,6 +46,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   final _formKey = GlobalKey<FormState>();
   String? discriminazione;
   String? consenso1, consenso2;
+  FilePickerResult? impegnativaController;
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +350,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
               content: ElevatedButton(
                   style: ThemeText.bottoneRosso,
                   onPressed: (() {
-                    //caricamento PDF
+                    uploadImpegnativa();
                   }),
                   child: Text("Carica l\'impegnativa del medico")),
               isActive: _currentStep >= 0,
@@ -388,5 +397,22 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   @override
   State<StatefulWidget> createState() {
     throw UnimplementedError();
+  }
+
+  Future<void> uploadImpegnativa() async {
+    FilePickerResult? fileResult = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['pdf'], withData: true);
+    if (fileResult != null) {
+      impegnativaController = fileResult;
+    }
+  }
+
+  void createRecord(SuperUtente? utente) async {
+    PrenotazioneController control = PrenotazioneController();
+    var result = control.addPrenotazioneControl(
+        utente: utente,
+        cap: capController.text,
+        provincia: provinciaController.text,
+        impegnativa: impegnativaController);
   }
 }
