@@ -1,7 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/presentation/pages/pages_GPSP/visualizza_storico_prenotazioni_page.dart';
 
 class FAQinformativa extends StatelessWidget {
   @override

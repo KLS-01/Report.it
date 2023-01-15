@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/presentation/pages/informazioni_prenotazione_page.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/presentation/pages/pages_GPSP/informazioni_prenotazione_page.dart';
 
 class PrenotazioneListWidget extends StatefulWidget {
   final List<Prenotazione>? snapshot;

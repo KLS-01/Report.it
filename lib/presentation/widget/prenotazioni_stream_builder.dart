@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
 

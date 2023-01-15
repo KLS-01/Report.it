@@ -3,9 +3,8 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/prenotazione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 var db = FirebaseFirestore.instance;
 final String DOCUMENT_NAME = "Prenotazione";

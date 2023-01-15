@@ -7,7 +7,6 @@ import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/firebase_options.dart';
-import 'package:report_it/presentation/pages/pages_GPSP/visualizza_storico_prenotazioni_page.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() async {
