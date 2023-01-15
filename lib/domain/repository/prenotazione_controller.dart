@@ -16,9 +16,16 @@ class PrenotazioneController {
 
   Future<String?> addPrenotazioneControl(
       {required utente,
+      required nome,
+      required cognome,
+      required numeroTelefono,
+      required indirizzo,
+      required email,
+      required cf,
       required cap,
       required provincia,
-      required impegnativa}) async {
+      required impegnativa,
+      required descrizione}) async {
     if (utente == null) {
       print("Non loggato");
     } else {
@@ -28,13 +35,20 @@ class PrenotazioneController {
     Prenotazione prenotazione = Prenotazione(
         id: null,
         idUtente: utente!.id,
+        nomeUtente: nome,
+        cognomeUtente: cognome,
+        numeroUtente: numeroTelefono,
+        emailUtente: email,
+        cfUtente: cf,
+        indirizzoUtente: indirizzo,
         cap: cap,
         provincia: provincia,
         idOperatore: null,
         coordASL: null,
         nomeASL: null,
         dataPrenotazione: null,
-        impegnativa: null);
+        impegnativa: null,
+        descrizione: descrizione);
 
     String? result;
     PrenotazioneDao.addPrenotazione(prenotazione)

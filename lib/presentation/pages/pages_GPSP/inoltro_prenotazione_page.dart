@@ -34,6 +34,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
       TextEditingController(text: 'ciao@gmail.com');
   final TextEditingController cfController =
       TextEditingController(text: 'LSRMRS94T61B963S');
+  final TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   final regexIndirizzo =
@@ -85,7 +86,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         ),
         (consenso2) != null
             ? Flexible(
-                child: Container(
+                flex: 0,
+                child: SizedBox(
                   height: 100,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -111,25 +113,26 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
             : Column(),
         //se il consenso "sì" --> allora il bottone viene mostrato
         (consenso1) != null
-            ? Container(
-                height: 100,
-                child: Flexible(
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        margin: const EdgeInsets.symmetric(vertical: 30),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            //
-                          },
-                          style: ThemeText.bottoneRosso,
-                          child: const Text(
-                            "Inoltra",
-                          ),
+            ? Flexible(
+                flex: 0,
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            createRecord(utente);
+                            Navigator.pop(context);
+                          }
+                        },
+                        style: ThemeText.bottoneRosso,
+                        child: const Text(
+                          "Inoltra",
                         ),
-                      )),
-                ),
+                      ),
+                    )),
               )
             : Column(),
       ],
@@ -330,6 +333,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                     TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'Scrivi qui la motivazione'),
+                      controller: descrizioneController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il motivo della richiesta.';
@@ -411,8 +415,15 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
     PrenotazioneController control = PrenotazioneController();
     var result = control.addPrenotazioneControl(
         utente: utente,
+        nome: nameController.text,
+        cognome: surnameController.text,
+        numeroTelefono: numberController.text,
+        indirizzo: indirizzoController.text,
         cap: capController.text,
         provincia: provinciaController.text,
-        impegnativa: impegnativaController);
+        email: emailController.text,
+        cf: cfController.text,
+        impegnativa: impegnativaController,
+        descrizione: descrizioneController.text);
   }
 }
