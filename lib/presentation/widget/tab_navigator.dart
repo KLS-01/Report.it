@@ -28,7 +28,7 @@ class TabNavigator extends StatelessWidget {
     else if (tabItem == "mappa")
       child = Mappa();
     else
-      child = VisualizzaPrenotazioni();
+      child = VisualizzaPrenotazioniPage();
 
     return Navigator(
       key: navigatorKey,

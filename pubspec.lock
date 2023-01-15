@@ -286,6 +286,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_phone_direct_caller:
     dependency: "direct main"
     description:
@@ -567,6 +572,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
+  time_picker_widget:
+    dependency: "direct main"
+    description:
+      name: time_picker_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+10"
   typed_data:
     dependency: transitive
     description:

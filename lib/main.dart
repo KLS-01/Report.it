@@ -8,6 +8,7 @@ import 'package:report_it/presentation/pages/pages_GA/authentication_wrapper.dar
 import 'package:report_it/presentation/widget/styles.dart';
 import 'domain/repository/authentication_controller.dart';
 import 'package:report_it/presentation/widget/theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           body: AuthenticationWrapper(),
         ),
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: const [Locale('it')],
       ),
     );
   }
