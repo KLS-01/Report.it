@@ -11,6 +11,7 @@ import 'package:report_it/presentation/pages/pages_GPSP/inoltro_prenotazione_pag
 import 'package:report_it/presentation/widget/widget_info.dart';
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
+import '../../widget/styles.dart';
 import '../../widget/theme.dart';
 import '../../widget/visualizza_denunce_widget.dart';
 
@@ -26,8 +27,8 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sezione Prenotazione Psicologica',
-            style: Theme.of(context).textTheme.headline3),
+        title: const Text('Sezione Prenotazione Psicologica',
+            style: ThemeText.titoloSezione),
         elevation: 0,
         backgroundColor: Color.fromRGBO(255, 254, 248, 1),
         systemOverlayStyle: SystemUiOverlayStyle.dark,

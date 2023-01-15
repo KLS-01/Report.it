@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widget/styles.dart';
 
 class InoltroPrenotazione extends StatefulWidget {
   @override
@@ -9,36 +10,45 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController surnameController = TextEditingController();
-  final TextEditingController numberController = TextEditingController();
-  final TextEditingController indirizzoController = TextEditingController();
-  final TextEditingController capController = TextEditingController();
-  final TextEditingController provinciaController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController cfController = TextEditingController();
+  final TextEditingController nameController =
+      TextEditingController(text: 'mario');
+  final TextEditingController surnameController =
+      TextEditingController(text: 'rossi');
+  final TextEditingController numberController =
+      TextEditingController(text: '3489156784');
+  final TextEditingController indirizzoController =
+      TextEditingController(text: 'viafod,1');
+  final TextEditingController capController =
+      TextEditingController(text: '81030');
+  final TextEditingController provinciaController =
+      TextEditingController(text: 'CT');
+  final TextEditingController emailController =
+      TextEditingController(text: 'ciao@gmail.com');
+  final TextEditingController cfController =
+      TextEditingController(text: 'LSRMRS94T61B963S');
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
-  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
+  final regexIndirizzo =
+      RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$"); //TODO: FIXARE, legge un solo numero
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
   final regexCF = RegExp(
       r"^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$");
   final _formKey = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
   String? discriminazione;
   String? consenso1, consenso2;
 
   @override
   Widget build(BuildContext context) {
-    final consensoWidget = Wrap(
+    final consensoWidget = Flex(
+      direction: Axis.vertical,
       children: [
         Column(
           children: <Widget>[
             const Text(
-              "Acconsenti al trattamento dei dati da parte dell'OperatoreCUP al fine di poter inserire i suoi dati personali all'interno del sistema. Acconsenti?",
-              style: TextStyle(fontSize: 16),
+              "Acconsenti al trattamento dei dati da parte dell'Operatore CUP al fine di poter inserire i suoi dati personali all'interno del sistema. Acconsenti?",
+              style: ThemeText.corpoInoltro,
             ),
             RadioListTile(
               title: const Text("Sì"),
@@ -66,63 +76,51 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         ),
         (consenso2) != null
             ? Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const <Widget>[
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Attenzione!",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(219, 29, 69, 1),
-                          )),
-                    ),
-                    Text(
-                      "Bisogna necessariamente accettare il consenso per poter inoltrare correttamente la richiesta.",
-                    ),
-                    SizedBox(
-                      height: 10,
-                    )
-                  ],
+                child: Container(
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const <Widget>[
+                      SizedBox(height: 5),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child:
+                            Text("Attenzione!", style: ThemeText.titoloAlert),
+                      ),
+                      Text(
+                        "Bisogna necessariamente accettare il consenso per poter inoltrare correttamente la richiesta.",
+                        style: ThemeText.corpoInoltro,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
                 ),
               )
             : Column(),
-        //se il consenso "sì" --> allora il bottne viene mostrato
+        //se il consenso "sì" --> allora il bottone viene mostrato
         (consenso1) != null
-            ? Flexible(
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      margin: const EdgeInsets.symmetric(vertical: 30),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          //
-                        },
-                        style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(5),
-                          textStyle: MaterialStateProperty.all(
-                              Theme.of(context).textTheme.button),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(219, 29, 69, 1),
+            ? Container(
+                height: 100,
+                child: Flexible(
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        margin: const EdgeInsets.symmetric(vertical: 30),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            //
+                          },
+                          style: ThemeText.bottoneRosso,
+                          child: const Text(
+                            "Inoltra",
                           ),
                         ),
-                        child: const Text(
-                          "Inoltra",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    )),
+                      )),
+                ),
               )
             : Column(),
       ],
@@ -132,20 +130,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(219, 29, 69, 1),
         ),
-        title: const Text(
-          "Prenotazione Psicologica",
-          style: TextStyle(
-            fontFamily: 'SourceSerifPro',
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
+        title:
+            const Text("Supporto Psicologico", style: ThemeText.titoloSezione),
         elevation: 3,
         backgroundColor: Theme.of(context).backgroundColor,
       ),
       body: Theme(
         data: ThemeData(
-          colorScheme: ColorScheme.light(
+          colorScheme: const ColorScheme.light(
             primary: Color.fromRGBO(219, 29, 69, 1),
           ),
         ),
@@ -156,20 +148,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: details.onStepContinue,
+                    style: ThemeText.bottoneRosso,
                     child: const Text('Continua'),
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(5),
-                      textStyle: MaterialStateProperty.all(
-                          Theme.of(context).textTheme.button),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(219, 29, 69, 1),
-                      ),
-                    ),
                   ),
                 ],
               );
@@ -189,20 +169,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: details.onStepContinue,
+                    style: ThemeText.bottoneRosso,
                     child: const Text('Continua'),
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(5),
-                      textStyle: MaterialStateProperty.all(
-                          Theme.of(context).textTheme.button),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(219, 29, 69, 1),
-                      ),
-                    ),
                   ),
                   TextButton(
                     onPressed: details.onStepCancel,
@@ -224,11 +192,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
             Step(
               title: const Text(
                 "Dati anagrafici",
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: ThemeText.titoloInoltro,
               ),
               content: Form(
                 key: _formKey,
@@ -342,18 +306,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
             Step(
               title: const Text(
                 "Motivazione",
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: ThemeText.titoloInoltro,
               ),
               content: Form(
                 child: Column(
                   children: <Widget>[
                     const Text(
                       "Breve descrizione della motivazione per cui si sta richiedendo il consulto psicologico.",
-                      style: TextStyle(fontSize: 16),
+                      style: ThemeText.corpoInoltro,
                     ),
                     const SizedBox(
                       height: 20,
@@ -376,28 +336,10 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                   _currentStep >= 1 ? StepState.complete : StepState.disabled,
             ),
             Step(
-              title: const Text(
-                "Impegnativa del medico",
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
+              title: const Text("Impegnativa del medico",
+                  style: ThemeText.titoloInoltro),
               content: ElevatedButton(
-                  style: ButtonStyle(
-                    elevation: MaterialStateProperty.all(5),
-                    textStyle: MaterialStateProperty.all(
-                        Theme.of(context).textTheme.button),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(219, 29, 69, 1),
-                    ),
-                  ),
+                  style: ThemeText.bottoneRosso,
                   onPressed: (() {
                     //caricamento PDF
                   }),
@@ -409,11 +351,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
             Step(
               title: const Text(
                 "Consenso",
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: ThemeText.titoloInoltro,
               ),
               content: consensoWidget,
               isActive: _currentStep >= 0,
@@ -423,7 +361,6 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
           ],
         ),
       ),
-      //backgroundColor: Theme.of(context).backgroundColor,
       backgroundColor: Colors.white,
     );
   }
@@ -450,7 +387,6 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     throw UnimplementedError();
   }
 }

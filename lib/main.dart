@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/firebase_options.dart';
 import 'package:report_it/presentation/pages/pages_GA/authentication_wrapper.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 import 'domain/repository/authentication_controller.dart';
 import 'package:report_it/presentation/widget/theme.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Report.it',
         debugShowCheckedModeBanner: false,
-        theme: AppTheme().build(),
+        theme: ThemeText.theme,
         home: Scaffold(
           body: AuthenticationWrapper(),
         ),
