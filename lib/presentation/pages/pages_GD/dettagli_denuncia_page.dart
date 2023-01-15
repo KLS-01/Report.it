@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/data/Models/denuncia_dao.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
-import 'inoltro_denuncia_page.dart';
 
 class DettagliDenunciaRebecca extends StatefulWidget {
   const DettagliDenunciaRebecca(
@@ -40,126 +40,29 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: Text(
-          'Dettagli denuncia',
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'SourceSerifPro'),
+        title: const Text(
+          'Sezione Denunce',
+          style: ThemeText.titoloSezione,
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Color.fromRGBO(219, 29, 69, 1),
         ),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
-          // if(utente.tipo == TipoUtente.UffPolGiud){
-          //   Container(
-          //                         decoration: BoxDecoration(
-          //                           color: Colors.white,
-          //                           borderRadius: BorderRadius.circular(20),
-          //                           boxShadow: [
-          //                             BoxShadow(
-          //                               color: Colors.grey.withOpacity(0.2),
-          //                               blurRadius: 8.0,
-          //                               spreadRadius: 1.0,
-          //                               offset: Offset(0, 3),
-          //                             )
-          //                           ],
-          //                         ),
-          //                         padding: const EdgeInsets.symmetric(
-          //                             vertical: 10, horizontal: 20),
-          //                         margin: const EdgeInsets.symmetric(
-          //                             vertical: 10, horizontal: 20),
-          //                         child: InputDecorator(
-          //                           decoration: const InputDecoration(
-          //                             labelText: 'Presa in carico da:',
-          //                             labelStyle: TextStyle(
-          //                               fontSize: 30,
-          //                               fontWeight: FontWeight.bold,
-          //                             ),
-          //                             border: InputBorder.none,
-          //                           ),
-          //                           child: SingleChildScrollView(
-          //                             scrollDirection: Axis.horizontal,
-          //                             child: Column(
-          //                               crossAxisAlignment:
-          //                                   CrossAxisAlignment.start,
-          //                               children: [
-          //                                 Row(
-          //                                   children: [
-          //                                     Text(
-          //                                       'Ufficiale di Polizia Giudiziaria: ',
-          //                                       style: TextStyle(
-          //                                           fontWeight:
-          //                                               FontWeight.bold),
-          //                                     ),
-          //                                     Text('chiamata dal back'),
-          //                                   ],
-          //                                 ),
-          //                                 Row(
-          //                                   children: [
-          //                                     Text(
-          //                                       'Grado: ',
-          //                                       style: TextStyle(
-          //                                           fontWeight:
-          //                                               FontWeight.bold),
-          //                                     ),
-          //                                     Text('chiamata dal back'),
-          //                                   ],
-          //                                 ),
-          //                                 Row(
-          //                                   children: [
-          //                                     Text(
-          //                                       'Tipo di Ufficiale: (carabinieri blabla)',
-          //                                       style: TextStyle(
-          //                                           fontWeight:
-          //                                               FontWeight.bold),
-          //                                     ),
-          //                                     Text('chiamata dal back'),
-          //                                   ],
-          //                                 ),
-          //                                 Row(
-          //                                   children: [
-          //                                     Text(
-          //                                       'Caserma di riferimento: ',
-          //                                       style: TextStyle(
-          //                                           fontWeight:
-          //                                               FontWeight.bold),
-          //                                     ),
-          //                                     Text('chiamata dal back'),
-          //                                   ],
-          //                                 ),
-          //                                 Row(
-          //                                   children: [
-          //                                     Text(
-          //                                       'Indirizzo caserma: VIA, CAP, CITTA\' ',
-          //                                       style: TextStyle(
-          //                                           fontWeight:
-          //                                               FontWeight.bold),
-          //                                     ),
-          //                                     Text('chiamata dal back'),
-          //                                   ],
-          //                                 ),
-          //                               ],
-          //                             ),
-          //                           ),
-          //                         )),
-          // }
           children: [
             StreamBuilder(
               stream: denuncia,
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasError) {
-                  return Text("Errore nello snapshot");
+                  return const Text("Errore nello snapshot.");
                 } else {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
-                      return Text("Dati denuncia non trovati");
+                      return const Text("Dati denuncia non trovati.");
                     case ConnectionState.waiting:
                       return const Center(child: CircularProgressIndicator());
-                      break;
                     case ConnectionState.active:
                       {
                         var json = snapshot.data?.data();
@@ -171,30 +74,15 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                             children: [
                               generaStatoDenuncia(d.statoDenuncia),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: const InputDecoration(
                                     labelText: 'Dati anagrafici',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Column(
@@ -203,7 +91,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Nome: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -213,7 +101,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Cognome: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -223,7 +111,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Indirizzo: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -233,7 +121,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'CAP: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -243,7 +131,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Provincia: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -253,7 +141,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Cellulare: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -263,7 +151,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'E-mail: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -276,35 +164,20 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Discriminazione',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Natura della discriminazione: ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
@@ -315,30 +188,15 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Vittima',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Column(
@@ -347,7 +205,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Nome: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -357,7 +215,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Cognome: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -370,35 +228,20 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Oppressore',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Nome oppressore: ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
@@ -409,34 +252,19 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Vicenda',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Row(
-                                    children: [
+                                    children: const [
                                       Text(
                                         'Dettagli della vicenda: ',
                                         style: TextStyle(
@@ -447,35 +275,20 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
+                                decoration: ThemeText.boxDettaglio,
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Consenso',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                     border: InputBorder.none,
                                   ),
                                   child: Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Consenso: ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
@@ -489,18 +302,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   builder: (context, utente, _) {
                                 if (utente?.tipo == TipoUtente.Utente) {
                                   return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.redAccent,
-                                          blurRadius: 8.0,
-                                          spreadRadius: 1.0,
-                                          offset: Offset(0, 3),
-                                        )
-                                      ],
-                                    ),
+                                    decoration: ThemeText.boxRossoDettaglio,
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     margin: const EdgeInsets.symmetric(
@@ -508,11 +310,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     child: InputDecorator(
                                       decoration: const InputDecoration(
                                         labelText: 'Presa in carico da:',
-                                        labelStyle: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
+                                        labelStyle: ThemeText.titoloDettaglio,
                                         border: InputBorder.none,
                                       ),
                                       child: SingleChildScrollView(
@@ -523,7 +321,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                           children: [
                                             Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Ufficiale di Polizia Giudiziaria: ',
                                                   style: TextStyle(
                                                       fontWeight:
@@ -534,7 +332,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                               ],
                                             ),
                                             Row(
-                                              children: [
+                                              children: const [
                                                 Text(
                                                   'Grado: ',
                                                   style: TextStyle(
@@ -546,7 +344,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                               ],
                                             ),
                                             Row(
-                                              children: [
+                                              children: const [
                                                 Text(
                                                   'Tipo di Ufficiale:',
                                                   style: TextStyle(
@@ -559,7 +357,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                             ),
                                             Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Caserma di riferimento: ',
                                                   style: TextStyle(
                                                       fontWeight:
@@ -570,7 +368,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                             ),
                                             Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Indirizzo caserma: VIA, CAP, CITTA\' ',
                                                   style: TextStyle(
                                                       fontWeight:
@@ -583,10 +381,10 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                         ),
                                       ),
                                     ),
-                                  ); //MARISA ECCO IL TUO CONTAINER <3
+                                  );
                                 } else {
-                                  return Visibility(
-                                      child: Text(""), visible: false);
+                                  return const Visibility(
+                                      visible: false, child: Text(""));
                                 }
                               }),
                               generaTastoCambiaStato(
@@ -607,15 +405,13 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               generaTastoCambiaStato(
                                   denuncia: d, utente: utente),
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
                                   decoration: const InputDecoration(
                                     labelText: 'Dati anagrafici',
-                                    labelStyle: TextStyle(
-                                      fontSize: 30,
-                                    ),
+                                    labelStyle: ThemeText.titoloDettaglio,
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -636,11 +432,11 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Discriminazione',
                                     labelStyle: TextStyle(fontSize: 30),
                                   ),
@@ -649,11 +445,11 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Vittima',
                                     labelStyle: TextStyle(fontSize: 30),
                                   ),
@@ -668,11 +464,11 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Oppressore',
                                     labelStyle: TextStyle(fontSize: 30),
                                   ),
@@ -681,10 +477,10 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
-                                child: InputDecorator(
+                                child: const InputDecorator(
                                   decoration: InputDecoration(
                                     labelText: 'Vicenda',
                                     labelStyle: TextStyle(fontSize: 30),
@@ -693,11 +489,11 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 20),
                                 child: InputDecorator(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Consenso',
                                     labelStyle: TextStyle(fontSize: 30),
                                   ),
@@ -732,41 +528,17 @@ class generaTastoCambiaStato extends StatelessWidget {
       switch (denuncia.statoDenuncia) {
         case StatoDenuncia.NonInCarico:
           return ElevatedButton(
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
               onPressed: () =>
                   showAlertDialogAccetta(context, denuncia, utente),
-              child: const Text("Accetta"));
+              child: const Text("Prendi in carico"));
         case StatoDenuncia.PresaInCarico:
           return ElevatedButton(
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
               onPressed: () => showAlertDialogChiudi(context, denuncia, utente),
-              child: const Text("Chiudi"));
+              child: const Text("Chiudi la pratica"));
         case StatoDenuncia.Chiusa:
-          return Visibility(
+          return const Visibility(
             visible: false,
             child: Text(""),
           );
@@ -782,45 +554,23 @@ class generaTastoCambiaStato extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Attenzione!!!!!!"),
-          content: Text("Sei sicuro di accettare la denuncia?"),
+          title: const Text("Attenzione!", style: ThemeText.titoloAlert),
+          content: const Text(
+              "Sei sicuro di voler prendere in carico la denuncia?",
+              style: ThemeText.corpoInoltro),
           actions: [
             ElevatedButton(
-              child: Text("Cancel"),
               onPressed: () => Navigator.pop(context, "Cancel"),
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
+              child: const Text("Torna indietro"),
             ),
             ElevatedButton(
-              child: Text("Continue"),
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
               onPressed: () {
                 DenunciaController.accettaDenuncia(denuncia, utente);
                 Navigator.pop(context, "Continue");
               },
+              child: const Text("Prendi in carico"),
             ),
           ],
         );
@@ -834,45 +584,22 @@ class generaTastoCambiaStato extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Attenzione!!!!!!"),
-          content: Text("Sei sicuro di voler chiudere la pratica?"),
+          title: const Text("Attenzione!", style: ThemeText.titoloAlert),
+          content: const Text("Sei sicuro di voler chiudere la pratica?",
+              style: ThemeText.corpoInoltro),
           actions: [
             ElevatedButton(
-              child: Text("NO"),
               onPressed: () => Navigator.pop(context, "Cancel"),
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
+              child: const Text("No"),
             ),
             ElevatedButton(
-              child: Text("SI"),
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(5),
-                textStyle: MaterialStateProperty.all(
-                    Theme.of(context).textTheme.button),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(219, 29, 69, 1),
-                ),
-              ),
+              style: ThemeText.bottoneRosso,
               onPressed: () {
                 DenunciaController().chiudiDenuncia(denuncia, utente);
                 Navigator.pop(context, "Continue");
               },
+              child: const Text("Sì"),
             ),
           ],
         );
@@ -886,78 +613,36 @@ Widget generaStatoDenuncia(StatoDenuncia stato) {
     case StatoDenuncia.NonInCarico:
       {
         return Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration: BoxDecoration(
-            color: Colors.amberAccent,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.4),
-                blurRadius: 8.0,
-                spreadRadius: 1.0,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Text(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: ThemeText.bottoneInAttesa,
+          child: const Text(
             'In attesa',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: ThemeText.titoloInoltro,
           ),
         );
       }
     case StatoDenuncia.PresaInCarico:
       {
         return Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.4),
-                blurRadius: 8.0,
-                spreadRadius: 1.0,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Text(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: ThemeText.bottoneInCarico,
+          child: const Text(
             'Presa in carico',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: ThemeText.titoloInoltro,
           ),
         );
       }
     case StatoDenuncia.Chiusa:
       {
         return Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade400,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.4),
-                blurRadius: 8.0,
-                spreadRadius: 1.0,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Text(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: ThemeText.bottoneChiusa,
+          child: const Text(
             'Chiusa',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: ThemeText.titoloInoltro,
           ),
         );
       }

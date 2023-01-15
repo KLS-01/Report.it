@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
-
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
-
-import '../../widget/theme.dart';
+import '../../widget/styles.dart';
 import 'inoltro_denuncia_page.dart';
 import '../../widget/visualizza_denunce_widget.dart';
 
@@ -22,18 +21,16 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
-
-
   Future<void> _pullRefresh() async {
-    setState(() {
-    });
+    setState(() {});
   }
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey3 =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +41,21 @@ class _VisualizzaStoricoDenunceUtentePageState
 
     if (utente.tipo == TipoUtente.UffPolGiud) {
       denunceDaAccettare = DenunciaController()
-          .generaStreamDenunciaByStatoAndCap(StatoDenuncia.NonInCarico,utente);
+          .generaStreamDenunciaByStatoAndCap(StatoDenuncia.NonInCarico, utente);
     } else {
       denunceDaAccettare = const Stream.empty();
     }
 
-
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Sezione Denunce',
+          style: ThemeText.titoloSezione,
+        ),
+        elevation: 0,
+        backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+      ),
       body: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -64,21 +69,21 @@ class _VisualizzaStoricoDenunceUtentePageState
                 Tab(
                   child: Text(
                     "In attesa",
-                    style: TextStyle(fontSize: 15),
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Prese in carico",
-                    style: TextStyle(fontSize: 15),
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Storico",
-                    style: TextStyle(fontSize: 15),
+                    style: ThemeText.titoloTab,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -92,11 +97,11 @@ class _VisualizzaStoricoDenunceUtentePageState
                 stream: denunce,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return const Text("Errore nello snapshot");
+                    return const Text("Errore nello snapshot.");
                   } else {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
-                        return const Text("Nessuna Denuncia");
+                        return const Text("Nessuna Denuncia.");
                       case ConnectionState.waiting:
                         return const Center(child: CircularProgressIndicator());
                       case ConnectionState.active:
@@ -106,7 +111,7 @@ class _VisualizzaStoricoDenunceUtentePageState
                                   (e) => DenunciaController().jsonToDenuncia(e))
                               .toList();
                           if (listaDenunce == null) {
-                            return const Text("non ci sono denunce");
+                            return const Text("Non ci sono denunce.");
                           } else {
                             return TabBarView(
                               children: [
@@ -130,20 +135,21 @@ class _VisualizzaStoricoDenunceUtentePageState
                                             builder: (context, snapshot) {
                                               if (snapshot.hasError) {
                                                 return const Text(
-                                                    "Errore nello snapshot");
+                                                    "Errore nello snapshot.");
                                               } else {
                                                 switch (
                                                     snapshot.connectionState) {
                                                   case ConnectionState.none:
                                                     return const Text(
-                                                        "Nessuna Denuncia");
+                                                        "Nessuna Denuncia.");
                                                   case ConnectionState.waiting:
                                                     return const Center(
                                                         child:
                                                             CircularProgressIndicator());
                                                   case ConnectionState.active:
-                                                    List<Denuncia>? listaDenunce =
-                                                        snapshot.data?.docs
+                                                    List<Denuncia>?
+                                                        listaDenunce = snapshot
+                                                            .data?.docs
                                                             .map((e) =>
                                                                 DenunciaController()
                                                                     .jsonToDenuncia(
@@ -152,8 +158,9 @@ class _VisualizzaStoricoDenunceUtentePageState
                                                     return VisualizzaDenunceWidget(
                                                         denunce: listaDenunce!);
                                                   case ConnectionState.done:
-                                                    List<Denuncia>? listaDenunce =
-                                                        snapshot.data?.docs
+                                                    List<Denuncia>?
+                                                        listaDenunce = snapshot
+                                                            .data?.docs
                                                             .map((e) =>
                                                                 DenunciaController()
                                                                     .jsonToDenuncia(
@@ -200,7 +207,7 @@ class _VisualizzaStoricoDenunceUtentePageState
                               .map((e) => Denuncia.fromJson(e.data()))
                               .toList();
                           if (listaDenunce == null) {
-                            return const Text("non ci sono denunce");
+                            return const Text("Non ci sono denunce.");
                           } else {
                             return TabBarView(
                               children: [

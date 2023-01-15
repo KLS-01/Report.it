@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 class WidgetInfo extends StatelessWidget {
   final String titolo;
@@ -15,7 +16,7 @@ class WidgetInfo extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, top: 20),
           child: Text(
             titolo,
-            style: Theme.of(context).textTheme.headline1,
+            style: ThemeText.titoloGIC,
             textAlign: TextAlign.left,
           ),
         ),
@@ -23,7 +24,7 @@ class WidgetInfo extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, bottom: 20),
           child: Text(
             corpo,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: ThemeText.corpoGIC,
           ),
         )
       ],
