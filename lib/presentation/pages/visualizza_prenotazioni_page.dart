@@ -6,7 +6,8 @@ import 'package:report_it/domain/entity/prenotazione_entity.dart';
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
-import 'package:report_it/presentation/lista_prenotazioni_widget.dart';
+import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
+import 'package:report_it/presentation/widget/prenotazioni_stream_builder.dart';
 
 Color? containerColor;
 List<Color> containerColors = [
@@ -28,11 +29,13 @@ class _VisualizzaPrenotazioniPageState
     extends State<VisualizzaPrenotazioniPage> {
   late Future<List<Prenotazione>> prenotazioni;
   PrenotazioneController controller = PrenotazioneController();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
       GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey3 =
+      GlobalKey<RefreshIndicatorState>();
+
   OperatoreCUP? op;
   @override
   void initState() {
@@ -53,12 +56,13 @@ class _VisualizzaPrenotazioniPageState
       }
       return Scaffold(
         body: DefaultTabController(
-          length: 2,
+          length: 3,
           child: Scaffold(
             appBar: AppBar(
               bottom: const TabBar(
                 tabs: [
-                  Tab(text: "Attive"),
+                  Tab(text: "In attesa"),
+                  Tab(text: "Prese in carico"),
                   Tab(text: "Storico"),
                 ],
               ),
@@ -66,180 +70,50 @@ class _VisualizzaPrenotazioniPageState
             ),
             body: TabBarView(
               children: [
-                Column(
-                  children: [
-                    Builder(builder: (context) {
-                      stream = streamGeneratorAttive(utente);
-                      return Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child: RefreshIndicator(
-                                    key: _refreshIndicatorKey1,
-                                    onRefresh: _pullRefresh,
-                                    child: StreamBuilder(
-                                        stream: stream,
-                                        builder:
-                                            (BuildContext context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            print("Errore snapshot");
-                                          } else {
-                                            switch (snapshot.connectionState) {
-                                              case ConnectionState.none:
-                                                return Text('No data');
-
-                                              case ConnectionState.waiting:
-                                                return Text('Awaiting...');
-
-                                              case ConnectionState.active:
-                                                List<Prenotazione>?
-                                                    listaPrenotazioni = snapshot
-                                                        .data?.docs
-                                                        .map((e) {
-                                                  print("FLAG");
-
-                                                  return Prenotazione.fromJson(
-                                                      e.data());
-                                                }).toList();
-
-                                                if (listaPrenotazioni != null) {
-                                                  listaPrenotazioni.removeWhere(
-                                                      (element) =>
-                                                          element
-                                                              .getDataPrenotazione !=
-                                                          null);
-                                                } 
-
-                                                return PrenotazioneListWidget(
-                                                  snapshot: listaPrenotazioni,
-                                                  utente: utente,
-                                                );
-
-                                              case ConnectionState.done:
-                                                List<Prenotazione>?
-                                                    listaPrenotazioni = snapshot
-                                                        .data?.docs
-                                                        .map((e) => controller
-                                                            .prenotazioneFromJson(
-                                                                e))
-                                                        .toList();
-                                                print(
-                                                    "lista $listaPrenotazioni");
-                                                if (utente.tipo ==
-                                                        TipoUtente.Utente &&
-                                                    listaPrenotazioni != null) {
-                                                  listaPrenotazioni.removeWhere(
-                                                      (element) =>
-                                                          element.getDataPrenotazione !=
-                                                              null ||
-                                                          DateTime.now()
-                                                              .isAfter(element
-                                                                  .getDataPrenotazione
-                                                                  .toDate()));
-                                                }
-                                                return PrenotazioneListWidget(
-                                                  snapshot: listaPrenotazioni,
-                                                  utente: utente,
-                                                );
-                                            }
-                                          }
-                                          return Text("AAAA");
-                                        }))),
-                          ],
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-                Builder(builder: (context) {
-                  stream = streamGeneratorStorico(utente);
-
-                  return Column(
+                RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _pullRefresh,
+                  child: Column(
                     children: [
-                      Expanded(
+                      Builder(builder: (context) {
+                        stream = streamGeneratorAttive(utente);
+                        return Expanded(
                           flex: 1,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: RefreshIndicator(
-                                    key: _refreshIndicatorKey2,
-                                    onRefresh: _pullRefresh,
-                                    child: StreamBuilder(
-                                        stream: stream,
-                                        builder:
-                                            (BuildContext context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            print("Errore snapshot");
-                                          } else {
-                                            switch (snapshot.connectionState) {
-                                              case ConnectionState.none:
-                                                return Text('No data');
-
-                                              case ConnectionState.waiting:
-                                                return Text('Awaiting...');
-
-                                              case ConnectionState.active:
-                                                List<Prenotazione>?
-                                                    listaPrenotazioni = snapshot
-                                                        .data?.docs
-                                                        .map((e) {
-                                                  print("FLAG");
-
-                                                  return Prenotazione.fromJson(
-                                                      e.data());
-                                                }).toList();
-
-                                                if (listaPrenotazioni != null) {
-                                                  listaPrenotazioni.removeWhere(
-                                                      (element) =>
-                                                          element.getDataPrenotazione ==
-                                                              null ||
-                                                          DateTime.now()
-                                                              .isBefore(element
-                                                                  .getDataPrenotazione
-                                                                  .toDate()));
-                                                }
-                                                return PrenotazioneListWidget(
-                                                  snapshot: listaPrenotazioni,
-                                                  utente: utente,
-                                                );
-
-                                              case ConnectionState.done:
-                                                List<Prenotazione>?
-                                                    listaPrenotazioni = snapshot
-                                                        .data?.docs
-                                                        .map((e) => controller
-                                                            .prenotazioneFromJson(
-                                                                e))
-                                                        .toList();
-                                                print(listaPrenotazioni);
-
-                                                if (listaPrenotazioni != null) {
-                                                  listaPrenotazioni.removeWhere(
-                                                      (element) =>
-                                                          element.getDataPrenotazione ==
-                                                              null ||
-                                                          DateTime.now()
-                                                              .isBefore(element
-                                                                  .getDataPrenotazione
-                                                                  .toDate()));
-                                                }
-
-                                                return PrenotazioneListWidget(
-                                                  snapshot: listaPrenotazioni,
-                                                  utente: utente,
-                                                );
-                                            }
-                                          }
-                                          return Text("AAAA");
-                                        })),
-                              ),
-                            ],
-                          )),
+                          child: PrenotazioneStreamWidget(
+                              stream: stream,
+                              utente: utente,
+                              mode: Mode.inAttesa),
+                        );
+                      }),
                     ],
-                  );
-                }),
+                  ),
+                ),
+                RefreshIndicator(
+                  key: _refreshIndicatorKey2,
+                  onRefresh: _pullRefresh,
+                  child: Builder(builder: (context) {
+                    stream = streamGeneratorAttive(utente);
+
+                    return PrenotazioneStreamWidget(
+                      stream: stream,
+                      utente: utente,
+                      mode: Mode.inCarico,
+                    );
+                  }),
+                ),
+                RefreshIndicator(
+                  key: _refreshIndicatorKey3,
+                  onRefresh: _pullRefresh,
+                  child: Builder(builder: (context) {
+                    stream = streamGeneratorStorico(utente);
+
+                    return PrenotazioneStreamWidget(
+                      stream: stream,
+                      utente: utente,
+                      mode: Mode.storico,
+                    );
+                  }),
+                ),
               ],
             ),
           ),
@@ -271,11 +145,7 @@ class _VisualizzaPrenotazioniPageState
   }
 
   Future<void> _pullRefresh() async {
-    //Future<List<Prenotazione>> freshList = listGenerator(globalUser);
-    setState(() {
-      //prenotazioni = freshList;
-    });
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    // why use freshNumbers var? https://stackoverflow.com/a/52992836/2301224
+    print("DFDF");
+    setState(() {});
   }
 }

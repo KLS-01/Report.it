@@ -58,6 +58,9 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_phone_direct_caller: ^2.1.1
   tab_container: ^2.0.0
+  flutter_localizations:
+    sdk: flutter
+  time_picker_widget: ^1.0.0+10
    
 
 

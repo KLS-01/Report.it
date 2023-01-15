@@ -153,10 +153,9 @@ class PrenotazioneDao {
       SuperUtente operatore) {
     Stream<QuerySnapshot<Map<String, dynamic>>> ref = db
         .collection(DOCUMENT_NAME)
-        .where("DataPrenotazione", isNull: true)
         .where("CAP", isEqualTo: operatore.cap)
         .snapshots();
-
+    print(operatore.cap);
     print("ref $ref");
     return ref;
   }
@@ -165,7 +164,6 @@ class PrenotazioneDao {
     var ref = db
         .collection(DOCUMENT_NAME)
         .where("IDUtente", isEqualTo: idUtente)
-        .where("DataPrenotazione")
         .snapshots();
 
     return ref;

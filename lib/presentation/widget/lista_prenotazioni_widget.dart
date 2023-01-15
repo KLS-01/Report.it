@@ -7,27 +7,29 @@ import 'package:report_it/presentation/pages/informazioni_prenotazione_page.dart
 class PrenotazioneListWidget extends StatefulWidget {
   final List<Prenotazione>? snapshot;
   final SuperUtente utente;
+  final Function() update;
 
-  const PrenotazioneListWidget({
-    super.key,
-    required this.snapshot,
-    required this.utente,
-  });
+  const PrenotazioneListWidget(
+      {super.key,
+      required this.snapshot,
+      required this.utente,
+      required this.update});
 
   @override
   State<PrenotazioneListWidget> createState() => _PrenotazioneListWidgetState(
-        snapshot: snapshot,
-        utente: utente,
-      );
+      snapshot: snapshot, utente: utente, update: update);
 }
 
 class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
-  _PrenotazioneListWidgetState({
-    required this.snapshot,
-    required this.utente,
-  });
+  _PrenotazioneListWidgetState(
+      {required this.snapshot, required this.utente, required this.update});
   List<Prenotazione>? snapshot;
   final SuperUtente utente;
+  final Function() update;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +44,14 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
         itemCount: snapshot!.length,
         itemBuilder: (context, index) {
           final item = snapshot![index];
-
           return Material(
             child: Column(
               children: [
                 ListTile(
                   title: Text(item.id!),
                 ),
-                if (widget.utente.tipo == TipoUtente.OperatoreCup)
+                if (widget.utente.tipo == TipoUtente.OperatoreCup ||
+                    widget.utente.tipo == TipoUtente.Utente)
                   ElevatedButton(
                       onPressed: () => {
                             Navigator.push(

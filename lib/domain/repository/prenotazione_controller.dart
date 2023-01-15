@@ -147,8 +147,8 @@ class PrenotazioneController {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamAttive(
       SuperUtente operatore) {
-    print("Flag ${operatore.id}");
     if (operatore.tipo == TipoUtente.OperatoreCup) {
+      print("Flag ${operatore.id}");
       return prenotazioneDao.retrieveStreamAttive(operatore);
     } else {
       throw ("Utente non operatore");
@@ -176,7 +176,6 @@ class PrenotazioneController {
 
   Prenotazione prenotazioneFromJson(
       QueryDocumentSnapshot<Map<String, dynamic>> json) {
-    print("AAAAAAAAAAAAAAAAAAAA");
     return Prenotazione.fromJson(json.data());
   }
 }

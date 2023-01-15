@@ -5,7 +5,6 @@ import 'package:report_it/presentation/pages/mappa_page.dart';
 import 'package:report_it/presentation/pages/psicologo_home_page.dart';
 import 'package:report_it/presentation/pages/visualizza_prenotazioni_page.dart';
 import 'package:report_it/presentation/pages/visualizza_storico_denunce_page.dart';
-import 'package:report_it/presentation/pages/visualizza_storico_prenotazioni_page.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
