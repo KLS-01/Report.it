@@ -36,15 +36,17 @@ class PrenotazionePage extends StatelessWidget {
 }
 
 class MyCustomPage extends StatefulWidget {
+  late final SuperUtente utente;
   @override
   MyCustomPageState createState() {
-    return MyCustomPageState();
+    return MyCustomPageState(utente: utente);
   }
 }
 
 class MyCustomPageState extends State<MyCustomPage> {
+  MyCustomPageState({required this.utente});
   final _formKey = GlobalKey<FormState>();
-
+  final SuperUtente utente;
   final TextEditingController capController =
       TextEditingController(text: "525698");
   final TextEditingController provinciaController =
@@ -146,15 +148,3 @@ class MyCustomPageState extends State<MyCustomPage> {
     print(await control.visualizzaAttiveByUtente(utente));
   }
 }
-
-//Questo codice permette di mostrare un documento pdf passandogli l'url del documento, che viene preso dal campo 'Impegnativa' dell'entità Prenotazione nel DB
-/*class PdfView extends StatelessWidget {
-  //const PdfView({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            child: SfPdfViewer.network(
-                'https://firebasestorage.googleapis.com/v0/b/reportit-unisa.appspot.com/o/Impegnative%2FImpegnativa_31kmqMXdyqsqfP5YcFx7.pdf?alt=media&token=66c62eea-f8ef-443e-b75a-a78d3ac53774')));
-  }
-}*/

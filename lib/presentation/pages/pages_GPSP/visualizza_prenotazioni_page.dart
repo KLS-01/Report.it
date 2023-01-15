@@ -76,7 +76,8 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => InoltroPrenotazione(),
+                        builder: (context) =>
+                            InoltroPrenotazione(utente: utente!),
                       ),
                     );
                   },
