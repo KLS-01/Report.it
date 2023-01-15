@@ -59,6 +59,12 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   tab_container: ^2.0.0
   flutter_launcher_icons: ^0.11.0
+  google_maps_flutter: ^2.2.2
+  flutter_google_places: ^0.3.0
+  geolocator: ^9.0.2
+  url_launcher: ^6.1.7
+  location: ^4.2.0
+  json_path: ^0.4.2
    
 
 

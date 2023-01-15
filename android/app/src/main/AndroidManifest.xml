@@ -1,10 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.report_it">
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
    <application
-        android:label="Report.it"
+        android:label="report_it"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCz1L_f-suII8W3eDL8u4ge1cH7xR_yC08"
+        />
+    
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -32,4 +38,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
