@@ -356,7 +356,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                   onPressed: (() {
                     uploadImpegnativa();
                   }),
-                  child: Text("Carica l\'impegnativa del medico")),
+                  child: const Text("Carica l'impegnativa del medico")),
               isActive: _currentStep >= 0,
               state:
                   _currentStep >= 2 ? StepState.complete : StepState.disabled,
@@ -396,11 +396,6 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
 
   cancel() {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    throw UnimplementedError();
   }
 
   Future<void> uploadImpegnativa() async {
