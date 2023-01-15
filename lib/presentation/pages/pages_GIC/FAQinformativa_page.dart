@@ -1,6 +1,8 @@
 import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../widget/styles.dart';
 
 class FAQinformativa extends StatelessWidget {
   @override
@@ -9,11 +11,10 @@ class FAQinformativa extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       duration: const Duration(seconds: 1),
       child: PageView(
-        // onPageChanged: _onPageChanged,
         children: <Widget>[
           ListView(
             children: [
-              PagerPageWidget_noimage(
+              const PagerPageWidget_noimage(
                 text: 'Sezione FAQ',
                 description:
                     'FAQ sta per "frequently asked questions", cioè le domande maggiormente chieste!',
