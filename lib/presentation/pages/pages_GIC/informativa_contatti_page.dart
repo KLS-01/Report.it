@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:report_it/presentation/pages/pages_GC/home_chat.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
@@ -240,7 +241,13 @@ class _InformativaState extends State<Informativa> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (() {}),
+        onPressed: (() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) => HomeChat()),
+            ),
+          );
+        }),
         backgroundColor: Color.fromRGBO(219, 29, 69, 1),
         child: Icon(Icons.android, size: 30),
       ),
