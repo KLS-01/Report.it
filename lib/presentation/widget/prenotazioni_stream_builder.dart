@@ -61,36 +61,26 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
                         } else {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
-                              return Text('No data');
+                              return const Text('No data');
 
                             case ConnectionState.waiting:
-                              return Text('Awaiting...');
+                              return const Text('Awaiting...');
+                          }
+                          if (snapshot.connectionState ==
+                                  ConnectionState.active ||
+                              snapshot.connectionState ==
+                                  ConnectionState.done) {
+                            List<Prenotazione>? listaPrenotazioni =
+                                snapshot.data?.docs.map((e) {
+                              return Prenotazione.fromJson(e.data());
+                            }).toList();
 
-                            case ConnectionState.active:
-                              List<Prenotazione>? listaPrenotazioni =
-                                  snapshot.data?.docs.map((e) {
-                                return Prenotazione.fromJson(e.data());
-                              }).toList();
+                            listaPrenotazioni = listFilter(listaPrenotazioni);
 
-                              listaPrenotazioni = listFilter(listaPrenotazioni);
-
-                              return PrenotazioneListWidget(
-                                  snapshot: listaPrenotazioni,
-                                  utente: utente,
-                                  update: _pullRefresh);
-
-                            case ConnectionState.done:
-                              List<Prenotazione>? listaPrenotazioni = snapshot
-                                  .data?.docs
-                                  .map(
-                                      (e) => controller.prenotazioneFromJson(e))
-                                  .toList();
-                              listaPrenotazioni = listFilter(listaPrenotazioni);
-
-                              return PrenotazioneListWidget(
-                                  snapshot: listaPrenotazioni,
-                                  utente: utente,
-                                  update: _pullRefresh);
+                            return PrenotazioneListWidget(
+                                snapshot: listaPrenotazioni,
+                                utente: utente,
+                                update: _pullRefresh);
                           }
                         }
                         return Text("AAAA");
