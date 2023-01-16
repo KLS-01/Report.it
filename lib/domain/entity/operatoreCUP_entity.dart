@@ -1,7 +1,9 @@
 import 'package:report_it/domain/entity/super_utente.dart';
 import 'package:report_it/domain/entity/tipo_utente.dart';
 
-class OperatoreCUP extends SuperUtente{
+class OperatoreCUP extends SuperUtente {
+  String nome;
+  String cognome;
   String password;
   String email;
   String asl;
@@ -22,7 +24,8 @@ class OperatoreCUP extends SuperUtente{
 
   set setAsl(asl) => this.asl = asl;
 
-  OperatoreCUP(id, this.password, this.email, this.asl) : super(id,TipoUtente.values.byName("OperatoreCup"));
+  OperatoreCUP(id, this.password, this.email, this.asl, this.nome, this.cognome)
+      : super(id, TipoUtente.values.byName("OperatoreCup"));
 
   factory OperatoreCUP.fromJson(Map<String, dynamic> json) {
     return OperatoreCUP(
@@ -30,6 +33,8 @@ class OperatoreCUP extends SuperUtente{
       json["Password"],
       json["Email"],
       json["ASL"],
+      json["Nome"],
+      json["Cognome"],
     );
   }
 
@@ -39,6 +44,8 @@ class OperatoreCUP extends SuperUtente{
       map["Password"],
       map["Email"],
       map["ASL"],
+      map["Nome"],
+      map["Cognome"],
     );
   }
 
@@ -48,6 +55,8 @@ class OperatoreCUP extends SuperUtente{
       "Password": password,
       "Email": email,
       "ASL": asl,
+      "Nome": nome,
+      "Cognome": cognome,
     };
   }
 }

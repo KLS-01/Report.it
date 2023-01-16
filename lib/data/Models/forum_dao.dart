@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/discussione_entity.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/tipo_utente.dart';
+import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
+import 'package:report_it/domain/entity/utente_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
@@ -27,6 +32,20 @@ class ForumDao {
         }
 
         ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
+
+        if (ut.tipoUtente == "Utente") {
+          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          ut.nome = utw!.spid!.nome;
+          ut.cognome = utw.spid!.cognome;
+        } else if (ut.tipoUtente == "CUP") {
+          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+          ut.nome = opCUP!.nome;
+          ut.cognome = opCUP.cognome;
+        } else {
+          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          ut.nome = uff!.nome;
+          ut.cognome = uff.cognome;
+        }
         lista.add(ut);
       }
 
@@ -47,6 +66,21 @@ class ForumDao {
 
         ut.id = c.id;
 
+        if (ut.tipoutente == "Utente") {
+          Utente? utw = await RetrieveUtenteByID(ut.creatore);
+          ut.nome = utw!.spid!.nome;
+          ut.cognome = utw.spid!.cognome;
+        } else if (ut.tipoutente == "CUP") {
+          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.creatore);
+
+          ut.nome = opCUP!.nome;
+          ut.cognome = opCUP.cognome;
+        } else {
+          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.creatore);
+          ut.nome = uff!.nome;
+          ut.cognome = uff.cognome;
+        }
+
         lista.add(ut);
       }
 
@@ -56,7 +90,8 @@ class ForumDao {
     return u;
   }
 
-  static Future<List<Discussione?>> RetrieveAllForumUtente(String id) async {
+  static Future<List<Discussione?>> RetrieveAllForumUtente(
+      String id, TipoUtente tipo) async {
     var ref =
         database.collection("Discussione").where("IDCreatore", isEqualTo: id);
 
@@ -76,6 +111,21 @@ class ForumDao {
         }
 
         ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
+
+        if (ut.tipoUtente == "Utente") {
+          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          ut.nome = utw!.spid!.nome;
+          ut.cognome = utw.spid!.cognome;
+        } else if (ut.tipoUtente == "CUP") {
+          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+
+          ut.nome = opCUP!.nome;
+          ut.cognome = opCUP.cognome;
+        } else {
+          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          ut.nome = uff!.nome;
+          ut.cognome = uff.cognome;
+        }
         lista.add(ut);
       }
 
@@ -131,24 +181,23 @@ class ForumDao {
     ref.delete();
   }
 
-  static void modificaPunteggio(String id, int valore) {
+  static Future<int> modificaPunteggio(
+      String id, int valore, String idUtente) async {
     var ref = database.collection("Discussione").doc(id);
 
-    ref.update({"Punteggio": FieldValue.increment(valore)});
-  }
-
-  static int supportaCommento(Commento commento, Discussione discussione) {
-    var ref = database
-        .collection("Discussione")
-        .doc(discussione.id)
-        .collection("Commento")
-        .doc(commento.id);
-
-    commento.punteggio += 1;
-
-    ref.update(commento.toMap());
-
-    return commento.punteggio;
+    if (valore == 1) {
+      ref.update({
+        "Punteggio": FieldValue.increment(valore),
+        "ListaCommenti": FieldValue.arrayUnion([idUtente])
+      });
+      return valore;
+    } else {
+      ref.update({
+        "Punteggio": FieldValue.increment(valore),
+        "ListaCommenti": FieldValue.arrayRemove([idUtente])
+      });
+      return valore;
+    }
   }
 
   Future<String> caricaImmagne(FilePickerResult file) async {
