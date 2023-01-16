@@ -113,7 +113,8 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Builder(builder: (context) {
-                                DateTime initDate = DateTime.now();
+                                DateTime initDate =
+                                    DateTime.now().add(const Duration(days: 1));
                                 print(initDate.weekday);
                                 while (initDate.weekday > 5) {
                                   initDate =

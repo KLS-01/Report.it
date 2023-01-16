@@ -74,7 +74,7 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
                                 snapshot.data?.docs.map((e) {
                               return Prenotazione.fromJson(e.data());
                             }).toList();
-
+                            print(listaPrenotazioni);
                             listaPrenotazioni = listFilter(listaPrenotazioni);
 
                             return PrenotazioneListWidget(
