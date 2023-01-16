@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/denuncia_entity.dart';
 
@@ -55,7 +56,6 @@ class DenunciaDao {
     DocumentReference? returnCode;
     try {
       returnCode = db.collection('Denuncia').doc(id);
-      print("aggiorno il seguente campo di $attribute: $value");
       return await returnCode.update({attribute: value});
     } catch (e) {
       print(e);
@@ -139,7 +139,9 @@ class DenunciaDao {
     return lista;
   }
 
-  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff) {
+  void accettaDenuncia
+      (String idDenuncia, GeoPoint coordCaserma, String idUff,
+      String nomeCaserma, String nomeUff, String cognomeUff,TipoUfficiale tipoUff, String gradoUff) {
     try {
       var ref = db.collection("Denuncia").doc(idDenuncia);
 
@@ -150,6 +152,8 @@ class DenunciaDao {
         "NomeCaserma": nomeCaserma,
         "NomeUff": nomeUff,
         "Stato": "PresaInCarico",
+        "TipoUff": tipoUff,
+        "GradoUff": gradoUff
       });
     }catch(e){
       print(e);

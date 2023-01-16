@@ -8,6 +8,7 @@ import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
+import '../../widget/tasto_cambia_stato_denuncia_widget.dart';
 
 class DettagliDenunciaRebecca extends StatefulWidget {
   const DettagliDenunciaRebecca(
@@ -63,7 +64,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                       return const Text("Dati denuncia non trovati.");
                     case ConnectionState.waiting:
                       return const Center(child: CircularProgressIndicator());
-                    case ConnectionState.active:
+                  }
+                    if(snapshot.connectionState ==ConnectionState.active || snapshot.connectionState==ConnectionState.done)
                       {
                         var json = snapshot.data?.data();
                         Denuncia d =
@@ -159,6 +161,18 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                           Text('${d.emailDenunciante}'),
                                         ],
                                       ),
+                                      utente.tipo==TipoUtente.UffPolGiud?
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Prova: ',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              Text('${d.emailDenunciante}'),
+                                            ],
+                                          )
+                                      : Container(),
                                     ],
                                   ),
                                 ),
@@ -332,19 +346,19 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                               ],
                                             ),
                                             Row(
-                                              children: const [
-                                                Text(
+                                              children:  [
+                                                const Text(
                                                   'Grado: ',
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
                                                 Text(
-                                                    'INSERIRE IL GRADO DEL DB'),
+                                                    '${d.gradoUff}'),
                                               ],
                                             ),
                                             Row(
-                                              children: const [
+                                              children:  [
                                                 Text(
                                                   'Tipo di Ufficiale:',
                                                   style: TextStyle(
@@ -352,7 +366,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                                           FontWeight.bold),
                                                 ),
                                                 Text(
-                                                    'INSERIRE TIPO NEL DB  (carabinieri blabla)'),
+                                                    '${d.tipoUff}'),
                                               ],
                                             ),
                                             Row(
@@ -392,119 +406,9 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                             ],
                           ),
                         );
-                      }
-                    case ConnectionState.done:
-                      {
-                        var json = snapshot.data?.data();
-                        Denuncia d =
-                            DenunciaController().jsonToDenunciaDettagli(json!);
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              generaTastoCambiaStato(
-                                  denuncia: d, utente: utente),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Dati anagrafici',
-                                    labelStyle: ThemeText.titoloDettaglio,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Nome: ${d.nomeDenunciante}'),
-                                      Text('Cognome: ${d.cognomeDenunciante}'),
-                                      Text(
-                                          'Indirizzo: ${d.indirizzoDenunciante}'),
-                                      Text('CAP: ${d.capDenunciante}'),
-                                      Text(
-                                          'Sigla provincia: ${d.provinciaDenunciante}'),
-                                      Text(
-                                          'Numero di telefono: ${d.cellulareDenunciante}'),
-                                      Text('E-mail: ${d.emailDenunciante}'),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Discriminazione',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child: Text(
-                                      'Natura della discriminazione: ${d.descrizione}'),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Vittima',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Nome: ${d.nomeVittima}'),
-                                      Text('Cognome: ${d.cognomeVittima}'),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Oppressore',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child:
-                                      Text('Nome oppressore: ${d.denunciato}'),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: const InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: 'Vicenda',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child: Text('Dettagli della vicenda: '),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Consenso',
-                                    labelStyle: TextStyle(fontSize: 30),
-                                  ),
-                                  child: Text('Consenso: ${d.alreadyFiled}'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                  }
+                      }else{
+                      return Text("");
+                    }
                 }
               },
             ),
@@ -515,98 +419,6 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
   }
 }
 
-class generaTastoCambiaStato extends StatelessWidget {
-  const generaTastoCambiaStato(
-      {Key? key, required this.denuncia, required this.utente})
-      : super(key: key);
-  final Denuncia denuncia;
-  final SuperUtente utente;
-
-  @override
-  Widget build(BuildContext context) {
-    if (utente.tipo == TipoUtente.UffPolGiud) {
-      switch (denuncia.statoDenuncia) {
-        case StatoDenuncia.NonInCarico:
-          return ElevatedButton(
-              style: ThemeText.bottoneRosso,
-              onPressed: () =>
-                  showAlertDialogAccetta(context, denuncia, utente),
-              child: const Text("Prendi in carico"));
-        case StatoDenuncia.PresaInCarico:
-          return ElevatedButton(
-              style: ThemeText.bottoneRosso,
-              onPressed: () => showAlertDialogChiudi(context, denuncia, utente),
-              child: const Text("Chiudi la pratica"));
-        case StatoDenuncia.Chiusa:
-          return const Visibility(
-            visible: false,
-            child: Text(""),
-          );
-      }
-    } else {
-      return const Visibility(visible: false, child: Text(""));
-    }
-  }
-
-  showAlertDialogAccetta(
-      BuildContext context, Denuncia denuncia, SuperUtente utente) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Attenzione!", style: ThemeText.titoloAlert),
-          content: const Text(
-              "Sei sicuro di voler prendere in carico la denuncia?",
-              style: ThemeText.corpoInoltro),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, "Cancel"),
-              style: ThemeText.bottoneRosso,
-              child: const Text("Torna indietro"),
-            ),
-            ElevatedButton(
-              style: ThemeText.bottoneRosso,
-              onPressed: () {
-                DenunciaController.accettaDenuncia(denuncia, utente);
-                Navigator.pop(context, "Continue");
-              },
-              child: const Text("Prendi in carico"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  showAlertDialogChiudi(
-      BuildContext context, Denuncia denuncia, SuperUtente utente) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Attenzione!", style: ThemeText.titoloAlert),
-          content: const Text("Sei sicuro di voler chiudere la pratica?",
-              style: ThemeText.corpoInoltro),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, "Cancel"),
-              style: ThemeText.bottoneRosso,
-              child: const Text("No"),
-            ),
-            ElevatedButton(
-              style: ThemeText.bottoneRosso,
-              onPressed: () {
-                DenunciaController().chiudiDenuncia(denuncia, utente);
-                Navigator.pop(context, "Continue");
-              },
-              child: const Text("Sì"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
 
 Widget generaStatoDenuncia(StatoDenuncia stato) {
   switch (stato) {

@@ -109,7 +109,10 @@ class DenunciaController {
         idUtente: user!.uid,
         nomeCaserma: null,
         nomeUff: null,
-        statoDenuncia: StatoDenuncia.NonInCarico);
+        statoDenuncia: StatoDenuncia.NonInCarico,
+      tipoUff: null,
+      gradoUff: null
+    );
 
     String? result;
     DenunciaDao.addDenuncia(denuncia).then((DocumentReference<Object?> id) {
@@ -129,7 +132,7 @@ static accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
         return;
       } else {
         DenunciaDao().accettaDenuncia(denuncia.id!, uff.coordinate, uff.id.trim(),
-            uff.nomeCaserma, uff.nome, uff.cognome);
+            uff.nomeCaserma, uff.nome, uff.cognome, uff.tipoUff, uff.grado);
         return;
       }
     }
