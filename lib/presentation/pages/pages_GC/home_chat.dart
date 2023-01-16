@@ -45,7 +45,6 @@ class _crealistaState extends State<crealista> {
           } else {
             return Container(
               margin: EdgeInsets.fromLTRB(5, 10, 10, 10),
-              //width: MediaQuery.of(context).size.width * 0.6,
               child: Column(
                 children: [
                   Expanded(
@@ -62,6 +61,7 @@ class _crealistaState extends State<crealista> {
                                     AssetImage("assets/images/chatbot.png"),
                                     color: ThemeText.theme.primaryColor,
                                   ),
+                                  SizedBox(width: 5),
                                   Material(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -82,6 +82,11 @@ class _crealistaState extends State<crealista> {
                                         setState(() {});
                                       }),
                                       child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Color.fromRGBO(219, 29, 69, 1),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
                                         padding: EdgeInsets.symmetric(
                                             vertical: 10, horizontal: 35),
                                         child: Text(
@@ -107,25 +112,38 @@ class _crealistaState extends State<crealista> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Material(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                color: ThemeText.theme.primaryColor,
-                                child: InkWell(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 35),
-                                    child: Text(
-                                      risposta!,
-                                      textAlign: TextAlign.center,
-                                      style: ThemeText.corpoInoltro,
+                              Row(
+                                children: [
+                                  Material(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    color: ThemeText.theme.primaryColor,
+                                    child: InkWell(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[350],
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 35),
+                                        child: Text(
+                                          risposta!,
+                                          textAlign: TextAlign.center,
+                                          style: ThemeText.corpoInoltro,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(
+                                    Icons.computer,
+                                  ),
+                                ],
                               ),
-                              Icon(
-                                Icons.computer,
-                              )
                             ],
                           ),
                         ),
