@@ -45,6 +45,7 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
         itemBuilder: (context, index) {
           final item = snapshot![index];
           return Material(
+            color: Theme.of(context).backgroundColor,
             child: Column(
               children: [
                 ListTile(
