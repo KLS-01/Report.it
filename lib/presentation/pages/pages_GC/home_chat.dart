@@ -52,7 +52,7 @@ class _crealistaState extends State<crealista> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: ((context, index) {
                         return Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Column(
                             children: [
                               Row(
@@ -84,6 +84,14 @@ class _crealistaState extends State<crealista> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           color: Color.fromRGBO(219, 29, 69, 1),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color.fromARGB(
+                                                  255, 78, 78, 78),
+                                              blurRadius: 1,
+                                              offset: Offset(1, 1),
+                                            )
+                                          ],
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),
@@ -125,6 +133,14 @@ class _crealistaState extends State<crealista> {
                                           color: Colors.grey[350],
                                           borderRadius:
                                               BorderRadius.circular(20),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color.fromARGB(
+                                                  255, 78, 78, 78),
+                                              blurRadius: 1,
+                                              offset: Offset(1, 1),
+                                            )
+                                          ],
                                         ),
                                         padding: EdgeInsets.symmetric(
                                             vertical: 10, horizontal: 35),
