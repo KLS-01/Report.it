@@ -8,6 +8,7 @@ import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:time_picker_widget/time_picker_widget.dart';
@@ -47,63 +48,94 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
   Widget build(BuildContext context) {
     print(prenotazione.getDataPrenotazione);
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Dettagli prenotazione', style: ThemeText.titoloSezione),
+          backgroundColor: Theme.of(context).backgroundColor,
+          iconTheme: IconThemeData(
+            color: Color.fromRGBO(219, 29, 69, 1),
+          ),
+        ),
+        backgroundColor: Theme.of(context).backgroundColor,
         body: Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 40.0, left: 10),
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text("Torna indietro")),
-      ),
-      Padding(
-          padding: const EdgeInsets.all(50),
-          child: Column(children: [
-            SingleChildScrollView(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
+          Padding(
+              padding: const EdgeInsets.all(50),
+              child: Column(children: [
+                Column(
                   children: [
-                    const Text(
-                      "Info prenotazione",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19.0,
-                      ),
+                    Row(
+                      children: [
+                        const Text(
+                          "ID Prenotazione: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(prenotazione.getId),
+                      ],
                     ),
-                    const Text("IDPrenotazione"),
-                    Text(prenotazione.getId),
-                    const Text("IDUtente"),
-                    Text(prenotazione.getIdUtente),
-                    const Text("Provincia"),
-                    Text(prenotazione.getProvincia),
-                    const Text("CAP"),
-                    Text(prenotazione.getCap),
-                    const Text("Impegnativa"),
+                    Row(
+                      children: [
+                        const Text(
+                          "ID Utente: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(prenotazione.getIdUtente),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Provincia: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(prenotazione.getProvincia),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "CAP: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(prenotazione.getCap),
+                      ],
+                    ),
                     ElevatedButton(
-                        onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Scaffold(
-                                          appBar: AppBar(
-                                              title: const Text('Impegnativa'),
-                                              actions: <Widget>[
-                                                IconButton(
-                                                  icon: const Icon(
-                                                    Icons.first_page,
-                                                    color: Colors.white,
-                                                  ),
-                                                  onPressed: () {
-                                                    _pdfViewerController
-                                                        .firstPage();
-                                                  },
-                                                )
-                                              ]),
-                                          body: SfPdfViewer.network(
-                                            prenotazione.getImpegnativa,
-                                          ))))
-                            },
-                        child: const Text("Visualizza impegnativa")),
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                iconTheme: IconThemeData(
+                                  color: Color.fromRGBO(219, 29, 69, 1),
+                                ),
+                                backgroundColor:
+                                    Theme.of(context).backgroundColor,
+                                title: const Text(
+                                  'Impegnativa',
+                                  style: ThemeText.titoloSezione,
+                                ),
+                                actions: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.first_page,
+                                      color: Color.fromRGBO(219, 29, 69, 1),
+                                    ),
+                                    onPressed: () {
+                                      _pdfViewerController.firstPage();
+                                    },
+                                  ),
+                                ],
+                              ),
+                              body: SfPdfViewer.network(
+                                prenotazione.getImpegnativa,
+                              ),
+                            ),
+                          ),
+                        ),
+                      },
+                      child: const Text("Visualizza impegnativa"),
+                      style: ThemeText.bottoneRosso,
+                    ),
                     if (utente.tipo == TipoUtente.OperatoreCup &&
                         prenotazione.getDataPrenotazione == null)
                       Form(
@@ -169,6 +201,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                                 padding: const EdgeInsets.only(
                                     left: 150.0, top: 40.0),
                                 child: ElevatedButton(
+                                  style: ThemeText.bottoneRosso,
                                   onPressed: () {
                                     // Validate returns true if the form is valid, or false otherwise.
                                     if (_prenotazioneFormKey.currentState!
@@ -192,9 +225,9 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                       Text(
                           "Data appuntamento: ${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}")
                   ],
-                ))
-          ]))
-    ]));
+                )
+              ]))
+        ]));
   }
 
   void inizializza(String date, time) {
