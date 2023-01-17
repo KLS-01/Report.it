@@ -44,7 +44,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                   if (denunce.length == 0) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Center(
                           child: Text(
                             "Non ci sono denunce in questa sezione",
