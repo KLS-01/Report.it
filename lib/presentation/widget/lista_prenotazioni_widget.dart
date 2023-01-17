@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
-import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:report_it/presentation/pages/pages_GPSP/informazioni_prenotazione_page.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 class PrenotazioneListWidget extends StatefulWidget {
   final List<Prenotazione>? snapshot;
@@ -37,8 +37,15 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
       return const Center(child: Text('Errore'));
     }
     if (snapshot!.isEmpty) {
-      return ListView(
-          children: [Center(child: Text('Nessuna prenotazione trovata'))]);
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Center(
+              child: Text(
+            'Nessuna prenotazione trovata',
+          )),
+        ],
+      );
     } else {
       return ListView.builder(
         itemCount: snapshot!.length,
@@ -46,26 +53,44 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
           final item = snapshot![index];
           return Material(
             color: Theme.of(context).backgroundColor,
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text(item.id!),
+            child: Column(children: [
+              Container(
+                margin: const EdgeInsets.all(10),
+                decoration: ThemeText.boxVisualizza,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 75.0,
+                        child: ListTile(
+                          title: Text(
+                            item.id!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: const Text(
+                              'Clicca sull\'icona per vedere i dettagli'),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InformazioniPrenotazione(
+                                  prenotazione: item, utente: widget.utente),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.info_outline_rounded,
+                        ))
+                  ],
                 ),
-                if (widget.utente.tipo == TipoUtente.OperatoreCup ||
-                    widget.utente.tipo == TipoUtente.Utente)
-                  ElevatedButton(
-                      onPressed: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Scaffold(
-                                        body: InformazioniPrenotazione(
-                                            prenotazione: item,
-                                            utente: widget.utente))))
-                          },
-                      child: const Text("Apri prenotazione"))
-              ],
-            ),
+              ),
+            ]),
           );
         },
       );

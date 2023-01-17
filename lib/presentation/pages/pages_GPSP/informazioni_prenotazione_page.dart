@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
@@ -49,56 +47,112 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
     print(prenotazione.getDataPrenotazione);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Dettagli prenotazione', style: ThemeText.titoloSezione),
+          title: const Text('Dettagli prenotazione',
+              style: ThemeText.titoloSezione),
           backgroundColor: Theme.of(context).backgroundColor,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Color.fromRGBO(219, 29, 69, 1),
           ),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Column(children: [
-          Padding(
-              padding: const EdgeInsets.all(50),
-              child: Column(children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "ID Prenotazione: ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(prenotazione.getId),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "ID Utente: ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(prenotazione.getIdUtente),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "Provincia: ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(prenotazione.getProvincia),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "CAP: ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(prenotazione.getCap),
-                      ],
-                    ),
-                    ElevatedButton(
+        body: SingleChildScrollView(
+            child: Column(children: [
+          Container(
+            decoration: ThemeText.boxDettaglio,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: 'Dati del paziente',
+                labelStyle: ThemeText.titoloDettaglio,
+                border: InputBorder.none,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        "ID Prenotazione: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getId),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Nome: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getNomeUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Cognome : ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getcognomeUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Recapito: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getNumeroUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Email: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getEmailUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "C.F.: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getCfUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Indirizzo: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getIndirizzoUtente),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Provincia: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getProvincia),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "CAP: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(prenotazione.getCap),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
                       onPressed: () => {
                         Navigator.push(
                           context,
@@ -114,17 +168,17 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                                   'Impegnativa',
                                   style: ThemeText.titoloSezione,
                                 ),
-                                actions: <Widget>[
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.first_page,
-                                      color: Color.fromRGBO(219, 29, 69, 1),
-                                    ),
-                                    onPressed: () {
-                                      _pdfViewerController.firstPage();
-                                    },
-                                  ),
-                                ],
+                                // actions: <Widget>[
+                                //   IconButton(
+                                //     icon: const Icon(
+                                //       Icons.first_page,
+                                //       color: Color.fromRGBO(219, 29, 69, 1),
+                                //     ),
+                                //     onPressed: () {
+                                //       _pdfViewerController.firstPage();
+                                //     },
+                                //   ),
+                                // ],
                               ),
                               body: SfPdfViewer.network(
                                 prenotazione.getImpegnativa,
@@ -133,101 +187,138 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                           ),
                         ),
                       },
-                      child: const Text("Visualizza impegnativa"),
                       style: ThemeText.bottoneRosso,
+                      child: const Text("Visualizza impegnativa"),
                     ),
-                    if (utente.tipo == TipoUtente.OperatoreCup &&
-                        prenotazione.getDataPrenotazione == null)
-                      Form(
-                          key: _prenotazioneFormKey,
-                          child: SingleChildScrollView(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Builder(builder: (context) {
-                                DateTime initDate =
-                                    DateTime.now().add(const Duration(days: 1));
-                                print(initDate.weekday);
-                                while (initDate.weekday > 5) {
-                                  initDate =
-                                      initDate.add(const Duration(days: 1));
-                                }
-                                print(initDate.weekday);
-                                return DateTimePicker(
-                                  type: DateTimePickerType.date,
-                                  dateMask: 'd MMM, yyyy',
-                                  initialValue: initDate.toString(),
-                                  firstDate: DateTime.now()
-                                      .add(const Duration(days: 1)),
-                                  lastDate: DateTime(2100),
-                                  icon: Icon(Icons.event),
-                                  dateLabelText: 'Date',
-                                  timeLabelText: "Hour",
-                                  locale: const Locale('it', 'IT'),
-                                  selectableDayPredicate: (date) {
-                                    // Disable weekend days to select from the calendar
-
-                                    if (date.weekday == 6 ||
-                                        date.weekday == 7) {
-                                      return false;
-                                    }
-
-                                    return true;
-                                  },
-                                  onChanged: (val) => dateController = val,
-                                  onSaved: (val) => dateController = val,
-                                );
-                              }),
-                              Builder(builder: (context) {
-                                return TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: Icon(Icons.access_time),
-                                      hintText: '',
-                                      labelText: 'Ora appuntamento',
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Per favore, inserisci l\'ora dell\'appuntamento!';
-                                      }
-                                      return null;
-                                    },
-                                    enableInteractiveSelection: false,
-                                    showCursor: false,
-                                    controller: timeController,
-                                    keyboardType: TextInputType.none,
-                                    onTap: test);
-                              }),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 150.0, top: 40.0),
-                                child: ElevatedButton(
-                                  style: ThemeText.bottoneRosso,
-                                  onPressed: () {
-                                    // Validate returns true if the form is valid, or false otherwise.
-                                    if (_prenotazioneFormKey.currentState!
-                                        .validate()) {
-                                      inizializza(
-                                          dateController, timeController.text);
-
-                                      Navigator.pop(context);
-
-                                      // If the form is valid, display a snackbar. In the real world,
-                                      // you'd often call a server or save the information in a database.
-                                      //createRecord(utente);
-                                    }
-                                  },
-                                  child: const Text('Inizializza prenotazione'),
-                                ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //TODO: QUA INIZIA IL SECONDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+          if (utente.tipo == TipoUtente.OperatoreCup &&
+              prenotazione.getDataPrenotazione == null)
+            Container(
+              decoration: ThemeText.boxDettaglio,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: InputDecorator(
+                decoration: const InputDecoration(
+                  labelText: 'Lato Operatore CUP',
+                  labelStyle: ThemeText.titoloDettaglio,
+                  border: InputBorder.none,
+                ),
+                child: Form(
+                    key: _prenotazioneFormKey,
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Builder(builder: (context) {
+                          DateTime initDate =
+                              DateTime.now().add(const Duration(days: 1));
+                          print(initDate.weekday);
+                          while (initDate.weekday > 5) {
+                            initDate = initDate.add(const Duration(days: 1));
+                          }
+                          print(initDate.weekday);
+                          return DateTimePicker(
+                            type: DateTimePickerType.date,
+                            dateMask: 'd MMM, yyyy',
+                            initialValue: initDate.toString(),
+                            firstDate:
+                                DateTime.now().add(const Duration(days: 1)),
+                            lastDate: DateTime(2100),
+                            icon: const Icon(Icons.event,
+                                color: Color.fromRGBO(219, 29, 69, 1)),
+                            dateLabelText: 'Date',
+                            locale: const Locale('it', 'IT'),
+                            selectableDayPredicate: (date) {
+                              if (date.weekday == 6 || date.weekday == 7) {
+                                return false;
+                              }
+                              return true;
+                            },
+                            onChanged: (val) => dateController = val,
+                            onSaved: (val) => dateController = val,
+                          );
+                        }),
+                        Builder(builder: (context) {
+                          return TextFormField(
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.access_time,
+                                    color: Color.fromRGBO(219, 29, 69, 1)),
+                                hintText: '',
+                                labelText: 'Ora appuntamento',
                               ),
-                            ],
-                          )))
-                    else if (prenotazione.getDataPrenotazione != null)
-                      Text(
-                          "Data appuntamento: ${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}")
-                  ],
-                )
-              ]))
-        ]));
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Per favore, inserisci l\'ora dell\'appuntamento!';
+                                }
+                                return null;
+                              },
+                              enableInteractiveSelection: false,
+                              showCursor: false,
+                              controller: timeController,
+                              keyboardType: TextInputType.none,
+                              onTap: test);
+                        }),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: ThemeText.bottoneRosso,
+                                onPressed: () {
+                                  if (_prenotazioneFormKey.currentState!
+                                      .validate()) {
+                                    inizializza(
+                                        dateController, timeController.text);
+
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: const Text('Inizializza prenotazione'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ))),
+              ),
+            )
+          else if (prenotazione.getDataPrenotazione != null)
+            Container(
+              decoration: ThemeText.boxDettaglio,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: InputDecorator(
+                decoration: const InputDecoration(
+                  labelText: "Orario e data della visita",
+                  labelStyle: ThemeText.titoloDettaglio,
+                  border: InputBorder.none,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Data appuntamento: ${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}",
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+        ])));
   }
 
   void inizializza(String date, time) {

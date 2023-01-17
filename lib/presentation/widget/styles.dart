@@ -130,6 +130,18 @@ abstract class ThemeText {
       )
     ],
   );
+  static BoxDecoration boxVisualizza = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(20),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.2),
+        blurRadius: 8.0,
+        spreadRadius: 1.0,
+        offset: const Offset(0, 3),
+      )
+    ],
+  );
   static BoxDecoration boxRossoDettaglio = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
