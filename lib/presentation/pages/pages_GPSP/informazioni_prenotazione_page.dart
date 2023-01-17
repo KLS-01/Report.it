@@ -195,7 +195,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
               ),
             ),
           ),
-          //TODO: QUA INIZIA IL SECONDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+          //TODO: -------------------------------------QUA INIZIA IL SECONDO----------------------------------------------------
           if (utente.tipo == TipoUtente.OperatoreCup &&
               prenotazione.getDataPrenotazione == null)
             Container(
@@ -253,7 +253,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Per favore, inserisci l\'ora dell\'appuntamento!';
+                                  return "Per favore, inserisci l'ora dell'appuntamento!";
                                 }
                                 return null;
                               },
@@ -263,6 +263,14 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                               keyboardType: TextInputType.none,
                               onTap: test);
                         }),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.psychology_outlined,
+                                color: Color.fromRGBO(219, 29, 69, 1)),
+                            hintText: '',
+                            labelText: 'Nome psicologo',
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -305,11 +313,27 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                     children: [
                       Row(
                         children: [
-                          Expanded(
-                            child: Text(
-                              "Data appuntamento: ${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}",
-                              overflow: TextOverflow.fade,
-                            ),
+                          Text(
+                            "Nome psicologo: ",
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Sta Lin",
+                            overflow: TextOverflow.fade,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Data appuntamento: ",
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}",
+                            overflow: TextOverflow.fade,
                           ),
                         ],
                       ),
