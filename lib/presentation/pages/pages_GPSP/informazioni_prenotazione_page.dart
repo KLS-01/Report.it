@@ -7,7 +7,7 @@ import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/widget/styles.dart';
-
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:time_picker_widget/time_picker_widget.dart';
 
@@ -38,6 +38,8 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
   final TextEditingController timeController =
       TextEditingController(text: "08:00");
 
+  final TextEditingController psicologoController = TextEditingController();
+  var formatter = DateFormat('dd-MM-yyyy HH:mm');
   _InformazioniPrenotazione({
     required this.prenotazione,
     required this.utente,
@@ -264,13 +266,19 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                               onTap: test);
                         }),
                         TextFormField(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.psychology_outlined,
-                                color: Color.fromRGBO(219, 29, 69, 1)),
-                            hintText: '',
-                            labelText: 'Nome psicologo',
-                          ),
-                        ),
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.psychology_outlined,
+                                  color: Color.fromRGBO(219, 29, 69, 1)),
+                              hintText: '',
+                              labelText: 'Nome psicologo',
+                            ),
+                            controller: psicologoController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Per favore, inserisci l'ora dell'appuntamento!";
+                              }
+                              return null;
+                            }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -313,26 +321,29 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                     children: [
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Nome psicologo: ",
                             overflow: TextOverflow.fade,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "Sta Lin",
+                            "${prenotazione.getPsicologo}",
                             overflow: TextOverflow.fade,
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Data appuntamento: ",
                             overflow: TextOverflow.fade,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "${DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString())}",
+                            formatter.format(DateTime.parse(prenotazione
+                                .getDataPrenotazione
+                                .toDate()
+                                .toString())),
                             overflow: TextOverflow.fade,
                           ),
                         ],
@@ -349,7 +360,8 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
     var parsedDate = DateTime.parse("$date $time");
     Timestamp ts = Timestamp.fromDate(parsedDate);
     PrenotazioneController control = PrenotazioneController();
-    control.inizializzaPrenotazione(prenotazione.getId, utente, ts);
+    control.inizializzaPrenotazione(
+        prenotazione.getId, utente, ts, psicologoController.text);
   }
 
   void test() async {

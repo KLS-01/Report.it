@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Prenotazione {
-  String? id, idUtente, idOperatore, nomeASL, impegnativa;
+  String? id, idUtente, idOperatore, nomeASL, impegnativa, psicologo;
 
   String cap,
       provincia,
@@ -31,7 +31,8 @@ class Prenotazione {
       required this.provincia,
       required this.coordASL,
       required this.dataPrenotazione,
-      required this.descrizione});
+      required this.descrizione,
+      required this.psicologo});
 
   get getId => id;
   set setId(id) => this.id = id;
@@ -83,6 +84,9 @@ class Prenotazione {
   get getDescrizione => descrizione;
   set setDescrizione(descrizione) => this.descrizione = descrizione;
 
+  get getPsicologo => psicologo;
+  set setPsicologo(psicologo) => this.psicologo = psicologo;
+
   factory Prenotazione.fromJson(Map<String, dynamic> json) {
     return Prenotazione(
         id: json["ID"],
@@ -100,6 +104,7 @@ class Prenotazione {
         provincia: json["Provincia"],
         coordASL: json["CoordASL"],
         dataPrenotazione: json["DataPrenotazione"],
+        psicologo: json["Psicologo"],
         descrizione: json["Descrizione"]);
   }
 
@@ -120,6 +125,7 @@ class Prenotazione {
         provincia: map["Provincia"],
         coordASL: map["CoordASL"],
         dataPrenotazione: map["DataPrenotazione"],
+        psicologo: map["Psicologo"],
         descrizione: map["Descrizione"]);
   }
 
@@ -140,7 +146,8 @@ class Prenotazione {
       "Provincia": provincia,
       "CoordASL": coordASL,
       "DataPrenotazione": dataPrenotazione,
-      "Descrizione": descrizione
+      "Descrizione": descrizione,
+      "Psicologo": psicologo
     };
   }
 

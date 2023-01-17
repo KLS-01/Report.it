@@ -14,18 +14,19 @@ class PrenotazioneController {
   PrenotazioneDao prenotazioneDao = PrenotazioneDao();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<String?> addPrenotazioneControl(
-      {required utente,
-      required nome,
-      required cognome,
-      required numeroTelefono,
-      required indirizzo,
-      required email,
-      required cf,
-      required cap,
-      required provincia,
-      required impegnativa,
-      required descrizione}) async {
+  Future<String?> addPrenotazioneControl({
+    required utente,
+    required nome,
+    required cognome,
+    required numeroTelefono,
+    required indirizzo,
+    required email,
+    required cf,
+    required cap,
+    required provincia,
+    required impegnativa,
+    required descrizione,
+  }) async {
     if (utente == null) {
       print("Non loggato");
     } else {
@@ -48,6 +49,7 @@ class PrenotazioneController {
         nomeASL: null,
         dataPrenotazione: null,
         impegnativa: null,
+        psicologo: null,
         descrizione: descrizione);
 
     String? result;
@@ -134,7 +136,7 @@ class PrenotazioneController {
   }
 
   Future<bool> inizializzaPrenotazione(String idPrenotazione,
-      SuperUtente utente, Timestamp dataPrenotazione) async {
+      SuperUtente utente, Timestamp dataPrenotazione, String psicologo) async {
     if (utente.tipo != TipoUtente.OperatoreCup) {
       return false;
     } else {
@@ -152,7 +154,8 @@ class PrenotazioneController {
               idOperatore: op.getId,
               coordASL: op.getCoordAsl,
               dataPrenotazione: dataPrenotazione,
-              nomeASL: op.getAsl);
+              nomeASL: op.getAsl,
+              psicologo: psicologo);
           return true;
         }
       }

@@ -37,13 +37,13 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
       return const Center(child: Text('Errore'));
     }
     if (snapshot!.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Center(
-              child: Text(
-            'Nessuna prenotazione trovata',
-          )),
+      return const CustomScrollView(
+        slivers: <Widget>[
+          SliverFillRemaining(
+            child: Center(
+              child: Text("Nessuna prenotazione trovata"),
+            ),
+          ),
         ],
       );
     } else {

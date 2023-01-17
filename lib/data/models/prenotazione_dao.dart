@@ -137,7 +137,8 @@ class PrenotazioneDao {
       required String idOperatore,
       required GeoPoint coordASL,
       required Timestamp dataPrenotazione,
-      required String nomeASL}) {
+      required String nomeASL,
+      required String psicologo}) {
     var ref = db.collection(DOCUMENT_NAME).doc(idPrenotazione);
 
     ref.update({
@@ -145,6 +146,7 @@ class PrenotazioneDao {
       "IDOperatore": idOperatore,
       "DataPrenotazione": dataPrenotazione,
       "NomeASL": nomeASL,
+      "Psicologo": psicologo
     });
   }
 
