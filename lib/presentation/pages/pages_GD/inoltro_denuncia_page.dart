@@ -1,17 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 import '../../../domain/entity/entity_GA/super_utente.dart';
 import '../../widget/styles.dart';
 
 class InoltroDenuncia extends StatefulWidget {
+  final SuperUtente utente;
+  InoltroDenuncia({required this.utente});
+
   @override
-  _InoltroDenuncia createState() => _InoltroDenuncia();
+  _InoltroDenuncia createState() => _InoltroDenuncia(utente: utente);
 }
 
 class _InoltroDenuncia extends State<InoltroDenuncia> {
+  _InoltroDenuncia({required this.utente});
+  final SuperUtente utente;
+
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
   final TextEditingController nameController =
@@ -35,6 +44,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       TextEditingController(text: 'Biscotto');
   final TextEditingController cognomeVittimaController =
       TextEditingController(text: 'Frugieri');
+  final TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -48,6 +58,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   String? discriminazione;
   String? vittima1, vittima2;
   String? consenso1, consenso2;
+  bool consensoController = false;
+  late SPID? spidUtente;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +79,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 setState(() {
                   consenso1 = value.toString();
                   consenso2 = null;
+                  consensoController = true;
                 });
               }),
             ),
@@ -123,7 +136,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         margin: const EdgeInsets.symmetric(vertical: 30),
                         child: ElevatedButton(
                           onPressed: () {
-
+                            addRecord();
+                            Navigator.pop(context);
                           },
                           style: ThemeText.bottoneRosso,
                           child: const Text(
@@ -617,9 +631,10 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 labelText: 'Scrivi qui la vicenda'),
+                            controller: descrizioneController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Per favore, inserisci il nome dell\'oppressore e/o organizzazione';
+                                return 'Per favore, inserisci una descrizione';
                               }
                               return null;
                             },
@@ -673,10 +688,43 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     throw UnimplementedError();
+  }
+
+  addRecord() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Processing Data')),
+    );
+    DenunciaController control = DenunciaController();
+    spidUtente = await control.retrieveSpidByUtente(utente);
+    if (spidUtente != null) {
+      Timestamp convertedDate =
+          Timestamp.fromDate(spidUtente!.getDataScadenzaDocumento);
+
+      var result = control.addDenunciaControl(
+          nomeDenunciante: nameController.text,
+          cognomeDenunciante: surnameController.text,
+          indirizzoDenunciante: indirizzoController.text,
+          capDenunciante: capController.text,
+          provinciaDenunciante: provinciaController.text,
+          cellulareDenunciante: numberController.text,
+          emailDenunciante: emailController.text,
+          tipoDocDenunciante: spidUtente!.tipoDocumento,
+          numeroDocDenunciante: spidUtente!.numeroDocumento,
+          scadenzaDocDenunciante: convertedDate,
+          categoriaDenuncia: CategoriaDenuncia.values.byName(discriminazione!),
+          nomeVittima: nomeVittimaController.text,
+          denunciato: oppressoreController.text,
+          descrizione: descrizioneController.text,
+          cognomeVittima: cognomeVittimaController.text,
+          consenso: consensoController,
+          alreadyFiled: false);
+
+      print(
+          "Operation terminated with success on presentation layer, resultId: ");
+    }
   }
 }

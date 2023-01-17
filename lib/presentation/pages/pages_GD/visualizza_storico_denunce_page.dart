@@ -35,14 +35,15 @@ class _VisualizzaStoricoDenunceUtentePageState
   @override
   Widget build(BuildContext context) {
     SuperUtente? utente = context.watch<SuperUtente?>();
-    if(utente?.tipo!=TipoUtente.OperatoreCup){
+    if (utente?.tipo != TipoUtente.OperatoreCup) {
       Stream<QuerySnapshot<Map<String, dynamic>>> denunceDaAccettare;
       Stream<QuerySnapshot<Map<String, dynamic>>> denunce =
-      DenunciaController().generaStreamDenunciaByUtente(utente!);
+          DenunciaController().generaStreamDenunciaByUtente(utente!);
 
       if (utente.tipo == TipoUtente.UffPolGiud) {
         denunceDaAccettare = DenunciaController()
-            .generaStreamDenunciaByStatoAndCap(StatoDenuncia.NonInCarico, utente);
+            .generaStreamDenunciaByStatoAndCap(
+                StatoDenuncia.NonInCarico, utente);
       } else {
         denunceDaAccettare = const Stream.empty();
       }
@@ -104,12 +105,13 @@ class _VisualizzaStoricoDenunceUtentePageState
                         case ConnectionState.none:
                           return const Text("Nessuna Denuncia.");
                         case ConnectionState.waiting:
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         case ConnectionState.active:
                           {
                             List<Denuncia>? listaDenunce = snapshot.data?.docs
-                                .map(
-                                    (e) => DenunciaController().jsonToDenuncia(e))
+                                .map((e) =>
+                                    DenunciaController().jsonToDenuncia(e))
                                 .toList();
                             if (listaDenunce == null) {
                               return const Text("Non ci sono denunce.");
@@ -126,8 +128,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                                           return VisualizzaDenunceWidget(
                                               denunce: listaDenunce
                                                   .where((event) =>
-                                              event.statoDenuncia ==
-                                                  StatoDenuncia.NonInCarico)
+                                                      event.statoDenuncia ==
+                                                      StatoDenuncia.NonInCarico)
                                                   .toList());
                                         } else {
                                           //generazione della lista di denunce da attettare nel caso si un uff
@@ -138,37 +140,40 @@ class _VisualizzaStoricoDenunceUtentePageState
                                                   return const Text(
                                                       "Errore nello snapshot.");
                                                 } else {
-                                                  switch (
-                                                  snapshot.connectionState) {
+                                                  switch (snapshot
+                                                      .connectionState) {
                                                     case ConnectionState.none:
                                                       return const Text(
                                                           "Nessuna Denuncia.");
-                                                    case ConnectionState.waiting:
+                                                    case ConnectionState
+                                                        .waiting:
                                                       return const Center(
                                                           child:
-                                                          CircularProgressIndicator());
+                                                              CircularProgressIndicator());
                                                     case ConnectionState.active:
                                                       List<Denuncia>?
-                                                      listaDenunce = snapshot
-                                                          .data?.docs
-                                                          .map((e) =>
-                                                          DenunciaController()
-                                                              .jsonToDenuncia(
-                                                              e))
-                                                          .toList();
+                                                          listaDenunce =
+                                                          snapshot.data?.docs
+                                                              .map((e) =>
+                                                                  DenunciaController()
+                                                                      .jsonToDenuncia(
+                                                                          e))
+                                                              .toList();
                                                       return VisualizzaDenunceWidget(
-                                                          denunce: listaDenunce!);
+                                                          denunce:
+                                                              listaDenunce!);
                                                     case ConnectionState.done:
                                                       List<Denuncia>?
-                                                      listaDenunce = snapshot
-                                                          .data?.docs
-                                                          .map((e) =>
-                                                          DenunciaController()
-                                                              .jsonToDenuncia(
-                                                              e))
-                                                          .toList();
+                                                          listaDenunce =
+                                                          snapshot.data?.docs
+                                                              .map((e) =>
+                                                                  DenunciaController()
+                                                                      .jsonToDenuncia(
+                                                                          e))
+                                                              .toList();
                                                       return VisualizzaDenunceWidget(
-                                                          denunce: listaDenunce!);
+                                                          denunce:
+                                                              listaDenunce!);
                                                   }
                                                 }
                                               });
@@ -183,8 +188,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                                     child: VisualizzaDenunceWidget(
                                         denunce: listaDenunce
                                             .where((event) =>
-                                        event.statoDenuncia ==
-                                            StatoDenuncia.PresaInCarico)
+                                                event.statoDenuncia ==
+                                                StatoDenuncia.PresaInCarico)
                                             .toList()),
                                   ),
                                   //3rd tab
@@ -194,8 +199,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                                     child: VisualizzaDenunceWidget(
                                         denunce: listaDenunce
                                             .where((event) =>
-                                        event.statoDenuncia ==
-                                            StatoDenuncia.Chiusa)
+                                                event.statoDenuncia ==
+                                                StatoDenuncia.Chiusa)
                                             .toList()),
                                   )
                                 ],
@@ -219,15 +224,15 @@ class _VisualizzaStoricoDenunceUtentePageState
                                         return VisualizzaDenunceWidget(
                                             denunce: listaDenunce
                                                 .where((event) =>
-                                            event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
+                                                    event.statoDenuncia ==
+                                                    StatoDenuncia.NonInCarico)
                                                 .toList());
                                       } else {
                                         return VisualizzaDenunceWidget(
                                             denunce: listaDenunce
                                                 .where((event) =>
-                                            event.statoDenuncia ==
-                                                StatoDenuncia.NonInCarico)
+                                                    event.statoDenuncia ==
+                                                    StatoDenuncia.NonInCarico)
                                                 .toList());
                                       }
                                     },
@@ -236,15 +241,15 @@ class _VisualizzaStoricoDenunceUtentePageState
                                   VisualizzaDenunceWidget(
                                       denunce: listaDenunce
                                           .where((event) =>
-                                      event.statoDenuncia ==
-                                          StatoDenuncia.PresaInCarico)
+                                              event.statoDenuncia ==
+                                              StatoDenuncia.PresaInCarico)
                                           .toList()),
                                   //3rd tab
                                   VisualizzaDenunceWidget(
                                       denunce: listaDenunce
                                           .where((event) =>
-                                      event.statoDenuncia ==
-                                          StatoDenuncia.Chiusa)
+                                              event.statoDenuncia ==
+                                              StatoDenuncia.Chiusa)
                                           .toList())
                                 ],
                               );
@@ -262,7 +267,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => InoltroDenuncia(),
+                          builder: (context) =>
+                              InoltroDenuncia(utente: utente!),
                         ),
                       );
                     },
@@ -280,8 +286,7 @@ class _VisualizzaStoricoDenunceUtentePageState
           ),
         ),
       );
-    }
-    else{
+    } else {
       return Container();
     }
   }

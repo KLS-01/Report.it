@@ -7,19 +7,19 @@ class Mappa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FloatingActionButton(
-            heroTag: null,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => InoltroDenuncia(),
-                ),
-              );
-            }),
-      ),
-      backgroundColor: Theme.of(context).backgroundColor,
-    );
+//       body: Center(
+//         child: FloatingActionButton(
+//             heroTag: null,
+//             onPressed: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => InoltroDenuncia(),
+//                 ),
+//               );
+//             }),
+//       ),
+//       backgroundColor: Theme.of(context).backgroundColor,
+        );
   }
 }
