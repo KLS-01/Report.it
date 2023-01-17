@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 import '../../../domain/entity/entity_GA/super_utente.dart';
 import '../../widget/styles.dart';
@@ -122,7 +123,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                         margin: const EdgeInsets.symmetric(vertical: 30),
                         child: ElevatedButton(
                           onPressed: () {
-                            // inserire funzione
+
                           },
                           style: ThemeText.bottoneRosso,
                           child: const Text(
@@ -671,6 +672,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   cancel() {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
+
 
   @override
   State<StatefulWidget> createState() {
