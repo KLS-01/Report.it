@@ -28,7 +28,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       TextEditingController();
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]+$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -328,8 +328,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           },
                         ),
                         TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Sigla provincia'),
+                          decoration: const InputDecoration(
+                              labelText: 'Sigla provincia'),
                           controller: provinciaController,
                           validator: (value) {
                             if (value!.isEmpty) {
