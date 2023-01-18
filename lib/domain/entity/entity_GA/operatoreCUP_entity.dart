@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
+
 class OperatoreCUP extends SuperUtente {
   String password;
   String email;
@@ -13,6 +14,7 @@ class OperatoreCUP extends SuperUtente {
   String provinciaASL;
   String nome;
   String cognome;
+
 
   get getId => this.id;
   set setId(id) => this.id = id;
