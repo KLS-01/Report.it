@@ -138,4 +138,8 @@ class ForumService {
 
     return c;
   }
+
+  Future<List<Commento?>> retrieveCommenti(String id) async {
+    return await ForumDao.RetrieveAllCommenti(id);
+  }
 }

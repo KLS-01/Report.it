@@ -10,12 +10,11 @@ class CardImaggine extends StatelessWidget {
   Widget build(BuildContext context) {
     return (immagine != null && immagine != "")
         ? Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(immagine),
-              ),
+            child: FadeInImage.assetNetwork(
+              placeholderScale: 1.5,
+              placeholder: "assets/images/MnyxU.gif",
+              image: immagine,
             ),
-            child: Image.network(immagine),
           )
         : Column();
   }

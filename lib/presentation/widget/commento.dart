@@ -24,7 +24,7 @@ class _CommentiState extends State<Commenti> {
 
   @override
   Widget build(BuildContext context) {
-    var lista = widget.discussione.commenti;
+    var lista = List.empty(growable: true);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -49,10 +49,6 @@ class _CommentiState extends State<Commenti> {
                     padding: const EdgeInsets.fromLTRB(0, 0, 9, 0),
                     child: Icon(Icons.comment, color: Colors.blue.shade500),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(lista.length.toString()),
-                  ),
                   const Text("Commenta"),
                 ],
               ),
@@ -72,50 +68,66 @@ class _CommentiState extends State<Commenti> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: lista.isNotEmpty ? 150 : 20,
-                        child: ListView.builder(
-                          itemCount: lista.length,
-                          itemBuilder: ((context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.height * 0.01,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade400,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.account_circle,
-                                          size: 20,
+                        height: 150,
+                        child: FutureBuilder(
+                            future: ForumService()
+                                .retrieveCommenti(widget.discussione.id!),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (!snapshot.hasData) {
+                                return Container();
+                              } else {
+                                lista.addAll(snapshot.data);
+                                return ListView.builder(
+                                  itemCount: lista.length,
+                                  itemBuilder: ((context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        padding: EdgeInsets.all(
+                                          MediaQuery.of(context).size.height *
+                                              0.01,
                                         ),
-                                        const SizedBox(
-                                          width: 5,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade400,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20)),
                                         ),
-                                        Text(
-                                          "${lista[index]!.nome!} ${lista[index]!.cognome!}",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.account_circle,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  "${lista[index]!.nome!} ${lista[index]!.cognome!}",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                            Align(
+                                                alignment: Alignment.centerLeft,
+                                                child:
+                                                    Text(lista[index]!.testo)),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(lista[index]!.testo)),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-                        ),
+                                      ),
+                                    );
+                                  }),
+                                );
+                              }
+                            }),
                       ),
                       widget.discussione.stato == "Aperta"
                           ? Form(

@@ -17,6 +17,11 @@ class _ForumHomeState extends State<ForumHome> {
     setState(() {});
   }
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +80,15 @@ class _ForumHomeState extends State<ForumHome> {
       ),
     );
   }
+
+  Future<void> _pullRefresh() async {
+    ForumService().AggiornaLista();
+    setState(() {});
+  }
 }
+
+
+
 
 // class crealista extends StatefulWidget {
 //   const crealista({super.key, required this.list, required this.Callback});

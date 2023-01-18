@@ -12,6 +12,7 @@ FirebaseFirestore database = FirebaseFirestore.instance;
 
 class ForumDao {
   static Future<List<Discussione?>> RetrieveAllForum() async {
+    int secondi = DateTime.now().millisecondsSinceEpoch;
     var ref = database.collection("Discussione");
 
     List<Discussione> lista = List.empty(growable: true);
@@ -31,7 +32,7 @@ class ForumDao {
               .then((value) => ut.setpathImmagine(value));
         }
 
-        ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
+        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
 
         if (ut.tipoUtente == "Utente") {
           Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
@@ -51,6 +52,10 @@ class ForumDao {
 
       return lista;
     });
+
+    int secondiNow = DateTime.now().millisecondsSinceEpoch;
+
+    print(secondiNow - secondi);
 
     return u;
   }
@@ -110,7 +115,7 @@ class ForumDao {
               .then((value) => ut.setpathImmagine(value));
         }
 
-        ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
+        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
 
         if (ut.tipoUtente == "Utente") {
           Utente? utw = await RetrieveUtenteByID(ut.idCreatore);

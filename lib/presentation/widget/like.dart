@@ -8,13 +8,9 @@ class like extends StatefulWidget {
     super.key,
     required this.discussione,
     required this.callback,
-    required this.flag,
-    required this.numero,
   });
   Discussione discussione;
   Function callback;
-  bool flag;
-  int numero;
 
   @override
   State<like> createState() => _likeState();
@@ -25,17 +21,17 @@ class _likeState extends State<like> {
 
   @override
   Widget build(BuildContext context) {
+    var numero = widget.discussione.listaSostegno;
     return Row(
       children: [
-        Text(widget.numero.toString()),
+        Text(numero.length.toString()),
         Material(
           color: Colors.transparent,
-          child: !widget.flag
+          child: !numero.contains(utente!.uid)
               ? InkWell(
                   onTap: () {
                     setState(() {
-                      widget.flag = !widget.flag;
-                      widget.numero += 1;
+                      numero.add(utente!.uid);
                     });
                     ForumService().sostieniDiscusione(
                       widget.discussione.id!,
@@ -55,8 +51,7 @@ class _likeState extends State<like> {
                       utente!.uid,
                     );
                     setState(() {
-                      widget.flag = !widget.flag;
-                      widget.numero -= 1;
+                      numero.remove(utente!.uid);
                     });
                   },
                   child: const Icon(
