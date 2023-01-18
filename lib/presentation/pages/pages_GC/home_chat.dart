@@ -56,12 +56,8 @@ class _crealistaState extends State<crealista> {
                           child: Column(
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  ImageIcon(
-                                    AssetImage("assets/images/chatbot.png"),
-                                    color: ThemeText.theme.primaryColor,
-                                  ),
-                                  SizedBox(width: 5),
                                   Material(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -100,10 +96,19 @@ class _crealistaState extends State<crealista> {
                                         child: Text(
                                           snapshot.data![index]!.domanda,
                                           textAlign: TextAlign.center,
-                                          style: ThemeText.corpoInoltro,
+                                          style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              fontSize: 16,
+                                              color: Colors.white),
                                         ),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  ImageIcon(
+                                    AssetImage("assets/images/chatbot.png"),
+                                    color: Color.fromRGBO(219, 29, 69, 1),
+                                    size: 30,
                                   ),
                                 ],
                               ),
@@ -116,12 +121,18 @@ class _crealistaState extends State<crealista> {
                   risposta == null
                       ? Container()
                       : Align(
-                          alignment: Alignment.bottomRight,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
+                                  Icon(
+                                    Icons.computer,
+                                    size: 30,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Material(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -151,12 +162,6 @@ class _crealistaState extends State<crealista> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Icon(
-                                    Icons.computer,
                                   ),
                                 ],
                               ),
