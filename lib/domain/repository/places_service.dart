@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class PlacesService {
-  final key = 'AIzaSyCz1L_f-suII8W3eDL8u4ge1cH7xR_yC08';
+  final key = '#{MAPS_API_KEY}#';
 
   Future<List<Place>>? getPlaces(
       double lat, double lng, List<BitmapDescriptor?> iconList) async {
