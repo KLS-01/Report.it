@@ -62,6 +62,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   time_picker_widget: ^1.0.0+10
+  fluttertoast: ^8.0.8
+
 
    
 

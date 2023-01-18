@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import '../../widget/styles.dart';
@@ -128,6 +129,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                           if (_formKey.currentState!.validate()) {
                             createRecord(utente);
                             Navigator.pop(context);
+                            Fluttertoast.showToast(
+                                msg: "Inoltro avvenuto correttamente!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: Colors.grey.shade200,
+                                textColor: Colors.black,
+                                fontSize: 15.0);
                           }
                         },
                         style: ThemeText.bottoneRosso,

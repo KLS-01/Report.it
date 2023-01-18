@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -334,6 +335,16 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                                               timeController.text);
 
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Inoltro avvenuto correttamente!",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 2,
+                                              backgroundColor:
+                                                  Colors.grey.shade200,
+                                              textColor: Colors.black,
+                                              fontSize: 15.0);
                                         }
                                       },
                                       child: const Text(
