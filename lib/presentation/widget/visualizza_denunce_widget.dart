@@ -15,14 +15,16 @@ class VisualizzaDenunceWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<VisualizzaDenunceWidget> createState() => _VisualizzaDenunceWidgetState(
-        denunce: denunce,
-      );
+
+  State<VisualizzaDenunceWidget> createState() =>
+      _VisualizzaDenunceWidgetState(denunce: denunce);
+
 }
 
 class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
   _VisualizzaDenunceWidgetState({required this.denunce});
   List<Denuncia> denunce;
+
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
       GlobalKey<RefreshIndicatorState>();
@@ -36,6 +38,7 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
           child: Consumer<SuperUtente?>(
             builder: (context, utente, _) {
               if (utente == null) {
+
                 return const Text("Non sei loggato");
               } else {
                 if (utente.tipo == TipoUtente.OperatoreCup) {

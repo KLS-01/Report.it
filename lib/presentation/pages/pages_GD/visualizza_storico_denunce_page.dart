@@ -21,6 +21,7 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
+    
   Future<void> _pullRefresh() async {
     setState(() {});
   }

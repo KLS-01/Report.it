@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+class Palette {
+  static const MaterialColor coloriPalette = MaterialColor(
+    0xFFDB1D45, // 0%
+    <int, Color>{
+      50: Color(0xFFDB1D45), //10%
+      100: Color(0xFFDB1D45), //20%
+      200: Color(0xFFDB1D45), //30%
+      300: Color(0xFFDB1D45), //40%
+      400: Color(0xFFDB1D45), //50%
+      500: Color(0xFFDB1D45), //60%
+      600: Color(0xFFDB1D45), //70%
+      700: Color(0xFFDB1D45), //80%
+      800: Color(0xFFDB1D45), //90%
+      900: Color(0xFFDB1D45), //100%
+    },
+  );
+} //
+
 
 abstract class ThemeText {
   static ThemeData theme = ThemeData(
     backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
-    primarySwatch: Colors.red,
+    primarySwatch: Palette.coloriPalette,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
@@ -131,12 +149,25 @@ abstract class ThemeText {
       )
     ],
   );
-  static BoxDecoration boxRossoDettaglio = BoxDecoration(
+
+  static BoxDecoration boxVisualizza = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
     boxShadow: [
       BoxShadow(
-        color: Colors.red.shade300,
+        color: Colors.grey.withOpacity(0.2),
+        blurRadius: 8.0,
+        spreadRadius: 1.0,
+        offset: const Offset(0, 3),
+      )
+    ],
+  );
+  static BoxDecoration boxRossoDettaglio = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(20),
+    boxShadow: const [
+      BoxShadow(
+        color: Colors.redAccent,
         blurRadius: 8.0,
         spreadRadius: 1.0,
         offset: Offset(0, 3),

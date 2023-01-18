@@ -15,7 +15,6 @@ class OperatoreCUP extends SuperUtente {
   String nome;
   String cognome;
 
-
   get getId => this.id;
   set setId(id) => this.id = id;
 
@@ -72,8 +71,10 @@ class OperatoreCUP extends SuperUtente {
       map["CittaASL"],
       map["IndirizzoASL"],
       map["ProvinciaASL"],
+
       map["Nome"],
       map["Cognome"],
+
     );
   }
 
@@ -90,6 +91,7 @@ class OperatoreCUP extends SuperUtente {
       "IndirizzoASL": indirizzoASL,
       "Nome": nome,
       "Cognome": cognome,
+
     };
   }
 }

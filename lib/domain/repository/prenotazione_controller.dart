@@ -6,20 +6,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/data/models/prenotazione_dao.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
-import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 class PrenotazioneController {
   PrenotazioneDao prenotazioneDao = PrenotazioneDao();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<String?> addPrenotazioneControl(
-      {required utente,
-      required cap,
-      required provincia,
-      required impegnativa}) async {
+  Future<String?> addPrenotazioneControl({
+    required utente,
+    required nome,
+    required cognome,
+    required numeroTelefono,
+    required indirizzo,
+    required email,
+    required cf,
+    required cap,
+    required provincia,
+    required impegnativa,
+    required descrizione,
+  }) async {
     if (utente == null) {
       print("Non loggato");
     } else {
@@ -29,13 +36,21 @@ class PrenotazioneController {
     Prenotazione prenotazione = Prenotazione(
         id: null,
         idUtente: utente!.id,
+        nomeUtente: nome,
+        cognomeUtente: cognome,
+        numeroUtente: numeroTelefono,
+        emailUtente: email,
+        cfUtente: cf,
+        indirizzoUtente: indirizzo,
         cap: cap,
         provincia: provincia,
         idOperatore: null,
         coordASL: null,
         nomeASL: null,
         dataPrenotazione: null,
-        impegnativa: null);
+        impegnativa: null,
+        psicologo: null,
+        descrizione: descrizione);
 
     String? result;
     PrenotazioneDao.addPrenotazione(prenotazione)
@@ -121,7 +136,7 @@ class PrenotazioneController {
   }
 
   Future<bool> inizializzaPrenotazione(String idPrenotazione,
-      SuperUtente utente, Timestamp dataPrenotazione) async {
+      SuperUtente utente, Timestamp dataPrenotazione, String psicologo) async {
     if (utente.tipo != TipoUtente.OperatoreCup) {
       return false;
     } else {
@@ -139,10 +154,49 @@ class PrenotazioneController {
               idOperatore: op.getId,
               coordASL: op.getCoordAsl,
               dataPrenotazione: dataPrenotazione,
-              nomeASL: op.getAsl);
+              nomeASL: op.getAsl,
+              psicologo: psicologo);
           return true;
         }
       }
     }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamAttive(
+      SuperUtente operatore) {
+    if (operatore.tipo == TipoUtente.OperatoreCup) {
+      print("Flag ${operatore.id}");
+      return prenotazioneDao.retrieveStreamAttive(operatore);
+    } else {
+      throw ("Utente non operatore");
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamAttiveUtente(
+      SuperUtente utente) {
+    return prenotazioneDao.retrieveStreamByUtente(utente.id);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamStoricoOperatore(
+      SuperUtente operatore) {
+    if (operatore.tipo == TipoUtente.OperatoreCup) {
+      return prenotazioneDao.retrieveStreamByOperatore(operatore.id);
+    } else {
+      throw ("L'utente non è un operatore");
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamStoricoUtente(
+      SuperUtente utente) {
+    return prenotazioneDao.retrieveStreamByUtente(utente.id);
+  }
+
+  Prenotazione prenotazioneFromJson(
+      QueryDocumentSnapshot<Map<String, dynamic>> json) {
+    return Prenotazione.fromJson(json.data());
+  }
+
+  Future<Prenotazione?> retrieveById(String idPrenotazione) async {
+    return await prenotazioneDao.retrieveById(idPrenotazione);
   }
 }

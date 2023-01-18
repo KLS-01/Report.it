@@ -1,18 +1,15 @@
-// ignore_for_file: unused_import
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/pages/pages_GPSP/inoltro_prenotazione_page.dart';
-import 'package:report_it/presentation/widget/widget_info.dart';
-import '../../../domain/entity/entity_GD/denuncia_entity.dart';
-import '../../../../domain/repository/denuncia_controller.dart';
-import '../../widget/theme.dart';
-import '../../widget/visualizza_denunce_widget.dart';
+import 'package:report_it/presentation/widget/prenotazioni_stream_builder.dart';
+import '../../widget/styles.dart';
 
 class VisualizzaPrenotazioni extends StatefulWidget {
   const VisualizzaPrenotazioni({Key? key}) : super(key: key);
@@ -22,79 +19,177 @@ class VisualizzaPrenotazioni extends StatefulWidget {
 }
 
 class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
+  late Future<List<Prenotazione>> prenotazioni;
+  PrenotazioneController controller = PrenotazioneController();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
+      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey3 =
+      GlobalKey<RefreshIndicatorState>();
+
+  OperatoreCUP? op;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sezione Prenotazione Psicologica',
-            style: Theme.of(context).textTheme.headline3),
-        elevation: 0,
-        backgroundColor: Color.fromRGBO(255, 254, 248, 1),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 0,
-            backgroundColor: Theme.of(context).backgroundColor,
-            bottom: const TabBar(
-              labelColor: Color.fromRGBO(219, 29, 69, 1),
-              indicatorColor: Color.fromRGBO(219, 29, 69, 1),
-              tabs: [
-                Tab(
-                  child: Text(
-                    "In attesa",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
-                    textAlign: TextAlign.center,
+    SuperUtente? utente = context.watch<SuperUtente?>();
+    Stream<QuerySnapshot<Map<String, dynamic>>> stream;
+
+    if (utente == null) {
+      return const Text("Errore non sei loggato");
+    } else {
+      if (utente.tipo == TipoUtente.UffPolGiud) {
+        return const Text(
+            "Non hai l'autorizzazione per visualizzare la pagina");
+      }
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Sezione Prenotazione Psicologica',
+              style: ThemeText.titoloSezione),
+          elevation: 0,
+          backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+        ),
+        body: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 0,
+              backgroundColor: Theme.of(context).backgroundColor,
+              bottom: const TabBar(
+                labelColor: Color.fromRGBO(219, 29, 69, 1),
+                indicatorColor: Color.fromRGBO(219, 29, 69, 1),
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "In attesa",
+                      style: ThemeText.titoloTab,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Prese in carico",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
-                    textAlign: TextAlign.center,
+                  Tab(
+                    child: Text(
+                      "Prenotate",
+                      style: ThemeText.titoloTab,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Storico",
-                    style:
-                        TextStyle(fontSize: 15, fontFamily: 'SourceSerifPro'),
-                    textAlign: TextAlign.center,
+                  Tab(
+                    child: Text(
+                      "Storico",
+                      style: ThemeText.titoloTab,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              title: const Text('Tabs Demo'),
             ),
-            title: const Text('Tabs Demo'),
-          ),
-          floatingActionButton: Consumer<SuperUtente?>(
-            builder: (context, utente, _) {
-              if (utente?.tipo == TipoUtente.Utente) {
-                return FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => InoltroPrenotazione(),
-                      ),
-                    );
-                  },
-                  backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-                  child: const Icon(Icons.add),
-                );
-              } else {
-                return Visibility(
-                  visible: false,
-                  child: FloatingActionButton(onPressed: () {}),
-                );
-              }
-            },
+            body: Container(
+              color: Theme.of(context).backgroundColor,
+              child: TabBarView(
+                children: [
+                  RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    onRefresh: _pullRefresh,
+                    child: Column(
+                      children: [
+                        Builder(builder: (context) {
+                          stream = streamGeneratorAttive(utente);
+                          return Expanded(
+                            flex: 1,
+                            child: PrenotazioneStreamWidget(
+                                stream: stream,
+                                utente: utente,
+                                mode: Mode.inAttesa),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                  RefreshIndicator(
+                    key: _refreshIndicatorKey2,
+                    onRefresh: _pullRefresh,
+                    child: Builder(builder: (context) {
+                      stream = streamGeneratorAttive(utente);
+
+                      return PrenotazioneStreamWidget(
+                        stream: stream,
+                        utente: utente,
+                        mode: Mode.inCarico,
+                      );
+                    }),
+                  ),
+                  RefreshIndicator(
+                    key: _refreshIndicatorKey3,
+                    onRefresh: _pullRefresh,
+                    child: Builder(builder: (context) {
+                      stream = streamGeneratorStorico(utente);
+
+                      return PrenotazioneStreamWidget(
+                        stream: stream,
+                        utente: utente,
+                        mode: Mode.storico,
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            floatingActionButton: Consumer<SuperUtente?>(
+              builder: (context, utente, _) {
+                if (utente?.tipo == TipoUtente.Utente) {
+                  return FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              InoltroPrenotazione(utente: utente!),
+                        ),
+                      );
+                    },
+                    backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+                    child: const Icon(Icons.add),
+                  );
+                } else {
+                  return Visibility(
+                    visible: false,
+                    child: FloatingActionButton(onPressed: () {}),
+                  );
+                }
+              },
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamGeneratorAttive(
+      SuperUtente utente) {
+    if (utente.tipo == TipoUtente.Utente) {
+      return controller.generaStreamAttiveUtente(utente);
+    } else if (utente.tipo == TipoUtente.OperatoreCup) {
+      return controller.generaStreamAttive(utente);
+    } else {
+      return const Stream.empty();
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamGeneratorStorico(
+      SuperUtente utente) {
+    if (utente.tipo == TipoUtente.Utente) {
+      return controller.generaStreamStoricoUtente(utente);
+    } else if (utente.tipo == TipoUtente.OperatoreCup) {
+      return controller.generaStreamStoricoOperatore(utente);
+    } else {
+      throw (NullThrownError());
+    }
+  }
+
+  Future<void> _pullRefresh() async {
+    print("DFDF");
+    setState(() {});
   }
 }

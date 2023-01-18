@@ -1,5 +1,3 @@
-
-
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
 class SuperUtente {
@@ -14,3 +12,4 @@ class SuperUtente {
       {this.cap, this.provincia, this.indirizzo, this.citta});
 
 }
+

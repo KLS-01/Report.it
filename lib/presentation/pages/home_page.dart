@@ -4,10 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-
-import '../../domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
-
 import 'package:report_it/presentation/widget/tab_navigator.dart';
 
 class HomePage extends StatefulWidget {
@@ -131,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                 centerTitle: true,
                 leading: Image.asset('assets/images/C11_Logo-noscritta.png',
                     fit: BoxFit.cover),
+                title: Text('', style: TextStyle(color: Colors.black)),
                 elevation: 0,
                 backgroundColor: Color.fromRGBO(255, 254, 248, 1),
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
