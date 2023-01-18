@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:report_it/domain/entity/discussione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/utente_entity.dart';
-import 'package:report_it/domain/repository/forum_service.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/repository/forum_controller.dart';
 import 'package:report_it/presentation/widget/theme.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:file_picker/file_picker.dart';

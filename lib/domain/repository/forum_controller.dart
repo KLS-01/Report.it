@@ -3,10 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:report_it/data/Models/forum_dao.dart';
-import 'package:report_it/domain/entity/discussione_entity.dart';
-import 'package:report_it/domain/entity/super_utente.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/repository/authentication_service.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 
 class ForumService {
   static Future<List<Discussione?>>? _discussioni_all;

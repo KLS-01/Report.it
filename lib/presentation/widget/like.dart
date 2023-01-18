@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/domain/entity/discussione_entity.dart';
-import 'package:report_it/domain/repository/forum_service.dart';
+import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
+import 'package:report_it/domain/repository/forum_controller.dart';
 
 class like extends StatefulWidget {
   like({

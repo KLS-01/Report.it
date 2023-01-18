@@ -6,8 +6,13 @@ class OperatoreCUP extends SuperUtente {
   String password;
   String email;
   String asl;
-  String provincia;
   GeoPoint coordASL;
+  String capASL;
+  String cittaASL;
+  String indirizzoASL;
+  String provinciaASL;
+  String nome;
+  String cognome;
 
   get getId => this.id;
   set setId(id) => this.id = id;
@@ -24,21 +29,50 @@ class OperatoreCUP extends SuperUtente {
   get getCoordAsl => this.coordASL;
   set setCoordAsl(coordASL) => this.coordASL = coordASL;
 
-  get getProvincia => this.provincia;
-  set setProvincia(provincia) => this.provincia = provincia;
-
   OperatoreCUP(
-      id, this.password, this.email, this.asl, this.coordASL, this.provincia)
-      : super(id, TipoUtente.values.byName("OperatoreCup"));
+    id,
+    this.password,
+    this.email,
+    this.asl,
+    this.coordASL,
+    this.capASL,
+    this.cittaASL,
+    this.indirizzoASL,
+    this.provinciaASL,
+    this.nome,
+    this.cognome,
+  ) : super(id, TipoUtente.values.byName("OperatoreCup"));
 
   factory OperatoreCUP.fromJson(Map<String, dynamic> json) {
-    return OperatoreCUP(json["ID"], json["Password"], json["Email"],
-        json["ASL"], json["CoordASL"], json["Provincia"]);
+    return OperatoreCUP(
+      json["ID"],
+      json["Password"],
+      json["Email"],
+      json["ASL"],
+      json["CoordASL"],
+      json["CapASL"],
+      json["CittaASL"],
+      json["IndirizzoASL"],
+      json["ProvinciaASL"],
+      json["Nome"],
+      json["Cognome"],
+    );
   }
 
   factory OperatoreCUP.fromMap(map) {
-    return OperatoreCUP(map["ID"], map["Password"], map["Email"], map["ASL"],
-        map["CoordASL"], map["Provincia"]);
+    return OperatoreCUP(
+      map["ID"],
+      map["Password"],
+      map["Email"],
+      map["ASL"],
+      map["CoordASL"],
+      map["CapASL"],
+      map["CittaASL"],
+      map["IndirizzoASL"],
+      map["ProvinciaASL"],
+      map["Nome"],
+      map["Cognome"],
+    );
   }
 
   Map<String?, dynamic> toMap() {
@@ -48,7 +82,12 @@ class OperatoreCUP extends SuperUtente {
       "Email": email,
       "ASL": asl,
       "CoordASL": coordASL,
-      "Provincia": provincia
+      "ProvinciaASL": provinciaASL,
+      "CapASL": capASL,
+      "CittaASL": cittaASL,
+      "IndirizzoASL": indirizzoASL,
+      "Nome": nome,
+      "Cognome": cognome,
     };
   }
 }

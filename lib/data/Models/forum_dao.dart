@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:report_it/data/Models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/discussione_entity.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:report_it/domain/entity/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/tipo_utente.dart';
-import 'package:report_it/domain/entity/uffPolGiud_entity.dart';
-import 'package:report_it/domain/entity/utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
