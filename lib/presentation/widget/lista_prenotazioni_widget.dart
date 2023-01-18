@@ -80,7 +80,8 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => InformazioniPrenotazione(
-                                  prenotazione: item, utente: widget.utente),
+                                  idPrenotazione: item.id!,
+                                  utente: widget.utente),
                             ),
                           );
                         },

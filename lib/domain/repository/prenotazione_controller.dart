@@ -195,4 +195,8 @@ class PrenotazioneController {
       QueryDocumentSnapshot<Map<String, dynamic>> json) {
     return Prenotazione.fromJson(json.data());
   }
+
+  Future<Prenotazione?> retrieveById(String idPrenotazione) async {
+    return await prenotazioneDao.retrieveById(idPrenotazione);
+  }
 }
