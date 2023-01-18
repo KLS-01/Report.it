@@ -59,6 +59,7 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   tab_container: ^2.0.0
   flutter_launcher_icons: ^0.11.0
+  fluttertoast: ^8.0.8
    
 
 

@@ -374,7 +374,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Tipo di Ufficiale:',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -416,7 +416,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                       ],
                     );
                   } else {
-                    return Text("");
+                    return const Text("");
                   }
                 }
               },

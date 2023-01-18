@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 
 import '../../domain/entity/entity_GA/super_utente.dart';
@@ -62,6 +63,15 @@ class generaTastoCambiaStato extends StatelessWidget {
               onPressed: () {
                 DenunciaController.accettaDenuncia(denuncia, utente);
                 Navigator.pop(context, "Continue");
+
+                Fluttertoast.showToast(
+                    msg: "Denuncia presa in carico correttamente!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 2,
+                    backgroundColor: Colors.grey.shade200,
+                    textColor: Colors.black,
+                    fontSize: 15.0);
               },
               child: const Text("Prendi in carico"),
             ),
@@ -91,6 +101,14 @@ class generaTastoCambiaStato extends StatelessWidget {
               onPressed: () {
                 DenunciaController().chiudiDenuncia(denuncia, utente);
                 Navigator.pop(context, "Continue");
+                Fluttertoast.showToast(
+                    msg: "Denuncia chiusa con successo!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 2,
+                    backgroundColor: Colors.grey.shade200,
+                    textColor: Colors.black,
+                    fontSize: 15.0);
               },
               child: const Text("Sì"),
             ),

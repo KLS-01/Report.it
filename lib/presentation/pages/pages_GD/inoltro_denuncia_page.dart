@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
@@ -138,6 +139,15 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           onPressed: () {
                             addRecord();
                             Navigator.pop(context);
+
+                            Fluttertoast.showToast(
+                                msg: "Inoltro avvenuto correttamente!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: Colors.grey.shade200,
+                                textColor: Colors.black,
+                                fontSize: 15.0);
                           },
                           style: ThemeText.bottoneRosso,
                           child: const Text(
@@ -695,9 +705,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   }
 
   addRecord() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Processing Data')),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text('Inoltro denuncia in corso...')),
+    // );
     DenunciaController control = DenunciaController();
     spidUtente = await control.retrieveSpidByUtente(utente);
     if (spidUtente != null) {
