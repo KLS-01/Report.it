@@ -42,13 +42,11 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                   return const Text("Errore, non hai i permessi");
                 } else {
                   if (denunce.length == 0) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Center(
-                          child: Text(
-                            "Non ci sono denunce in questa sezione",
-                            textAlign: TextAlign.center,
+                    return const CustomScrollView(
+                      slivers: <Widget>[
+                        SliverFillRemaining(
+                          child: Center(
+                            child: Text("Nessuna denuncia trovata"),
                           ),
                         ),
                       ],
