@@ -70,371 +70,350 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                     var json = snapshot.data?.data();
                     Denuncia d =
                         DenunciaController().jsonToDenunciaDettagli(json!);
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          generaStatoDenuncia(d.statoDenuncia),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Dati anagrafici',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Nome: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.nomeDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Cognome: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.cognomeDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Indirizzo: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.indirizzoDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'CAP: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.capDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Provincia: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.provinciaDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Cellulare: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.cellulareDenunciante}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'E-mail: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.emailDenunciante}'),
-                                    ],
-                                  ),
-                                  Consumer<SuperUtente?>(
-                                    builder: (context, utente, _) {
-                                      if (utente?.tipo ==
-                                          TipoUtente.UffPolGiud) {
-                                        return Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Tipo documento del denunciante: ${d.tipoDocDenunciante}',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                    overflow: TextOverflow.fade,
-                                                  ),
-                                                ),
-                                                // Text(
-                                                //     ' ${d.tipoDocDenunciante}'),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Numero documento: ',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                    '${d.numeroDocDenunciante}'),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Scadenza documento: ',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                    '${d.numeroDocDenunciante}'),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      } else {
-                                        return Container();
-                                      }
-                                    },
-                                  )
-                                ],
-                              ),
+                    return Column(
+                      children: [
+                        generaStatoDenuncia(d.statoDenuncia),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Dati anagrafici',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
                             ),
-                          ),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Discriminazione',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    'Natura della discriminazione: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text('${d.descrizione}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Vittima',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Nome: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.nomeVittima}'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Cognome: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text('${d.cognomeVittima}'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Oppressore',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    'Nome oppressore: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text('${d.denunciato}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Vicenda',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Row(
-                                children: const [
-                                  Text(
-                                    'Dettagli della vicenda: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: ThemeText.boxDettaglio,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: 'Consenso',
-                                labelStyle: ThemeText.titoloDettaglio,
-                                border: InputBorder.none,
-                              ),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    'Consenso: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text('${d.alreadyFiled}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Consumer<SuperUtente?>(builder: (context, utente, _) {
-                            if (utente?.tipo == TipoUtente.Utente) {
-                              return Container(
-                                decoration: ThemeText.boxRossoDettaglio,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                child: InputDecorator(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Presa in carico da:',
-                                    labelStyle: ThemeText.titoloDettaglio,
-                                    border: InputBorder.none,
-                                  ),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Ufficiale di Polizia Giudiziaria: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                                '${d.cognomeUff} ${d.nomeUff}'),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Grado: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text('${d.gradoUff}'),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Tipo di Ufficiale:',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text('${d.tipoUff}'),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Caserma di riferimento: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text('${d.nomeCaserma}'),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Indirizzo caserma: VIA, CAP, CITTA\' ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text('${d.coordCaserma}'),
-                                          ],
-                                        ),
-                                      ],
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Nome: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
+                                    Text('${d.nomeDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Cognome: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.cognomeDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Indirizzo: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.indirizzoDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'CAP: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.capDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Provincia: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.provinciaDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Cellulare: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.cellulareDenunciante}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'E-mail: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.emailDenunciante}'),
+                                  ],
+                                ),
+                                Consumer<SuperUtente?>(
+                                  builder: (context, utente, _) {
+                                    if (utente?.tipo == TipoUtente.UffPolGiud) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Tipo documento del denunciante: ${d.tipoDocDenunciante}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  overflow: TextOverflow.fade,
+                                                ),
+                                              ),
+                                              // Text(
+                                              //     ' ${d.tipoDocDenunciante}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Numero documento: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text('${d.numeroDocDenunciante}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Scadenza documento: ',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text('${d.numeroDocDenunciante}'),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Container();
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Categoria discriminazione',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
+                            ),
+                            child: Expanded(
+                              child: Text(d.descrizione,
+                                  overflow: TextOverflow.fade),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Vittima',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Nome: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.nomeVittima}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Cognome: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('${d.cognomeVittima}'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Oppressore',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
+                            ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Nome oppressore: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('${d.denunciato}'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Vicenda',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
+                            ),
+                            child: Expanded(
+                              child: Text(d.descrizione,
+                                  overflow: TextOverflow.fade),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: ThemeText.boxDettaglio,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              labelText: 'Consenso',
+                              labelStyle: ThemeText.titoloDettaglio,
+                              border: InputBorder.none,
+                            ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Consenso: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('${d.alreadyFiled}'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Consumer<SuperUtente?>(builder: (context, utente, _) {
+                          if (utente?.tipo == TipoUtente.Utente) {
+                            return Container(
+                              decoration: ThemeText.boxRossoDettaglio,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: InputDecorator(
+                                decoration: const InputDecoration(
+                                  labelText: 'Presa in carico da:',
+                                  labelStyle: ThemeText.titoloDettaglio,
+                                  border: InputBorder.none,
+                                ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Ufficiale di Polizia Giudiziaria: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.cognomeUff} ${d.nomeUff}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Grado: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.gradoUff}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Tipo di Ufficiale:',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.tipoUff}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Caserma di riferimento: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.nomeCaserma}'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Indirizzo caserma: VIA, CAP, CITTA\' ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text('${d.coordCaserma}'),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            } else {
-                              return const Visibility(
-                                  visible: false, child: Text(""));
-                            }
-                          }),
-                          generaTastoCambiaStato(denuncia: d, utente: utente),
-                        ],
-                      ),
+                              ),
+                            );
+                          } else {
+                            return const Visibility(
+                                visible: false, child: Text(""));
+                          }
+                        }),
+                        generaTastoCambiaStato(denuncia: d, utente: utente),
+                      ],
                     );
                   } else {
                     return Text("");

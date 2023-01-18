@@ -101,13 +101,13 @@ class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
                                   height: 75.0,
                                   child: ListTile(
                                     title: Text(
-                                      item.descrizione,
+                                      item.id!,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    subtitle:
-                                        Text(item.categoriaDenuncia.toString()),
+                                    subtitle: const Text(
+                                        "Clicca sull'icona per vedere i dettagli"),
                                   ),
                                 ),
                               ),

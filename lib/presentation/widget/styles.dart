@@ -133,9 +133,9 @@ abstract class ThemeText {
   static BoxDecoration boxRossoDettaglio = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
-    boxShadow: const [
+    boxShadow: [
       BoxShadow(
-        color: Colors.redAccent,
+        color: Colors.red.shade300,
         blurRadius: 8.0,
         spreadRadius: 1.0,
         offset: Offset(0, 3),
