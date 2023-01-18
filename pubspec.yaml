@@ -59,6 +59,9 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   tab_container: ^2.0.0
   flutter_launcher_icons: ^0.11.0
+  app_popup_menu: ^1.0.0
+  firebase_storage: ^11.0.10
+  file_picker: ^5.2.5
    
 
 
