@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 
 import '../entity/entity_GA/operatoreCUP_entity.dart';
+import '../entity/entity_GA/spid_entity.dart';
 import '../entity/entity_GA/super_utente.dart';
 import '../entity/entity_GA/tipo_utente.dart';
 import '../entity/entity_GA/uffPolGiud_entity.dart';
@@ -105,5 +106,9 @@ class AuthenticationService {
       print(e.message);
       return e.code;
     }
+  }
+
+  Future<SPID?> getSpid(String? id){
+    return RetrieveSPIDByID(id!);
   }
 }
