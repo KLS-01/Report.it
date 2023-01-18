@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/denuncia_entity.dart';
 
@@ -40,9 +41,10 @@ class DenunciaDao {
 
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStato(StatoDenuncia stato){
+  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStatoAndCap(StatoDenuncia stato, String cap){
     var ref=db.collection("Denuncia");
-    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString()).snapshots();
+    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString())
+        .where("CapDenunciante", isEqualTo: cap).snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunceById(String id){
@@ -137,7 +139,9 @@ class DenunciaDao {
     return lista;
   }
 
-  void accettaDenuncia (String idDenuncia, GeoPoint coordCaserma, String idUff, String nomeCaserma, String nomeUff, String cognomeUff) {
+  void accettaDenuncia
+      (String idDenuncia, GeoPoint coordCaserma, String idUff,
+      String nomeCaserma, String nomeUff, String cognomeUff,TipoUfficiale tipoUff, String gradoUff) {
     try {
       var ref = db.collection("Denuncia").doc(idDenuncia);
 
@@ -146,7 +150,10 @@ class DenunciaDao {
         "CoordCaserma": coordCaserma,
         "IDUff": idUff,
         "NomeCaserma": nomeCaserma,
-        "NomeUff": nomeUff
+        "NomeUff": nomeUff,
+        "Stato": "PresaInCarico",
+        "TipoUff": tipoUff,
+        "GradoUff": gradoUff
       });
     }catch(e){
       print(e);

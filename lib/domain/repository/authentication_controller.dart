@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
-import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
-import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
-import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
-import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
-import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
 
+import '../entity/entity_GA/operatoreCUP_entity.dart';
+import '../entity/entity_GA/super_utente.dart';
+import '../entity/entity_GA/tipo_utente.dart';
 import '../entity/entity_GA/uffPolGiud_entity.dart';
+import '../entity/entity_GA/utente_entity.dart';
 
 class AuthenticationService {
   final FirebaseAuth auth;
@@ -61,8 +60,8 @@ class AuthenticationService {
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
   Future<String?> signIn(
       {required String email,
-      required String password,
-      required String userType}) async {
+        required String password,
+        required String userType}) async {
     try {
       if (userType == "SPID") {
         try {

@@ -10,4 +10,6 @@ class SuperUtente {
 
   SuperUtente(this.id, this.tipo,
       {this.cap, this.provincia, this.indirizzo, this.citta});
+
 }
+

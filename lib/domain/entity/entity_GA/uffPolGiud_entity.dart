@@ -17,9 +17,8 @@ class UffPolGiud extends SuperUtente {
   String cittaCaserma;
   String provinciaCaserma;
 
-  get getId => super.id;
 
-  set setId(id) => this.id = id;
+  get getId => super.id;
 
   get getNome => this.nome;
 
@@ -72,11 +71,11 @@ class UffPolGiud extends SuperUtente {
   factory UffPolGiud.fromJson(Map<String, dynamic> json) {
     return UffPolGiud(json["ID"], json["Nome"], json["Cognome"], json["Grado"],
         TipoUfficiale.values.firstWhere(
-      (element) {
-        // ignore: prefer_interpolation_to_compose_strings
-        return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
-      },
-    ),
+              (element) {
+            // ignore: prefer_interpolation_to_compose_strings
+            return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
+          },
+        ),
         json["Email"],
         json["Password"],
         json["NomeCaserma"],
@@ -94,8 +93,8 @@ class UffPolGiud extends SuperUtente {
       map["Cognome"],
       map["Grado"],
       TipoUfficiale.values.firstWhere((element) =>
-          // ignore: prefer_interpolation_to_compose_strings
-          element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
+      // ignore: prefer_interpolation_to_compose_strings
+      element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
       map["Email"],
       map["Password"],
       map["NomeCaserma"],
@@ -109,7 +108,7 @@ class UffPolGiud extends SuperUtente {
 
   Map<String?, dynamic> toMap() {
     return {
-      "ID": id.toString(),
+      "ID": id,
       "Nome": nome,
       "Cognome": cognome,
       "Grado": grado,

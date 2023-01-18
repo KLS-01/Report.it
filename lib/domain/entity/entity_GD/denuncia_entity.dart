@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 
 class Denuncia {
-  String? id;
+  String? id,gradoUff;
   String nomeDenunciante,
       cognomeDenunciante,
       indirizzoDenunciante,
@@ -18,6 +19,8 @@ class Denuncia {
       denunciato,
       descrizione;
 
+  TipoUfficiale? tipoUff;
+
   Timestamp scadenzaDocDenunciante, dataDenuncia;
   GeoPoint? coordCaserma;
 
@@ -27,7 +30,6 @@ class Denuncia {
   String idUtente;
   CategoriaDenuncia categoriaDenuncia;
   StatoDenuncia statoDenuncia;
-  //StatoDenuncia statoDenuncia;
 
   Denuncia(
       {required this.id,
@@ -55,7 +57,10 @@ class Denuncia {
       required this.nomeUff,
       required this.cognomeUff,
       required this.cognomeVittima,
-      required this.idUff});
+      required this.idUff,
+        required this.tipoUff,
+        required this.gradoUff
+      });
 
   get getId => id;
   set setId(id) => this.id = id;
@@ -154,7 +159,10 @@ class Denuncia {
         nomeUff: json["NomeUff"],
         cognomeUff: json["CognomeUff"],
         cognomeVittima: json["CognomeVittima"],
-        idUff: json["IDUff"]);
+        idUff: json["IDUff"],
+        tipoUff: json["TipoUff"]==null?null:TipoUfficiale.values.byName(json["TipoUff"]),
+        gradoUff: json["GradoUff"]
+    );
   }
 
   factory Denuncia.fromMap(map) {
@@ -184,7 +192,10 @@ class Denuncia {
         nomeUff: map["NomeUff"],
         cognomeUff: map["CognomeUff"],
         cognomeVittima: map["CognomeVittima"],
-        idUff: map["IDUff"]);
+        idUff: map["IDUff"],
+        tipoUff: map["TipoUff"],
+        gradoUff: map["GradoUff"]
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -214,7 +225,9 @@ class Denuncia {
       "NomeUff": nomeUff,
       "CognomeUff": cognomeUff,
       "CognomeVittima": cognomeVittima,
-      "IDUff": idUff
+      "IDUff": idUff,
+      "TipoUff": tipoUff,
+      "GradoUff": gradoUff
     };
   }
 

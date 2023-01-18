@@ -18,6 +18,7 @@ class Palette {
   );
 } //
 
+
 abstract class ThemeText {
   static ThemeData theme = ThemeData(
     backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
@@ -148,6 +149,7 @@ abstract class ThemeText {
       )
     ],
   );
+
   static BoxDecoration boxVisualizza = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),

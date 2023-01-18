@@ -1,4 +1,4 @@
- import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/repository/denuncia_controller.dart';
@@ -370,7 +370,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
-                  testMethod();
+                  //testMethod();
                 }
               },
               child: const Text('Submit'),
@@ -381,35 +381,35 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 
-  testMethod() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Processing Data')),
-    );
+  // testMethod() {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(content: Text('Processing Data')),
+  //   );
 
-    Timestamp convertedDate =
-        Timestamp.fromDate(DateTime.parse(scadDocDenuncianteController.text));
-    DenunciaController control = DenunciaController();
-    var result = control.addDenunciaControl(
-        nomeDenunciante: nomeDenuncianteController.text,
-        cognomeDenunciante: cognomeDenuncianteController.text,
-        indirizzoDenunciante: indirizzoDenuncianteController.text,
-        capDenunciante: capDenuncianteController.text,
-        provinciaDenunciante: provinciaDenuncianteController.text,
-        cellulareDenunciante: cellulareDenuncianteController.text,
-        emailDenunciante: emailDenuncianteController.text,
-        tipoDocDenunciante: tipoDocDenuncianteController.text,
-        numeroDocDenunciante: nomeDenuncianteController.text,
-        scadenzaDocDenunciante: convertedDate,
-        categoriaDenuncia:
-            CategoriaDenuncia.values.byName(categoriaController.text),
-        nomeVittima: nomeVittimaController.text,
-        denunciato: denunciatoController.text,
-        descrizione: descrizioneController.text,
-        cognomeVittima: cognomeVittimaController.text,
-        consenso: consensoValue!,
-        alreadyFilled: alreadyFilledValue!);
+  //   Timestamp convertedDate =
+  //       Timestamp.fromDate(DateTime.parse(scadDocDenuncianteController.text));
+  //   DenunciaController control = DenunciaController();
+  //   var result = control.addDenunciaControl(
+  //       nomeDenunciante: nomeDenuncianteController.text,
+  //       cognomeDenunciante: cognomeDenuncianteController.text,
+  //       indirizzoDenunciante: indirizzoDenuncianteController.text,
+  //       capDenunciante: capDenuncianteController.text,
+  //       provinciaDenunciante: provinciaDenuncianteController.text,
+  //       cellulareDenunciante: cellulareDenuncianteController.text,
+  //       emailDenunciante: emailDenuncianteController.text,
+  //       tipoDocDenunciante: tipoDocDenuncianteController.text,
+  //       numeroDocDenunciante: nomeDenuncianteController.text,
+  //       scadenzaDocDenunciante: convertedDate,
+  //       categoriaDenuncia:
+  //           CategoriaDenuncia.values.byName(categoriaController.text),
+  //       nomeVittima: nomeVittimaController.text,
+  //       denunciato: denunciatoController.text,
+  //       descrizione: descrizioneController.text,
+  //       cognomeVittima: cognomeVittimaController.text,
+  //       consenso: consensoValue!,
+  //       alreadyFilled: alreadyFilledValue!);
 
-    print(
-        "Operation terminated with success on presentation layer, resultId: $result");
-  }
+  //   print(
+  //       "Operation terminated with success on presentation layer, resultId: $result");
+  // }
 }

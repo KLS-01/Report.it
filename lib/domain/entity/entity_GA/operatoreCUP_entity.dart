@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
+
 class OperatoreCUP extends SuperUtente {
   String password;
   String email;
@@ -11,6 +12,8 @@ class OperatoreCUP extends SuperUtente {
   String cittaASL;
   String indirizzoASL;
   String provinciaASL;
+  String nome;
+  String cognome;
 
   get getId => this.id;
   set setId(id) => this.id = id;
@@ -37,6 +40,8 @@ class OperatoreCUP extends SuperUtente {
     this.cittaASL,
     this.indirizzoASL,
     this.provinciaASL,
+    this.nome,
+    this.cognome,
   ) : super(id, TipoUtente.values.byName("OperatoreCup"));
 
   factory OperatoreCUP.fromJson(Map<String, dynamic> json) {
@@ -50,6 +55,8 @@ class OperatoreCUP extends SuperUtente {
       json["CittaASL"],
       json["IndirizzoASL"],
       json["ProvinciaASL"],
+      json["Nome"],
+      json["Cognome"],
     );
   }
 
@@ -64,6 +71,10 @@ class OperatoreCUP extends SuperUtente {
       map["CittaASL"],
       map["IndirizzoASL"],
       map["ProvinciaASL"],
+
+      map["Nome"],
+      map["Cognome"],
+
     );
   }
 
@@ -78,6 +89,9 @@ class OperatoreCUP extends SuperUtente {
       "CapASL": capASL,
       "CittaASL": cittaASL,
       "IndirizzoASL": indirizzoASL,
+      "Nome": nome,
+      "Cognome": cognome,
+
     };
   }
 }

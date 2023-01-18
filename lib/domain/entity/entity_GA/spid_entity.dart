@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 class SPID {
   String? cf;
   String? nome;
+  String? cognome;
   String? luogoNascita;
   DateTime? dataNascita;
   String? sesso;
@@ -75,6 +76,7 @@ class SPID {
   SPID(
     this.cf,
     this.nome,
+    this.cognome,
     this.luogoNascita,
     this.dataNascita,
     this.sesso,
@@ -92,6 +94,7 @@ class SPID {
     return SPID(
         json["CF"],
         json["Nome"],
+        json["Cognome"],
         json["Luogo di Nascita"],
         json["Data di Nascita"].toDate(),
         json["Sesso"],
@@ -109,6 +112,7 @@ class SPID {
     return SPID(
         map["CF"],
         map["Nome"],
+        map["Cognome"],
         map["Luogo di Nascita"],
         map["Data di Nascita"],
         map["Sesso"],
@@ -126,6 +130,7 @@ class SPID {
     return {
       "CF": cf,
       "Nome": nome,
+      "Cognome": cognome,
       "Luogo di Nascita": luogoNascita,
       "Data di Nascita": dataNascita,
       "Sesso": sesso,
