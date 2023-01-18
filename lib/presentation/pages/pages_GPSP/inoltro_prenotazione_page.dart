@@ -366,13 +366,17 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                     child: const Text("Carica l'impegnativa del medico"),
                   ),
                   impegnativa == true
-                      ? Text(
-                          impegnativaController == null
-                              ? "inserire un file"
-                              : impegnativaController!.files.first.name,
-                          style: impegnativaController == null
-                              ? TextStyle(color: Colors.red)
-                              : TextStyle(color: Colors.black),
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text(
+                            impegnativaController == null
+                                ? "Inserisci l'impegnativa"
+                                : impegnativaController!.files.first.name,
+                            style: impegnativaController == null
+                                ? TextStyle(
+                                    color: Color.fromRGBO(219, 29, 69, 1))
+                                : TextStyle(color: Colors.black),
+                          ),
                         )
                       : Container(),
                 ],
