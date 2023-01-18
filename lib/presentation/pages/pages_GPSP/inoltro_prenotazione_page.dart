@@ -45,9 +45,12 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   final regexCF = RegExp(
       r"^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$");
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
+  final _formKey3 = GlobalKey<FormState>();
   String? discriminazione;
   String? consenso1, consenso2;
   FilePickerResult? impegnativaController;
+  bool impegnativa = false;
 
   @override
   Widget build(BuildContext context) {
@@ -321,6 +324,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                 style: ThemeText.titoloInoltro,
               ),
               content: Form(
+                key: _formKey2,
                 child: Column(
                   children: <Widget>[
                     const Text(
@@ -351,12 +355,28 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
             Step(
               title: const Text("Impegnativa del medico",
                   style: ThemeText.titoloInoltro),
-              content: ElevatedButton(
-                  style: ThemeText.bottoneRosso,
-                  onPressed: (() {
-                    uploadImpegnativa();
-                  }),
-                  child: const Text("Carica l'impegnativa del medico")),
+              content: Column(
+                children: [
+                  ElevatedButton(
+                    style: ThemeText.bottoneRosso,
+                    onPressed: (() {
+                      impegnativa = true;
+                      uploadImpegnativa();
+                    }),
+                    child: const Text("Carica l'impegnativa del medico"),
+                  ),
+                  impegnativa == true
+                      ? Text(
+                          impegnativaController == null
+                              ? "inserire un file"
+                              : impegnativaController!.files.first.name,
+                          style: impegnativaController == null
+                              ? TextStyle(color: Colors.red)
+                              : TextStyle(color: Colors.black),
+                        )
+                      : Container(),
+                ],
+              ),
               isActive: _currentStep >= 0,
               state:
                   _currentStep >= 2 ? StepState.complete : StepState.disabled,
@@ -389,8 +409,26 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   }
 
   continued() {
-    if (_formKey.currentState!.validate()) {
-      _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+    if (_currentStep == 0) {
+      if (_formKey.currentState!.validate()) {
+        _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      }
+    } else if (_currentStep == 1) {
+      if (_formKey2.currentState!.validate()) {
+        print("ciao");
+        _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      }
+    } else if (_currentStep == 2) {
+      if (impegnativaController == null) {
+        impegnativa = !impegnativa;
+        setState(() {});
+      } else {
+        _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      }
+    } else {
+      if (_formKey.currentState!.validate()) {
+        _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      }
     }
   }
 
@@ -404,6 +442,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
     if (fileResult != null) {
       impegnativaController = fileResult;
     }
+    setState(() {});
   }
 
   void createRecord(SuperUtente? utente) async {
