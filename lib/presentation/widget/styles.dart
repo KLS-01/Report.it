@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 
+class Palette {
+  static const MaterialColor coloriPalette = MaterialColor(
+    0xFFDB1D45, // 0%
+    <int, Color>{
+      50: Color(0xFFDB1D45), //10%
+      100: Color(0xFFDB1D45), //20%
+      200: Color(0xFFDB1D45), //30%
+      300: Color(0xFFDB1D45), //40%
+      400: Color(0xFFDB1D45), //50%
+      500: Color(0xFFDB1D45), //60%
+      600: Color(0xFFDB1D45), //70%
+      700: Color(0xFFDB1D45), //80%
+      800: Color(0xFFDB1D45), //90%
+      900: Color(0xFFDB1D45), //100%
+    },
+  );
+} //
+
 abstract class ThemeText {
   static ThemeData theme = ThemeData(
     backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
-    primarySwatch: Colors.red,
+    primarySwatch: Palette.coloriPalette,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 

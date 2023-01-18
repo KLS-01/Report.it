@@ -197,6 +197,32 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
               ),
             ),
           ),
+          Container(
+            decoration: ThemeText.boxDettaglio,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: 'Motivazione',
+                labelStyle: ThemeText.titoloDettaglio,
+                border: InputBorder.none,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          prenotazione.descrizione,
+                          overflow: TextOverflow.fade,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
           //TODO: -------------------------------------QUA INIZIA IL SECONDO----------------------------------------------------
           if (utente.tipo == TipoUtente.OperatoreCup &&
               prenotazione.getDataPrenotazione == null)
