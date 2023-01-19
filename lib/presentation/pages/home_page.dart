@@ -4,6 +4,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+
+import 'package:report_it/presentation/pages/pages_GIC/informativa_contatti_page.dart';
+import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
+
+import 'package:report_it/presentation/pages/pages_GPSP/visualizza_storico_prenotazioni_page.dart';
+import '../../domain/repository/authentication_controller.dart';
+import 'pages_GIC/informativa_contatti_page.dart';
+import 'pages_GPSP/test_prenotazioni.dart';
+import '../../domain/entity/entity_GA/super_utente.dart';
+import '../../domain/repository/authentication_controller.dart';
+import 'pages_GIC/informativa_contatti_page.dart';
+import 'package:report_it/presentation/pages/pages_GIC/informativa_contatti_page.dart';
+import 'package:report_it/presentation/pages/pages_GF/forum_home_page.dart';
+import 'package:report_it/presentation/pages/pages_GPSP/psicologo_home_page.dart';
+import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/presentation/widget/tab_navigator.dart';
