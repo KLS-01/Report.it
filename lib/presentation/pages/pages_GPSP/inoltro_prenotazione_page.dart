@@ -407,7 +407,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeText.theme.backgroundColor,
     );
   }
 

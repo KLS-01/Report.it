@@ -1,9 +1,11 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
 import 'package:report_it/presentation/pages/pages_GF/form_crea_discussione.dart';
 import 'package:report_it/presentation/widget/crealista.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 class ForumHome extends StatefulWidget {
   const ForumHome({super.key});
@@ -25,6 +27,12 @@ class _ForumHomeState extends State<ForumHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sezione Forum', style: ThemeText.titoloSezione),
+        elevation: 0,
+        backgroundColor: Theme.of(context).backgroundColor,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+      ),
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -55,7 +63,8 @@ class _ForumHomeState extends State<ForumHome> {
               Callback: callback,
             )
           ]),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: FloatingActionButton.extended(
+            label: const Text("Pubblica"),
             heroTag: null,
             onPressed: () {
               Navigator.push(
@@ -74,7 +83,6 @@ class _ForumHomeState extends State<ForumHome> {
               //
             },
             backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-            child: const Icon(Icons.add),
           ),
         ),
       ),

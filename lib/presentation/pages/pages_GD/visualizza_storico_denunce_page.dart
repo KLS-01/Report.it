@@ -270,7 +270,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                         .getSpid(utente?.id),
                     builder:
                         (BuildContext context, AsyncSnapshot<SPID?> snapshot) {
-                      return FloatingActionButton(
+                      return FloatingActionButton.extended(
+                        label: const Text("Inoltra"),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -283,7 +284,6 @@ class _VisualizzaStoricoDenunceUtentePageState
                           );
                         },
                         backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-                        child: const Icon(Icons.add),
                       );
                     },
                   );

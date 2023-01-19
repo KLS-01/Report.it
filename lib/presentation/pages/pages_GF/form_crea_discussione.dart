@@ -56,7 +56,7 @@ class _ForumFormState extends State<ForumForm> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(
                           MediaQuery.of(context).size.width * 0.04, 0, 0, 0),
-                      child: Text(
+                      child: const Text(
                         "Titolo",
                         textAlign: TextAlign.left,
                       ),
@@ -72,7 +72,7 @@ class _ForumFormState extends State<ForumForm> {
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(20)),
-                          contentPadding: EdgeInsets.all(20.0),
+                          contentPadding: const EdgeInsets.all(20.0),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -85,7 +85,7 @@ class _ForumFormState extends State<ForumForm> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(
                           MediaQuery.of(context).size.width * 0.04, 0, 0, 0),
-                      child: Text(
+                      child: const Text(
                         "Testo della discussione",
                         textAlign: TextAlign.left,
                       ),
@@ -101,7 +101,7 @@ class _ForumFormState extends State<ForumForm> {
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(20)),
-                          contentPadding: EdgeInsets.all(20.0),
+                          contentPadding: const EdgeInsets.all(20.0),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -115,7 +115,7 @@ class _ForumFormState extends State<ForumForm> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(
                           MediaQuery.of(context).size.width * 0.04, 0, 0, 0),
-                      child: Text(
+                      child: const Text(
                         "Categoria",
                         textAlign: TextAlign.left,
                       ),

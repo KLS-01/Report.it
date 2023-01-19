@@ -237,19 +237,22 @@ class _InformativaState extends State<Informativa> {
                 ),
               ),
             ),
+            const WidgetInfo(
+                titolo: "Aiuto chat-bot",
+                corpo: "Qualcosa non è chiaro? Prova a chiedere al chat-bot!"),
+            FloatingActionButton(
+              onPressed: (() {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) => HomeChat()),
+                  ),
+                );
+              }),
+              backgroundColor: Color.fromRGBO(219, 29, 69, 1),
+              child: Icon(Icons.android, size: 30),
+            ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: ((context) => HomeChat()),
-            ),
-          );
-        }),
-        backgroundColor: ThemeText.theme.primaryColor,
-        child: Icon(Icons.android, size: 30),
       ),
     );
   }

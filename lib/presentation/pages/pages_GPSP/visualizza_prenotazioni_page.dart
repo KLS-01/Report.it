@@ -139,7 +139,8 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
             floatingActionButton: Consumer<SuperUtente?>(
               builder: (context, utente, _) {
                 if (utente?.tipo == TipoUtente.Utente) {
-                  return FloatingActionButton(
+                  return FloatingActionButton.extended(
+                    label: const Text("Prenota"),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -150,7 +151,6 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
                       );
                     },
                     backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-                    child: const Icon(Icons.add),
                   );
                 } else {
                   return Visibility(
