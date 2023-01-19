@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/repository/authentication_controller.dart';
+import '../../../domain/entity/entity_GA/spid_entity.dart';
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
 import '../../widget/styles.dart';
@@ -21,7 +24,6 @@ class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
 
 class _VisualizzaStoricoDenunceUtentePageState
     extends State<VisualizzaStoricoDenunceUtentePage> {
-    
   Future<void> _pullRefresh() async {
     setState(() {});
   }
@@ -263,18 +265,27 @@ class _VisualizzaStoricoDenunceUtentePageState
             floatingActionButton: Consumer<SuperUtente?>(
               builder: (context, utente, _) {
                 if (utente?.tipo == TipoUtente.Utente) {
-                  return FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              InoltroDenuncia(utente: utente!),
-                        ),
+                  return FutureBuilder<SPID?>(
+                    future: AuthenticationService(FirebaseAuth.instance)
+                        .getSpid(utente?.id),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<SPID?> snapshot) {
+                      return FloatingActionButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InoltroDenuncia(
+                                utente: utente!,
+                                spid: snapshot.data!,
+                              ),
+                            ),
+                          );
+                        },
+                        backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+                        child: const Icon(Icons.add),
                       );
                     },
-                    backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
-                    child: const Icon(Icons.add),
                   );
                 } else {
                   return Visibility(
