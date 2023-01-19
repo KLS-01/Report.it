@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Palette {
   static const MaterialColor coloriPalette = MaterialColor(
     0xFFDB1D45, // 0%
@@ -18,7 +17,6 @@ class Palette {
     },
   );
 } //
-
 
 abstract class ThemeText {
   static ThemeData theme = ThemeData(
@@ -68,6 +66,17 @@ abstract class ThemeText {
   static const TextStyle titoloDettaglio = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  static const TextStyle titoloForum = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  static const TextStyle corpoForum = TextStyle(
+    fontSize: 15,
     color: Colors.black,
   );
 
@@ -151,7 +160,6 @@ abstract class ThemeText {
     ],
   );
 
-
   static BoxDecoration boxVisualizza = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
@@ -164,7 +172,7 @@ abstract class ThemeText {
       )
     ],
   );
-  
+
   static BoxDecoration boxRossoDettaglio = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),

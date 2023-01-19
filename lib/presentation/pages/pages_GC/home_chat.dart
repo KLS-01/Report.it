@@ -11,6 +11,7 @@ class HomeChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: const Text("Aiuto Chat-bot", style: ThemeText.titoloSezione),
           backgroundColor: ThemeText.theme.backgroundColor,
           iconTheme: IconThemeData(color: ThemeText.theme.primaryColor),
         ),

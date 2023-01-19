@@ -45,10 +45,11 @@ class _ForumHomeState extends State<ForumHome> {
               indicatorColor: Color.fromRGBO(219, 29, 69, 1),
               tabs: [
                 Tab(
-                  child: Text("Tutte le discussioni"),
+                  child:
+                      Text("Tutte le discussioni", style: ThemeText.titoloTab),
                 ),
                 Tab(
-                  child: Text("Le tue discussioni"),
+                  child: Text("Le tue discussioni", style: ThemeText.titoloTab),
                 )
               ],
             ),

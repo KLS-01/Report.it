@@ -19,22 +19,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
 
-  final TextEditingController nameController =
-      TextEditingController(text: 'mario');
-  final TextEditingController surnameController =
-      TextEditingController(text: 'rossi');
-  final TextEditingController numberController =
-      TextEditingController(text: '3489156784');
-  final TextEditingController indirizzoController =
-      TextEditingController(text: 'viafod,1');
-  final TextEditingController capController =
-      TextEditingController(text: '81030');
-  final TextEditingController provinciaController =
-      TextEditingController(text: 'CT');
-  final TextEditingController emailController =
-      TextEditingController(text: 'ciao@gmail.com');
-  final TextEditingController cfController =
-      TextEditingController(text: 'LSRMRS94T61B963S');
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
+  final TextEditingController indirizzoController = TextEditingController();
+  final TextEditingController capController = TextEditingController();
+  final TextEditingController provinciaController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController cfController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");

@@ -6,6 +6,7 @@ import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
 import 'package:report_it/presentation/widget/commento.dart';
 import 'package:report_it/presentation/widget/like.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 import 'package:report_it/presentation/widget/widgetImmagine.dart';
 
 class crealista extends StatefulWidget {
@@ -111,12 +112,8 @@ class _crealistaState extends State<crealista> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            snapshot.data![index]!.titolo,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                            ),
-                                          ),
+                                              snapshot.data![index]!.titolo,
+                                              style: ThemeText.titoloForum),
                                         ),
                                       ],
                                     ),
@@ -126,12 +123,8 @@ class _crealistaState extends State<crealista> {
                                   padding: const EdgeInsets.all(10.0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      snapshot.data![index]!.testo,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                                    child: Text(snapshot.data![index]!.testo,
+                                        style: ThemeText.corpoForum),
                                   ),
                                 ),
                                 CardImaggine(
