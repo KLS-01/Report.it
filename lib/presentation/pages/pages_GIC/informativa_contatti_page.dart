@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
+import '../../widget/styles.dart';
 import 'FAQinformativa_page.dart';
 import '../navigation_animations.dart';
 
@@ -36,7 +37,7 @@ class _InformativaState extends State<Informativa> {
               options: CarouselOptions(
                 enableInfiniteScroll: true,
                 viewportFraction: 1,
-                height: MediaQuery.of(context).size.height * 0.58,
+                height: MediaQuery.of(context).size.height * 0.6,
                 onPageChanged: (index, reason) {
                   setState(() {
                     _current = index;
@@ -64,7 +65,7 @@ class _InformativaState extends State<Informativa> {
                             children: [
                               Text(
                                 i.title,
-                                style: Theme.of(context).textTheme.headline2,
+                                style: ThemeText.titoloInoltro,
                               ),
                               const SizedBox(width: 10),
                             ],
@@ -79,8 +80,7 @@ class _InformativaState extends State<Informativa> {
                               child: i.body != ''
                                   ? (Text(
                                       i.body,
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
+                                      style: ThemeText.corpoInoltro,
                                       textAlign: TextAlign.center,
                                     ))
                                   : (ElevatedButton(
@@ -98,6 +98,7 @@ class _InformativaState extends State<Informativa> {
                                       child: const Text(
                                         "Leggi di più",
                                         style: TextStyle(
+                                          fontSize: 20,
                                           color: Colors.black,
                                         ),
                                       ),
@@ -117,7 +118,6 @@ class _InformativaState extends State<Informativa> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: carousels.asMap().entries.map((entry) {
               return GestureDetector(
-                // onTap: () => _controller.animateToPage(entry.key),
                 child: Container(
                   width: 12.0,
                   height: 12.0,
@@ -151,80 +151,83 @@ class _InformativaState extends State<Informativa> {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Polizia',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Polizia',
+                            style: ThemeText.chiamataGIC,
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('113');
-                            },
-                            child: const Text(
-                              '113',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: ThemeText.bottoneChiamata,
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('113');
+                              },
+                              child: const Text(
+                                '113',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Text(
-                          'Carabinieri',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Carabinieri',
+                            style: ThemeText.chiamataGIC,
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('112');
-                            },
-                            child: const Text(
-                              '112',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: ThemeText.bottoneChiamata,
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('112');
+                              },
+                              child: const Text(
+                                '112',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Text(
-                          'Guardia di Finanza',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(width: 5),
-                        Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Guardia di Finanza',
+                            style: ThemeText.chiamataGIC,
                           ),
-                          child: TextButton(
-                            onPressed: () async {
-                              FlutterPhoneDirectCaller.callNumber('117');
-                            },
-                            child: const Text(
-                              '117',
-                              style: TextStyle(fontSize: 20),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 40,
+                            decoration: ThemeText.bottoneChiamata,
+                            child: TextButton(
+                              onPressed: () async {
+                                FlutterPhoneDirectCaller.callNumber('117');
+                              },
+                              child: const Text(
+                                '117',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

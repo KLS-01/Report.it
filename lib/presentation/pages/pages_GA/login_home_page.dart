@@ -7,9 +7,15 @@ import '../../../domain/repository/authentication_controller.dart';
 import 'authentication_wrapper.dart';
 import '../navigation_animations.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     String userWorker = 'WRK';
@@ -17,7 +23,6 @@ class LoginPage extends StatelessWidget {
 
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
 
     late SnackBar snackBar;
     late String loginOutcome;

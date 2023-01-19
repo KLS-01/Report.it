@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0+1"
+  app_popup_menu:
+    dependency: "direct main"
+    description:
+      name: app_popup_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   archive:
     dependency: transitive
     description:
@@ -175,7 +182,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.4"
+    version: "5.2.5"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -293,6 +300,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_phone_direct_caller:
     dependency: "direct main"
     description:
@@ -331,6 +343,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+
   geolocator:
     dependency: "direct main"
     description:
@@ -415,6 +428,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.20-nullsafety.5"
+
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.1.2"
+
   http:
     dependency: "direct main"
     description:
@@ -721,6 +743,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
+  time_picker_widget:
+    dependency: "direct main"
+    description:
+      name: time_picker_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+10"
   typed_data:
     dependency: transitive
     description:

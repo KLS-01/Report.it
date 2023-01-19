@@ -1,43 +1,52 @@
 import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:report_it/presentation/pages/pages_GPSP/visualizza_storico_prenotazioni_page.dart';
+import 'package:flutter/services.dart';
+
+import '../../widget/styles.dart';
 
 class FAQinformativa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      color: Theme.of(context).backgroundColor,
-      duration: const Duration(seconds: 1),
-      child: PageView(
-        // onPageChanged: _onPageChanged,
-        children: <Widget>[
-          ListView(
-            children: [
-              PagerPageWidget_noimage(
-                text: 'Sezione FAQ',
-                description:
-                    'FAQ sta per "frequently asked questions", cioè le domande maggiormente chieste!',
-              ),
-              Card1(
-                titolo: titolo1,
-                corpo: corpo1,
-              ),
-              Card1(
-                titolo: titolo2,
-                corpo: corpo2,
-              ),
-              Card1(
-                titolo: titolo3,
-                corpo: corpo3,
-              ),
-              Card1(
-                titolo: titolo4,
-                corpo: corpo4,
-              ),
-            ],
-          ),
-        ],
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: IconThemeData(
+          color: Color.fromRGBO(219, 29, 69, 1),
+        ),
+      ),
+      body: AnimatedContainer(
+        color: Theme.of(context).backgroundColor,
+        duration: const Duration(seconds: 1),
+        child: PageView(
+          children: <Widget>[
+            ListView(
+              children: [
+                const PagerPageWidget_noimage(
+                  text: 'Sezione FAQ',
+                  description:
+                      'FAQ sta per "frequently asked questions", cioè le domande maggiormente chieste!',
+                ),
+                Card1(
+                  titolo: titolo1,
+                  corpo: corpo1,
+                ),
+                Card1(
+                  titolo: titolo2,
+                  corpo: corpo2,
+                ),
+                Card1(
+                  titolo: titolo3,
+                  corpo: corpo3,
+                ),
+                Card1(
+                  titolo: titolo4,
+                  corpo: corpo4,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
