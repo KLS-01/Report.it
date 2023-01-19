@@ -29,41 +29,41 @@ abstract class ThemeText {
 
   static const TextStyle titoloGIC = TextStyle(
     fontSize: 40,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle corpoGIC = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.w200,
     color: Colors.black,
   );
   static const TextStyle titoloSezione = TextStyle(
     fontSize: 23,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle titoloTab = TextStyle(
     fontSize: 15,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
   );
   static const TextStyle titoloInoltro = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle corpoInoltro = TextStyle(
     fontSize: 16,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     color: Colors.black,
   );
   static const TextStyle chiamataGIC = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
   );
   static const TextStyle titoloDettaglio = TextStyle(
     fontSize: 30,
@@ -73,7 +73,7 @@ abstract class ThemeText {
 
   static const TextStyle titoloAlert = TextStyle(
     fontSize: 17,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.bold,
     color: Color.fromRGBO(219, 29, 69, 1),
   );
@@ -83,7 +83,7 @@ abstract class ThemeText {
     textStyle: MaterialStateProperty.all(
       const TextStyle(
         fontSize: 15,
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Raleway',
         color: Colors.white,
       ),
     ),
