@@ -47,7 +47,7 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
           title: const Text('Sezione Prenotazione Psicologica',
               style: ThemeText.titoloSezione),
           elevation: 0,
-          backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+          backgroundColor: Theme.of(context).backgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         body: DefaultTabController(

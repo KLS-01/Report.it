@@ -38,8 +38,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   final TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
-  final regexIndirizzo =
-      RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$"); //TODO: FIXARE, legge un solo numero
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -157,13 +156,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         title:
             const Text("Supporto Psicologico", style: ThemeText.titoloSezione),
         elevation: 3,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: ThemeText.theme.backgroundColor,
       ),
       body: Theme(
         data: ThemeData(
           colorScheme: const ColorScheme.light(
             primary: Color.fromRGBO(219, 29, 69, 1),
           ),
+          backgroundColor: ThemeText.theme.backgroundColor,
         ),
         child: Stepper(
           controlsBuilder: (context, details) {
