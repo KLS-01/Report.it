@@ -6,20 +6,21 @@ import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GF/adapter_commento.dart';
+import 'package:report_it/domain/entity/entity_GF/adapter_discussione.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
 class ForumDao {
   static Future<List<Discussione?>> RetrieveAllForum() async {
-    int secondi = DateTime.now().millisecondsSinceEpoch;
     var ref = database.collection("Discussione");
 
     List<Discussione> lista = List.empty(growable: true);
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Discussione ut = Discussione.fromJson(c.data());
+        Discussione ut = AdapterDiscussione().fromJson(c.data());
         ut.setID(c.id);
 
         if (ut.pathImmagine != null &&
@@ -31,8 +32,6 @@ class ForumDao {
               .getDownloadURL()
               .then((value) => ut.setpathImmagine(value));
         }
-
-        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
 
         if (ut.tipoUtente == "Utente") {
           Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
@@ -53,10 +52,6 @@ class ForumDao {
       return lista;
     });
 
-    int secondiNow = DateTime.now().millisecondsSinceEpoch;
-
-    print(secondiNow - secondi);
-
     return u;
   }
 
@@ -67,7 +62,7 @@ class ForumDao {
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Commento ut = Commento.fromJson(c.data());
+        Commento ut = AdapterCommento().fromJson(c.data());
 
         ut.id = c.id;
 
@@ -104,7 +99,7 @@ class ForumDao {
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Discussione? ut = Discussione.fromJson(c.data());
+        Discussione ut = AdapterDiscussione().fromJson(c.data());
         ut.id = c.id;
         if (!ut.pathImmagine!.startsWith("http") ||
             !ut.pathImmagine!.startsWith("gs://")) {
@@ -114,8 +109,6 @@ class ForumDao {
               .getDownloadURL()
               .then((value) => ut.setpathImmagine(value));
         }
-
-        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
 
         if (ut.tipoUtente == "Utente") {
           Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
@@ -147,7 +140,7 @@ class ForumDao {
         .doc(discussione)
         .collection("Commento");
 
-    String id = await ref.add(commento.toMap()).then((value) {
+    String id = await ref.add(AdapterCommento().toMap(commento)).then((value) {
       return value.id;
     });
 
@@ -157,7 +150,8 @@ class ForumDao {
   static Future<String> AggiungiDiscussione(Discussione discussione) async {
     var ref = database.collection("Discussione");
 
-    String id = await ref.add(discussione.toMap()).then((value) {
+    String id =
+        await ref.add(AdapterDiscussione().toMap(discussione)).then((value) {
       return value.id;
     });
 

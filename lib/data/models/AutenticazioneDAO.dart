@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/entity_GA/adapter_operatoreCUP.dart';
+import 'package:report_it/domain/entity/entity_GA/adapter_spid.dart';
+import 'package:report_it/domain/entity/entity_GA/adapter_uffpolgiud.dart';
+import 'package:report_it/domain/entity/entity_GA/adapter_utente.dart';
 
 import '../../domain/entity/entity_GA/operatoreCUP_entity.dart';
 import '../../domain/entity/entity_GA/spid_entity.dart';
@@ -11,7 +15,7 @@ Future<SPID?> RetrieveSPIDByEmail(String email) async {
   var ref = database.collection("SPID").where("Email", isEqualTo: email);
 
   var u = await ref.get().then(((value) async {
-    SPID u = SPID.fromJson(value.docs.first.data());
+    SPID u = AdapterSpid().fromJson(value.docs.first.data());
 
     return u;
   }));
@@ -27,7 +31,7 @@ Future<Utente?> RetrieveUtenteByID(String uid) async {
     if (value.data() == null) {
       return null;
     } else {
-      Utente u = Utente.fromJson(value.data()!);
+      Utente u = AdapterUtente().fromJson(value.data()!);
 
       var spid = await RetrieveSPIDByID(uid);
 
@@ -48,7 +52,7 @@ Future<SPID?> RetrieveSPIDByID(String uid) async {
     if (value.data() == null) {
       return null;
     } else {
-      SPID u = SPID.fromJson(value.data()!);
+      SPID u = AdapterSpid().fromJson(value.data()!);
       return u;
     }
   }));
@@ -64,7 +68,7 @@ Future<UffPolGiud?> RetrieveUffPolGiudByID(String uid) async {
     if (value.data() == null) {
       return null;
     } else {
-      UffPolGiud u = UffPolGiud.fromJson(value.data()!);
+      UffPolGiud u = AdapterUffPolGiud().fromJson(value.data()!);
 
       return u;
     }
@@ -81,7 +85,7 @@ Future<OperatoreCUP?> RetrieveCUPByID(String uid) async {
     if (value.data() == null) {
       return null;
     } else {
-      OperatoreCUP u = OperatoreCUP.fromJson(value.data()!);
+      OperatoreCUP u = AdapterOperatoreCUP().fromJson(value.data()!);
 
       return u;
     }
@@ -97,7 +101,7 @@ Future<List<Utente?>> RetrieveAllUtente() async {
 
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
-      Utente ut = Utente.fromJson(c.data());
+      Utente ut = AdapterUtente().fromJson(c.data());
 
       var spid = await RetrieveSPIDByID(ut.id);
       ut.setSpid(spid!);
@@ -118,7 +122,7 @@ Future<List<SPID?>> RetrieveAllSPID() async {
 
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
-      SPID ut = SPID.fromJson(c.data());
+      SPID ut = AdapterSpid().fromJson(c.data());
       lista.add(ut);
     }
 
@@ -136,7 +140,7 @@ Future<List<UffPolGiud?>> RetrieveAllUffPolGiud() async {
 
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
-      UffPolGiud ut = UffPolGiud.fromJson(c.data());
+      UffPolGiud ut = AdapterUffPolGiud().fromJson(c.data());
       lista.add(ut);
     }
 
@@ -154,7 +158,7 @@ Future<List<OperatoreCUP?>> RetrieveAllOperatoreCUP() async {
 
   var u = await ref.get().then((value) async {
     for (var c in value.docs) {
-      OperatoreCUP ut = OperatoreCUP.fromJson(c.data());
+      OperatoreCUP ut = AdapterOperatoreCUP().fromJson(c.data());
       lista.add(ut);
     }
 
