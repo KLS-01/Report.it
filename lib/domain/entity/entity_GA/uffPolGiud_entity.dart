@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/adapter.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
@@ -16,7 +17,6 @@ class UffPolGiud extends SuperUtente {
   String indirizzoCaserma;
   String cittaCaserma;
   String provinciaCaserma;
-
 
   get getId => super.id;
 
@@ -71,11 +71,11 @@ class UffPolGiud extends SuperUtente {
   factory UffPolGiud.fromJson(Map<String, dynamic> json) {
     return UffPolGiud(json["ID"], json["Nome"], json["Cognome"], json["Grado"],
         TipoUfficiale.values.firstWhere(
-              (element) {
-            // ignore: prefer_interpolation_to_compose_strings
-            return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
-          },
-        ),
+      (element) {
+        // ignore: prefer_interpolation_to_compose_strings
+        return element.toString() == "TipoUfficiale." + json["TipoUfficiale"];
+      },
+    ),
         json["Email"],
         json["Password"],
         json["NomeCaserma"],
@@ -93,8 +93,8 @@ class UffPolGiud extends SuperUtente {
       map["Cognome"],
       map["Grado"],
       TipoUfficiale.values.firstWhere((element) =>
-      // ignore: prefer_interpolation_to_compose_strings
-      element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
+          // ignore: prefer_interpolation_to_compose_strings
+          element.toString() == "TipoUfficiale" + map["TipoUfficiale"]),
       map["Email"],
       map["Password"],
       map["NomeCaserma"],
