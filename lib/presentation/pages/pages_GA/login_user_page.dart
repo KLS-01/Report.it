@@ -28,6 +28,11 @@ class _LoginWorkerState extends State<LoginWorker> {
     late String loginOutcome;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color.fromRGBO(219, 29, 69, 1)),
+      ),
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -35,23 +40,23 @@ class _LoginWorkerState extends State<LoginWorker> {
           reverse: true,
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+              //   child: Align(
+              //     alignment: Alignment.topLeft,
+              //     child: IconButton(
+              //       icon: const Icon(Icons.arrow_back),
+              //       onPressed: () => Navigator.pop(context),
+              //     ),
+              //   ),
+              // ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
                 child: Hero(
                   tag: 'logo',
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/C11_Logo-png.png',
                     scale: 1.8,
                   ),
                 ),

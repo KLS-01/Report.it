@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
+import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 var db = FirebaseFirestore.instance;
@@ -135,7 +137,8 @@ class PrenotazioneDao {
       required String idOperatore,
       required GeoPoint coordASL,
       required Timestamp dataPrenotazione,
-      required String nomeASL}) {
+      required String nomeASL,
+      required String psicologo}) {
     var ref = db.collection(DOCUMENT_NAME).doc(idPrenotazione);
 
     ref.update({
@@ -143,6 +146,37 @@ class PrenotazioneDao {
       "IDOperatore": idOperatore,
       "DataPrenotazione": dataPrenotazione,
       "NomeASL": nomeASL,
+      "Psicologo": psicologo
     });
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamAttive(
+      SuperUtente operatore) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> ref = db
+        .collection(DOCUMENT_NAME)
+        .where("CAP", isEqualTo: operatore.cap)
+        .snapshots();
+    print(operatore.cap);
+    print("ref $ref");
+    return ref;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamByUtente(idUtente) {
+    var ref = db
+        .collection(DOCUMENT_NAME)
+        .where("IDUtente", isEqualTo: idUtente)
+        .snapshots();
+
+    return ref;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> retrieveStreamByOperatore(
+      idOperatore) {
+    var ref = db
+        .collection(DOCUMENT_NAME)
+        .where("IDOperatore", isEqualTo: idOperatore)
+        .snapshots();
+
+    return ref;
   }
 }
