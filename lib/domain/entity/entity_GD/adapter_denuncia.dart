@@ -76,6 +76,7 @@ class AdapterDenuncia implements Adapter {
 
   @override
   toMap(dynamic denuncia) {
+    denuncia = denuncia as Denuncia;
     return {
       "ID": denuncia.id,
       "IDUtente": denuncia.idUtente,

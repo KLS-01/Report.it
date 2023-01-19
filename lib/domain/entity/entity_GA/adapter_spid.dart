@@ -42,6 +42,7 @@ class AdapterSpid implements Adapter {
 
   @override
   toMap(object) {
+    object = object as SPID;
     return {
       "CF": object.cf,
       "Nome": object.nome,

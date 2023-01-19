@@ -38,6 +38,7 @@ class AdapterOperatoreCUP implements Adapter {
 
   @override
   toMap(object) {
+    object = object as OperatoreCUP;
     return {
       "ID": object.id,
       "Password": object.password,

@@ -48,6 +48,7 @@ class AdapterPrenotazione implements Adapter {
 
   @override
   toMap(dynamic prenotazione) {
+    prenotazione = prenotazione as Prenotazione;
     return {
       "ID": prenotazione.id,
       "IDUtente": prenotazione.idUtente,
