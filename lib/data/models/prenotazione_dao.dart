@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/adapter_prenotazione.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 var db = FirebaseFirestore.instance;
@@ -14,7 +15,7 @@ class PrenotazioneDao {
       Prenotazione prenotazione) {
     Future<DocumentReference<Object?>> id = db
         .collection(DOCUMENT_NAME)
-        .add(prenotazione.toMap())
+        .add(AdapterPrenotazione().toMap(prenotazione))
       ..then((doc) => log('Data added with success with ID: ${doc.id}'));
     return id;
   }
@@ -59,7 +60,7 @@ class PrenotazioneDao {
 
     var d = await ref.get().then(((value) {
       if (value.data() != null) {
-        Prenotazione? d = Prenotazione.fromJson(value.data()!);
+        Prenotazione? d = AdapterPrenotazione().fromJson(value.data()!);
         return d;
       } else {
         return null;
@@ -74,7 +75,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -90,7 +91,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -107,7 +108,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -122,7 +123,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 

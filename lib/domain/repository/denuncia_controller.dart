@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
+import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
@@ -16,11 +17,11 @@ class DenunciaController {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Denuncia jsonToDenuncia(QueryDocumentSnapshot<Map<String, dynamic>> json) {
-    return Denuncia.fromJson(json.data());
+    return AdapterDenuncia().fromJson(json.data());
   }
 
   Denuncia jsonToDenunciaDettagli(Map<String, dynamic> json) {
-    return Denuncia.fromJson(json);
+    return AdapterDenuncia().fromJson(json);
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamDenunciaByUtente(

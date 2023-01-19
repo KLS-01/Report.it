@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
@@ -209,8 +210,8 @@ class _VisualizzaStoricoDenunceUtentePageState
                       case ConnectionState.done:
                         {
                           List<Denuncia>? listaDenunce = snapshot.data?.docs
-                              .map((e) => Denuncia.fromJson(e.data()))
-                              .toList();
+                              .map((e) => AdapterDenuncia().fromJson(e.data()))
+                              .toList() as List<Denuncia>?;
                           if (listaDenunce == null) {
                             return const Text("Non ci sono denunce.");
                           } else {

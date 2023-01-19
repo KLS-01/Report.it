@@ -8,6 +8,7 @@ import 'package:report_it/data/models/prenotazione_dao.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/adapter_prenotazione.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 class PrenotazioneController {
@@ -193,7 +194,7 @@ class PrenotazioneController {
 
   Prenotazione prenotazioneFromJson(
       QueryDocumentSnapshot<Map<String, dynamic>> json) {
-    return Prenotazione.fromJson(json.data());
+    return AdapterPrenotazione().fromJson(json.data());
   }
 
   Future<Prenotazione?> retrieveById(String idPrenotazione) async {

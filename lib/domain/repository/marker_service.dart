@@ -9,7 +9,7 @@ class MarkerService {
       Marker marker = Marker(
           markerId: MarkerId(place.id),
           draggable: false,
-          icon: place.icon,
+          icon: place.icon as BitmapDescriptor,
           infoWindow: InfoWindow(
             title: place.name,
             snippet: place.vicinity,
