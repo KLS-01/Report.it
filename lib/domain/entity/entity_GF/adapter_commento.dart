@@ -24,6 +24,7 @@ class AdapterCommento implements Adapter {
 
   @override
   toMap(object) {
+    object = object as Commento;
     return {
       "Creatore": object.creatore,
       "DataOra": object.dataCreazione,

@@ -42,6 +42,7 @@ class AdapterDiscussione implements Adapter {
 
   @override
   toMap(object) {
+    object = object as Discussione;
     return {
       "Categoria": object.categoria,
       "DataOraCreazione": object.dataCreazione,

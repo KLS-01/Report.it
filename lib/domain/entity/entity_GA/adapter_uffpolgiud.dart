@@ -47,7 +47,8 @@ class AdapterUffPolGiud implements Adapter {
 
   @override
   toMap(dynamic uff) {
-    // TODO: implement toMap
+    uff = uff as UffPolGiud;
+
     return {
       "ID": uff.id,
       "Nome": uff.nome,
