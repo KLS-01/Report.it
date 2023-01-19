@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
+import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/pages/pages_GPSP/inoltro_prenotazione_page.dart';
 import 'package:report_it/presentation/widget/prenotazioni_stream_builder.dart';
@@ -142,18 +145,24 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
             floatingActionButton: Consumer<SuperUtente?>(
               builder: (context, utente, _) {
                 if (utente?.tipo == TipoUtente.Utente) {
-                  return FloatingActionButton.extended(
-                    label: const Text("Prenota"),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              InoltroPrenotazione(utente: utente!),
-                        ),
-                      );
+                  return FutureBuilder<SPID?>(
+                    future: AuthenticationService(FirebaseAuth.instance)
+                        .getSpid(utente?.id),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<SPID?> snapshot) {
+                      return FloatingActionButton.extended(
+                          backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+                          label: const Text("Prenota"),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InoltroPrenotazione(
+                                    utente: utente!, spid: snapshot.data!),
+                              ),
+                            );
+                          });
                     },
-                    backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
                   );
                 } else {
                   return Visibility(
