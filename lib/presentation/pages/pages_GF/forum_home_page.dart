@@ -26,6 +26,7 @@ class _ForumHomeState extends State<ForumHome> {
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sezione Forum', style: ThemeText.titoloSezione),
@@ -36,7 +37,7 @@ class _ForumHomeState extends State<ForumHome> {
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
+          backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             toolbarHeight: 0,
             backgroundColor: Theme.of(context).backgroundColor,
@@ -64,26 +65,29 @@ class _ForumHomeState extends State<ForumHome> {
               Callback: callback,
             )
           ]),
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Pubblica"),
-            heroTag: null,
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  //pisnelo
-                  pageBuilder: (_, __, ___) => const ForumForm(),
-                  transitionDuration: const Duration(seconds: 0),
-                  transitionsBuilder: (_, a, __, c) =>
-                      FadeTransition(opacity: a, child: c),
-                ),
-              ).then((value) {
-                ForumService().AggiornaLista();
-                setState(() {});
-              });
-              //
-            },
-            backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+          floatingActionButton: Visibility(
+            visible: !keyboardIsOpen,
+            child: FloatingActionButton.extended(
+              label: const Text("Pubblica"),
+              heroTag: null,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    //pisnelo
+                    pageBuilder: (_, __, ___) => const ForumForm(),
+                    transitionDuration: const Duration(seconds: 0),
+                    transitionsBuilder: (_, a, __, c) =>
+                        FadeTransition(opacity: a, child: c),
+                  ),
+                ).then((value) {
+                  ForumService().AggiornaLista();
+                  setState(() {});
+                });
+                //
+              },
+              backgroundColor: ThemeText.theme.primaryColor,
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 import 'package:report_it/presentation/widget/theme.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:file_picker/file_picker.dart';
@@ -23,6 +24,7 @@ class _ForumFormState extends State<ForumForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Consumer<SuperUtente?>(
       builder: ((context, utente, child) {
         return Scaffold(
@@ -39,7 +41,7 @@ class _ForumFormState extends State<ForumForm> {
               ),
             ),
             elevation: 3,
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: ThemeText.theme.backgroundColor,
           ),
           body: Form(
             key: _formKey,
@@ -154,7 +156,7 @@ class _ForumFormState extends State<ForumForm> {
                               ),
                             ),
                             backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(219, 29, 69, 1),
+                              ThemeText.theme.primaryColor,
                             ),
                           ),
                           onPressed: (() async {
@@ -171,27 +173,30 @@ class _ForumFormState extends State<ForumForm> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text('Pubblica'),
-            heroTag: null,
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                if (fileResult != null) {
-                  ForumService().AggiungiDiscussione(
-                      titoloController.text,
-                      testoController.text,
-                      categoriaController.text,
-                      utente,
-                      fileResult!);
-                  Navigator.pop(context);
-                } else {
-                  ForumService().AggiungiDiscussione(titoloController.text,
-                      testoController.text, categoriaController.text, utente);
-                  Navigator.pop(context);
+          floatingActionButton: Visibility(
+            visible: !keyboardIsOpen,
+            child: FloatingActionButton.extended(
+              label: Text('Pubblica'),
+              heroTag: null,
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  if (fileResult != null) {
+                    ForumService().AggiungiDiscussione(
+                        titoloController.text,
+                        testoController.text,
+                        categoriaController.text,
+                        utente,
+                        fileResult!);
+                    Navigator.pop(context);
+                  } else {
+                    ForumService().AggiungiDiscussione(titoloController.text,
+                        testoController.text, categoriaController.text, utente);
+                    Navigator.pop(context);
+                  }
                 }
-              }
-            },
-            backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+              },
+              backgroundColor: const Color.fromRGBO(219, 29, 69, 1),
+            ),
           ),
         );
       }),
