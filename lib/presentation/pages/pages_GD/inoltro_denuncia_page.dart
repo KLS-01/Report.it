@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
+import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 import '../../../domain/entity/entity_GA/super_utente.dart';
@@ -12,44 +14,36 @@ import '../../widget/styles.dart';
 
 class InoltroDenuncia extends StatefulWidget {
   final SuperUtente utente;
-  InoltroDenuncia({required this.utente});
+  final SPID spid;
+  InoltroDenuncia({required this.utente, required this.spid});
 
   @override
-  _InoltroDenuncia createState() => _InoltroDenuncia(utente: utente);
+  _InoltroDenuncia createState() =>
+      _InoltroDenuncia(utente: utente, spid: spid);
 }
 
 class _InoltroDenuncia extends State<InoltroDenuncia> {
-  _InoltroDenuncia({required this.utente});
+  _InoltroDenuncia({required this.utente, required this.spid});
   final SuperUtente utente;
+  final SPID spid;
 
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
-  final TextEditingController nameController =
-      TextEditingController(text: 'Mario');
-  final TextEditingController surnameController =
-      TextEditingController(text: 'Rossi');
-  final TextEditingController numberController =
-      TextEditingController(text: '3336549875');
-  final TextEditingController indirizzoController = TextEditingController(
-      text:
-          'via cilea,1'); //TODO: correggere la regex, legge un solo numero dopo la virgola obbligatoria
-  final TextEditingController capController =
-      TextEditingController(text: '82091');
-  final TextEditingController provinciaController =
-      TextEditingController(text: 'RO');
-  final TextEditingController emailController =
-      TextEditingController(text: 'mario@gmail.com');
-  final TextEditingController oppressoreController =
-      TextEditingController(text: 'Leonardo Schiavo');
-  final TextEditingController nomeVittimaController =
-      TextEditingController(text: 'Biscotto');
-  final TextEditingController cognomeVittimaController =
-      TextEditingController(text: 'Frugieri');
-  final TextEditingController descrizioneController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController surnameController;
+  late TextEditingController numberController;
+  late TextEditingController indirizzoController;
+  late TextEditingController capController;
+  late TextEditingController provinciaController;
+  late TextEditingController emailController;
+  late TextEditingController oppressoreController;
+  late TextEditingController nomeVittimaController;
+  late TextEditingController cognomeVittimaController;
+  late TextEditingController descrizioneController;
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]+$");
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -60,7 +54,22 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   String? vittima1, vittima2;
   String? consenso1, consenso2;
   bool consensoController = false;
-  late SPID? spidUtente;
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: spid.nome);
+    surnameController = TextEditingController(text: spid.cognome);
+    numberController = TextEditingController(text: spid.numCellulare);
+    indirizzoController = TextEditingController(text: spid.domicilioFisico);
+    capController = TextEditingController();
+    provinciaController = TextEditingController(text: spid.provinciaNascita);
+    emailController = TextEditingController(text: spid.indirizzoEmail);
+    oppressoreController = TextEditingController();
+    nomeVittimaController = TextEditingController();
+    cognomeVittimaController = TextEditingController();
+    descrizioneController = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -264,94 +273,6 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   if (_currentStep == 0) {
                     return Row(
                       children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'Nome'),
-                          controller: nameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il nome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Cognome'),
-                          controller: surnameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il cognome';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Indirizzo'),
-                          controller: indirizzoController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci un indirizzo';
-                            } else if (!regexIndirizzo.hasMatch(value)) {
-                              return 'Per favore, inserisci un indirizzo valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(labelText: 'CAP'),
-                          controller: capController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il CAP';
-                            } else if (!regexCap.hasMatch(value)) {
-                              return 'Per favore, inserisci un CAP valido';
-                            }
-
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Sigla provincia'),
-                          controller: provinciaController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci la provincia';
-                            } else if (!regexProvincia.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.phone,
-                          controller: numberController,
-                          decoration: const InputDecoration(
-                              labelText: 'Numero telefonico'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci il numero telefonico';
-                            } else if (!regexCellulare.hasMatch(value)) {
-                              return 'Per favore, inserisci una provincia valida';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                              labelText: 'Indirizzo e-mail'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Per favore, inserisci l\'indirizzo e-mail';
-                            } else if (!regexEmail.hasMatch(value)) {
-                              return 'Per favore, inserisci una e-mail valida';
-                            }
-                            return null;
-                          },
-                        ),
                         ElevatedButton(
                           onPressed: details.onStepContinue,
                           style: ThemeText.bottoneRosso,
@@ -797,7 +718,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
     //   const SnackBar(content: Text('Inoltro denuncia in corso...')),
     // );
     DenunciaController control = DenunciaController();
-    spidUtente = await control.retrieveSpidByUtente(utente);
+    SPID? spidUtente = spid;
     if (spidUtente != null) {
       Timestamp convertedDate =
           Timestamp.fromDate(spidUtente!.getDataScadenzaDocumento);
