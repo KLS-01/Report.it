@@ -18,235 +18,238 @@ class _InformativaState extends State<Informativa> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      color: Theme.of(context).backgroundColor,
-      duration: const Duration(seconds: 1),
-      child: ListView(
-        children: [
-          const WidgetInfo(
-            titolo: "Informativa",
-            corpo:
-                "Vuoi sapere di più sulle discriminazioni?\nEcco qui una sezione FAQ!",
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-            child: CarouselSlider(
-                options: CarouselOptions(
-                  enableInfiniteScroll: true,
-                  viewportFraction: 1,
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index;
-                    });
-                  },
-                ),
-                items: carousels.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                          color: Colors.grey.shade200,
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  i.title,
-                                  style: ThemeText.titoloInoltro,
-                                ),
-                                const SizedBox(width: 10),
-                              ],
-                            ),
-                            Image.asset(
-                              i.imagePath,
-                              scale: 7,
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: i.body != ''
-                                    ? (Text(
-                                        i.body,
-                                        style: ThemeText.corpoInoltro,
-                                        textAlign: TextAlign.center,
-                                      ))
-                                    : (ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                              createRouteTo(FAQinformativa()));
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          elevation: 4,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                        ),
-                                        child: const Text(
-                                          "Leggi di più",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
+    return Scaffold(
+      body: AnimatedContainer(
+        color: ThemeText.theme.backgroundColor,
+        duration: const Duration(seconds: 1),
+        child: ListView(
+          children: [
+            const WidgetInfo(
+              titolo: "Informativa",
+              corpo:
+                  "Vuoi sapere di più sulle discriminazioni?\nEcco qui una sezione FAQ!",
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+              child: CarouselSlider(
+                  options: CarouselOptions(
+                    enableInfiniteScroll: true,
+                    viewportFraction: 1,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _current = index;
+                      });
+                    },
+                  ),
+                  items: carousels.map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: Colors.grey.shade200,
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    i.title,
+                                    style: ThemeText.titoloInoltro,
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+                              Image.asset(
+                                i.imagePath,
+                                scale: 7,
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10, top: 10),
+                                  child: i.body != ''
+                                      ? (Text(
+                                          i.body,
+                                          style: ThemeText.corpoInoltro,
+                                          textAlign: TextAlign.center,
+                                        ))
+                                      : (ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                                createRouteTo(
+                                                    FAQinformativa()));
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            elevation: 4,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
                                           ),
-                                        ),
-                                      ))),
-                            const SizedBox(
-                              height: 10,
+                                          child: const Text(
+                                            "Leggi di più",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ))),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }).toList()),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: carousels.asMap().entries.map((entry) {
+                return GestureDetector(
+                  // onTap: () => _controller.animateToPage(entry.key),
+                  child: Container(
+                    width: 12.0,
+                    height: 12.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : const Color.fromRGBO(219, 29, 69, 1))
+                            .withOpacity(_current == entry.key ? 1.0 : 0.4)),
+                  ),
+                );
+              }).toList(),
+            ),
+            const WidgetInfo(
+                titolo: "Contatti",
+                corpo:
+                    "Hai bisogno di aiuto?\nEcco qui i contatti delle forze dell'ordine!"),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Material(
+                elevation: 5,
+                color: Colors.grey.shade200,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Polizia',
+                              style: ThemeText.chiamataGIC,
+                            ),
+                            const SizedBox(width: 5),
+                            Container(
+                              height: 40,
+                              decoration: ThemeText.bottoneChiamata,
+                              child: TextButton(
+                                onPressed: () async {
+                                  FlutterPhoneDirectCaller.callNumber('113');
+                                },
+                                child: const Text(
+                                  '113',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Carabinieri',
+                              style: ThemeText.chiamataGIC,
+                            ),
+                            const SizedBox(width: 5),
+                            Container(
+                              height: 40,
+                              decoration: ThemeText.bottoneChiamata,
+                              child: TextButton(
+                                onPressed: () async {
+                                  FlutterPhoneDirectCaller.callNumber('112');
+                                },
+                                child: const Text(
+                                  '112',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      );
-                    },
-                  );
-                }).toList()),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: carousels.asMap().entries.map((entry) {
-              return GestureDetector(
-                // onTap: () => _controller.animateToPage(entry.key),
-                child: Container(
-                  width: 12.0,
-                  height: 12.0,
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 4.0),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: (Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : const Color.fromRGBO(219, 29, 69, 1))
-                          .withOpacity(_current == entry.key ? 1.0 : 0.4)),
-                ),
-              );
-            }).toList(),
-          ),
-          const WidgetInfo(
-              titolo: "Contatti",
-              corpo:
-                  "Hai bisogno di aiuto?\nEcco qui i contatti delle forze dell'ordine!"),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
-            child: Material(
-              elevation: 5,
-              color: Colors.grey.shade200,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Polizia',
-                            style: ThemeText.chiamataGIC,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 40,
-                            decoration: ThemeText.bottoneChiamata,
-                            child: TextButton(
-                              onPressed: () async {
-                                FlutterPhoneDirectCaller.callNumber('113');
-                              },
-                              child: const Text(
-                                '113',
-                                style: TextStyle(fontSize: 20),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Guardia di Finanza',
+                              style: ThemeText.chiamataGIC,
+                            ),
+                            const SizedBox(width: 5),
+                            Container(
+                              height: 40,
+                              decoration: ThemeText.bottoneChiamata,
+                              child: TextButton(
+                                onPressed: () async {
+                                  FlutterPhoneDirectCaller.callNumber('117');
+                                },
+                                child: const Text(
+                                  '117',
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Carabinieri',
-                            style: ThemeText.chiamataGIC,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 40,
-                            decoration: ThemeText.bottoneChiamata,
-                            child: TextButton(
-                              onPressed: () async {
-                                FlutterPhoneDirectCaller.callNumber('112');
-                              },
-                              child: const Text(
-                                '112',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Guardia di Finanza',
-                            style: ThemeText.chiamataGIC,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 40,
-                            decoration: ThemeText.bottoneChiamata,
-                            child: TextButton(
-                              onPressed: () async {
-                                FlutterPhoneDirectCaller.callNumber('117');
-                              },
-                              child: const Text(
-                                '117',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: (() {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: ((context) => HomeChat()),
-                ),
-              );
-            }),
-            backgroundColor: Color.fromRGBO(219, 29, 69, 1),
-            child: Icon(Icons.android, size: 30),
-          ),
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) => HomeChat()),
+            ),
+          );
+        }),
+        backgroundColor: ThemeText.theme.primaryColor,
+        child: Icon(Icons.android, size: 30),
       ),
     );
   }
