@@ -264,7 +264,6 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   if (_currentStep == 0) {
                     return Row(
                       children: <Widget>[
-
                         TextFormField(
                           decoration: const InputDecoration(labelText: 'Nome'),
                           controller: nameController,
@@ -352,12 +351,11 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                             }
                             return null;
                           },
-
+                        ),
                         ElevatedButton(
                           onPressed: details.onStepContinue,
                           style: ThemeText.bottoneRosso,
                           child: const Text('Continua'),
-
                         ),
                       ],
                     );

@@ -343,7 +343,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.1.2"
   geolocator:
     dependency: "direct main"
     description:
@@ -428,15 +434,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.20-nullsafety.5"
-
-  fluttertoast:
-    dependency: "direct main"
-    description:
-      name: fluttertoast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.1.2"
-
   http:
     dependency: "direct main"
     description:
