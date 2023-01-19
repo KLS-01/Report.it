@@ -10,12 +10,13 @@ class HomeChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Aiuto Chat-bot", style: ThemeText.titoloSezione),
-          backgroundColor: ThemeText.theme.backgroundColor,
-          iconTheme: IconThemeData(color: ThemeText.theme.primaryColor),
-        ),
-        body: crealista(list: ChatBotController().retrieveAll()));
+      appBar: AppBar(
+        title: const Text("Aiuto Chat-bot", style: ThemeText.titoloSezione),
+        backgroundColor: ThemeText.theme.backgroundColor,
+        iconTheme: IconThemeData(color: ThemeText.theme.primaryColor),
+      ),
+      body: crealista(list: ChatBotController().retrieveAll()),
+    );
   }
 }
 

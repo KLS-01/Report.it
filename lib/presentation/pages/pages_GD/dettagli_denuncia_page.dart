@@ -223,10 +223,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
-                            child: Expanded(
-                              child: Text(d.descrizione,
-                                  overflow: TextOverflow.fade),
-                            ),
+                            child: Text(d.descrizione,
+                                overflow: TextOverflow.fade),
                           ),
                         ),
                         Container(
@@ -303,10 +301,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
-                            child: Expanded(
-                              child: Text(d.descrizione,
-                                  overflow: TextOverflow.fade),
-                            ),
+                            child: Text(d.descrizione,
+                                overflow: TextOverflow.fade),
                           ),
                         ),
                         Container(

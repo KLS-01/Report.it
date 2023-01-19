@@ -44,8 +44,11 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
       }
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Sezione Prenotazione Psicologica',
-              style: ThemeText.titoloSezione),
+          title: const Text(
+            'Sezione Prenotazione Psicologica',
+            style: ThemeText.titoloSezione,
+            overflow: TextOverflow.visible,
+          ),
           elevation: 0,
           backgroundColor: Theme.of(context).backgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.dark,

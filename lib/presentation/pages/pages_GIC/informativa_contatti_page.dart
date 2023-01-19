@@ -130,7 +130,7 @@ class _InformativaState extends State<Informativa> {
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
-                                : const Color.fromRGBO(219, 29, 69, 1))
+                                : ThemeText.theme.primaryColor)
                             .withOpacity(_current == entry.key ? 1.0 : 0.4)),
                   ),
                 );
