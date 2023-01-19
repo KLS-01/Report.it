@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:report_it/presentation/pages/pages_GC/home_chat.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
@@ -17,6 +18,7 @@ class _InformativaState extends State<Informativa> {
 
   @override
   Widget build(BuildContext context) {
+
     return AnimatedContainer(
       color: Theme.of(context).backgroundColor,
       duration: const Duration(seconds: 1),
@@ -110,9 +112,99 @@ class _InformativaState extends State<Informativa> {
                       ),
                     );
                   },
+                ),
+                items: carousels.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.shade200,
+                        ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  i.title,
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                                const SizedBox(width: 10),
+                              ],
+                            ),
+                            Image.asset(
+                              i.imagePath,
+                              scale: 7,
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
+                                child: i.body != ''
+                                    ? (Text(
+                                        i.body,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        textAlign: TextAlign.center,
+                                      ))
+                                    : (ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              createRouteTo(FAQinformativa()));
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          elevation: 4,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
+                                        ),
+                                        child: const Text(
+                                          "Leggi di più",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ))),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: carousels.asMap().entries.map((entry) {
+                return GestureDetector(
+                  // onTap: () => _controller.animateToPage(entry.key),
+                  child: Container(
+                    width: 12.0,
+                    height: 12.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : const Color.fromRGBO(219, 29, 69, 1))
+                            .withOpacity(_current == entry.key ? 1.0 : 0.4)),
+                  ),
                 );
               }).toList(),
             ),
+
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -185,6 +277,7 @@ class _InformativaState extends State<Informativa> {
                           const Text(
                             'Carabinieri',
                             style: ThemeText.chiamataGIC,
+
                           ),
                           const SizedBox(width: 5),
                           Container(
@@ -233,8 +326,19 @@ class _InformativaState extends State<Informativa> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) => HomeChat()),
+            ),
+          );
+        }),
+        backgroundColor: Color.fromRGBO(219, 29, 69, 1),
+        child: Icon(Icons.android, size: 30),
       ),
     );
   }

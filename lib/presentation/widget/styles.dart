@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Palette {
   static const MaterialColor coloriPalette = MaterialColor(
     0xFFDB1D45, // 0%
@@ -150,6 +151,7 @@ abstract class ThemeText {
     ],
   );
 
+
   static BoxDecoration boxVisualizza = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
@@ -162,6 +164,7 @@ abstract class ThemeText {
       )
     ],
   );
+  
   static BoxDecoration boxRossoDettaglio = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),

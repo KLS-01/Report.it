@@ -49,7 +49,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]+$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -264,10 +264,100 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   if (_currentStep == 0) {
                     return Row(
                       children: <Widget>[
+
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'Nome'),
+                          controller: nameController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il nome';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Cognome'),
+                          controller: surnameController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il cognome';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Indirizzo'),
+                          controller: indirizzoController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci un indirizzo';
+                            } else if (!regexIndirizzo.hasMatch(value)) {
+                              return 'Per favore, inserisci un indirizzo valida';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'CAP'),
+                          controller: capController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il CAP';
+                            } else if (!regexCap.hasMatch(value)) {
+                              return 'Per favore, inserisci un CAP valido';
+                            }
+
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'Sigla provincia'),
+                          controller: provinciaController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci la provincia';
+                            } else if (!regexProvincia.hasMatch(value)) {
+                              return 'Per favore, inserisci una provincia valida';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          controller: numberController,
+                          decoration: const InputDecoration(
+                              labelText: 'Numero telefonico'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci il numero telefonico';
+                            } else if (!regexCellulare.hasMatch(value)) {
+                              return 'Per favore, inserisci una provincia valida';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                              labelText: 'Indirizzo e-mail'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Per favore, inserisci l\'indirizzo e-mail';
+                            } else if (!regexEmail.hasMatch(value)) {
+                              return 'Per favore, inserisci una e-mail valida';
+                            }
+                            return null;
+                          },
+
                         ElevatedButton(
                           onPressed: details.onStepContinue,
                           style: ThemeText.bottoneRosso,
                           child: const Text('Continua'),
+
                         ),
                       ],
                     );
