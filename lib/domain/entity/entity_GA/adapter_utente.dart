@@ -1,21 +1,22 @@
 import 'package:report_it/domain/entity/adapter.dart';
+import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
 
 class AdapterUtente implements Adapter {
   @override
   toMap(object) {
-    // TODO: implement toMap
-    throw UnimplementedError();
+    return {
+      "CF": object.cf,
+      "id": object.id,
+    };
   }
 
   @override
   fromJson(Map<String, dynamic> json) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
+    return Utente(json["CF"], json["id"]);
   }
 
   @override
   fromMap(map) {
-    // TODO: implement fromMap
-    throw UnimplementedError();
+    return Utente(map['CF'], map["id"]);
   }
 }

@@ -1,33 +1,40 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import '../../widget/styles.dart';
 
 class InoltroPrenotazione extends StatefulWidget {
   final SuperUtente utente;
+  final SPID spid;
 
-  InoltroPrenotazione({required this.utente});
+  InoltroPrenotazione({required this.utente, required this.spid});
   @override
-  _InoltroPrenotazione createState() => _InoltroPrenotazione(utente: utente);
+  _InoltroPrenotazione createState() =>
+      _InoltroPrenotazione(utente: utente, spid: spid);
 }
 
 class _InoltroPrenotazione extends State<InoltroPrenotazione> {
-  _InoltroPrenotazione({required this.utente});
+  _InoltroPrenotazione({required this.utente, required this.spid});
   final SuperUtente utente;
+  final SPID spid;
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController surnameController = TextEditingController();
-  final TextEditingController numberController = TextEditingController();
-  final TextEditingController indirizzoController = TextEditingController();
-  final TextEditingController capController = TextEditingController();
-  final TextEditingController provinciaController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController cfController = TextEditingController();
-  final TextEditingController descrizioneController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController surnameController;
+  late TextEditingController numberController;
+  late TextEditingController indirizzoController = TextEditingController();
+  late TextEditingController capController = TextEditingController();
+  late TextEditingController provinciaController;
+  late TextEditingController emailController;
+  late TextEditingController cfController;
+  late TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
@@ -43,6 +50,17 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   String? consenso1, consenso2;
   FilePickerResult? impegnativaController;
   bool impegnativa = false;
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: spid.nome);
+    surnameController = TextEditingController(text: spid.cognome);
+    numberController = TextEditingController(text: spid.numCellulare);
+    provinciaController = TextEditingController(text: spid.provinciaNascita);
+    emailController = TextEditingController(text: spid.indirizzoEmail);
+    cfController = TextEditingController(text: spid.cf);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -450,9 +468,10 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
     setState(() {});
   }
 
-  void createRecord(SuperUtente? utente) async {
-    PrenotazioneController control = PrenotazioneController();
-    var result = control.addPrenotazioneControl(
+  void createRecord(SuperUtente utente) async {
+    PrenotazioneController prenotazioneControl = PrenotazioneController();
+
+    var result = prenotazioneControl.addPrenotazioneControl(
         utente: utente,
         nome: nameController.text,
         cognome: surnameController.text,
