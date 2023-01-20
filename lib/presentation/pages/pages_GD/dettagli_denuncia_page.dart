@@ -329,7 +329,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           ),
                         ),
                         Consumer<SuperUtente?>(builder: (context, utente, _) {
-                          if (utente?.tipo == TipoUtente.Utente) {
+                          if (utente?.tipo == TipoUtente.Utente && d.statoDenuncia!=StatoDenuncia.NonInCarico) {
                             return Container(
                               decoration: ThemeText.boxRossoDettaglio,
                               padding: const EdgeInsets.symmetric(
