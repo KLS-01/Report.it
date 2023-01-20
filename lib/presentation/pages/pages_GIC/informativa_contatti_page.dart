@@ -251,6 +251,9 @@ class _InformativaState extends State<Informativa> {
               backgroundColor: Color.fromRGBO(219, 29, 69, 1),
               child: Icon(Icons.android, size: 30),
             ),
+            const SizedBox(
+              height: 40,
+            ),
           ],
         ),
       ),
