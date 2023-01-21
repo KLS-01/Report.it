@@ -43,8 +43,8 @@ class Prenotazione {
   get getNomeUtente => nomeUtente;
   set setNomeUtente(nomeUtente) => this.nomeUtente = nomeUtente;
 
-  get getcognomeUtente => cognomeUtente;
-  set setcognomeUtente(cognomeUtente) => this.cognomeUtente = cognomeUtente;
+  get getCognomeUtente => cognomeUtente;
+  set setCognomeUtente(cognomeUtente) => this.cognomeUtente = cognomeUtente;
 
   get getNumeroUtente => numeroUtente;
   set setNumeroUtente(numeroUtente) => this.numeroUtente = numeroUtente;

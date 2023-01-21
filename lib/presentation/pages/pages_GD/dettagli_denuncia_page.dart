@@ -88,117 +88,199 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Nome: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Nome: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.nomeDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.nomeDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Cognome: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Cognome: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.cognomeDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.cognomeDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Indirizzo: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Indirizzo: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.indirizzoDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.indirizzoDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'CAP: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "CAP: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.capDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.capDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Provincia: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Provincia: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.provinciaDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.provinciaDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Cellulare: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Cellulare: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.cellulareDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.cellulareDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'E-mail: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "E-mail: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.emailDenunciante}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.emailDenunciante}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Consumer<SuperUtente?>(
                                   builder: (context, utente, _) {
                                     if (utente?.tipo == TipoUtente.UffPolGiud) {
                                       return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  'Tipo documento del denunciante: ${d.tipoDocDenunciante}',
+                                          RichText(
+                                            text: TextSpan(
+                                              text:
+                                                  "Tipo documento del denunciante: ",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      "${d.tipoDocDenunciante}",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal,
                                                   ),
-                                                  overflow: TextOverflow.fade,
                                                 ),
-                                              ),
-                                              // Text(
-                                              //     ' ${d.tipoDocDenunciante}'),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Numero documento: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: "Numero documento: ",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              Text('${d.numeroDocDenunciante}'),
-                                            ],
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      "${d.numeroDocDenunciante}",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Scadenza documento: ',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: "Scadenza documento: ",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              Text('${d.numeroDocDenunciante}'),
-                                            ],
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      "${d.scadenzaDocDenunciante}",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       );
@@ -242,25 +324,41 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Nome: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Nome: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.nomeVittima}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.nomeVittima}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Cognome: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Cognome: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text('${d.cognomeVittima}'),
-                                  ],
+                                    children: [
+                                      TextSpan(
+                                        text: "${d.cognomeVittima}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -278,14 +376,23 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Nome oppressore: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                            child: RichText(
+                              text: TextSpan(
+                                text: "Nome oppressore: ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Text('${d.denunciato}'),
-                              ],
+                                children: [
+                                  TextSpan(
+                                    text: "${d.denunciato}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -317,14 +424,23 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Consenso: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                            child: RichText(
+                              text: TextSpan(
+                                text: "Consenso: ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Text('${d.alreadyFiled}'),
-                              ],
+                                children: [
+                                  TextSpan(
+                                    text: "${d.alreadyFiled}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -343,64 +459,103 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                   labelStyle: ThemeText.titoloDettaglio,
                                   border: InputBorder.none,
                                 ),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text:
+                                            "Ufficiale di Polizia Giudiziaria: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                         children: [
-                                          const Text(
-                                            'Ufficiale di Polizia Giudiziaria: ',
+                                          TextSpan(
+                                            text:
+                                                "${d.cognomeUff} ${d.nomeUff}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                           ),
-                                          Text('${d.cognomeUff} ${d.nomeUff}'),
                                         ],
                                       ),
-                                      Row(
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: "Grado: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                         children: [
-                                          const Text(
-                                            'Grado: ',
+                                          TextSpan(
+                                            text: "${d.gradoUff}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                           ),
-                                          Text('${d.gradoUff}'),
                                         ],
                                       ),
-                                      Row(
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: "Tipo di Ufficiale: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                         children: [
-                                          const Text(
-                                            'Tipo di Ufficiale:',
+                                          TextSpan(
+                                            text: "${d.tipoUff}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                           ),
-                                          Text('${d.tipoUff}'),
                                         ],
                                       ),
-                                      Row(
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: "Caserma di riferimento: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                         children: [
-                                          const Text(
-                                            'Caserma di riferimento: ',
+                                          TextSpan(
+                                            text: "${d.nomeCaserma}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                           ),
-                                          Text('${d.nomeCaserma}'),
                                         ],
                                       ),
-                                      Row(
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        text:
+                                            "Indirizzo caserma: VIA, CAP, CITTÀ: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                         children: [
-                                          const Text(
-                                            'Indirizzo caserma: VIA, CAP, CITTA\' ',
+                                          TextSpan(
+                                            text: "${d.coordCaserma}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                           ),
-                                          Text('${d.coordCaserma}'),
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
