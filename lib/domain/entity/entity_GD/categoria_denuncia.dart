@@ -1,19 +1,19 @@
 enum CategoriaDenuncia {
-  Razza,
+//   Razza,
   Colore,
   OrigineNazionale,
   Disabilita,
   Eta,
-  Sesso,
+//   Sesso,
   OrientamentoSessuale,
   Religione,
   Stirpe,
   Gender,
-  Etnicita,
+  Etnia,
   IdentitaDiGenere,
   EspressioneDiGenere,
   Fede,
-  Veterano,
+//   Veterano,
   StoriaPersonale,
-  BassoReddito
+  Reddito
 }

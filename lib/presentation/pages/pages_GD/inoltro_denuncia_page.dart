@@ -186,6 +186,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 setState(() {
                   vittima1 = value.toString();
                   vittima2 = null;
+                  nomeVittimaController = nameController;
+                  cognomeVittimaController = surnameController;
                 });
               }),
             ),
@@ -446,7 +448,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           ),
                           RadioListTile(
                             title: const Text("Colore della pelle"),
-                            value: "ColoreDellaPelle",
+                            value: "Colore",
                             groupValue: discriminazione,
                             onChanged: ((value) {
                               setState(() {
@@ -505,8 +507,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                             }),
                           ),
                           RadioListTile(
-                            title: const Text("GenereSessuale"),
-                            value: "GenereSessuale",
+                            title: const Text("Genere Sessuale"),
+                            value: "Gender",
                             groupValue: discriminazione,
                             onChanged: ((value) {
                               setState(() {
