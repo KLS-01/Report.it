@@ -1,5 +1,5 @@
 import 'package:report_it/domain/entity/adapter.dart';
-import 'package:report_it/domain/entity/entity_GG/adapter_geometry.dart';
+import 'package:report_it/domain/entity/entity_GG/adapter_location.dart';
 import 'package:report_it/domain/entity/entity_GG/place_entity.dart';
 
 class AdapterPlace implements Adapter {
@@ -8,7 +8,7 @@ class AdapterPlace implements Adapter {
     return Place(
       id: json['place_id'],
       name: json['name'],
-      geometry: AdapterGeometry().fromJson(json['geometry']),
+      location: AdapterLocation().fromJson(json['geometry']),
       vicinity: json['vicinity'],
     );
   }

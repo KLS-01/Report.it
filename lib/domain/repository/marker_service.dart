@@ -14,8 +14,7 @@ class MarkerService {
             title: place.name,
             snippet: place.vicinity,
           ),
-          position:
-              LatLng(place.geometry.location.lat, place.geometry.location.lng));
+          position: LatLng(place.location.lat, place.location.lng));
 
       markers.add(marker);
     });

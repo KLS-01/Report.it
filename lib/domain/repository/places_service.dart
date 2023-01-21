@@ -39,8 +39,9 @@ class PlacesService {
 
       return result as List<Place>;
     } catch (e) {
-      print(
-          'ERROR: Connessione non riuscita. Controlla la connessione e riprova.');
+      print('ERROR: $e');
+      //   print(
+      //       'ERROR: Connessione non riuscita. Controlla la connessione e riprova.');
       return <Place>[]; //lista vuota perché non sono stati trovati risultati
     }
   }

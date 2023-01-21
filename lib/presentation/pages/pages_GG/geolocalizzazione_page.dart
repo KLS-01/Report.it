@@ -21,6 +21,7 @@ class _GeolocalizzazionePageState extends State<GeolocalizzazionePage> {
     var currentPositionProvider = context.watch<Position?>();
     final placesProvider = context.watch<Future<List<Place>?>?>();
     final markerService = MarkerService();
+    const altezzaMappa = 0.76;
 
     return SafeArea(
       child: FutureProvider(
@@ -37,8 +38,8 @@ class _GeolocalizzazionePageState extends State<GeolocalizzazionePage> {
                         ? Column(
                             children: <Widget>[
                               SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.78,
+                                height: MediaQuery.of(context).size.height *
+                                    altezzaMappa,
                                 width: MediaQuery.of(context).size.width,
                                 child: GoogleMap(
                                   initialCameraPosition: CameraPosition(
@@ -62,22 +63,41 @@ class _GeolocalizzazionePageState extends State<GeolocalizzazionePage> {
                               ),
                             ],
                           )
-                        : Center(
-                            child: Column(
-                              children: const [
-                                CircularProgressIndicator(),
-                                Text('PLACES == null'),
-                              ],
+                        : Container(
+                            height: MediaQuery.of(context).size.height *
+                                altezzaMappa,
+                            color: const Color.fromRGBO(241, 243, 244, 1),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02,
+                                  ),
+                                  const Text(
+                                      'Ricerca edifici ospedalieri e forze dell\'ordine . . .'),
+                                ],
+                              ),
                             ),
                           );
                   },
                 )
-              : Center(
-                  child: Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('CURRENT POSITION == null'),
-                    ],
+              : Container(
+                  height: MediaQuery.of(context).size.height * altezzaMappa,
+                  color: const Color.fromRGBO(241, 243, 244, 1),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        const Text('Ricerca posizione . . .'),
+                      ],
+                    ),
                   ),
                 ),
         ),

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:report_it/presentation/pages/pages_GG/geolocalizzazione_page.dart';
 import 'package:report_it/presentation/pages/pages_GIC/Informativa_contatti_page.dart';
 import 'package:report_it/presentation/pages/pages_GF/forum_home_page.dart';
-import 'package:report_it/presentation/pages/pages_GPSP/inoltro_prenotazione_page.dart';
-import 'package:report_it/presentation/pages/pages_GG/mappa_page.dart';
 import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
 import 'package:report_it/presentation/pages/pages_GPSP/visualizza_prenotazioni_page.dart';
 import 'package:report_it/presentation/widget/geo_provider_widget.dart';
