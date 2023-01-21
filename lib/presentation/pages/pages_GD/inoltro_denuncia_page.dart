@@ -53,7 +53,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   String? discriminazione;
   String? vittima1, vittima2;
   String? consenso1, consenso2;
+  String? alreadyFiled1, alreadyFiled2;
   bool consensoController = false;
+  late bool alreadyFiledController;
 
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   @override
   Widget build(BuildContext context) {
-    final consenso_widget = Wrap(
+    final consensoWidget = Wrap(
       children: [
         Column(
           children: <Widget>[
@@ -170,7 +172,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       ],
     );
 
-    final vittima_widget = Wrap(
+    final vittimaWidget = Wrap(
       children: [
         Column(
           children: <Widget>[
@@ -245,6 +247,54 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       ],
     );
 
+    final alreadyFiledWidget = Wrap(
+      children: [
+        Column(
+          children: <Widget>[
+            const Text(
+              "Riferire se le segnalazioni riportate sono già state presentate ad un ufficiale di Polizia Giudiziaria e/o al PM sottoforma di denuncia.",
+              style: ThemeText.corpoInoltro,
+            ),
+            RadioListTile(
+              title: const Text("Sì"),
+              value: "Si",
+              groupValue: alreadyFiled1,
+              onChanged: ((value) {
+                setState(() {
+                  alreadyFiled1 = value.toString();
+                  alreadyFiled2 = null;
+                  alreadyFiledController = true;
+                });
+              }),
+            ),
+            RadioListTile(
+              title: const Text("No"),
+              value: "No",
+              groupValue: alreadyFiled2,
+              onChanged: ((value) {
+                setState(() {
+                  alreadyFiled2 = value.toString();
+                  alreadyFiled1 = null;
+                  alreadyFiledController = false;
+                });
+              }),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    // Checkbox(
+    //   checkColor: Colors.white,
+    //   fillColor: MaterialStateProperty.resolveWith(getColor),
+    //   value: isChecked,
+    //   onChanged: (bool? value) {
+    //     setState(() {
+    //       isChecked = value!;
+    //     });
+    //   },
+    // )
+
     return Consumer<SuperUtente?>(
       builder: (context, utente, _) {
         if (utente == null) {
@@ -284,7 +334,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       ],
                     );
                   }
-                  if (_currentStep == 5) {
+                  if (_currentStep == 6) {
                     return TextButton(
                         onPressed: details.onStepCancel,
                         child: const Align(
@@ -597,7 +647,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   Step(
                     title:
                         const Text("Vittima", style: ThemeText.titoloInoltro),
-                    content: vittima_widget,
+                    content: vittimaWidget,
                     isActive: _currentStep >= 0,
                     state: _currentStep >= 2
                         ? StepState.complete
@@ -671,12 +721,23 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   ),
                   Step(
                     title: const Text(
+                      "Info sulla pratica",
+                      style: ThemeText.titoloInoltro,
+                    ),
+                    content: alreadyFiledWidget,
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 5
+                        ? StepState.complete
+                        : StepState.disabled,
+                  ),
+                  Step(
+                    title: const Text(
                       "Consenso",
                       style: ThemeText.titoloInoltro,
                     ),
-                    content: consenso_widget,
+                    content: consensoWidget,
                     isActive: _currentStep >= 0,
-                    state: _currentStep >= 5
+                    state: _currentStep >= 6
                         ? StepState.complete
                         : StepState.disabled,
                   ),
@@ -702,7 +763,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   continued() {
     if (_formKey.currentState!.validate()) {
-      _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      _currentStep <= 7 ? setState(() => _currentStep += 1) : null;
     }
   }
 
@@ -743,7 +804,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
           descrizione: descrizioneController.text,
           cognomeVittima: cognomeVittimaController.text,
           consenso: consensoController,
-          alreadyFiled: false);
+          alreadyFiled: alreadyFiledController);
 
       print(
           "Operation terminated with success on presentation layer, resultId: ");

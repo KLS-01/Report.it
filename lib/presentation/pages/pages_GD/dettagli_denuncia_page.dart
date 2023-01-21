@@ -420,20 +420,20 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               vertical: 10, horizontal: 20),
                           child: InputDecorator(
                             decoration: const InputDecoration(
-                              labelText: 'Consenso',
+                              labelText: 'Info sulla pratica',
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
                             child: RichText(
                               text: TextSpan(
-                                text: "Consenso: ",
+                                text: "Presentata in precedenza: ",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "${d.alreadyFiled}",
+                                    text: d.alreadyFiled ? "sì" : "no",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
