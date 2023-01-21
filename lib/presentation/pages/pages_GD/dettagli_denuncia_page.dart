@@ -223,7 +223,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                               labelStyle: ThemeText.titoloDettaglio,
                               border: InputBorder.none,
                             ),
-                            child: Text(d.descrizione,
+                            child: Text(d.categoriaDenuncia.name,
                                 overflow: TextOverflow.fade),
                           ),
                         ),
@@ -329,7 +329,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                           ),
                         ),
                         Consumer<SuperUtente?>(builder: (context, utente, _) {
-                          if (utente?.tipo == TipoUtente.Utente && d.statoDenuncia!=StatoDenuncia.NonInCarico) {
+                          if (utente?.tipo == TipoUtente.Utente &&
+                              d.statoDenuncia != StatoDenuncia.NonInCarico) {
                             return Container(
                               decoration: ThemeText.boxRossoDettaglio,
                               padding: const EdgeInsets.symmetric(
