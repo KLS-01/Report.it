@@ -5,7 +5,6 @@ class AdapterDiscussione implements Adapter {
   @override
   fromJson(Map<String, dynamic> json) {
     var u = Discussione(
-      json["Categoria"],
       json["DataOraCreazione"].toDate(),
       json["IDCreatore"],
       json["Punteggio"],
@@ -15,6 +14,7 @@ class AdapterDiscussione implements Adapter {
       json["ListaCommenti"],
       json["TipoUtente"],
       pathImmagine: json["pathImmagine"],
+      categoria: json["Categoria"],
     );
     u.id = json["ID"];
 
@@ -32,8 +32,8 @@ class AdapterDiscussione implements Adapter {
       map["Titolo"],
       map["Stato"],
       map["ListaCommenti"],
-      map["TipoUtente"],
       pathImmagine: map["pathImmagine"],
+      categoria: map["Categoria"],
     );
     u.id = map["ID"];
 

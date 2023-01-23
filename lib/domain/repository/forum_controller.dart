@@ -35,33 +35,23 @@ class ForumService {
     return UtenteDiscussioni;
   }
 
-  Future<void> AggiungiDiscussione(
-      String titolo, String testo, String categoria, SuperUtente? superUtente,
+  Future<void> AggiungiDiscussioneUFF(String titolo, String testo,
       [FilePickerResult? file]) async {
     final User? user = auth.currentUser;
 
-    var tipo = "";
-
-    if (superUtente!.tipo == TipoUtente.Utente) {
-      tipo = "Utente";
-    } else if (superUtente.tipo == TipoUtente.UffPolGiud) {
-      tipo = "UFF";
-    } else {
-      tipo = "CUP";
-    }
+    var tipo = "UFF";
 
     if (file != null) {
       var c = ForumDao().caricaImmagne(file);
 
-      Discussione d = Discussione(categoria, DateTime.now(), user!.uid, 0,
-          testo, titolo, "Aperta", [], tipo);
+      Discussione d = Discussione(
+          DateTime.now(), user!.uid, 0, testo, titolo, "Aperta", [], tipo);
       await c.then((value) {
         d.setpathImmagine(value);
       });
       ForumDao.AggiungiDiscussione(d);
     } else {
       Discussione d = Discussione(
-          categoria,
           DateTime.now(),
           user!.uid,
           0,
@@ -140,5 +130,65 @@ class ForumService {
 
   Future<List<Commento?>> retrieveCommenti(String id) async {
     return await ForumDao.RetrieveAllCommenti(id);
+  }
+
+  Future<void> CreaDiscussione(String titolo, String testo,
+      [FilePickerResult? file]) async {
+    final User? user = auth.currentUser;
+
+    var tipo = "Utente";
+
+    if (file != null) {
+      var c = ForumDao().caricaImmagne(file);
+
+      Discussione d = Discussione(
+          DateTime.now(), user!.uid, 0, testo, titolo, "Aperta", [], tipo);
+      await c.then((value) {
+        d.setpathImmagine(value);
+      });
+      ForumDao.AggiungiDiscussione(d);
+    } else {
+      Discussione d = Discussione(
+          DateTime.now(),
+          user!.uid,
+          0,
+          testo,
+          titolo,
+          "Aperta",
+          pathImmagine: "",
+          [],
+          tipo);
+      ForumDao.AggiungiDiscussione(d);
+    }
+  }
+
+  Future<void> AggiungiDiscussioneCUP(String titolo, String testo,
+      [FilePickerResult? file]) async {
+    final User? user = auth.currentUser;
+
+    var tipo = "CUP";
+
+    if (file != null) {
+      var c = ForumDao().caricaImmagne(file);
+
+      Discussione d = Discussione(
+          DateTime.now(), user!.uid, 0, testo, titolo, "Aperta", [], tipo);
+      await c.then((value) {
+        d.setpathImmagine(value);
+      });
+      ForumDao.AggiungiDiscussione(d);
+    } else {
+      Discussione d = Discussione(
+          DateTime.now(),
+          user!.uid,
+          0,
+          testo,
+          titolo,
+          "Aperta",
+          pathImmagine: "",
+          [],
+          tipo);
+      ForumDao.AggiungiDiscussione(d);
+    }
   }
 }

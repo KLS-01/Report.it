@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 import 'package:report_it/presentation/widget/theme.dart';
@@ -19,7 +20,6 @@ class _ForumFormState extends State<ForumForm> {
 
   final TextEditingController titoloController = TextEditingController();
   final TextEditingController testoController = TextEditingController();
-  final TextEditingController categoriaController = TextEditingController();
   FilePickerResult? fileResult;
 
   @override
@@ -123,27 +123,6 @@ class _ForumFormState extends State<ForumForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: categoriaController,
-                        decoration: InputDecoration(
-                          hintText: "Inserisci la categoria del tuo post",
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(20)),
-                          contentPadding: EdgeInsets.all(20.0),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Per favore, inserisci un titolo';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
                           style: ButtonStyle(
@@ -181,16 +160,36 @@ class _ForumFormState extends State<ForumForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   if (fileResult != null) {
-                    ForumService().AggiungiDiscussione(
-                        titoloController.text,
-                        testoController.text,
-                        categoriaController.text,
-                        utente,
-                        fileResult!);
+                    if (utente!.tipo == TipoUtente.Utente) {
+                      ForumService().CreaDiscussione(titoloController.text,
+                          testoController.text, fileResult!);
+                    } else if (utente.tipo == TipoUtente.UffPolGiud) {
+                      ForumService().AggiungiDiscussioneUFF(
+                          titoloController.text,
+                          testoController.text,
+                          fileResult!);
+                    } else {
+                      ForumService().AggiungiDiscussioneCUP(
+                          titoloController.text,
+                          testoController.text,
+                          fileResult!);
+                    }
                     Navigator.pop(context);
                   } else {
-                    ForumService().AggiungiDiscussione(titoloController.text,
-                        testoController.text, categoriaController.text, utente);
+                    if (utente!.tipo == TipoUtente.Utente) {
+                      ForumService().CreaDiscussione(
+                          titoloController.text, testoController.text);
+                    } else if (utente.tipo == TipoUtente.UffPolGiud) {
+                      ForumService().AggiungiDiscussioneUFF(
+                        titoloController.text,
+                        testoController.text,
+                      );
+                    } else {
+                      ForumService().AggiungiDiscussioneCUP(
+                        titoloController.text,
+                        testoController.text,
+                      );
+                    }
                     Navigator.pop(context);
                   }
                 }

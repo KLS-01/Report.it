@@ -240,16 +240,22 @@ class _InformativaState extends State<Informativa> {
             const WidgetInfo(
                 titolo: "Aiuto chat-bot",
                 corpo: "Qualcosa non è chiaro? Prova a chiedere al chat-bot!"),
-            FloatingActionButton(
-              onPressed: (() {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: ((context) => HomeChat()),
-                  ),
-                );
-              }),
-              backgroundColor: Color.fromRGBO(219, 29, 69, 1),
-              child: Icon(Icons.android, size: 30),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100),
+              child: FloatingActionButton.extended(
+                onPressed: (() {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: ((context) => HomeChat()),
+                    ),
+                  );
+                }),
+                label: Text('Avvia Chat-Bot'),
+                icon: Icon(
+                  Icons.android,
+                  size: 30,
+                ),
+              ),
             ),
             const SizedBox(
               height: 40,

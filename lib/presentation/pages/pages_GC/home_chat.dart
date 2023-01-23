@@ -84,30 +84,42 @@ class _crealistaState extends State<crealista> {
                                             }
                                             setState(() {});
                                           }),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(
-                                                  219, 29, 69, 1),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                      255, 78, 78, 78),
-                                                  blurRadius: 1,
-                                                  offset: Offset(1, 1),
-                                                )
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 35),
-                                            child: Text(
-                                              snapshot.data![index]!.domanda,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontFamily: 'Ubuntu',
-                                                  fontSize: 16,
-                                                  color: Colors.white),
+                                          child: Flexible(
+                                            child: ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.75),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromRGBO(
+                                                      219, 29, 69, 1),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Color.fromARGB(
+                                                          255, 78, 78, 78),
+                                                      blurRadius: 1,
+                                                      offset: Offset(1, 1),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 35),
+                                                child: Text(
+                                                  snapshot
+                                                      .data![index]!.domanda,
+                                                  textAlign: TextAlign.start,
+                                                  style: TextStyle(
+                                                      fontFamily: 'Ubuntu',
+                                                      fontSize: 16,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -147,26 +159,37 @@ class _crealistaState extends State<crealista> {
                                                 BorderRadius.circular(20.0)),
                                         color: ThemeText.theme.primaryColor,
                                         child: InkWell(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[350],
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                      255, 78, 78, 78),
-                                                  blurRadius: 1,
-                                                  offset: Offset(1, 1),
-                                                )
-                                              ],
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 35),
-                                            child: Text(
-                                              risposta!,
-                                              textAlign: TextAlign.center,
-                                              style: ThemeText.corpoInoltro,
+                                          child: Flexible(
+                                            child: ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.75),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[350],
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Color.fromARGB(
+                                                          255, 78, 78, 78),
+                                                      blurRadius: 1,
+                                                      offset: Offset(1, 1),
+                                                    )
+                                                  ],
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 35),
+                                                child: Text(
+                                                  risposta!,
+                                                  textAlign: TextAlign.start,
+                                                  style: ThemeText.corpoInoltro,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
