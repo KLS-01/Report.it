@@ -177,11 +177,11 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
         Column(
           children: <Widget>[
             const Text(
-              "Chi ritiene essere stato vittima di discriminazione?",
+              "Chi ritieni essere stato vittima di discriminazione?",
               style: ThemeText.corpoInoltro,
             ),
             RadioListTile(
-              title: const Text("Lei stesso"),
+              title: const Text("Tu stesso"),
               value: "LeiStesso",
               groupValue: vittima1,
               onChanged: ((value) {
