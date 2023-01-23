@@ -2,7 +2,7 @@
     package="com.example.report_it">
     
    <application
-        android:label="report_it"
+        android:label="Report.it"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
