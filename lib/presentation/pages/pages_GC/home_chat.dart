@@ -125,10 +125,10 @@ class _crealistaState extends State<crealista> {
                                         ),
                                       ),
                                       SizedBox(width: 5),
-                                      ImageIcon(
-                                        AssetImage("assets/images/chatbot.png"),
-                                        color: Color.fromRGBO(219, 29, 69, 1),
+                                      Icon(
+                                        Icons.computer,
                                         size: 30,
+                                        color: ThemeText.theme.primaryColor,
                                       ),
                                     ],
                                   ),
@@ -146,8 +146,8 @@ class _crealistaState extends State<crealista> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.computer,
+                                      ImageIcon(
+                                        AssetImage("assets/images/chatbot.png"),
                                         size: 30,
                                       ),
                                       SizedBox(

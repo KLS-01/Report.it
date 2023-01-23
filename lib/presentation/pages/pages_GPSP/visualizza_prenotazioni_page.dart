@@ -50,7 +50,7 @@ class _VisualizzaPrenotazioni extends State<VisualizzaPrenotazioni> {
           title: const Text(
             'Sezione Prenotazione Psicologica',
             style: ThemeText.titoloSezione,
-            overflow: TextOverflow.visible,
+            overflow: TextOverflow.ellipsis,
           ),
           elevation: 0,
           backgroundColor: Theme.of(context).backgroundColor,
