@@ -37,6 +37,7 @@ class _ForumHomeState extends State<ForumHome> {
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             toolbarHeight: 0,
@@ -65,30 +66,29 @@ class _ForumHomeState extends State<ForumHome> {
               Callback: callback,
             )
           ]),
-          floatingActionButton: Visibility(
-            visible: !keyboardIsOpen,
-            child: FloatingActionButton.extended(
-              label: const Text("Pubblica"),
-              heroTag: null,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    //pisnelo
-                    pageBuilder: (_, __, ___) => const ForumForm(),
-                    transitionDuration: const Duration(seconds: 0),
-                    transitionsBuilder: (_, a, __, c) =>
-                        FadeTransition(opacity: a, child: c),
-                  ),
-                ).then((value) {
-                  ForumService().AggiornaLista();
-                  setState(() {});
-                });
-                //
-              },
-              backgroundColor: ThemeText.theme.primaryColor,
-            ),
-          ),
+          floatingActionButton: !keyboardIsOpen
+              ? FloatingActionButton.extended(
+                  label: const Text("Pubblica"),
+                  heroTag: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        //pisnelo
+                        pageBuilder: (_, __, ___) => const ForumForm(),
+                        transitionDuration: const Duration(seconds: 0),
+                        transitionsBuilder: (_, a, __, c) =>
+                            FadeTransition(opacity: a, child: c),
+                      ),
+                    ).then((value) {
+                      ForumService().AggiornaLista();
+                      setState(() {});
+                    });
+                    //
+                  },
+                  backgroundColor: ThemeText.theme.primaryColor,
+                )
+              : Container(),
         ),
       ),
     );

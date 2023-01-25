@@ -16,13 +16,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String userWorker = 'WRK';
     String userSPID = 'SPID';
-
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
 
     late SnackBar snackBar;
     late String loginOutcome;

@@ -694,7 +694,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       child: Column(
                         children: <Widget>[
                           const Text(
-                            "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
+                            "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alle sue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
                             style: ThemeText.corpoInoltro,
                           ),
                           const SizedBox(
