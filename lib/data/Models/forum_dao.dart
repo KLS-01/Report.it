@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:mockito/annotations.dart';
-import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
@@ -35,15 +34,18 @@ class ForumDao {
         }
 
         if (ut.tipoUtente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.idCreatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoUtente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.idCreatore);
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.idCreatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }
@@ -68,16 +70,19 @@ class ForumDao {
         ut.id = c.id;
 
         if (ut.tipoutente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.creatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.creatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoutente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.creatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.creatore);
 
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.creatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.creatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }
@@ -112,16 +117,19 @@ class ForumDao {
         }
 
         if (ut.tipoUtente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.idCreatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoUtente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.idCreatore);
 
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.idCreatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }

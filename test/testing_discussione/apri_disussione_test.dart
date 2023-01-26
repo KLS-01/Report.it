@@ -11,11 +11,13 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 import './apri_disussione_test.mocks.dart';
 
+/*
 @GenerateMocks([
   ForumDao
 ], customMocks: [
   MockSpec<ForumDao>(as: #MockForumDaoRelaxed),
 ])
+*/
 void main() {
   late ForumDao dao;
   late MockUser user;

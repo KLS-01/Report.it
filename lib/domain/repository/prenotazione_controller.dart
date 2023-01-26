@@ -136,19 +136,29 @@ class PrenotazioneController {
     return Future.error(StackTrace);
   }
 
-  Future<bool> inizializzaPrenotazione(String idPrenotazione,
+  Future<String> inizializzaPrenotazione(String idPrenotazione,
       SuperUtente utente, Timestamp dataPrenotazione, String psicologo) async {
+    if (psicologo.length > 20 || psicologo.isEmpty) {
+      return "Lunghezza nome psicologo non valida";
+    }
+
+    final timestamp1 = DateTime.now().millisecondsSinceEpoch;
+
+    if (dataPrenotazione.compareTo(Timestamp.fromDate(DateTime.now())) < 0) {
+      return "Data non valida";
+    }
+
     if (utente.tipo != TipoUtente.OperatoreCup) {
-      return false;
+      return "tipo utente non valido";
     } else {
       Prenotazione? prenotazione =
           await prenotazioneDao.retrieveById(idPrenotazione);
       if (prenotazione == null) {
-        return false;
+        return "prenotazione non presente sul db";
       } else {
-        OperatoreCUP? op = await RetrieveCUPByID(utente.id);
+        OperatoreCUP? op = await AutenticazioneDAO().RetrieveCUPByID(utente.id);
         if (op == null) {
-          return false;
+          return "utente non presente nel db";
         } else {
           prenotazioneDao.accettaPrenotazione(
               idPrenotazione: idPrenotazione,
@@ -157,7 +167,7 @@ class PrenotazioneController {
               dataPrenotazione: dataPrenotazione,
               nomeASL: op.getAsl,
               psicologo: psicologo);
-          return true;
+          return "Corretto";
         }
       }
     }

@@ -28,9 +28,10 @@ class AuthenticationService {
     if (user == null) {
       return null;
     } else {
-      Utente? ut = await RetrieveUtenteByID(user.uid);
-      UffPolGiud? uff = await RetrieveUffPolGiudByID(user.uid);
-      OperatoreCUP? op = await RetrieveCUPByID(user.uid);
+      Utente? ut = await AutenticazioneDAO().RetrieveUtenteByID(user.uid);
+      UffPolGiud? uff =
+          await AutenticazioneDAO().RetrieveUffPolGiudByID(user.uid);
+      OperatoreCUP? op = await AutenticazioneDAO().RetrieveCUPByID(user.uid);
       if (ut != null) {
         return SuperUtente(user.uid, TipoUtente.Utente);
       } else if (uff != null) {
@@ -66,7 +67,7 @@ class AuthenticationService {
     try {
       if (userType == "SPID") {
         try {
-          var u = await RetrieveSPIDByEmail(email);
+          var u = await AutenticazioneDAO().RetrieveSPIDByEmail(email);
 
           if (u!.password != password) {
             print("password sbagliata"); //only for testing TODO: Remove
@@ -80,7 +81,7 @@ class AuthenticationService {
         }
       } else {
         try {
-          var u = await RetrieveSPIDByEmail(email);
+          var u = await AutenticazioneDAO().RetrieveSPIDByEmail(email);
 
           if (u != null) {
             return 'invalid-email';
@@ -109,6 +110,6 @@ class AuthenticationService {
   }
 
   Future<SPID?> getSpid(String? id) {
-    return RetrieveSPIDByID(id!);
+    return AutenticazioneDAO().RetrieveSPIDByID(id!);
   }
 }

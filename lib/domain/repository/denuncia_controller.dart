@@ -133,7 +133,8 @@ class DenunciaController {
     if (utente.tipo != TipoUtente.UffPolGiud) {
       return;
     } else {
-      UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
+      UffPolGiud? uff =
+          await AutenticazioneDAO().RetrieveUffPolGiudByID(utente.id);
       print(uff!.tipoUff);
       if (uff == null) {
         return;
@@ -166,7 +167,7 @@ class DenunciaController {
   }
 
   Future<SPID?> retrieveSpidByUtente(SuperUtente utente) async {
-    Future<SPID?> spidUtente = RetrieveSPIDByID(utente.id);
+    Future<SPID?> spidUtente = AutenticazioneDAO().RetrieveSPIDByID(utente.id);
     return spidUtente;
   }
 }

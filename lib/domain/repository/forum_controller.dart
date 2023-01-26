@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:report_it/data/Models/forum_dao.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
@@ -122,17 +123,17 @@ class ForumService {
     var c = Commento(uid, DateTime.now(), testo, tipo);
 
     if (superUtente.tipo == TipoUtente.OperatoreCup) {
-      await RetrieveCUPByID(uid).then((value) {
+      await AutenticazioneDAO().RetrieveCUPByID(uid).then((value) {
         c.nome = value!.nome;
         c.cognome = value.cognome;
       });
     } else if (superUtente.tipo == TipoUtente.UffPolGiud) {
-      await RetrieveUffPolGiudByID(uid).then((value) {
+      await AutenticazioneDAO().RetrieveUffPolGiudByID(uid).then((value) {
         c.nome = value!.nome;
         c.cognome = value.cognome;
       });
     } else {
-      await RetrieveSPIDByID(uid).then((value) {
+      await AutenticazioneDAO().RetrieveSPIDByID(uid).then((value) {
         c.nome = value!.nome;
         c.cognome = value.cognome;
       });
