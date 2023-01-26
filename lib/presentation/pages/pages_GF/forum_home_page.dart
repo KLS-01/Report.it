@@ -29,7 +29,7 @@ class _ForumHomeState extends State<ForumHome> {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sezione Forum', style: ThemeText.titoloSezione),
+        title: const Text('Forum', style: ThemeText.titoloSezione),
         elevation: 0,
         backgroundColor: Theme.of(context).backgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle.dark,

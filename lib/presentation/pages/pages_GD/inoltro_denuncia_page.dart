@@ -309,7 +309,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 color: Color.fromRGBO(219, 29, 69, 1),
               ),
               title: const Text(
-                "Modulo inoltro denuncia",
+                "Inoltro denuncia",
                 style: ThemeText.titoloSezione,
               ),
               elevation: 3,

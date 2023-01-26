@@ -42,7 +42,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
         title: const Text(
-          'Sezione Denunce',
+          'Denunce',
           style: ThemeText.titoloSezione,
         ),
         iconTheme: const IconThemeData(

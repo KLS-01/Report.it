@@ -55,7 +55,7 @@ class _VisualizzaStoricoDenunceUtentePageState
       return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Sezione Denunce',
+            'Denunce',
             style: ThemeText.titoloSezione,
           ),
           elevation: 0,
