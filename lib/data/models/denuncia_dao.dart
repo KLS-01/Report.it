@@ -12,15 +12,15 @@ import '../../domain/entity/entity_GD/stato_denuncia.dart';
 var db = FirebaseFirestore.instance;
 
 class DenunciaDao {
-  static Future<DocumentReference<Object?>> addDenuncia(Denuncia denuncia) {
-    Future<DocumentReference<Object?>> id = db
+  Future<String> addDenuncia(Denuncia denuncia) {
+    Future<String> id = db
         .collection("Denuncia")
         .add(AdapterDenuncia().toMap(denuncia))
-      ..then((doc) => log('Data added with success with ID: ${doc.id}'));
+      .then((doc) => doc.id);
     return id;
   }
 
-  static void updateId(String id) async {
+  void updateId(String id) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection('Denuncia').doc(id);

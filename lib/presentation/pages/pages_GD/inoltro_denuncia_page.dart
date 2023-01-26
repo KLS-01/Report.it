@@ -806,8 +806,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
           consenso: consensoController,
           alreadyFiled: alreadyFiledController);
 
-      print(
-          "Operation terminated with success on presentation layer, resultId: ");
+      print(await result);
     }
   }
 }
