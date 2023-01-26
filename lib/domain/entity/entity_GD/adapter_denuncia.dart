@@ -38,6 +38,7 @@ class AdapterDenuncia implements Adapter {
         tipoUff: json["TipoUff"] == null
             ? null
             : TipoUfficiale.values.byName(json["TipoUff"]),
+        indirizzoCaserma: json["IndirizzoCaserma"],
         gradoUff: json["GradoUff"]);
   }
 
@@ -71,6 +72,7 @@ class AdapterDenuncia implements Adapter {
         cognomeVittima: map["CognomeVittima"],
         idUff: map["IDUff"],
         tipoUff: map["TipoUff"],
+        indirizzoCaserma: map["IndirizzoiCaserma"],
         gradoUff: map["GradoUff"]);
   }
 
@@ -99,6 +101,7 @@ class AdapterDenuncia implements Adapter {
       "Descrizione": denuncia.descrizione,
       "Stato": denuncia.statoDenuncia.name,
       "NomeCaserma": denuncia.nomeCaserma,
+      "IndirizzoCaserma": denuncia.indirizzoCaserma,
       "CoordCaserma": denuncia.coordCaserma,
       "NomeUff": denuncia.nomeUff,
       "CognomeUff": denuncia.cognomeUff,

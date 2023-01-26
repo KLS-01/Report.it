@@ -24,7 +24,7 @@ class Denuncia {
   Timestamp scadenzaDocDenunciante, dataDenuncia;
   GeoPoint? coordCaserma;
 
-  String? nomeCaserma, nomeUff, cognomeUff, idUff;
+  String? nomeCaserma, nomeUff, cognomeUff, idUff, indirizzoCaserma;
 
   bool consenso = false, alreadyFiled = false;
   String idUtente;
@@ -59,7 +59,8 @@ class Denuncia {
       required this.cognomeVittima,
       required this.idUff,
       required this.tipoUff,
-      required this.gradoUff});
+      required this.gradoUff,
+      required this.indirizzoCaserma});
 
   get getId => id;
   set setId(id) => this.id = id;
@@ -129,6 +130,10 @@ class Denuncia {
   set setAlreadyFiled(alreadyFiled) => this.alreadyFiled = alreadyFiled;
 
   get getIdUtente => idUtente;
+
+  get getIndirizzoCaserma => indirizzoCaserma;
+  set setIndirizzoCaserma(indirizzoCaserma) =>
+      this.indirizzoCaserma = indirizzoCaserma;
 
 //   factory Denuncia.fromJson(Map<String, dynamic> json) {
 //     return Denuncia(

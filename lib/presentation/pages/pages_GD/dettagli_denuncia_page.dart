@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/presentation/widget/styles.dart';
@@ -38,6 +40,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
 
   @override
   Widget build(BuildContext context) {
+    var formatter = DateFormat('dd-MM-yyyy');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -272,7 +275,7 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                               children: [
                                                 TextSpan(
                                                   text:
-                                                      "${d.scadenzaDocDenunciante}",
+                                                      "${formatter.format(DateTime.parse(d.scadenzaDocDenunciante.toDate().toString()))}",
                                                   style: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight:
@@ -509,7 +512,8 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: "${d.tipoUff}",
+                                            text:
+                                                "${d.tipoUff.toString().split(".").last}",
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -538,15 +542,14 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text:
-                                            "Indirizzo caserma: VIA, CAP, CITTÀ: ",
+                                        text: "Indirizzo caserma: ",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: "${d.coordCaserma}",
+                                            text: "${d.indirizzoCaserma}",
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,

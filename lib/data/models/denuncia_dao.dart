@@ -162,7 +162,7 @@ class DenunciaDao {
         "NomeCaserma": nomeCaserma,
         "NomeUff": nomeUff,
         "Stato": "PresaInCarico",
-        "TipoUff": tipoUff,
+        "TipoUff": tipoUff.name,
         "GradoUff": gradoUff
       });
     } catch (e) {

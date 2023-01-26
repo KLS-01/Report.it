@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
@@ -116,6 +117,7 @@ class DenunciaController {
         nomeUff: null,
         statoDenuncia: StatoDenuncia.NonInCarico,
         tipoUff: null,
+        indirizzoCaserma: null,
         gradoUff: null);
 
     String? result;
@@ -132,6 +134,7 @@ class DenunciaController {
       return;
     } else {
       UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
+      print(uff!.tipoUff);
       if (uff == null) {
         return;
       } else {
