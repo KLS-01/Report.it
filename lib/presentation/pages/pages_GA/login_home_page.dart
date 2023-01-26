@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/pages_GA/login_user_page.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 import '../../../domain/repository/authentication_controller.dart';
 import 'authentication_wrapper.dart';
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeText.theme.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,
