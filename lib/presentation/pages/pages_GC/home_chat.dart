@@ -45,7 +45,7 @@ class _crealistaState extends State<crealista> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
-                    CircularProgressIndicator(),
+                    Center(child: CircularProgressIndicator()),
                   ],
                 );
               } else {
