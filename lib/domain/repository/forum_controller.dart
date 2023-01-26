@@ -1,6 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:report_it/data/Models/forum_dao.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
@@ -35,13 +34,27 @@ class ForumService {
     return UtenteDiscussioni;
   }
 
-  Future<void> AggiungiDiscussioneUFF(String titolo, String testo,
+  Future<String> AggiungiDiscussioneUFF(String titolo, String testo,
       [FilePickerResult? file]) async {
     final User? user = auth.currentUser;
+    if (titolo.length > 80 || titolo.isEmpty) {
+      return "titolo troppo lungo";
+    }
 
+    if (testo.length > 400) {
+      return "testo troppo lungo";
+    }
     var tipo = "UFF";
 
     if (file != null) {
+      if (file.files.first.size > 10485760) {
+        return "file troppo grande";
+      }
+
+      if (file.files.first.extension != "png" &&
+          file.files.first.extension != "jpeg") {
+        return "formato file non supportato";
+      }
       var c = ForumDao().caricaImmagne(file);
 
       Discussione d = Discussione(
@@ -49,7 +62,8 @@ class ForumService {
       await c.then((value) {
         d.setpathImmagine(value);
       });
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     } else {
       Discussione d = Discussione(
           DateTime.now(),
@@ -61,7 +75,8 @@ class ForumService {
           pathImmagine: "",
           [],
           tipo);
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     }
   }
 
@@ -80,7 +95,7 @@ class ForumService {
     ForumDao.CambiaStato(id, "Chiusa");
   }
 
-  void ApriDiscussione(String? id) {
+  void CambiaAdapertaDiscussione(String? id) {
     ForumDao.CambiaStato(id, "Aperta");
   }
 
@@ -132,13 +147,29 @@ class ForumService {
     return await ForumDao.RetrieveAllCommenti(id);
   }
 
-  Future<void> CreaDiscussione(String titolo, String testo,
+  Future<String> ApriDiscussione(String titolo, String testo,
       [FilePickerResult? file]) async {
     final User? user = auth.currentUser;
+
+    if (titolo.length > 80 || titolo.isEmpty) {
+      return "titolo troppo lungo";
+    }
+
+    if (testo.length > 400) {
+      return "testo troppo lungo";
+    }
 
     var tipo = "Utente";
 
     if (file != null) {
+      if (file.files.first.size > 10485760) {
+        return "file troppo grande";
+      }
+
+      if (file.files.first.extension != "png" &&
+          file.files.first.extension != "jpeg") {
+        return "formato file non supportato";
+      }
       var c = ForumDao().caricaImmagne(file);
 
       Discussione d = Discussione(
@@ -146,7 +177,8 @@ class ForumService {
       await c.then((value) {
         d.setpathImmagine(value);
       });
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     } else {
       Discussione d = Discussione(
           DateTime.now(),
@@ -158,17 +190,34 @@ class ForumService {
           pathImmagine: "",
           [],
           tipo);
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     }
   }
 
-  Future<void> AggiungiDiscussioneCUP(String titolo, String testo,
+  Future<String> AggiungiDiscussioneCUP(String titolo, String testo,
       [FilePickerResult? file]) async {
     final User? user = auth.currentUser;
+
+    if (titolo.length > 80 || titolo.isEmpty) {
+      return "titolo troppo lungo";
+    }
+
+    if (testo.length > 400) {
+      return "testo troppo lungo";
+    }
 
     var tipo = "CUP";
 
     if (file != null) {
+      if (file.files.first.size > 10485760) {
+        return "file troppo grande";
+      }
+
+      if (file.files.first.extension != "png" &&
+          file.files.first.extension != "jpeg") {
+        return "formato file non supportato";
+      }
       var c = ForumDao().caricaImmagne(file);
 
       Discussione d = Discussione(
@@ -176,7 +225,8 @@ class ForumService {
       await c.then((value) {
         d.setpathImmagine(value);
       });
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     } else {
       Discussione d = Discussione(
           DateTime.now(),
@@ -188,7 +238,8 @@ class ForumService {
           pathImmagine: "",
           [],
           tipo);
-      ForumDao.AggiungiDiscussione(d);
+      ForumDao().AggiungiDiscussione(d);
+      return "tutto ok";
     }
   }
 }

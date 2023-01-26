@@ -161,7 +161,7 @@ class _ForumFormState extends State<ForumForm> {
                 if (_formKey.currentState!.validate()) {
                   if (fileResult != null) {
                     if (utente!.tipo == TipoUtente.Utente) {
-                      ForumService().CreaDiscussione(titoloController.text,
+                      ForumService().ApriDiscussione(titoloController.text,
                           testoController.text, fileResult!);
                     } else if (utente.tipo == TipoUtente.UffPolGiud) {
                       ForumService().AggiungiDiscussioneUFF(
@@ -177,7 +177,7 @@ class _ForumFormState extends State<ForumForm> {
                     Navigator.pop(context);
                   } else {
                     if (utente!.tipo == TipoUtente.Utente) {
-                      ForumService().CreaDiscussione(
+                      ForumService().ApriDiscussione(
                           titoloController.text, testoController.text);
                     } else if (utente.tipo == TipoUtente.UffPolGiud) {
                       ForumService().AggiungiDiscussioneUFF(

@@ -248,8 +248,11 @@ class _CreaDiscussioneState extends State<CreaDiscussione> {
                                     )
                                   : PopupMenuItem(
                                       onTap: (() {
-                                        ForumService().ApriDiscussione(widget
-                                            .snapshot.data![widget.index]!.id);
+                                        ForumService()
+                                            .CambiaAdapertaDiscussione(widget
+                                                .snapshot
+                                                .data![widget.index]!
+                                                .id);
                                         ForumService().AggiornaLista();
                                         widget.callback;
                                       }),

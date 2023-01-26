@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:mockito/annotations.dart';
 import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
@@ -147,7 +148,7 @@ class ForumDao {
     return id;
   }
 
-  static Future<String> AggiungiDiscussione(Discussione discussione) async {
+  Future<String> AggiungiDiscussione(Discussione discussione) async {
     var ref = database.collection("Discussione");
 
     String id =
