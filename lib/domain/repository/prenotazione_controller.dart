@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/data/models/prenotazione_dao.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
@@ -13,30 +13,32 @@ import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 class PrenotazioneController {
   PrenotazioneDao prenotazioneDao = PrenotazioneDao();
+  AutenticazioneDAO authDao = AutenticazioneDAO();
   final FirebaseAuth auth = FirebaseAuth.instance;
-
   Future<String?> addPrenotazioneControl({
-    required utente,
-    required nome,
-    required cognome,
-    required numeroTelefono,
-    required indirizzo,
-    required email,
-    required cf,
-    required cap,
-    required provincia,
-    required impegnativa,
-    required descrizione,
+    required String nome,
+    required String cognome,
+    required String numeroTelefono,
+    required String indirizzo,
+    required String email,
+    required String cf,
+    required String cap,
+    required String provincia,
+    required FilePickerResult impegnativa,
+    required String descrizione,
   }) async {
-    if (utente == null) {
-      print("Non loggato");
-    } else {
-      print("Ok");
-    }
+    final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
+    final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
+    final regexCap = RegExp(r"^[0-9]{5}$");
+    final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
+    final regexCellulare =
+        RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
+    final regexCF = RegExp(
+        r"^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$");
 
     Prenotazione prenotazione = Prenotazione(
         id: null,
-        idUtente: utente!.id,
+        idUtente: auth.currentUser!.uid,
         nomeUtente: nome,
         cognomeUtente: cognome,
         numeroUtente: numeroTelefono,
@@ -52,18 +54,41 @@ class PrenotazioneController {
         impegnativa: null,
         psicologo: null,
         descrizione: descrizione);
-
-    String? result;
-    PrenotazioneDao.addPrenotazione(prenotazione)
-        .then((DocumentReference<Object?> id) {
-      prenotazione.setId = id.id;
-      PrenotazioneDao.updateId(prenotazione.getId);
-      uploadImpegnativa(prenotazione.getId, impegnativa);
-      result = prenotazione.getId;
+    print("Peso in byte: ${impegnativa.files.first.size}");
+    int dim = impegnativa.files.first.size;
+    if (nome.length < 2 || nome.length > 30) {
+      return "Errore: lunghezza nome non valida";
+    } else if (cognome.length < 2 || cognome.length > 30) {
+      return "Errore: lunghezza cognome non valida";
+    } else if (!regexCellulare.hasMatch(numeroTelefono)) {
+      return "Errore: formato numero di telefono non rispettato";
+    } else if (!regexIndirizzo.hasMatch(indirizzo)) {
+      return "Errore: formato indirizzo non rispettato";
+    } else if (!regexEmail.hasMatch(email)) {
+      return "Errore: formato indirizzo email non rispettato";
+    } else if (!regexCF.hasMatch(cf)) {
+      return "Errore: formato codice fiscale non rispettato";
+    } else if (!regexCap.hasMatch(cap)) {
+      return "Errore: formato CAP non rispettato";
+    } else if (!regexProvincia.hasMatch(provincia)) {
+      return "Errore: formato provincia non rispettato";
+    } else if (descrizione.length < 10 || descrizione.length > 500) {
+      return "Errore: lunghezza descrizione non valida";
+    } else if (dim <= 0 || dim > 20971520) {
+      return "Errato: dimensione file non valida";
+    } else if (impegnativa.files.first.extension != "pdf") {
+      return "Errato: estensione del file non supportata (caricare un file in formato pdf)";
+    } else {
+      String result = "false";
+      await prenotazioneDao.addPrenotazione(prenotazione).then((String id) {
+        prenotazione.setId = id;
+        prenotazioneDao.updateId(prenotazione.getId);
+        uploadImpegnativa(prenotazione.getId, impegnativa);
+        result = "true";
+        return result;
+      });
       return result;
-    });
-
-    return result;
+    }
   }
 
   void uploadImpegnativa(
@@ -73,9 +98,9 @@ class PrenotazioneController {
     print(fileName);
     print('${file.readAsBytesSync()}');
 
-    String? url = await PrenotazioneDao.uploadImpegnativa(
+    String? url = await prenotazioneDao.uploadImpegnativa(
         file.readAsBytesSync(), fileName);
-    PrenotazioneDao.updateAttribute(idPrenotazione, "Impegnativa", url);
+    prenotazioneDao.updateAttribute(idPrenotazione, "Impegnativa", url);
   }
 
   Future<List<Prenotazione>> visualizzaAttiveByUtente(
@@ -136,29 +161,19 @@ class PrenotazioneController {
     return Future.error(StackTrace);
   }
 
-  Future<String> inizializzaPrenotazione(String idPrenotazione,
+  Future<bool> inizializzaPrenotazione(String idPrenotazione,
       SuperUtente utente, Timestamp dataPrenotazione, String psicologo) async {
-    if (psicologo.length > 20 || psicologo.isEmpty) {
-      return "Lunghezza nome psicologo non valida";
-    }
-
-    final timestamp1 = DateTime.now().millisecondsSinceEpoch;
-
-    if (dataPrenotazione.compareTo(Timestamp.fromDate(DateTime.now())) < 0) {
-      return "Data non valida";
-    }
-
     if (utente.tipo != TipoUtente.OperatoreCup) {
-      return "tipo utente non valido";
+      return false;
     } else {
       Prenotazione? prenotazione =
           await prenotazioneDao.retrieveById(idPrenotazione);
       if (prenotazione == null) {
-        return "prenotazione non presente sul db";
+        return false;
       } else {
-        OperatoreCUP? op = await AutenticazioneDAO().RetrieveCUPByID(utente.id);
+        OperatoreCUP? op = await authDao.RetrieveCUPByID(utente.id);
         if (op == null) {
-          return "utente non presente nel db";
+          return false;
         } else {
           prenotazioneDao.accettaPrenotazione(
               idPrenotazione: idPrenotazione,
@@ -167,7 +182,7 @@ class PrenotazioneController {
               dataPrenotazione: dataPrenotazione,
               nomeASL: op.getAsl,
               psicologo: psicologo);
-          return "Corretto";
+          return true;
         }
       }
     }

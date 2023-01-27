@@ -11,16 +11,15 @@ var db = FirebaseFirestore.instance;
 final String DOCUMENT_NAME = "Prenotazione";
 
 class PrenotazioneDao {
-  static Future<DocumentReference<Object?>> addPrenotazione(
-      Prenotazione prenotazione) {
-    Future<DocumentReference<Object?>> id = db
+  Future<String> addPrenotazione(Prenotazione prenotazione) {
+    Future<String> id = db
         .collection(DOCUMENT_NAME)
         .add(AdapterPrenotazione().toMap(prenotazione))
-      ..then((doc) => log('Data added with success with ID: ${doc.id}'));
+        .then((doc) => doc.id);
     return id;
   }
 
-  static void updateId(String id) async {
+  void updateId(String id) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection(DOCUMENT_NAME).doc(id);
@@ -31,7 +30,7 @@ class PrenotazioneDao {
     }
   }
 
-  static void updateAttribute(String id, String attribute, var value) async {
+  void updateAttribute(String id, String attribute, var value) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection(DOCUMENT_NAME).doc(id);
@@ -42,7 +41,7 @@ class PrenotazioneDao {
     }
   }
 
-  static Future<String?> uploadImpegnativa(Uint8List asset, String name) async {
+  Future<String?> uploadImpegnativa(Uint8List asset, String name) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference ref = storage.ref("Impegnative").child(name);
     UploadTask uploadTask = ref.putData(asset);
