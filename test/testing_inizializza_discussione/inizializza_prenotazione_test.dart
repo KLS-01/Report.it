@@ -11,13 +11,13 @@ import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 import 'inizializza_prenotazione_test.mocks.dart';
 
-@GenerateMocks([
-  PrenotazioneDao,
-  AutenticazioneDAO
-], customMocks: [
-  MockSpec<PrenotazioneDao>(as: #MockPrenotazioneDaoRelaxed),
-  MockSpec<AutenticazioneDAO>(as: #MockAutenticazioneDAORelaxed),
-])
+// @GenerateMocks([
+//   PrenotazioneDao,
+//   AutenticazioneDAO
+// ], customMocks: [
+//   MockSpec<PrenotazioneDao>(as: #MockPrenotazioneDaoRelaxed),
+//   MockSpec<AutenticazioneDAO>(as: #MockAutenticazioneDAORelaxed),
+// ])
 void main() {
   late PrenotazioneDao daoP;
   late AutenticazioneDAO daoA;
