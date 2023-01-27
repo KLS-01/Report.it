@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
@@ -88,7 +87,8 @@ class DenunciaController {
     final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
     final regexCap = RegExp(r"^[0-9]{5}$");
     final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
-    final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
+    final regexCellulare =
+        RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
 
     final User? user = auth.currentUser;
     if (user == null) {
@@ -97,69 +97,70 @@ class DenunciaController {
       print("Ok");
     }
 
-    if(nomeDenunciante.length>30){
+    if (nomeDenunciante.length > 30) {
       //aggiungere
-      return("Lunghezza nome denunciante non è valida");
+      return ("Lunghezza nome denunciante non è valida");
     }
-    if(cognomeDenunciante.length>30){
+    if (cognomeDenunciante.length > 30) {
       //aggiungere
-      return("Lunghezza cognome denunciante non è valida");
+      return ("Lunghezza cognome denunciante non è valida");
     }
-    if(!regexIndirizzo.hasMatch(indirizzoDenunciante)){
-      return("Il formato dell’indirizzo non è valido");
-    }else if(indirizzoDenunciante.length>50){
-      return("La lunghezza dell’indirizzo non è valida");
+    if (!regexIndirizzo.hasMatch(indirizzoDenunciante)) {
+      return ("Il formato dell’indirizzo non è valido");
+    } else if (indirizzoDenunciante.length > 50) {
+      return ("La lunghezza dell’indirizzo non è valida");
     }
-    if(!regexCap.hasMatch(capDenunciante)){
-      return("Il formato del CAP non è rispettato");
+    if (!regexCap.hasMatch(capDenunciante)) {
+      return ("Il formato del CAP non è rispettato");
     }
-    if(!regexProvincia.hasMatch(provinciaDenunciante)){
+    if (!regexProvincia.hasMatch(provinciaDenunciante)) {
       return ("Il formato della provincia non è rispettato");
     }
-    if(!regexCellulare.hasMatch(cellulareDenunciante)){
-      return("Il formato del numero di cellulare non è rispettato");
+    if (!regexCellulare.hasMatch(cellulareDenunciante)) {
+      return ("Il formato del numero di cellulare non è rispettato");
     }
-    if(!regexEmail.hasMatch(emailDenunciante)){
-      return("Il formato della e-mail non è rispettato");
+    if (!regexEmail.hasMatch(emailDenunciante)) {
+      return ("Il formato della e-mail non è rispettato");
     }
     print(tipoDocDenunciante);
 
-    if(tipoDocDenunciante=="Carta Identita" || tipoDocDenunciante== "Patente"){
+    if (tipoDocDenunciante == "Carta Identita" ||
+        tipoDocDenunciante == "Patente") {
       //aggiungere
-    }else{
-      return("Tipo documento non rispettato");
+    } else {
+      return ("Tipo documento non rispettato");
     }
-    String numero= numeroDocDenunciante!;
+    String numero = numeroDocDenunciante!;
 
-    if(numero.length>15){
+    if (numero.length > 15) {
       //aggiungere
-      return("La lunghezza del nunero del documento è errata");
+      return ("La lunghezza del nunero del documento è errata");
     }
-    if(scadenzaDocDenunciante.toDate().compareTo(DateTime.now())<=0){
-      return("Errore il documento già è scaduto");
+    if (scadenzaDocDenunciante.toDate().compareTo(DateTime.now()) <= 0) {
+      return ("Errore il documento già è scaduto");
     }
-    try{
+    try {
       CategoriaDenuncia.values.byName(categoriaDenuncia.name);
-    }catch (e){
-      return("La categoria di discriminazione inserita è sconosciuta");
+    } catch (e) {
+      return ("La categoria di discriminazione inserita è sconosciuta");
     }
-    if(nomeVittima.length>30){
-      return("La lunghezza del nome della vittima non è valida");
+    if (nomeVittima.length > 30) {
+      return ("La lunghezza del nome della vittima non è valida");
     }
-    if(denunciato.length>60){
-      return("La lunghezza del campo denunciato non è valida");
+    if (denunciato.length > 60) {
+      return ("La lunghezza del campo denunciato non è valida");
     }
-    if(descrizione.length>1000){
-      return("La lunghezza della descrizione non è valida");
+    if (descrizione.length > 1000) {
+      return ("La lunghezza della descrizione non è valida");
     }
-    if(cognomeVittima.length>30){
-      return("La lunghezza del cognome della vittima non è valida");
+    if (cognomeVittima.length > 30) {
+      return ("La lunghezza del cognome della vittima non è valida");
     }
-    if(consenso==false){
-      return("Il campo del consenso non è valido");
+    if (consenso == false) {
+      return ("Il campo del consenso non è valido");
     }
-    if(alreadyFiled==null){
-      return("Il campo che indica se la pratica è stata già precedentemente archiviata non è valido");
+    if (alreadyFiled == null) {
+      return ("Il campo che indica se la pratica è stata già precedentemente archiviata non è valido");
     }
 
     Denuncia denuncia = Denuncia(
@@ -200,26 +201,30 @@ class DenunciaController {
     return "OK";
   }
 
-  static accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
+  Future<String> accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
     if (utente.tipo != TipoUtente.UffPolGiud) {
-      return;
+      return "tipo utente non valido";
     } else {
       UffPolGiud? uff =
           await AutenticazioneDAO().RetrieveUffPolGiudByID(utente.id);
-      print(uff!.tipoUff);
+
       if (uff == null) {
-        return;
+        return "utente non presente nel db";
       } else {
-        DenunciaDao().accettaDenuncia(
-            denuncia.id!,
-            uff.coordinate,
-            uff.id.trim(),
-            uff.nomeCaserma,
-            uff.nome,
-            uff.cognome,
-            uff.tipoUff,
-            uff.grado);
-        return;
+        if (denuncia == null) {
+          return "denuncia non presente sul db";
+        } else {
+          DenunciaDao().accettaDenuncia(
+              denuncia.id!,
+              uff.coordinate,
+              uff.id.trim(),
+              uff.nomeCaserma,
+              uff.nome,
+              uff.cognome,
+              uff.tipoUff,
+              uff.grado);
+          return "Corretto";
+        }
       }
     }
   }
