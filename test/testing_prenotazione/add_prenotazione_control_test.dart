@@ -480,5 +480,38 @@ void main() {
               impegnativa: file) ==
           "Errato: estensione del file non supportata (caricare un file in formato pdf)");
     }));
+
+    test("TC_GPSP.1.1_12", (() {
+      List<PlatformFile> files = List.empty(growable: true);
+      files.add(PlatformFile(
+          name: "impegnativa.pdf",
+          size: 5000000,
+          bytes: Uint8List.fromList([10, 20, 30])));
+      var file = FilePickerResult(files);
+      var nome = "Luca";
+      var cognome = "Rossi";
+      var numeroTelefono = "3345431203";
+      var indirizzo = "Via del Campo,2";
+      var email = "test@gmail.com";
+      var cf = "DLCNCL02T32I197R";
+      var cap = "82019";
+      var provincia = "BN";
+      var descrizione =
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum mi a nibh rutrum, sed scelerisque enim efficitur. Fusce accumsan id mi quis hendrerit. Vivamus ut tincidunt orci. Sed nunc neque, faucibus vel feugiat eu, " +
+              "fermentum ornare metus. Etiam volutpat sed lacus eu efficitur. Sed tincidunt mauris id cursus rutrum. Praesent pellentesque ultrices lectus, vel porta felis eleifend sed. Etiam ac molestie eros. ";
+
+      assert(funzioneTest(
+              nome: nome,
+              cognome: cognome,
+              cf: cf,
+              numeroTelefono: numeroTelefono,
+              indirizzo: indirizzo,
+              provincia: provincia,
+              cap: cap,
+              email: email,
+              descrizione: descrizione,
+              impegnativa: file) ==
+          "true");
+    }));
   });
 }
