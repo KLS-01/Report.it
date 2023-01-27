@@ -105,13 +105,8 @@ class DenunciaController {
       //aggiungere
       return ("Lunghezza cognome denunciante non è valida");
     }
-    if (!regexIndirizzo.hasMatch(indirizzoDenunciante)) {
-      return ("Il formato dell’indirizzo non è valido");
-    } else if (indirizzoDenunciante.length > 50) {
-      return ("La lunghezza dell’indirizzo non è valida");
-    }
-    if (!regexCap.hasMatch(capDenunciante)) {
-      return ("Il formato del CAP non è rispettato");
+    if(!regexCap.hasMatch(capDenunciante)){
+      return("Il formato del CAP non è rispettato");
     }
     if (!regexProvincia.hasMatch(provinciaDenunciante)) {
       return ("Il formato della provincia non è rispettato");
@@ -134,17 +129,11 @@ class DenunciaController {
 
     if (numero.length > 15) {
       //aggiungere
-      return ("La lunghezza del nunero del documento è errata");
-    }
-    if (scadenzaDocDenunciante.toDate().compareTo(DateTime.now()) <= 0) {
-      return ("Errore il documento già è scaduto");
-    }
     try {
       CategoriaDenuncia.values.byName(categoriaDenuncia.name);
     } catch (e) {
       return ("La categoria di discriminazione inserita è sconosciuta");
     }
-    if (nomeVittima.length > 30) {
       return ("La lunghezza del nome della vittima non è valida");
     }
     if (denunciato.length > 60) {
