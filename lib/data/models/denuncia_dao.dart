@@ -16,7 +16,7 @@ class DenunciaDao {
     Future<String> id = db
         .collection("Denuncia")
         .add(AdapterDenuncia().toMap(denuncia))
-      .then((doc) => doc.id);
+        .then((doc) => doc.id);
     return id;
   }
 

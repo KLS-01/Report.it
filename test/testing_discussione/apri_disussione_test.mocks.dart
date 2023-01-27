@@ -7,7 +7,7 @@ import 'dart:async' as _i3;
 
 import 'package:file_picker/file_picker.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:report_it/data/Models/forum_dao.dart' as _i2;
+import 'package:report_it/data/models/forum_dao.dart' as _i2;
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart'
     as _i4;
 
