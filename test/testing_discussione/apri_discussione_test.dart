@@ -9,7 +9,7 @@ import 'package:report_it/data/models/forum_dao.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
-import './apri_disussione_test.mocks.dart';
+import 'apri_discussione_test.mocks.dart';
 
 /*
 @GenerateMocks([
