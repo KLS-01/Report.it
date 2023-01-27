@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';

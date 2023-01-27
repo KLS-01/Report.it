@@ -1,5 +1,3 @@
-import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
-
 class Commento {
   String? id;
   String creatore;

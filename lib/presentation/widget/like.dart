@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
 
+// ignore: must_be_immutable
 class like extends StatefulWidget {
   like({
     super.key,

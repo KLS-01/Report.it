@@ -12,8 +12,8 @@ import '../../../domain/entity/entity_GA/spid_entity.dart';
 import '../../../domain/entity/entity_GD/denuncia_entity.dart';
 import '../../../../domain/repository/denuncia_controller.dart';
 import '../../widget/styles.dart';
-import 'inoltro_denuncia_page.dart';
 import '../../widget/visualizza_denunce_widget.dart';
+import 'inoltro_denuncia_page.dart';
 
 class VisualizzaStoricoDenunceUtentePage extends StatefulWidget {
   const VisualizzaStoricoDenunceUtentePage({Key? key}) : super(key: key);

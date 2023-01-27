@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
-import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/presentation/widget/styles.dart';
@@ -67,6 +65,10 @@ class _DettagliDenunciaRebeccaState extends State<DettagliDenunciaRebecca> {
                       return const Text("Dati denuncia non trovati.");
                     case ConnectionState.waiting:
                       return const Center(child: CircularProgressIndicator());
+                    case ConnectionState.active:
+                      break;
+                    case ConnectionState.done:
+                      break;
                   }
                   if (snapshot.connectionState == ConnectionState.active ||
                       snapshot.connectionState == ConnectionState.done) {

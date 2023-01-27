@@ -4,22 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-
-import 'package:report_it/presentation/pages/pages_GIC/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
-
-import '../../domain/repository/authentication_controller.dart';
-import 'pages_GIC/informativa_contatti_page.dart';
-
-import '../../domain/entity/entity_GA/super_utente.dart';
-import '../../domain/repository/authentication_controller.dart';
-import 'pages_GIC/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/pages_GIC/informativa_contatti_page.dart';
-import 'package:report_it/presentation/pages/pages_GF/forum_home_page.dart';
-import 'package:report_it/presentation/pages/pages_GD/visualizza_storico_denunce_page.dart';
-import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/presentation/widget/tab_navigator.dart';
+import '../../domain/entity/entity_GA/super_utente.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,18 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final BorderRadius _borderRadius = const BorderRadius.only(
-    topLeft: Radius.circular(25),
-    topRight: Radius.circular(25),
-  );
-
   ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(25)),
   );
   SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
   EdgeInsets padding = const EdgeInsets.all(12);
 
-  int _selectedItemPosition = 2;
   SnakeShape snakeShape = SnakeShape.circle;
 
   bool showSelectedLabels = false;

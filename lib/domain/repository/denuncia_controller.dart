@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
-import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
@@ -108,6 +107,9 @@ class DenunciaController {
     if (!regexCap.hasMatch(capDenunciante)) {
       return ("Il formato del CAP non è rispettato");
     }
+    if (!regexIndirizzo.hasMatch(indirizzoDenunciante)) {
+      return ("Il formato dell'indirizzo non è rispettato");
+    }
     if (!regexProvincia.hasMatch(provinciaDenunciante)) {
       return ("Il formato della provincia non è rispettato");
     }
@@ -200,8 +202,9 @@ class DenunciaController {
       if (uff == null) {
         return "utente non presente nel db";
       } else {
+        // ignore: unnecessary_null_comparison
         if (denuncia == null) {
-          return "denuncia non presente sul db";
+          return "denuncia non presente sul db"; //conforme all'annessa funzione di testing
         } else {
           DenunciaDao().accettaDenuncia(
               denuncia.id!,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class CardImaggine extends StatelessWidget {
   const CardImaggine({super.key, this.immagine});

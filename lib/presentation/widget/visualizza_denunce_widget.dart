@@ -5,9 +5,7 @@ import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
 import '../../domain/entity/entity_GD/denuncia_entity.dart';
-import '../../../domain/repository/denuncia_controller.dart';
 import '../pages/pages_GD/dettagli_denuncia_page.dart';
-import '../pages/pages_GD/inoltro_denuncia_page.dart';
 
 class VisualizzaDenunceWidget extends StatefulWidget {
   final List<Denuncia> denunce;
@@ -22,9 +20,6 @@ class VisualizzaDenunceWidget extends StatefulWidget {
 class _VisualizzaDenunceWidgetState extends State<VisualizzaDenunceWidget> {
   _VisualizzaDenunceWidgetState({required this.denunce});
   List<Denuncia> denunce;
-
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey1 =
-      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {

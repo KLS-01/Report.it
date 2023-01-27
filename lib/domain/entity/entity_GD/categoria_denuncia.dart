@@ -1,5 +1,4 @@
 enum CategoriaDenuncia {
-//   Razza,
   Etnia,
   Colore,
   Disabilita,
@@ -14,6 +13,4 @@ enum CategoriaDenuncia {
   StoriaPersonale,
   Reddito,
   Aggressione,
-//   Sesso,
-//   Veterano,
 }

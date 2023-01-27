@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/data/models/prenotazione_dao.dart';
@@ -33,8 +32,6 @@ void main() {
     if (psicologo.length > 20 || psicologo.isEmpty) {
       return "Lunghezza nome psicologo non valida";
     }
-
-    final timestamp1 = DateTime.now().millisecondsSinceEpoch;
 
     if (dataPrenotazione.compareTo(Timestamp.fromDate(DateTime.now())) < 0) {
       return "Data non valida";

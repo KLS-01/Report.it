@@ -4,8 +4,8 @@ import 'package:report_it/presentation/pages/pages_GC/home_chat.dart';
 import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
-import '../../widget/styles.dart';
 import 'FAQinformativa_page.dart';
+import '../../widget/styles.dart';
 import '../navigation_animations.dart';
 
 class Informativa extends StatefulWidget {

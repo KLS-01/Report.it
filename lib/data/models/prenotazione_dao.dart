@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GPSP/adapter_prenotazione.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';

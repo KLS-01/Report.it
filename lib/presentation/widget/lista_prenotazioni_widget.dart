@@ -121,6 +121,5 @@ class _PrenotazioneBoxState extends State<PrenotazioneBox> {
         ),
       ]),
     );
-    ;
   }
 }

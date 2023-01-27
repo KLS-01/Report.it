@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
-
 class SPID {
   String? cf;
   String? nome;
