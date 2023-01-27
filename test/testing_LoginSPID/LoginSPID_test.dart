@@ -88,35 +88,35 @@ void main() {
   }
 
   group("Login_SPID", (() {
-    test("TC_1.1_1", (() async {
+    test("TC_GA.1_1", (() async {
       String email = "@asd,lololol/.pippo";
       String password = "";
 
       assert(await funzionetest(email, password).then((value) => value) ==
           "Il formato della e-mail non è stato rispettato");
     }));
-    test("TC_1.1_2", (() async {
+    test("TC_GA.1_2", (() async {
       String email = "r.ferraris104@studenti.unisa.it";
       String password = "";
 
       assert(await funzionetest(email, password).then((value) => value) ==
           "L’e-mail non è associata a nessun account");
     }));
-    test("TC_1.1_3", (() async {
+    test("TC_GA.1_3", (() async {
       String email = "r.ferraris1@studenti.unisa.it";
       String password = "PassErrata";
 
       assert(await funzionetest(email, password).then((value) => value) ==
           "Il formato della password non è stato rispettato");
     }));
-    test("TC_1.1_4", (() async {
+    test("TC_GA.1_4", (() async {
       String email = "r.ferraris1@studenti.unisa.it";
       String password = "PassErrata12*/";
 
       assert(await funzionetest(email, password).then((value) => value) ==
           "La password non è corretta");
     }));
-    test("TC_1.1_5", (() async {
+    test("TC_GA.1_5", (() async {
       String email = "r.ferraris1@studenti.unisa.it";
       String password = "PassCorretta12*/";
 

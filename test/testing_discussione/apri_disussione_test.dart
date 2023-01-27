@@ -37,11 +37,11 @@ void main() {
 
   funzioneTest(String titolo, String testo, [FilePickerResult? file]) {
     if (titolo.length > 80 || titolo.isEmpty) {
-      return "titolo troppo lungo";
+      return "lunghezza titolo non rispettata";
     }
 
     if (testo.length > 400) {
-      return "testo troppo lungo";
+      return "lunghezza corpo non rispettata";
     }
 
     var tipo = "Utente";
@@ -54,7 +54,7 @@ void main() {
 
       if (file.files.first.extension != "png" &&
           file.files.first.extension != "jpeg") {
-        return "formato file non supportato";
+        return "estensione del file non supportata (caricare un file in formato png o jpg)";
       }
 
       when(dao.caricaImmagne(file)).thenAnswer((realInvocation) => Future((() {
@@ -74,7 +74,7 @@ void main() {
         d.setpathImmagine(value);
       });
       dao.AggiungiDiscussione(d);
-      return "tutto ok";
+      return "Corretto";
     } else {
       Discussione d = Discussione(
           DateTime.now(),
@@ -92,12 +92,12 @@ void main() {
                 return "aggiunto";
               })));
       dao.AggiungiDiscussione(d);
-      return "tutto ok";
+      return "Corretto";
     }
   }
 
   group("apri discussione", () {
-    test("TC_5.1_1", (() {
+    test("TC_GF.2_1", (() {
       var titolo =
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum mi a nibh rutrum, sed scelerisque enim efficitur. Fusce accumsan id mi quis hendrerit. Vivamus ut tincidunt orci. Sed nunc neque, faucibus vel feugiat eu, " +
               "fermentum ornare metus. Etiam volutpat sed lacus eu efficitur. Sed tincidunt mauris id cursus rutrum. Praesent pellentesque ultrices lectus, vel porta felis eleifend sed. Etiam ac molestie eros. ";
@@ -107,10 +107,11 @@ void main() {
       files.add(PlatformFile(name: "IMG.png", size: 5242880));
       var file = FilePickerResult(files);
 
-      assert(funzioneTest(titolo, testo, file) == "titolo troppo lungo");
+      assert(funzioneTest(titolo, testo, file) ==
+          "lunghezza titolo non rispettata");
     }));
 
-    test("TC_5.1_2", (() {
+    test("TC_GF.2_2", (() {
       var titolo =
           "Discriminazioni di genere nella scelta del cast di un film.";
       var testo =
@@ -119,10 +120,11 @@ void main() {
       files.add(PlatformFile(name: "IMG.png", size: 5242880));
       var file = FilePickerResult(files);
 
-      assert(funzioneTest(titolo, testo, file) == "testo troppo lungo");
+      assert(funzioneTest(titolo, testo, file) ==
+          "lunghezza corpo non rispettata");
     }));
 
-    test("TC_5.1_3", (() {
+    test("TC_GF.2_3", (() {
       var titolo =
           "Discriminazioni di genere nella scelta del cast di un film.";
       var testo =
@@ -134,7 +136,7 @@ void main() {
       assert(funzioneTest(titolo, testo, file) == "file troppo grande");
     }));
 
-    test("TC_5.1_4", (() {
+    test("TC_GF.2_4", (() {
       var titolo =
           "Discriminazioni di genere nella scelta del cast di un film.";
       var testo =
@@ -143,11 +145,11 @@ void main() {
       files.add(PlatformFile(name: "IMG.xml", size: 5242880));
       var file = FilePickerResult(files);
 
-      assert(
-          funzioneTest(titolo, testo, file) == "formato file non supportato");
+      assert(funzioneTest(titolo, testo, file) ==
+          "estensione del file non supportata (caricare un file in formato png o jpg)");
     }));
 
-    test("TC_5.1_5", (() {
+    test("TC_GF.2_5", (() {
       var titolo =
           "Discriminazioni di genere nella scelta del cast di un film.";
       var testo =
@@ -156,7 +158,7 @@ void main() {
       files.add(PlatformFile(name: "IMG.png", size: 5242880));
       var file = FilePickerResult(files);
 
-      assert(funzioneTest(titolo, testo, file) == "tutto ok");
+      assert(funzioneTest(titolo, testo, file) == "Corretto");
     }));
   });
 }

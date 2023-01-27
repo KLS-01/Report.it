@@ -123,7 +123,7 @@ void main() {
   }
 
   group("inizializza_prenotazione", (() {
-    test("TC_4.3_1", (() async {
+    test("TC_GPSP.5.1_1", (() async {
       String idPrenotazione = "999999999";
       SuperUtente utente =
           SuperUtente("9K0FsSYgHkZd5j3Fz96WuCWGE0W2", TipoUtente.OperatoreCup);
@@ -135,7 +135,7 @@ void main() {
               .then((value) => value) ==
           "prenotazione non presente sul db");
     }));
-    test("TC_4.3_2", (() async {
+    test("TC_GPSP.5.1_2", (() async {
       String idPrenotazione = "7Lc2mJSl9BBfN8866AHa";
       SuperUtente utente =
           SuperUtente("9K0FsSYgHkZd5j3Fz96WuCWGE0W2", TipoUtente.Utente);
@@ -146,7 +146,7 @@ void main() {
               .then((value) => value) ==
           "tipo utente non valido");
     }));
-    test("TC_4.3_3", (() async {
+    test("TC_GPSP.5.1_3", (() async {
       String idPrenotazione = "7Lc2mJSl9BBfN8866AHa";
       SuperUtente utente = SuperUtente("123", TipoUtente.OperatoreCup);
       Timestamp dataPrenotazione = Timestamp.fromDate(DateTime(2025, 10, 5));
@@ -156,7 +156,7 @@ void main() {
               .then((value) => value) ==
           "utente non presente nel db");
     }));
-    test("TC_4.3_4", (() async {
+    test("TC_GPSP.5.1_4", (() async {
       String idPrenotazione = "7Lc2mJSl9BBfN8866AHa";
       SuperUtente utente =
           SuperUtente("9K0FsSYgHkZd5j3Fz96WuCWGE0W2", TipoUtente.OperatoreCup);
@@ -167,7 +167,7 @@ void main() {
               .then((value) => value) ==
           "Data non valida");
     }));
-    test("TC_4.3_5", (() async {
+    test("TC_GPSP.5.1_5", (() async {
       String idPrenotazione = "7Lc2mJSl9BBfN8866AHa";
       SuperUtente utente =
           SuperUtente("9K0FsSYgHkZd5j3Fz96WuCWGE0W2", TipoUtente.OperatoreCup);
@@ -178,7 +178,7 @@ void main() {
               .then((value) => value) ==
           "Lunghezza nome psicologo non valida");
     }));
-    test("TC_4.3_6", (() async {
+    test("TC_GPSP.5.1_6", (() async {
       String idPrenotazione = "7Lc2mJSl9BBfN8866AHa";
       SuperUtente utente =
           SuperUtente("9K0FsSYgHkZd5j3Fz96WuCWGE0W2", TipoUtente.OperatoreCup);

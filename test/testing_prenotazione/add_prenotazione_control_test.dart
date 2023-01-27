@@ -119,7 +119,7 @@ void main() {
   }
 
   group("Inoltra prenotazione", () {
-    test("TC_4.2_1", (() {
+    test("TC_GPSP.1.1_1", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -152,7 +152,7 @@ void main() {
           "Errore: lunghezza nome non valida");
     }));
 
-    test("TC_4.2_2", (() {
+    test("TC_GPSP.1.1_2", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -185,7 +185,7 @@ void main() {
           "Errore: lunghezza cognome non valida");
     }));
 
-    test("TC_4.2_3", (() {
+    test("TC_GPSP.1.1_3", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -218,7 +218,7 @@ void main() {
           "Errore: formato numero di telefono non rispettato");
     }));
 
-    test("TC_4.2_4", (() {
+    test("TC_GPSP.1.1_4", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -251,7 +251,7 @@ void main() {
           "Errore: formato indirizzo non rispettato");
     }));
 
-    test("TC_4.2_5", (() {
+    test("TC_GPSP.1.1_5", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -284,7 +284,7 @@ void main() {
           "Errore: formato indirizzo email non rispettato");
     }));
 
-    test("TC_4.2_6", (() {
+    test("TC_GPSP.1.1_6", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -317,7 +317,7 @@ void main() {
           "Errore: formato codice fiscale non rispettato");
     }));
 
-    test("TC_4.2_7", (() {
+    test("TC_GPSP.1.1_7", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -350,7 +350,7 @@ void main() {
           "Errore: formato CAP non rispettato");
     }));
 
-    test("TC_4.2_8", (() {
+    test("TC_GPSP.1.1_8", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -383,7 +383,7 @@ void main() {
           "Errore: formato provincia non rispettato");
     }));
 
-    test("TC_4.2_9", (() {
+    test("TC_GPSP.1.1_9", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -415,7 +415,7 @@ void main() {
           "Errore: lunghezza descrizione non valida");
     }));
 
-    test("TC_4.2_10", (() {
+    test("TC_GPSP.1.1_10", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.pdf",
@@ -448,7 +448,7 @@ void main() {
           "Errato: dimensione file non valida");
     }));
 
-    test("TC_4.2_11", (() {
+    test("TC_GPSP.1.1_11", (() {
       List<PlatformFile> files = List.empty(growable: true);
       files.add(PlatformFile(
           name: "impegnativa.jpg",
