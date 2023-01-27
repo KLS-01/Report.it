@@ -237,17 +237,6 @@ void main() {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum mi a nibh rutrum, sed scelerisque enim efficitur. Fusce accumsan id mi quis hendrerit. Vivamus ut tincidunt orci. Sed nunc neque, faucibus vel feugiat eu, " +
               "fermentum ornare metus. Etiam volutpat sed lacus eu efficitur. Sed tincidunt mauris id cursus rutrum. Praesent pellentesque ultrices lectus, vel porta felis eleifend sed. Etiam ac molestie eros. ";
 
-      print(funzioneTest(
-          nome: nome,
-          cognome: cognome,
-          cf: cf,
-          numeroTelefono: numeroTelefono,
-          indirizzo: indirizzo,
-          provincia: provincia,
-          cap: cap,
-          email: email,
-          descrizione: descrizione,
-          impegnativa: file));
       assert(funzioneTest(
               nome: nome,
               cognome: cognome,
@@ -444,18 +433,7 @@ void main() {
       var descrizione =
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum mi a nibh rutrum, sed scelerisque enim efficitur. Fusce accumsan id mi quis hendrerit. Vivamus ut tincidunt orci. Sed nunc neque, faucibus vel feugiat eu, " +
               "fermentum ornare metus. Etiam volutpat sed lacus eu efficitur. Sed tincidunt mauris id cursus rutrum. Praesent pellentesque ultrices lectus, vel porta felis eleifend sed. Etiam ac molestie eros. ";
-      print(file.files.first.size);
-      print(funzioneTest(
-          nome: nome,
-          cognome: cognome,
-          cf: cf,
-          numeroTelefono: numeroTelefono,
-          indirizzo: indirizzo,
-          provincia: provincia,
-          cap: cap,
-          email: email,
-          descrizione: descrizione,
-          impegnativa: file));
+
       assert(funzioneTest(
               nome: nome,
               cognome: cognome,
@@ -489,17 +467,6 @@ void main() {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum mi a nibh rutrum, sed scelerisque enim efficitur. Fusce accumsan id mi quis hendrerit. Vivamus ut tincidunt orci. Sed nunc neque, faucibus vel feugiat eu, " +
               "fermentum ornare metus. Etiam volutpat sed lacus eu efficitur. Sed tincidunt mauris id cursus rutrum. Praesent pellentesque ultrices lectus, vel porta felis eleifend sed. Etiam ac molestie eros. ";
 
-      print(funzioneTest(
-          nome: nome,
-          cognome: cognome,
-          cf: cf,
-          numeroTelefono: numeroTelefono,
-          indirizzo: indirizzo,
-          provincia: provincia,
-          cap: cap,
-          email: email,
-          descrizione: descrizione,
-          impegnativa: file));
       assert(funzioneTest(
               nome: nome,
               cognome: cognome,

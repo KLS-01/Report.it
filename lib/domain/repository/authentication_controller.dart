@@ -88,13 +88,25 @@ class AuthenticationService {
   }
 
   Future<String?> LoginSPID(String email, String password) async {
+    final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
+    if (!regexEmail.hasMatch(email)) {
+      return "Il formato della e-mail non è stato rispettato";
+    }
+    final regexPassword = RegExp(
+        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&\/]{8,}$");
     try {
       var u = await AutenticazioneDAO().RetrieveSPIDByEmail(email);
 
-      if (u!.password != password) {
-        print("password sbagliata");
+      if (u == null) {
+        return "L’e-mail non è associata a nessun account";
+      }
 
-        return 'wrong-password';
+      if (!regexPassword.hasMatch(password)) {
+        return "Il formato della password non è stato rispettato";
+      }
+
+      if (u.password != password) {
+        return "La password non è corretta";
       }
     } catch (e) {
       return 'invalid-email';

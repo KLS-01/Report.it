@@ -4,5 +4,5 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:report_it/main.dart';
 
 void main() {
-  test("discussione test", () {});
+  group("Unit test", () {});
 }

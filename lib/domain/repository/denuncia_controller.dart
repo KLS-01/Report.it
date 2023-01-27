@@ -105,8 +105,8 @@ class DenunciaController {
       //aggiungere
       return ("Lunghezza cognome denunciante non è valida");
     }
-    if(!regexCap.hasMatch(capDenunciante)){
-      return("Il formato del CAP non è rispettato");
+    if (!regexCap.hasMatch(capDenunciante)) {
+      return ("Il formato del CAP non è rispettato");
     }
     if (!regexProvincia.hasMatch(provinciaDenunciante)) {
       return ("Il formato della provincia non è rispettato");
@@ -129,11 +129,11 @@ class DenunciaController {
 
     if (numero.length > 15) {
       //aggiungere
-    try {
-      CategoriaDenuncia.values.byName(categoriaDenuncia.name);
-    } catch (e) {
-      return ("La categoria di discriminazione inserita è sconosciuta");
-    }
+      try {
+        CategoriaDenuncia.values.byName(categoriaDenuncia.name);
+      } catch (e) {
+        return ("La categoria di discriminazione inserita è sconosciuta");
+      }
       return ("La lunghezza del nome della vittima non è valida");
     }
     if (denunciato.length > 60) {
@@ -162,14 +162,14 @@ class DenunciaController {
         cellulareDenunciante: cellulareDenunciante,
         emailDenunciante: emailDenunciante,
         tipoDocDenunciante: tipoDocDenunciante!,
-        numeroDocDenunciante: numeroDocDenunciante!,
+        numeroDocDenunciante: numeroDocDenunciante,
         scadenzaDocDenunciante: scadenzaDocDenunciante,
         categoriaDenuncia: categoriaDenuncia,
         nomeVittima: nomeVittima,
         denunciato: denunciato,
         descrizione: descrizione,
         cognomeVittima: cognomeVittima,
-        alreadyFiled: alreadyFiled!,
+        alreadyFiled: alreadyFiled,
         consenso: consenso,
         cognomeUff: null,
         coordCaserma: null,

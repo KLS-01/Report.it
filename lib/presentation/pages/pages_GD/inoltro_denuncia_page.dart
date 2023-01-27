@@ -785,7 +785,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
     SPID? spidUtente = spid;
     if (spidUtente != null) {
       Timestamp convertedDate =
-          Timestamp.fromDate(spidUtente!.getDataScadenzaDocumento);
+          Timestamp.fromDate(spidUtente.getDataScadenzaDocumento);
 
       var result = control.addDenunciaControl(
           nomeDenunciante: nameController.text,
@@ -795,8 +795,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
           provinciaDenunciante: provinciaController.text,
           cellulareDenunciante: numberController.text,
           emailDenunciante: emailController.text,
-          tipoDocDenunciante: spidUtente!.tipoDocumento,
-          numeroDocDenunciante: spidUtente!.numeroDocumento,
+          tipoDocDenunciante: spidUtente.tipoDocumento,
+          numeroDocDenunciante: spidUtente.numeroDocumento,
           scadenzaDocDenunciante: convertedDate,
           categoriaDenuncia: CategoriaDenuncia.values.byName(discriminazione!),
           nomeVittima: nomeVittimaController.text,

@@ -197,7 +197,6 @@ void main() {
       SuperUtente utente =
           SuperUtente("1PZNxmcGrWVN2ezktgyKFVRWdBS2", TipoUtente.UffPolGiud);
       assert(await funzioneTest(denuncia, utente).then((value) {
-            print('Result: $value');
             return value;
           }) ==
           'denuncia non presente sul db');
