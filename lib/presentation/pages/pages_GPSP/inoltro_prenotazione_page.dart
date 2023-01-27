@@ -238,6 +238,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il nome.';
+                        } else if (value.length < 2 || value.length > 30) {
+                          return "Il nome inserito non è valido.";
                         }
                         return null;
                       },
@@ -248,6 +250,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il cognome.';
+                        } else if (value.length < 2 || value.length > 30) {
+                          return "Il cognome inserito non è valido.";
                         }
                         return null;
                       },
@@ -470,18 +474,19 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
 
   void createRecord(SuperUtente utente) async {
     PrenotazioneController prenotazioneControl = PrenotazioneController();
-
-    var result = prenotazioneControl.addPrenotazioneControl(
-        utente: utente,
-        nome: nameController.text,
-        cognome: surnameController.text,
-        numeroTelefono: numberController.text,
-        indirizzo: indirizzoController.text,
-        cap: capController.text,
-        provincia: provinciaController.text,
-        email: emailController.text,
-        cf: cfController.text,
-        impegnativa: impegnativaController,
-        descrizione: descrizioneController.text);
+    if (impegnativaController != null) {
+      var result = prenotazioneControl.addPrenotazioneControl(
+          nome: nameController.text,
+          cognome: surnameController.text,
+          numeroTelefono: numberController.text,
+          indirizzo: indirizzoController.text,
+          cap: capController.text,
+          provincia: provinciaController.text,
+          email: emailController.text,
+          cf: cfController.text,
+          impegnativa: impegnativaController!,
+          descrizione: descrizioneController.text);
+      print(await result);
+    }
   }
 }
