@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/adapter_prenotazione.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
@@ -72,8 +73,10 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
                                   ConnectionState.done) {
                             List<Prenotazione>? listaPrenotazioni =
                                 snapshot.data?.docs.map((e) {
-                              return Prenotazione.fromJson(e.data());
-                            }).toList();
+                              Prenotazione p =
+                                  AdapterPrenotazione().fromJson(e.data());
+                              return p;
+                            }).toList() as List<Prenotazione>?;
                             print(listaPrenotazioni);
                             listaPrenotazioni = listFilter(listaPrenotazioni);
 

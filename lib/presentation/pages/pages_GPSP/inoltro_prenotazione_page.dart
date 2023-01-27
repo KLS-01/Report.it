@@ -1,45 +1,43 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import '../../widget/styles.dart';
 
 class InoltroPrenotazione extends StatefulWidget {
   final SuperUtente utente;
+  final SPID spid;
 
-  InoltroPrenotazione({required this.utente});
+  InoltroPrenotazione({required this.utente, required this.spid});
   @override
-  _InoltroPrenotazione createState() => _InoltroPrenotazione(utente: utente);
+  _InoltroPrenotazione createState() =>
+      _InoltroPrenotazione(utente: utente, spid: spid);
 }
 
 class _InoltroPrenotazione extends State<InoltroPrenotazione> {
-  _InoltroPrenotazione({required this.utente});
+  _InoltroPrenotazione({required this.utente, required this.spid});
   final SuperUtente utente;
+  final SPID spid;
   int _currentStep = 0;
   StepperType stepperType = StepperType.vertical;
 
-  final TextEditingController nameController =
-      TextEditingController(text: 'mario');
-  final TextEditingController surnameController =
-      TextEditingController(text: 'rossi');
-  final TextEditingController numberController =
-      TextEditingController(text: '3489156784');
-  final TextEditingController indirizzoController =
-      TextEditingController(text: 'viafod,1');
-  final TextEditingController capController =
-      TextEditingController(text: '81030');
-  final TextEditingController provinciaController =
-      TextEditingController(text: 'CT');
-  final TextEditingController emailController =
-      TextEditingController(text: 'ciao@gmail.com');
-  final TextEditingController cfController =
-      TextEditingController(text: 'LSRMRS94T61B963S');
-  final TextEditingController descrizioneController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController surnameController;
+  late TextEditingController numberController;
+  late TextEditingController indirizzoController = TextEditingController();
+  late TextEditingController capController = TextEditingController();
+  late TextEditingController provinciaController;
+  late TextEditingController emailController;
+  late TextEditingController cfController;
+  late TextEditingController descrizioneController = TextEditingController();
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
-  final regexIndirizzo =
-      RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$"); //TODO: FIXARE, legge un solo numero
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -52,6 +50,17 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
   String? consenso1, consenso2;
   FilePickerResult? impegnativaController;
   bool impegnativa = false;
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: spid.nome);
+    surnameController = TextEditingController(text: spid.cognome);
+    numberController = TextEditingController(text: spid.numCellulare);
+    provinciaController = TextEditingController(text: spid.provinciaNascita);
+    emailController = TextEditingController(text: spid.indirizzoEmail);
+    cfController = TextEditingController(text: spid.cf);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,13 +166,14 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
         title:
             const Text("Supporto Psicologico", style: ThemeText.titoloSezione),
         elevation: 3,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: ThemeText.theme.backgroundColor,
       ),
       body: Theme(
         data: ThemeData(
           colorScheme: const ColorScheme.light(
             primary: Color.fromRGBO(219, 29, 69, 1),
           ),
+          backgroundColor: ThemeText.theme.backgroundColor,
         ),
         child: Stepper(
           controlsBuilder: (context, details) {
@@ -228,6 +238,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il nome.';
+                        } else if (value.length < 2 || value.length > 30) {
+                          return "Il nome inserito non è valido.";
                         }
                         return null;
                       },
@@ -238,6 +250,8 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Per favore, inserisci il cognome.';
+                        } else if (value.length < 2 || value.length > 30) {
+                          return "Il cognome inserito non è valido.";
                         }
                         return null;
                       },
@@ -407,7 +421,7 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeText.theme.backgroundColor,
     );
   }
 
@@ -458,19 +472,21 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
     setState(() {});
   }
 
-  void createRecord(SuperUtente? utente) async {
-    PrenotazioneController control = PrenotazioneController();
-    var result = control.addPrenotazioneControl(
-        utente: utente,
-        nome: nameController.text,
-        cognome: surnameController.text,
-        numeroTelefono: numberController.text,
-        indirizzo: indirizzoController.text,
-        cap: capController.text,
-        provincia: provinciaController.text,
-        email: emailController.text,
-        cf: cfController.text,
-        impegnativa: impegnativaController,
-        descrizione: descrizioneController.text);
+  void createRecord(SuperUtente utente) async {
+    PrenotazioneController prenotazioneControl = PrenotazioneController();
+    if (impegnativaController != null) {
+      var result = prenotazioneControl.addPrenotazioneControl(
+          nome: nameController.text,
+          cognome: surnameController.text,
+          numeroTelefono: numberController.text,
+          indirizzo: indirizzoController.text,
+          cap: capController.text,
+          provincia: provinciaController.text,
+          email: emailController.text,
+          cf: cfController.text,
+          impegnativa: impegnativaController!,
+          descrizione: descrizioneController.text);
+      print("Risultato pres: ${await result}");
+    }
   }
 }

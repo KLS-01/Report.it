@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
+import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
+import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
+import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/stato_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
@@ -16,11 +19,11 @@ class DenunciaController {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Denuncia jsonToDenuncia(QueryDocumentSnapshot<Map<String, dynamic>> json) {
-    return Denuncia.fromJson(json.data());
+    return AdapterDenuncia().fromJson(json.data());
   }
 
   Denuncia jsonToDenunciaDettagli(Map<String, dynamic> json) {
-    return Denuncia.fromJson(json);
+    return AdapterDenuncia().fromJson(json);
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamDenunciaByUtente(
@@ -61,30 +64,92 @@ class DenunciaController {
   }
 
   Future<String?> addDenunciaControl(
-      {required nomeDenunciante,
-      required cognomeDenunciante,
-      required indirizzoDenunciante,
-      required capDenunciante,
-      required provinciaDenunciante,
-      required cellulareDenunciante,
-      required emailDenunciante,
-      required tipoDocDenunciante,
-      required numeroDocDenunciante,
-      required scadenzaDocDenunciante,
-      required categoriaDenuncia,
-      required nomeVittima,
-      required denunciato,
-      required descrizione,
-      required cognomeVittima,
+      {required String nomeDenunciante,
+      required String cognomeDenunciante,
+      required String indirizzoDenunciante,
+      required String capDenunciante,
+      required String provinciaDenunciante,
+      required String cellulareDenunciante,
+      required String emailDenunciante,
+      required String? tipoDocDenunciante,
+      required String? numeroDocDenunciante,
+      required Timestamp scadenzaDocDenunciante,
+      required CategoriaDenuncia categoriaDenuncia,
+      required String nomeVittima,
+      required String denunciato,
+      required String descrizione,
+      required String cognomeVittima,
       required bool consenso,
-      required bool alreadyFiled}) async {
+      required bool? alreadyFiled}) async {
     Timestamp today = Timestamp.now();
+    final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
+    //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
+    final regexCap = RegExp(r"^[0-9]{5}$");
+    final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
+    final regexCellulare =
+        RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
 
     final User? user = auth.currentUser;
     if (user == null) {
       print("Non loggato");
     } else {
       print("Ok");
+    }
+
+    if (nomeDenunciante.length > 30) {
+      //aggiungere
+      return ("Lunghezza nome denunciante non è valida");
+    }
+    if (cognomeDenunciante.length > 30) {
+      //aggiungere
+      return ("Lunghezza cognome denunciante non è valida");
+    }
+    if (!regexCap.hasMatch(capDenunciante)) {
+      return ("Il formato del CAP non è rispettato");
+    }
+    if (!regexProvincia.hasMatch(provinciaDenunciante)) {
+      return ("Il formato della provincia non è rispettato");
+    }
+    if (!regexCellulare.hasMatch(cellulareDenunciante)) {
+      return ("Il formato del numero di cellulare non è rispettato");
+    }
+    if (!regexEmail.hasMatch(emailDenunciante)) {
+      return ("Il formato della e-mail non è rispettato");
+    }
+    print(tipoDocDenunciante);
+
+    if (tipoDocDenunciante == "Carta Identita" ||
+        tipoDocDenunciante == "Patente") {
+      //aggiungere
+    } else {
+      return ("Tipo documento non rispettato");
+    }
+    String numero = numeroDocDenunciante!;
+
+    if (numero.length > 15) {
+      //aggiungere
+      try {
+        CategoriaDenuncia.values.byName(categoriaDenuncia.name);
+      } catch (e) {
+        return ("La categoria di discriminazione inserita è sconosciuta");
+      }
+      return ("La lunghezza del nome della vittima non è valida");
+    }
+    if (denunciato.length > 60) {
+      return ("La lunghezza del campo denunciato non è valida");
+    }
+    if (descrizione.length > 1000) {
+      return ("La lunghezza della descrizione non è valida");
+    }
+    if (cognomeVittima.length > 30) {
+      return ("La lunghezza del cognome della vittima non è valida");
+    }
+    if (consenso == false) {
+      return ("Il campo del consenso non è valido");
+    }
+    if (alreadyFiled == null) {
+      return ("Il campo che indica se la pratica è stata già precedentemente archiviata non è valido");
     }
 
     Denuncia denuncia = Denuncia(
@@ -96,7 +161,7 @@ class DenunciaController {
         provinciaDenunciante: provinciaDenunciante,
         cellulareDenunciante: cellulareDenunciante,
         emailDenunciante: emailDenunciante,
-        tipoDocDenunciante: tipoDocDenunciante,
+        tipoDocDenunciante: tipoDocDenunciante!,
         numeroDocDenunciante: numeroDocDenunciante,
         scadenzaDocDenunciante: scadenzaDocDenunciante,
         categoriaDenuncia: categoriaDenuncia,
@@ -115,35 +180,40 @@ class DenunciaController {
         nomeUff: null,
         statoDenuncia: StatoDenuncia.NonInCarico,
         tipoUff: null,
+        indirizzoCaserma: null,
         gradoUff: null);
 
-    String? result;
-    DenunciaDao.addDenuncia(denuncia).then((DocumentReference<Object?> id) {
-      denuncia.setId = id.id;
-      DenunciaDao.updateId(denuncia.getId);
-      result = denuncia.getId;
+    DenunciaDao().addDenuncia(denuncia).then((String id) {
+      denuncia.setId = id;
+      DenunciaDao().updateId(denuncia.getId);
     });
-    return await result;
+    return "OK";
   }
 
-  static accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
+  Future<String> accettaDenuncia(Denuncia denuncia, SuperUtente utente) async {
     if (utente.tipo != TipoUtente.UffPolGiud) {
-      return;
+      return "tipo utente non valido";
     } else {
-      UffPolGiud? uff = await RetrieveUffPolGiudByID(utente.id);
+      UffPolGiud? uff =
+          await AutenticazioneDAO().RetrieveUffPolGiudByID(utente.id);
+
       if (uff == null) {
-        return;
+        return "utente non presente nel db";
       } else {
-        DenunciaDao().accettaDenuncia(
-            denuncia.id!,
-            uff.coordinate,
-            uff.id.trim(),
-            uff.nomeCaserma,
-            uff.nome,
-            uff.cognome,
-            uff.tipoUff,
-            uff.grado);
-        return;
+        if (denuncia == null) {
+          return "denuncia non presente sul db";
+        } else {
+          DenunciaDao().accettaDenuncia(
+              denuncia.id!,
+              uff.coordinate,
+              uff.id.trim(),
+              uff.nomeCaserma,
+              uff.nome,
+              uff.cognome,
+              uff.tipoUff,
+              uff.grado);
+          return "Corretto";
+        }
       }
     }
   }
@@ -162,7 +232,7 @@ class DenunciaController {
   }
 
   Future<SPID?> retrieveSpidByUtente(SuperUtente utente) async {
-    Future<SPID?> spidUtente = RetrieveSPIDByID(utente.id);
+    Future<SPID?> spidUtente = AutenticazioneDAO().RetrieveSPIDByID(utente.id);
     return spidUtente;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/presentation/pages/pages_GA/login_user_page.dart';
+import 'package:report_it/presentation/widget/styles.dart';
 
 import '../../../domain/repository/authentication_controller.dart';
 import 'authentication_wrapper.dart';
@@ -16,20 +17,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String userWorker = 'WRK';
     String userSPID = 'SPID';
-
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
 
     late SnackBar snackBar;
     late String loginOutcome;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeText.theme.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,

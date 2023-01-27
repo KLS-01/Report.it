@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:report_it/domain/entity/entity_GC/adapter_chatbot.dart';
 import 'package:report_it/domain/entity/entity_GC/chatbot_entity.dart';
 
 class ChatBotDao {
@@ -11,7 +12,7 @@ class ChatBotDao {
 
     var c = await ref.get().then((value) {
       for (var d in value.docs) {
-        ChatB chat = ChatB.fromJson(d.data());
+        ChatB chat = AdapterChatBot().fromJson(d.data());
 
         chat.id = d.id;
         lista.add(chat);

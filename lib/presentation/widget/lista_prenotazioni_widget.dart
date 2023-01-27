@@ -51,50 +51,76 @@ class _PrenotazioneListWidgetState extends State<PrenotazioneListWidget> {
         itemCount: snapshot!.length,
         itemBuilder: (context, index) {
           final item = snapshot![index];
-          return Material(
-            color: Theme.of(context).backgroundColor,
-            child: Column(children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                decoration: ThemeText.boxVisualizza,
-                child: Row(
+          return index != (snapshot!.length - 1)
+              ? PrenotazioneBox(item: item, utente: utente)
+              : Column(
                   children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 75.0,
-                        child: ListTile(
-                          title: Text(
-                            item.id!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: const Text(
-                              'Clicca sull\'icona per vedere i dettagli'),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InformazioniPrenotazione(
-                                  idPrenotazione: item.id!,
-                                  utente: widget.utente),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.info_outline_rounded,
-                        ))
+                    PrenotazioneBox(item: item, utente: utente),
+                    const SizedBox(
+                      height: 70,
+                    )
                   ],
-                ),
-              ),
-            ]),
-          );
+                );
         },
       );
     }
+  }
+}
+
+class PrenotazioneBox extends StatefulWidget {
+  const PrenotazioneBox({super.key, required this.item, required this.utente});
+  final Prenotazione item;
+  final utente;
+
+  @override
+  State<PrenotazioneBox> createState() => _PrenotazioneBoxState();
+}
+
+class _PrenotazioneBoxState extends State<PrenotazioneBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).backgroundColor,
+      child: Column(children: [
+        Container(
+          margin: const EdgeInsets.all(10),
+          decoration: ThemeText.boxVisualizza,
+          child: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 75.0,
+                  child: ListTile(
+                    title: Text(
+                      widget.item.id!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle:
+                        const Text('Clicca sull\'icona per vedere i dettagli'),
+                  ),
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InformazioniPrenotazione(
+                            idPrenotazione: widget.item.id!,
+                            utente: widget.utente),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.info_outline_rounded,
+                  ))
+            ],
+          ),
+        ),
+      ]),
+    );
+    ;
   }
 }

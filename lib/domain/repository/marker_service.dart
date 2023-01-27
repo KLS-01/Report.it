@@ -9,13 +9,12 @@ class MarkerService {
       Marker marker = Marker(
           markerId: MarkerId(place.id),
           draggable: false,
-          icon: place.icon,
+          icon: place.icon as BitmapDescriptor,
           infoWindow: InfoWindow(
             title: place.name,
             snippet: place.vicinity,
           ),
-          position:
-              LatLng(place.geometry.location.lat, place.geometry.location.lng));
+          position: LatLng(place.location.lat, place.location.lng));
 
       markers.add(marker);
     });

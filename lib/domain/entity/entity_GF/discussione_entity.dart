@@ -40,7 +40,7 @@ class Commento {
 }
 
 class Discussione {
-  String categoria;
+  String? categoria;
   DateTime dataCreazione;
   String? id;
   String idCreatore;
@@ -56,20 +56,20 @@ class Discussione {
   String tipoUtente;
 
   Discussione(
-      this.categoria,
-      this.dataCreazione,
-      this.idCreatore,
-      this.punteggio,
-      this.testo,
-      this.titolo,
-      this.stato,
-      this.listaSostegno,
-      this.tipoUtente,
-      {this.pathImmagine});
+    this.dataCreazione,
+    this.idCreatore,
+    this.punteggio,
+    this.testo,
+    this.titolo,
+    this.stato,
+    this.listaSostegno,
+    this.tipoUtente, {
+    this.pathImmagine,
+    this.categoria,
+  });
 
   factory Discussione.fromJson(Map<String, dynamic> json) {
     var u = Discussione(
-      json["Categoria"],
       json["DataOraCreazione"].toDate(),
       json["IDCreatore"],
       json["Punteggio"],
@@ -79,6 +79,7 @@ class Discussione {
       json["ListaCommenti"],
       json["TipoUtente"],
       pathImmagine: json["pathImmagine"],
+      categoria: json["Categoria"],
     );
     u.id = json["ID"];
 
@@ -87,7 +88,6 @@ class Discussione {
 
   factory Discussione.fromMap(map) {
     var u = Discussione(
-      map["Categoria"],
       map["DataOraCreazione"].toDate(),
       map["IDCreatore"],
       map["Punteggio"],
@@ -97,6 +97,7 @@ class Discussione {
       map["ListaCommenti"],
       map["TipoUtente"],
       pathImmagine: map["pathImmagine"],
+      categoria: map["Categoria"],
     );
     u.id = map["ID"];
 

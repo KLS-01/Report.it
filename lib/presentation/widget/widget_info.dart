@@ -13,7 +13,7 @@ class WidgetInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: Text(
             titolo,
             style: ThemeText.titoloGIC,
@@ -21,7 +21,7 @@ class WidgetInfo extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 20),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Text(
             corpo,
             style: ThemeText.corpoGIC,

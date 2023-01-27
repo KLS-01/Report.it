@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Palette {
   static const MaterialColor coloriPalette = MaterialColor(
     0xFFDB1D45, // 0%
@@ -19,7 +18,6 @@ class Palette {
   );
 } //
 
-
 abstract class ThemeText {
   static ThemeData theme = ThemeData(
     backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
@@ -29,41 +27,41 @@ abstract class ThemeText {
 
   static const TextStyle titoloGIC = TextStyle(
     fontSize: 40,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle corpoGIC = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.w200,
     color: Colors.black,
   );
   static const TextStyle titoloSezione = TextStyle(
     fontSize: 23,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle titoloTab = TextStyle(
     fontSize: 15,
-    fontFamily: 'SourceSerifPro',
+    fontFamily: 'Merriweather',
     fontWeight: FontWeight.bold,
   );
   static const TextStyle titoloInoltro = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
   static const TextStyle corpoInoltro = TextStyle(
     fontSize: 16,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     color: Colors.black,
   );
   static const TextStyle chiamataGIC = TextStyle(
     fontSize: 20,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
   );
   static const TextStyle titoloDettaglio = TextStyle(
     fontSize: 30,
@@ -71,9 +69,20 @@ abstract class ThemeText {
     color: Colors.black,
   );
 
+  static const TextStyle titoloForum = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  static const TextStyle corpoForum = TextStyle(
+    fontSize: 15,
+    color: Colors.black,
+  );
+
   static const TextStyle titoloAlert = TextStyle(
     fontSize: 17,
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Raleway',
     fontWeight: FontWeight.bold,
     color: Color.fromRGBO(219, 29, 69, 1),
   );
@@ -83,7 +92,7 @@ abstract class ThemeText {
     textStyle: MaterialStateProperty.all(
       const TextStyle(
         fontSize: 15,
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Raleway',
         color: Colors.white,
       ),
     ),
@@ -151,7 +160,6 @@ abstract class ThemeText {
     ],
   );
 
-
   static BoxDecoration boxVisualizza = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
@@ -164,7 +172,7 @@ abstract class ThemeText {
       )
     ],
   );
-  
+
   static BoxDecoration boxRossoDettaglio = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),

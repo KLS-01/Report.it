@@ -90,116 +90,200 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                       border: InputBorder.none,
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const Text(
-                              "ID Prenotazione: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "ID Prenotazione: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getId),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getId}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Nome: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "Nome: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getNomeUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getNomeUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Cognome : ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "Cognome: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getcognomeUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getCognomeUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Recapito: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "Recapito: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getNumeroUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getNumeroUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Email: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "E-mail: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getEmailUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getEmailUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "C.F.: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "CF: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getCfUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getCfUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Indirizzo: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "Indirizzo: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getIndirizzoUtente),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getIndirizzoUtente}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Provincia: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "Provincia: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getProvincia),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getProvincia}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "CAP: ",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            text: "CAP: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(prenotazione.getCap),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: "${prenotazione.getCap}",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            onPressed: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Scaffold(
-                                    appBar: AppBar(
-                                      iconTheme: const IconThemeData(
-                                        color: Color.fromRGBO(219, 29, 69, 1),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Scaffold(
+                                      appBar: AppBar(
+                                        iconTheme: const IconThemeData(
+                                          color: Color.fromRGBO(219, 29, 69, 1),
+                                        ),
+                                        backgroundColor:
+                                            Theme.of(context).backgroundColor,
+                                        title: const Text(
+                                          'Impegnativa',
+                                          style: ThemeText.titoloSezione,
+                                        ),
                                       ),
-                                      backgroundColor:
-                                          Theme.of(context).backgroundColor,
-                                      title: const Text(
-                                        'Impegnativa',
-                                        style: ThemeText.titoloSezione,
+                                      body: SfPdfViewer.network(
+                                        prenotazione.getImpegnativa,
                                       ),
-                                    ),
-                                    body: SfPdfViewer.network(
-                                      prenotazione.getImpegnativa,
                                     ),
                                   ),
                                 ),
-                              ),
-                            },
-                            style: ThemeText.bottoneRosso,
-                            child: const Text("Visualizza impegnativa"),
+                              },
+                              style: ThemeText.bottoneRosso,
+                              child: const Text("Visualizza impegnativa"),
+                            ),
                           ),
                         ),
                       ],
@@ -218,23 +302,14 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                       labelStyle: ThemeText.titoloDettaglio,
                       border: InputBorder.none,
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                prenotazione.descrizione,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    child: Text(
+                      prenotazione.descrizione,
                     ),
                   ),
                 ),
+
                 //* -------------------------------------QUA INIZIA IL SECONDO----------------------------------------------------
+
                 if (utente.tipo == TipoUtente.OperatoreCup &&
                     prenotazione.getDataPrenotazione == null)
                   Container(
@@ -370,41 +445,47 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
                         labelStyle: ThemeText.titoloDettaglio,
                         border: InputBorder.none,
                       ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: "Nome psicologo: ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                               children: [
-                                const Text(
-                                  "Nome psicologo: ",
-                                  overflow: TextOverflow.fade,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "${prenotazione.getPsicologo}",
-                                  overflow: TextOverflow.fade,
+                                TextSpan(
+                                  text: "${prenotazione.getPsicologo}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ],
                             ),
-                            Row(
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: "Data appuntamento: ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                               children: [
-                                const Text(
-                                  "Data appuntamento: ",
-                                  overflow: TextOverflow.fade,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  formatter.format(DateTime.parse(prenotazione
-                                      .getDataPrenotazione
-                                      .toDate()
-                                      .toString())),
-                                  overflow: TextOverflow.fade,
+                                TextSpan(
+                                  text:
+                                      "${formatter.format(DateTime.parse(prenotazione.getDataPrenotazione.toDate().toString()))}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   )

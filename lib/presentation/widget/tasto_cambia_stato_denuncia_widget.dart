@@ -60,8 +60,8 @@ class generaTastoCambiaStato extends StatelessWidget {
             ),
             ElevatedButton(
               style: ThemeText.bottoneRosso,
-              onPressed: () {
-                DenunciaController.accettaDenuncia(denuncia, utente);
+              onPressed: () async {
+                await DenunciaController().accettaDenuncia(denuncia, utente);
                 Navigator.pop(context, "Continue");
 
                 Fluttertoast.showToast(

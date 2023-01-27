@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_ufficiale.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
+import 'package:report_it/domain/entity/entity_GD/adapter_denuncia.dart';
 import 'package:report_it/domain/entity/entity_GD/denuncia_entity.dart';
 
 import '../../domain/entity/entity_GA/super_utente.dart';
@@ -11,15 +12,15 @@ import '../../domain/entity/entity_GD/stato_denuncia.dart';
 var db = FirebaseFirestore.instance;
 
 class DenunciaDao {
-  static Future<DocumentReference<Object?>> addDenuncia(Denuncia denuncia) {
-    Future<DocumentReference<Object?>> id = db
+  Future<String> addDenuncia(Denuncia denuncia) {
+    Future<String> id = db
         .collection("Denuncia")
-        .add(denuncia.toMap())
-      ..then((doc) => log('Data added with success with ID: ${doc.id}'));
+        .add(AdapterDenuncia().toMap(denuncia))
+        .then((doc) => doc.id);
     return id;
   }
 
-  static void updateId(String id) async {
+  void updateId(String id) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection('Denuncia').doc(id);
@@ -30,29 +31,33 @@ class DenunciaDao {
     }
   }
 
-
-  Stream<QuerySnapshot<Map<String,dynamic>>>generaStreamDenunceByUtente(SuperUtente utente){
-    var ref= db.collection("Denuncia");
-    if(utente.tipo==TipoUtente.Utente){
-      return ref.where("IDUtente" ,isEqualTo: utente.id).snapshots();
-    }else{
-      return ref.where("IDUff" ,isEqualTo: utente.id).snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamDenunceByUtente(
+      SuperUtente utente) {
+    var ref = db.collection("Denuncia");
+    if (utente.tipo == TipoUtente.Utente) {
+      return ref.where("IDUtente", isEqualTo: utente.id).snapshots();
+    } else {
+      return ref.where("IDUff", isEqualTo: utente.id).snapshots();
     }
-
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> generaStreamDenunceByStatoAndCap(StatoDenuncia stato, String cap){
-    var ref=db.collection("Denuncia");
-    return ref.where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString())
-        .where("CapDenunciante", isEqualTo: cap).snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> generaStreamDenunceByStatoAndCap(
+      StatoDenuncia stato, String cap) {
+    var ref = db.collection("Denuncia");
+    return ref
+        .where("Stato",
+            isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString())
+        .where("CapDenunciante", isEqualTo: cap)
+        .snapshots();
   }
 
-  Stream<DocumentSnapshot<Map<String,dynamic>>> generaStreamDenunceById(String id){
-    var ref=db.collection("Denuncia");
+  Stream<DocumentSnapshot<Map<String, dynamic>>> generaStreamDenunceById(
+      String id) {
+    var ref = db.collection("Denuncia");
     return ref.doc(id).snapshots();
   }
 
-  Future<void> updateAttribute(String id,String attribute, var value) async {
+  Future<void> updateAttribute(String id, String attribute, var value) async {
     DocumentReference? returnCode;
     try {
       returnCode = db.collection('Denuncia').doc(id);
@@ -67,14 +72,12 @@ class DenunciaDao {
     var ref = db.collection("Denuncia").doc(id);
 
     var d = await ref.get().then(((value) {
-      if(value.data()==null){
+      if (value.data() == null) {
         return null;
-      }
-      else {
-        Denuncia? d = Denuncia.fromJson(value.data()!);
+      } else {
+        Denuncia? d = AdapterDenuncia().fromJson(value.data()!);
         return d;
       }
-
     }));
 
     return d;
@@ -86,7 +89,7 @@ class DenunciaDao {
     print("debug dao 1");
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Denuncia de = Denuncia.fromJson(snap.data());
+        Denuncia de = AdapterDenuncia().fromJson(snap.data());
         lista.add(de);
       }
 
@@ -100,7 +103,7 @@ class DenunciaDao {
     List<Denuncia> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Denuncia de = Denuncia.fromJson(snap.data());
+        Denuncia de = AdapterDenuncia().fromJson(snap.data());
         lista.add(de);
       }
 
@@ -115,7 +118,7 @@ class DenunciaDao {
     List<Denuncia> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Denuncia de = Denuncia.fromJson(snap.data());
+        Denuncia de = AdapterDenuncia().fromJson(snap.data());
         lista.add(de);
       }
 
@@ -125,11 +128,12 @@ class DenunciaDao {
   }
 
   Future<List<Denuncia>> retrieveByStato(StatoDenuncia stato) async {
-    var ref = db.collection("Denuncia").where("Stato", isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString());
+    var ref = db.collection("Denuncia").where("Stato",
+        isEqualTo: StatoDenuncia.values.byName(stato.name).name.toString());
     List<Denuncia> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Denuncia de = Denuncia.fromJson(snap.data());
+        Denuncia de = AdapterDenuncia().fromJson(snap.data());
         lista.add(de);
       }
 
@@ -139,9 +143,15 @@ class DenunciaDao {
     return lista;
   }
 
-  void accettaDenuncia
-      (String idDenuncia, GeoPoint coordCaserma, String idUff,
-      String nomeCaserma, String nomeUff, String cognomeUff,TipoUfficiale tipoUff, String gradoUff) {
+  void accettaDenuncia(
+      String idDenuncia,
+      GeoPoint coordCaserma,
+      String idUff,
+      String nomeCaserma,
+      String nomeUff,
+      String cognomeUff,
+      TipoUfficiale tipoUff,
+      String gradoUff) {
     try {
       var ref = db.collection("Denuncia").doc(idDenuncia);
 
@@ -152,10 +162,10 @@ class DenunciaDao {
         "NomeCaserma": nomeCaserma,
         "NomeUff": nomeUff,
         "Stato": "PresaInCarico",
-        "TipoUff": tipoUff,
+        "TipoUff": tipoUff.name,
         "GradoUff": gradoUff
       });
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }

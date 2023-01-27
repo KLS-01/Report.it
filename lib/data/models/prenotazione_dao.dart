@@ -4,22 +4,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
+import 'package:report_it/domain/entity/entity_GPSP/adapter_prenotazione.dart';
 import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 
 var db = FirebaseFirestore.instance;
 final String DOCUMENT_NAME = "Prenotazione";
 
 class PrenotazioneDao {
-  static Future<DocumentReference<Object?>> addPrenotazione(
-      Prenotazione prenotazione) {
-    Future<DocumentReference<Object?>> id = db
+  Future<String> addPrenotazione(Prenotazione prenotazione) {
+    Future<String> id = db
         .collection(DOCUMENT_NAME)
-        .add(prenotazione.toMap())
-      ..then((doc) => log('Data added with success with ID: ${doc.id}'));
+        .add(AdapterPrenotazione().toMap(prenotazione))
+        .then((doc) => doc.id);
     return id;
   }
 
-  static void updateId(String id) async {
+  void updateId(String id) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection(DOCUMENT_NAME).doc(id);
@@ -30,7 +30,7 @@ class PrenotazioneDao {
     }
   }
 
-  static void updateAttribute(String id, String attribute, var value) async {
+  void updateAttribute(String id, String attribute, var value) async {
     DocumentReference? returnCode;
     try {
       returnCode = FirebaseFirestore.instance.collection(DOCUMENT_NAME).doc(id);
@@ -41,7 +41,7 @@ class PrenotazioneDao {
     }
   }
 
-  static Future<String?> uploadImpegnativa(Uint8List asset, String name) async {
+  Future<String?> uploadImpegnativa(Uint8List asset, String name) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference ref = storage.ref("Impegnative").child(name);
     UploadTask uploadTask = ref.putData(asset);
@@ -59,7 +59,7 @@ class PrenotazioneDao {
 
     var d = await ref.get().then(((value) {
       if (value.data() != null) {
-        Prenotazione? d = Prenotazione.fromJson(value.data()!);
+        Prenotazione? d = AdapterPrenotazione().fromJson(value.data()!);
         return d;
       } else {
         return null;
@@ -74,7 +74,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -90,7 +90,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -107,7 +107,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 
@@ -122,7 +122,7 @@ class PrenotazioneDao {
     List<Prenotazione> lista = List.empty(growable: true);
     await ref.get().then(((value) {
       for (var snap in value.docs) {
-        Prenotazione prenotazione = Prenotazione.fromJson(snap.data());
+        Prenotazione prenotazione = AdapterPrenotazione().fromJson(snap.data());
         lista.add(prenotazione);
       }
 

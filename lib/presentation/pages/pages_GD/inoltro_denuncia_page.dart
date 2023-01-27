@@ -43,7 +43,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   final regexEmail = RegExp(r"^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$");
   //   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]\s?[0-9]$");
+  final regexIndirizzo = RegExp(r"^[a-zA-Z+\s]+[,]?\s?[0-9]+$");
   final regexCap = RegExp(r"^[0-9]{5}$");
   final regexProvincia = RegExp(r"^[a-zA-Z]{2}$");
   final regexCellulare = RegExp(r"^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$");
@@ -53,7 +53,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
   String? discriminazione;
   String? vittima1, vittima2;
   String? consenso1, consenso2;
+  String? alreadyFiled1, alreadyFiled2;
   bool consensoController = false;
+  late bool alreadyFiledController;
 
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   @override
   Widget build(BuildContext context) {
-    final consenso_widget = Wrap(
+    final consensoWidget = Wrap(
       children: [
         Column(
           children: <Widget>[
@@ -170,22 +172,24 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       ],
     );
 
-    final vittima_widget = Wrap(
+    final vittimaWidget = Wrap(
       children: [
         Column(
           children: <Widget>[
             const Text(
-              "Chi ritiene essere stato vittima di discriminazione?",
+              "Chi ritieni essere stato vittima di discriminazione?",
               style: ThemeText.corpoInoltro,
             ),
             RadioListTile(
-              title: const Text("Lei stesso"),
+              title: const Text("Tu stesso"),
               value: "LeiStesso",
               groupValue: vittima1,
               onChanged: ((value) {
                 setState(() {
                   vittima1 = value.toString();
                   vittima2 = null;
+                  nomeVittimaController = nameController;
+                  cognomeVittimaController = surnameController;
                 });
               }),
             ),
@@ -243,6 +247,54 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
       ],
     );
 
+    final alreadyFiledWidget = Wrap(
+      children: [
+        Column(
+          children: <Widget>[
+            const Text(
+              "Riferire se le segnalazioni riportate sono già state presentate ad un ufficiale di Polizia Giudiziaria e/o al PM sottoforma di denuncia.",
+              style: ThemeText.corpoInoltro,
+            ),
+            RadioListTile(
+              title: const Text("Sì"),
+              value: "Si",
+              groupValue: alreadyFiled1,
+              onChanged: ((value) {
+                setState(() {
+                  alreadyFiled1 = value.toString();
+                  alreadyFiled2 = null;
+                  alreadyFiledController = true;
+                });
+              }),
+            ),
+            RadioListTile(
+              title: const Text("No"),
+              value: "No",
+              groupValue: alreadyFiled2,
+              onChanged: ((value) {
+                setState(() {
+                  alreadyFiled2 = value.toString();
+                  alreadyFiled1 = null;
+                  alreadyFiledController = false;
+                });
+              }),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    // Checkbox(
+    //   checkColor: Colors.white,
+    //   fillColor: MaterialStateProperty.resolveWith(getColor),
+    //   value: isChecked,
+    //   onChanged: (bool? value) {
+    //     setState(() {
+    //       isChecked = value!;
+    //     });
+    //   },
+    // )
+
     return Consumer<SuperUtente?>(
       builder: (context, utente, _) {
         if (utente == null) {
@@ -257,16 +309,17 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                 color: Color.fromRGBO(219, 29, 69, 1),
               ),
               title: const Text(
-                "Modulo inoltro denuncia",
+                "Inoltro denuncia",
                 style: ThemeText.titoloSezione,
               ),
               elevation: 3,
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: ThemeText.theme.backgroundColor,
             ),
             body: Theme(
               data: ThemeData(
                 colorScheme: const ColorScheme.light(
                     primary: Color.fromRGBO(219, 29, 69, 1)),
+                backgroundColor: ThemeText.theme.backgroundColor,
               ),
               child: Stepper(
                 controlsBuilder: (context, details) {
@@ -281,7 +334,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       ],
                     );
                   }
-                  if (_currentStep == 5) {
+                  if (_currentStep == 6) {
                     return TextButton(
                         onPressed: details.onStepCancel,
                         child: const Align(
@@ -445,7 +498,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                           ),
                           RadioListTile(
                             title: const Text("Colore della pelle"),
-                            value: "ColoreDellaPelle",
+                            value: "Colore",
                             groupValue: discriminazione,
                             onChanged: ((value) {
                               setState(() {
@@ -504,8 +557,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                             }),
                           ),
                           RadioListTile(
-                            title: const Text("GenereSessuale"),
-                            value: "GenereSessuale",
+                            title: const Text("Genere Sessuale"),
+                            value: "Gender",
                             groupValue: discriminazione,
                             onChanged: ((value) {
                               setState(() {
@@ -594,7 +647,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   Step(
                     title:
                         const Text("Vittima", style: ThemeText.titoloInoltro),
-                    content: vittima_widget,
+                    content: vittimaWidget,
                     isActive: _currentStep >= 0,
                     state: _currentStep >= 2
                         ? StepState.complete
@@ -641,7 +694,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                       child: Column(
                         children: <Widget>[
                           const Text(
-                            "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alleSue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
+                            "Includere tutti i dettagli specifici come nomi, date, orari, testimoni e qualsiasi altra informazione che potrebbe aiutarci nella nostra indagine in base alle sue affermazioni. Includere inoltre qualsiasi altra documentazione pertinente alla presente denuncia.",
                             style: ThemeText.corpoInoltro,
                           ),
                           const SizedBox(
@@ -668,12 +721,23 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
                   ),
                   Step(
                     title: const Text(
+                      "Info sulla pratica",
+                      style: ThemeText.titoloInoltro,
+                    ),
+                    content: alreadyFiledWidget,
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 5
+                        ? StepState.complete
+                        : StepState.disabled,
+                  ),
+                  Step(
+                    title: const Text(
                       "Consenso",
                       style: ThemeText.titoloInoltro,
                     ),
-                    content: consenso_widget,
+                    content: consensoWidget,
                     isActive: _currentStep >= 0,
-                    state: _currentStep >= 5
+                    state: _currentStep >= 6
                         ? StepState.complete
                         : StepState.disabled,
                   ),
@@ -699,7 +763,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
 
   continued() {
     if (_formKey.currentState!.validate()) {
-      _currentStep < 6 ? setState(() => _currentStep += 1) : null;
+      _currentStep <= 7 ? setState(() => _currentStep += 1) : null;
     }
   }
 
@@ -721,7 +785,7 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
     SPID? spidUtente = spid;
     if (spidUtente != null) {
       Timestamp convertedDate =
-          Timestamp.fromDate(spidUtente!.getDataScadenzaDocumento);
+          Timestamp.fromDate(spidUtente.getDataScadenzaDocumento);
 
       var result = control.addDenunciaControl(
           nomeDenunciante: nameController.text,
@@ -731,8 +795,8 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
           provinciaDenunciante: provinciaController.text,
           cellulareDenunciante: numberController.text,
           emailDenunciante: emailController.text,
-          tipoDocDenunciante: spidUtente!.tipoDocumento,
-          numeroDocDenunciante: spidUtente!.numeroDocumento,
+          tipoDocDenunciante: spidUtente.tipoDocumento,
+          numeroDocDenunciante: spidUtente.numeroDocumento,
           scadenzaDocDenunciante: convertedDate,
           categoriaDenuncia: CategoriaDenuncia.values.byName(discriminazione!),
           nomeVittima: nomeVittimaController.text,
@@ -740,10 +804,9 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
           descrizione: descrizioneController.text,
           cognomeVittima: cognomeVittimaController.text,
           consenso: consensoController,
-          alreadyFiled: false);
+          alreadyFiled: alreadyFiledController);
 
-      print(
-          "Operation terminated with success on presentation layer, resultId: ");
+      print(await result);
     }
   }
 }

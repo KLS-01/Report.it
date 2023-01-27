@@ -1,25 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:report_it/data/Models/AutenticazioneDAO.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:report_it/data/models/AutenticazioneDAO.dart';
 import 'package:report_it/domain/entity/entity_GA/operatoreCUP_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/uffPolGiud_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/utente_entity.dart';
+import 'package:report_it/domain/entity/entity_GF/adapter_commento.dart';
+import 'package:report_it/domain/entity/entity_GF/adapter_discussione.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
 class ForumDao {
   static Future<List<Discussione?>> RetrieveAllForum() async {
-    int secondi = DateTime.now().millisecondsSinceEpoch;
     var ref = database.collection("Discussione");
 
     List<Discussione> lista = List.empty(growable: true);
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Discussione ut = Discussione.fromJson(c.data());
+        Discussione ut = AdapterDiscussione().fromJson(c.data());
         ut.setID(c.id);
 
         if (ut.pathImmagine != null &&
@@ -32,18 +33,19 @@ class ForumDao {
               .then((value) => ut.setpathImmagine(value));
         }
 
-        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
-
         if (ut.tipoUtente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.idCreatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoUtente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.idCreatore);
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.idCreatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }
@@ -52,10 +54,6 @@ class ForumDao {
 
       return lista;
     });
-
-    int secondiNow = DateTime.now().millisecondsSinceEpoch;
-
-    print(secondiNow - secondi);
 
     return u;
   }
@@ -67,21 +65,24 @@ class ForumDao {
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Commento ut = Commento.fromJson(c.data());
+        Commento ut = AdapterCommento().fromJson(c.data());
 
         ut.id = c.id;
 
         if (ut.tipoutente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.creatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.creatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoutente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.creatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.creatore);
 
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.creatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.creatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }
@@ -104,7 +105,7 @@ class ForumDao {
 
     var u = await ref.get().then((value) async {
       for (var c in value.docs) {
-        Discussione? ut = Discussione.fromJson(c.data());
+        Discussione ut = AdapterDiscussione().fromJson(c.data());
         ut.id = c.id;
         if (!ut.pathImmagine!.startsWith("http") ||
             !ut.pathImmagine!.startsWith("gs://")) {
@@ -115,19 +116,20 @@ class ForumDao {
               .then((value) => ut.setpathImmagine(value));
         }
 
-        //ut.commenti.addAll(await RetrieveAllCommenti(ut.id!));
-
         if (ut.tipoUtente == "Utente") {
-          Utente? utw = await RetrieveUtenteByID(ut.idCreatore);
+          Utente? utw =
+              await AutenticazioneDAO().RetrieveUtenteByID(ut.idCreatore);
           ut.nome = utw!.spid!.nome;
           ut.cognome = utw.spid!.cognome;
         } else if (ut.tipoUtente == "CUP") {
-          OperatoreCUP? opCUP = await RetrieveCUPByID(ut.idCreatore);
+          OperatoreCUP? opCUP =
+              await AutenticazioneDAO().RetrieveCUPByID(ut.idCreatore);
 
           ut.nome = opCUP!.nome;
           ut.cognome = opCUP.cognome;
         } else {
-          UffPolGiud? uff = await RetrieveUffPolGiudByID(ut.idCreatore);
+          UffPolGiud? uff =
+              await AutenticazioneDAO().RetrieveUffPolGiudByID(ut.idCreatore);
           ut.nome = uff!.nome;
           ut.cognome = uff.cognome;
         }
@@ -147,17 +149,18 @@ class ForumDao {
         .doc(discussione)
         .collection("Commento");
 
-    String id = await ref.add(commento.toMap()).then((value) {
+    String id = await ref.add(AdapterCommento().toMap(commento)).then((value) {
       return value.id;
     });
 
     return id;
   }
 
-  static Future<String> AggiungiDiscussione(Discussione discussione) async {
+  Future<String> AggiungiDiscussione(Discussione discussione) async {
     var ref = database.collection("Discussione");
 
-    String id = await ref.add(discussione.toMap()).then((value) {
+    String id =
+        await ref.add(AdapterDiscussione().toMap(discussione)).then((value) {
       return value.id;
     });
 
