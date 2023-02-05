@@ -78,6 +78,8 @@ dependencies:
   build_runner: ^2.3.3
   firebase_auth_mocks: ^0.10.3
 
+  very_good_analysis: ^3.1.0
+
 
 
    

@@ -21,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    String userWorker = 'WRK';
     String userSPID = 'SPID';
 
     late SnackBar snackBar;

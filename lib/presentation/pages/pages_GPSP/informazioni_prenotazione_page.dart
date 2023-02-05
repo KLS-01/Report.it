@@ -9,7 +9,6 @@ import 'package:time_picker_widget/time_picker_widget.dart';
 
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
-import 'package:report_it/domain/entity/entity_GPSP/prenotazione_entity.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 
@@ -32,7 +31,6 @@ class InformazioniPrenotazione extends StatefulWidget {
 initState() {}
 
 class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
-  final PdfViewerController _pdfViewerController = PdfViewerController();
   late String idPrenotazione;
   late SuperUtente utente;
   final _prenotazioneFormKey = GlobalKey<FormState>();
@@ -504,6 +502,7 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
   }
 
   void test() async {
+    // ignore: unused_local_variable
     var timeSelected;
 
     var time = showCustomTimePicker(
@@ -519,13 +518,6 @@ class _InformazioniPrenotazione extends State<InformazioniPrenotazione> {
       timeController.text = (await time)!;
     }
     print(timeController.text);
-  }
-
-  Future<void> _pullRefresh() async {
-    setState(() async {
-      prenotazione = await retrievePrenotazione(idPrenotazione);
-    });
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
   }
 
   Future<Prenotazione> retrievePrenotazione(String? idPrenotazione) async {

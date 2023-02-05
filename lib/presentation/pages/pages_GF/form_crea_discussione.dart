@@ -5,7 +5,6 @@ import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/repository/forum_controller.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 import 'package:report_it/presentation/widget/theme.dart';
-import 'package:report_it/presentation/widget/widget_info.dart';
 import 'package:file_picker/file_picker.dart';
 
 class ForumForm extends StatefulWidget {

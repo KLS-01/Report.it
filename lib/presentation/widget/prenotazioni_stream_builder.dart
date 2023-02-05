@@ -8,6 +8,7 @@ import 'package:report_it/presentation/widget/lista_prenotazioni_widget.dart';
 
 enum Mode { storico, inCarico, inAttesa }
 
+// ignore: must_be_immutable
 class PrenotazioneStreamWidget extends StatefulWidget {
   Stream<QuerySnapshot<Map<String, dynamic>>> stream;
   final SuperUtente utente;
@@ -38,8 +39,6 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
   }
 
   late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
   PrenotazioneController controller = PrenotazioneController();
   final SuperUtente utente;
   final Mode mode;
@@ -63,9 +62,12 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
                               return const Text('No data');
-
                             case ConnectionState.waiting:
                               return const Text('Awaiting...');
+                            case ConnectionState.active:
+                              break;
+                            case ConnectionState.done:
+                              break;
                           }
                           if (snapshot.connectionState ==
                                   ConnectionState.active ||
@@ -76,7 +78,7 @@ class _PrenotazioneStreamWidgetState extends State<PrenotazioneStreamWidget> {
                               Prenotazione p =
                                   AdapterPrenotazione().fromJson(e.data());
                               return p;
-                            }).toList() as List<Prenotazione>?;
+                            }).toList();
                             print(listaPrenotazioni);
                             listaPrenotazioni = listFilter(listaPrenotazioni);
 

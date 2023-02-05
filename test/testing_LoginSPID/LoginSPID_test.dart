@@ -65,6 +65,7 @@ void main() {
                     email,
                     password);
               }
+              return null;
             })));
     try {
       var u = await daoA.RetrieveSPIDByEmail(email);

@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 import 'package:report_it/domain/entity/entity_GD/categoria_denuncia.dart';
-import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/denuncia_controller.dart';
 
 import '../../../domain/entity/entity_GA/super_utente.dart';
@@ -771,42 +769,35 @@ class _InoltroDenuncia extends State<InoltroDenuncia> {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+//   State<StatefulWidget> createState() {
+//     throw UnimplementedError();
+//   }
 
   addRecord() async {
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text('Inoltro denuncia in corso...')),
-    // );
     DenunciaController control = DenunciaController();
     SPID? spidUtente = spid;
-    if (spidUtente != null) {
-      Timestamp convertedDate =
-          Timestamp.fromDate(spidUtente.getDataScadenzaDocumento);
+    Timestamp convertedDate =
+        Timestamp.fromDate(spidUtente.getDataScadenzaDocumento);
 
-      var result = control.addDenunciaControl(
-          nomeDenunciante: nameController.text,
-          cognomeDenunciante: surnameController.text,
-          indirizzoDenunciante: indirizzoController.text,
-          capDenunciante: capController.text,
-          provinciaDenunciante: provinciaController.text,
-          cellulareDenunciante: numberController.text,
-          emailDenunciante: emailController.text,
-          tipoDocDenunciante: spidUtente.tipoDocumento,
-          numeroDocDenunciante: spidUtente.numeroDocumento,
-          scadenzaDocDenunciante: convertedDate,
-          categoriaDenuncia: CategoriaDenuncia.values.byName(discriminazione!),
-          nomeVittima: nomeVittimaController.text,
-          denunciato: oppressoreController.text,
-          descrizione: descrizioneController.text,
-          cognomeVittima: cognomeVittimaController.text,
-          consenso: consensoController,
-          alreadyFiled: alreadyFiledController);
+    var result = control.addDenunciaControl(
+        nomeDenunciante: nameController.text,
+        cognomeDenunciante: surnameController.text,
+        indirizzoDenunciante: indirizzoController.text,
+        capDenunciante: capController.text,
+        provinciaDenunciante: provinciaController.text,
+        cellulareDenunciante: numberController.text,
+        emailDenunciante: emailController.text,
+        tipoDocDenunciante: spidUtente.tipoDocumento,
+        numeroDocDenunciante: spidUtente.numeroDocumento,
+        scadenzaDocDenunciante: convertedDate,
+        categoriaDenuncia: CategoriaDenuncia.values.byName(discriminazione!),
+        nomeVittima: nomeVittimaController.text,
+        denunciato: oppressoreController.text,
+        descrizione: descrizioneController.text,
+        cognomeVittima: cognomeVittimaController.text,
+        consenso: consensoController,
+        alreadyFiled: alreadyFiledController);
 
-      print(await result);
-    }
+    print(await result);
   }
 }

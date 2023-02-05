@@ -3,7 +3,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:report_it/data/models/forum_dao.dart';
 import 'package:report_it/domain/entity/entity_GF/discussione_entity.dart';

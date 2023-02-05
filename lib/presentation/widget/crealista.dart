@@ -22,8 +22,7 @@ class crealista extends StatefulWidget {
 class _crealistaState extends State<crealista> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey2 =
-      GlobalKey<RefreshIndicatorState>();
+
   void callback2() {
     setState(() {});
   }
@@ -109,9 +108,6 @@ class _CreaDiscussioneState extends State<CreaDiscussione> {
   User? utente = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-    bool flag = widget.snapshot.data![widget.index]!.listaSostegno
-        .contains(utente!.uid);
-    int numero = widget.snapshot.data![widget.index]!.listaSostegno.length;
     return Padding(
       padding: const EdgeInsets.only(top: 25),
       child: Stack(

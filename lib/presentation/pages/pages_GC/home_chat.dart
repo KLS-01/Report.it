@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:report_it/domain/entity/entity_GC/chatbot_entity.dart';
 import 'package:report_it/domain/repository/chatbot_controller.dart';
-import 'package:report_it/presentation/widget/icona_bot.dart';
 import 'package:report_it/presentation/widget/styles.dart';
 
 class HomeChat extends StatelessWidget {

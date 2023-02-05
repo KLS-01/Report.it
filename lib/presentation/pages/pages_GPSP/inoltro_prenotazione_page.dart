@@ -1,11 +1,8 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:report_it/domain/entity/entity_GA/spid_entity.dart';
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
-import 'package:report_it/domain/repository/authentication_controller.dart';
 import 'package:report_it/domain/repository/prenotazione_controller.dart';
 import '../../widget/styles.dart';
 
@@ -45,7 +42,6 @@ class _InoltroPrenotazione extends State<InoltroPrenotazione> {
       r"^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$");
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
-  final _formKey3 = GlobalKey<FormState>();
   String? discriminazione;
   String? consenso1, consenso2;
   FilePickerResult? impegnativaController;

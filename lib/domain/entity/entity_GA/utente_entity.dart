@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:report_it/domain/entity/entity_GA/super_utente.dart';
 import 'package:report_it/domain/entity/entity_GA/tipo_utente.dart';
 
 import 'spid_entity.dart';
 
-class Utente extends SuperUtente{
+class Utente extends SuperUtente {
   String cf;
   SPID? spid;
 
@@ -15,7 +13,7 @@ class Utente extends SuperUtente{
 
   get getSpid => this.spid;
 
-  Utente(this.cf,id) : super(id, TipoUtente.values.byName("Utente"));
+  Utente(this.cf, id) : super(id, TipoUtente.values.byName("Utente"));
 
   factory Utente.fromJson(Map<String, dynamic> json) {
     return Utente(json["CF"], json["id"]);

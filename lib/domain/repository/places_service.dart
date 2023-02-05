@@ -30,14 +30,14 @@ class PlacesService {
       List<Place> result = jsonResults.map((place) {
         Place p = AdapterPlace().fromJson(place);
         return p;
-      }).toList() as List<Place>;
+      }).toList();
 
       result.forEach((place) {
         Place p = place;
         p.icon = icon;
       });
 
-      return result as List<Place>;
+      return result;
     } catch (e) {
       print('ERROR: $e');
       //   print(

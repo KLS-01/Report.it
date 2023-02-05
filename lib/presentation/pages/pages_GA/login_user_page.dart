@@ -4,6 +4,7 @@ import 'package:report_it/presentation/pages/pages_GA/authentication_wrapper.dar
 
 import '../../../domain/repository/authentication_controller.dart';
 
+// ignore: must_be_immutable
 class LoginWorker extends StatefulWidget {
   late String userType;
 
@@ -40,16 +41,6 @@ class _LoginWorkerState extends State<LoginWorker> {
           reverse: true,
           child: Column(
             children: [
-              // Container(
-              //   padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
-              //   child: Align(
-              //     alignment: Alignment.topLeft,
-              //     child: IconButton(
-              //       icon: const Icon(Icons.arrow_back),
-              //       onPressed: () => Navigator.pop(context),
-              //     ),
-              //   ),
-              // ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
@@ -160,7 +151,6 @@ class _LoginWorkerState extends State<LoginWorker> {
                                     ),
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
-                                        // setState(() => loading = true);
                                         snackBar = const SnackBar(
                                           content:
                                               Text('Validazione in corso...'),
@@ -217,8 +207,7 @@ class _LoginWorkerState extends State<LoginWorker> {
                                                 'Errore nell\'accesso';
                                             break;
                                         }
-                                        print(
-                                            'Test: $loginOutcome'); //TODO: only for tes. Action: Remove.
+                                        print('Test: $loginOutcome');
 
                                         ///The snackbar will display the message to alert the user (ex. for an error, ...)
                                         snackBar = SnackBar(
