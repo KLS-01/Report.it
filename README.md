@@ -18,7 +18,7 @@ All product and management documentation is available in the relevant folders.
 
 ## Used By
 
-Project carried out for Software Engineering course and Software Project Management course at Universy of Salerno.
+Project carried out for Software Engineering course and Software Project Management course at University of Salerno.
 
 
 ## Authors
