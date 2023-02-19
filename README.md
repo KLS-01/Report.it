@@ -26,8 +26,8 @@ Project carried out for Software Engineering course and Software Project Managem
 - [Simona Grieco](https://github.com/simonagrieco) as Project Manager
 - [Maria Concetta Schiavone](https://github.com/mariaconcettas) as Project Manager
 - [Riccardo Kevin Ferraris](https://github.com/Rickyfer02) as Developer
-- [Nicola Frugieri](https://github.com/mariaconcettas) as Developer
-- [Alberto Genovese](https://github.com/TechRufys) as Developer
+- [Nicola Frugieri](https://github.com/nf0101) as Developer
+- [Alberto Genovese](https://github.com/TechRufy) as Developer
 - [Arturo Gentile](https://github.com/Mr-Kind16) as Developer
 - [Marisa La Sorda](https://github.com/marisuz) as Developer
 - [Leonardo Schiavo](https://github.com/KLS-01/) as Developer
